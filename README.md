@@ -1,3 +1,4 @@
 # FlowZone AI
 
-Done-for-you AI workflow automation. Visit [flowzone.dev](https://flowzone.dev)
+Done-for-you AI workflow automation - flowzone.dev
+Built with Next.js, deployed on Vercel.
