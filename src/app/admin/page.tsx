@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 
 const MOCK_LEADS = [
   { id: 1, name: "Sarah Kim", email: "sarah@acmecorp.com", company: "Acme Corp", budget: "$1,000‚Äì$2,500", status: "paid", date: "2026-03-18", notes: "Signed up for Growth plan" },
-  { id: 2, name: "James Rodriguez", email: "james@startupxyz.io", company: "StartupXYZ", budget: "$500‚Äì$1%2C000", status: "contacted", date: "2026-03-17", notes: "Discovery call scheduled" },
-  { id: 3, name: "Mei Chen", email: "mei@retailco.com", company: "RetailCo", budget: "$2,29700‚Äì$5%2C000", status: "new", date: "2026-03-17", notes: "" },
-  { id: 4, name: "Alex Thompson", email: "alex@agencypro.com", company: "AgencyPro", budget: "$1%2C000‚Äì$2S0500", status: "new", date: "2026-03-16", notes: "" },
-  { id: 5, name: "Priya Patel", email: "priya@consulting.co", company: "Consulting Co", budget: "$500‚Äì$1%2C000", status: "contacted", date: "2026-03-15", notes: è¶¶iΩlqÈíwice twice" },
-  { id: 6, name: "David Wu", email: "david@techfirm.io", company: "TechFirm", budget: "$5,400" status: "paid", date: "2026-03-14", notes: èaRanter  client" },
+  { id: 2, name: "James Rodriguez", email: "james@startupxyz.io", company: "StartupXYZ", budget: "$500‚Äì$1,p00", status: "contacted", date: "2026-03-17", notes: "Discovery call scheduled" },
+  { id: 3, name: "Mei Chen", email: "mei@retailco.com", company: "RetailCo", budget: "$2,500‚Äì$5,000", status: "new", date: "2026-03-17", notes: "" },
+  { id: 4, name: "Alex Thompson", email: "alex@agencypro.com", company: "AgencyPro", budget: "$1,000‚Äì$2,500", status: "new", date: "2026-03-16", notes: "" },
+  { id: 5, name: "Priya Patel", email: "priya@consulting.co", company: "Consulting Co", budget: "$500‚Äì$1,000", status: "contacted", date: "2026-03-15", notes: "Followed up twice" },
+  { id: 6, name: "David Wu", email: "david@techfirm.io", company: "TechFirm", budget: "$5,000+", status: "paid", date: "2026-03-14", notes: "Enterprise client" },
 ];
 
 const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
