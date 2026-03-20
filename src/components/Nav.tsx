@@ -8,8 +8,16 @@ export default function Nav() {
   return (
     <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-sm border-b border-gray-100 z-50">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link href="/" className="text-xl font-bold text-gray-900 tracking-tight">
-          FlowZone AI
+        <Link href="/" className="flex items-center gap-3">
+          <svg width="44" height="32" viewBox="0 0 44 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="7" cy="16" r="6" fill="#4F46E5"/>
+            <line x1="13" y1="16" x2="20" y2="16" stroke="#C7D2FE" strokeWidth="2"/>
+            <circle cx="22" cy="16" r="5" fill="#4F46E5" opacity="0.7"/>
+            <line x1="27" y1="16" x2="34" y2="16" stroke="#C7D2FE" strokeWidth="2"/>
+            <circle cx="37" cy="16" r="4" fill="#4F46E5" opacity="0.4"/>
+            <path d="M34 13.5L37 16L34 18.5" stroke="#818CF8" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          <span className="text-xl font-bold text-gray-900 tracking-tight">FlowZone <span className="text-indigo-600">AI</span></span>
         </Link>
 
         {/* Desktop */}
