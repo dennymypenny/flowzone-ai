@@ -83,7 +83,7 @@ export default function Home() {
             </p>
           </div>
           <DemoAnimation />
-          <div className="text-center mt-10">xt-center mt-10">
+          <div className="text-center mt-10">
             <Link href="/case-studies" className="text-sky-600 font-semibold hover:underline text-lg">
               View All Case Studies →
             </Link>
