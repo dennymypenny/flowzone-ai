@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 export default function Intake() {
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting\ = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
     name: "", email: "", company: "", website: "",
     needs: "", monthlyRevenue: "",
