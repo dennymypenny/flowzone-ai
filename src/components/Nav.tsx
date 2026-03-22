@@ -17,7 +17,7 @@ export default function Nav() {
             <circle cx="49" cy="16" r="8" fill="#60A5FA"/>
           </svg>
           <span className="text-xl font-bold text-gray-900 tracking-tight">
-            FlowZone <span className="text-sky-400">AI</span>
+            FlowZone <span className="text-blue-400">AI</span>
           </span>
         </Link>
 
@@ -27,7 +27,7 @@ export default function Nav() {
           <Link href="/case-studies" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Case Studies</Link>
           <Link href="/pricing" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Pricing</Link>
           <Link href="/blog" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Blog</Link>
-          <Link href="/intake" className="bg-indigo-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-indigo-700 transition-colors">
+          <Link href="/intake" className="bg-sky-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-sky-700 transition-colors">
             Get Free AI Audit
           </Link>
         </div>
@@ -49,7 +49,7 @@ export default function Nav() {
           <Link href="/case-studies" className="text-sm text-gray-700" onClick={() => setOpen(false)}>Case Studies</Link>
           <Link href="/pricing" className="text-sm text-gray-700" onClick={() => setOpen(false)}>Pricing</Link>
           <Link href="/blog" className="text-sm text-gray-700" onClick={() => setOpen(false)}>Blog</Link>
-          <Link href="/intake" className="bg-indigo-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center" onClick={() => setOpen(false)}>
+          <Link href="/intake" className="bg-sky-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center" onClick={() => setOpen(false)}>
             Get Free AI Audit
           </Link>
         </div>
