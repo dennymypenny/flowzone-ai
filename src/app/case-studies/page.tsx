@@ -133,9 +133,9 @@ export default function CaseStudies() {
 
                 <div className="bg-indigo-50 rounded-2xl p-6 border border-indigo-100">
                   <div className="flex text-yellow-400 text-sm mb-3">★★★★★</div>
-                  <p className="text-gray-700 leading-relaxed mb-4 italic">"{{c.quote}}"</p>
-                  <p className="font-bold text-gray-900 text-sm">{{c.quoteName}}</p>
-                  <p className="text-gray-400 text-xs">{{c.quoteRole}}</p>
+                  <p className="text-gray-700 leading-relaxed mb-4 italic">"{c.quote}"</p>
+                  <p className="font-bold text-gray-900 text-sm">{c.quoteName}</p>
+                  <p className="text-gray-400 text-xs">{c.quoteRole}</p>
                 </div>
               </div>
             </div>
