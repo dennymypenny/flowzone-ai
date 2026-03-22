@@ -55,7 +55,7 @@ const posts = [
 ];
 
 const TAG_COLORS: Record<string, string> = {
-  Tutorial: "bg-indigo-100 text-indigo-700",
+  Tutorial: "bg-sky-100 text-sky-700",
   Strategy: "bg-green-100 text-green-700",
   Tools: "bg-blue-100 text-blue-700",
   Finance: "bg-yellow-100 text-yellow-700",
@@ -66,7 +66,7 @@ export default function Blog() {
     <>
       <section className="bg-white pt-20 pb-16 px-6 border-b border-gray-100">
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-indigo-600 font-semibold text-sm uppercase tracking-wider mb-4">Blog</p>
+          <p className="text-sky-600 font-semibold text-sm uppercase tracking-wider mb-4">Blog</p>
           <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6">Automation Insights</h1>
           <p className="text-xl text-gray-500 leading-relaxed">
             Guides, case studies, and tutorials from the FlowZone AI team.
@@ -77,7 +77,7 @@ export default function Blog() {
       <section className="py-20 px-6 bg-white">
         <div className="max-w-3xl mx-auto space-y-8">
           {posts.map((post) => (
-            <article key={post.slug} className="border border-gray-100 rounded-2xl p-8 hover:border-indigo-200 hover:shadow-md transition-all">
+            <article key={post.slug} className="border border-gray-100 rounded-2xl p-8 hover:border-sky-200 hover:shadow-md transition-all">
               <div className="flex items-center gap-3 mb-4">
                 <span className={`text-xs font-bold px-3 py-1 rounded-full ${TAG_COLORS[post.tag] || "bg-gray-100 text-gray-600"}`}>
                   {post.tag}
@@ -87,14 +87,14 @@ export default function Blog() {
                 <span className="text-gray-400 text-sm">{post.readTime}</span>
               </div>
               <h2 className="text-2xl font-black text-gray-900 mb-3 leading-tight">
-                <Link href={`/blog/${post.slug}`} className="hover:text-indigo-600 transition-colors">
+                <Link href={`/blog/${post.slug}`} className="hover:text-sky-600 transition-colors">
                   {post.title}
                 </Link>
               </h2>
               <p className="text-gray-500 leading-relaxed mb-4">{post.excerpt}</p>
               <Link
                 href={`/blog/${post.slug}`}
-                className="text-indigo-600 font-semibold text-sm hover:text-indigo-800 transition-colors"
+                className="text-sky-600 font-semibold text-sm hover:text-sky-800 transition-colors"
               >
                 Read more â†’
               </Link>
@@ -103,13 +103,13 @@ export default function Blog() {
         </div>
       </section>
 
-      <section className="py-16 px-6 bg-indigo-50 border-t border-indigo-100">
+      <section className="py-16 px-6 bg-sky-50 border-t border-sky-100">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-2xl font-black text-gray-900 mb-4">Ready to automate your business?</h2>
           <p className="text-gray-500 mb-6">Get a free custom automation plan â€” delivered in 24 hours.</p>
           <Link
             href="/intake"
-            className="inline-block bg-indigo-600 text-white font-bold px-8 py-4 rounded-xl hover:bg-indigo-700 transition-colors"
+            className="inline-block bg-sky-600 text-white font-bold px-8 py-4 rounded-xl hover:bg-sky-700 transition-colors"
           >
             Get Your Free AI Audit â†’
           </Link>
