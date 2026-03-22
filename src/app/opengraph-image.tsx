@@ -19,9 +19,9 @@ export default async function Image() {
           <span style={{fontSize:"34px",fontWeight:"800",color:"#111827"}}>FlowZone <span style={{color:"#4F46E5"}}>AI</span></span>
         </div>
         <h1 style={{fontSize:"70px",fontWeight:"900",color:"#111827",lineHeight:1.05,margin:"0 0 24px",letterSpacing:"-2px",maxWidth:"880px"}}>Automate Your Business <span style={{color:"#4F46E5"}}>in 48 Hours.</span></h1>
-        <p style={{fontSize:"26px",fontWeight:"normal",color:"#6B7280",margin:"0 0 44px",lineHeight:1.4,maxWidth:"680px"}}>Done-for-you AI orkflow systems. Free audit delivered in 24 hours.</p>
+        <p style={{fontSize:"26px",fontWeight:"normal",color:"#6B7280",margin:"0 0 44px",lineHeight:1.4,maxWidth:"680px"}}>Done-for-you AI workflow systems. Free audit delivered in 24 hours.</p>
         <div style={{display:"flex",alignItems:"center",background:"#4F46E5",color:"white",borderRadius:"12px",padding:"16px 32px",fontSize:"22px",fontWeight:"700"}}>Get Your Free AI Audit</div>
-        <div style={{position:"absolute",bottom:"36px",right:"100px",freeSize:"20px",color:"#9CA3AF",fontWeight:"600",display:"flex"}}>flowzone.dev</div>
+        <div style={{position:"absolute",bottom:"36px",right:"100px",fontSize:"20px",color:"#9CA3AF",fontWeight:"600",display:"flex"}}>flowzone.dev</div>
       </div>
     ),
     { ...size }
