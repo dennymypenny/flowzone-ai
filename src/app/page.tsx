@@ -1,4 +1,5 @@
 import Link from "next/link";
+import DemoAnimation from "@/components/DemoAnimation";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -81,60 +82,8 @@ export default function Home() {
               Watch real workflows we have built for clients — saving hours of manual work every single day.
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-              <div className="bg-gradient-to-br from-sky-100 to-sky-200 aspect-video flex items-center justify-center relative">
-                <div className="w-16 h-16 bg-sky-600 rounded-full flex items-center justify-center shadow-lg">
-                  <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
-                <div className="absolute top-3 left-3 bg-sky-600 text-white text-xs font-bold px-2 py-1 rounded-full">
-                  Lead Follow-Up
-                </div>
-              </div>
-              <div className="p-5">
-                <h3 className="font-bold text-gray-900 text-lg mb-2">Automated Lead Follow-Up</h3>
-                <p className="text-gray-500 text-sm">New leads get an instant personalized response and follow-up sequence — without lifting a finger.</p>
-                <div className="mt-3 text-sky-600 text-sm font-semibold">Saves 3+ hrs/day →</div>
-              </div>
-            </div>
-            <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-              <div className="bg-gradient-to-br from-blue-100 to-sky-200 aspect-video flex items-center justify-center relative">
-                <div className="w-16 h-16 bg-sky-600 rounded-full flex items-center justify-center shadow-lg">
-                  <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
-                <div className="absolute top-3 left-3 bg-sky-600 text-white text-xs font-bold px-2 py-1 rounded-full">
-                  Invoice &amp; Billing
-                </div>
-              </div>
-              <div className="p-5">
-                <h3 className="font-bold text-gray-900 text-lg mb-2">Invoice &amp; Payment Automation</h3>
-                <p className="text-gray-500 text-sm">Auto-generate invoices, send reminders, and reconcile payments — all without manual data entry.</p>
-                <div className="mt-3 text-sky-600 text-sm font-semibold">Saves 5+ hrs/week →</div>
-              </div>
-            </div>
-            <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-              <div className="bg-gradient-to-br from-sky-100 to-blue-200 aspect-video flex items-center justify-center relative">
-                <div className="w-16 h-16 bg-sky-600 rounded-full flex items-center justify-center shadow-lg">
-                  <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
-                <div className="absolute top-3 left-3 bg-sky-600 text-white text-xs font-bold px-2 py-1 rounded-full">
-                  Reporting
-                </div>
-              </div>
-              <div className="p-5">
-                <h3 className="font-bold text-gray-900 text-lg mb-2">Automated Weekly Reports</h3>
-                <p className="text-gray-500 text-sm">Pull data from every tool you use and deliver a clean summary report straight to your inbox every Monday.</p>
-                <div className="mt-3 text-sky-600 text-sm font-semibold">Saves 2+ hrs/week →</div>
-              </div>
-            </div>
-          </div>
-          <div className="text-center mt-10">
+          <DemoAnimation />
+          <div className="text-center mt-10">xt-center mt-10">
             <Link href="/case-studies" className="text-sky-600 font-semibold hover:underline text-lg">
               View All Case Studies →
             </Link>
