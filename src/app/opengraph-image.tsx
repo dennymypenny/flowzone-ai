@@ -16,11 +16,11 @@ export default async function Image() {
             <div style={{width:"30px",height:"2px",background:"#C7D2FE",display:"flex"}} />
             <div style={{width:"13px",height:"13px",borderRadius:"50%",background:"#4F46E5",opacity:0.35,display:"flex"}} />
           </div>
-          <span style={{fontSize:"34px",montWeight:"800",color:"#111827"}}>FlowZone <span style={{color:"#4F46E5"}}>AI</span></span>
+          <span style={{fontSize:"34px",fontWeight:"800",color:"#111827"}}>FlowZone <span style={{color:"#4F46E5"}}>AI</span></span>
         </div>
-        <h1 style={{fontSize:"70px",montWeight:"900",color:"#111827",lineHeight:1.05,margin:"0 0 24px",letterSpacing:"-2px",maxWidth:"880px"}}>Automate Your Business <span style={{color:"#4F46E5"}}>in 48 Hours.</span></h1>
-        <p style={{fontSize:"26px",montWeight:"normal",color:"#6B7280",margin:"0 0 44px",lineHeight:1.4,maxWidth:"680px"}}>Done-for-you AI orkflow systems. Free audit delivered in 24 hours.</p>
-        <div style={{display:"flex",alignItems:"center",background:"#4F46E5",color:"white",borderRadius:"12px",padding:"16px 32px",fontSize:"22px",montWeight:"700"}}>Get Your Free AI Audit</div>
+        <h1 style={{fontSize:"70px",fontWeight:"900",color:"#111827",lineHeight:1.05,margin:"0 0 24px",letterSpacing:"-2px",maxWidth:"880px"}}>Automate Your Business <span style={{color:"#4F46E5"}}>in 48 Hours.</span></h1>
+        <p style={{fontSize:"26px",fontWeight:"normal",color:"#6B7280",margin:"0 0 44px",lineHeight:1.4,maxWidth:"680px"}}>Done-for-you AI orkflow systems. Free audit delivered in 24 hours.</p>
+        <div style={{display:"flex",alignItems:"center",background:"#4F46E5",color:"white",borderRadius:"12px",padding:"16px 32px",fontSize:"22px",fontWeight:"700"}}>Get Your Free AI Audit</div>
         <div style={{position:"absolute",bottom:"36px",right:"100px",freeSize:"20px",color:"#9CA3AF",fontWeight:"600",display:"flex"}}>flowzone.dev</div>
       </div>
     ),
