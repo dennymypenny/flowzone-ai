@@ -13,18 +13,18 @@ export default function Home() {
       {/* Hero */}
       <section className="bg-white pt-20 pb-24 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-indigo-50 text-indigo-700 text-xs font-semibold px-4 py-1.5 rounded-full mb-8 tracking-wide uppercase">
+          <div className="inline-flex items-center gap-2 bg-sky-50 text-sky-700 text-xs font-semibold px-4 py-1.5 rounded-full mb-8 tracking-wide uppercase">
             ´ Done-For-You AIWorkflow Systems
           </div>
           <h1 className="text-5xl md:text-7xl font-black text-gray-900 leading-tight mb-6">
-            Your Business Runs on <span className="text-indigo-600">Repetitive Work.</span>
+            Your Business Runs on <span className="text-sky-600">Repetitive Work.</span>
             <br />We Automate All of It.
           </h1>
           <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed">
             We design, build, and deploy custom AI automations for your business delivered in 7 days or less. You focus on growth; we handle the grind.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Link href="/intake" className="bg-indigo-600 text-white font-bold px-8 py-4 rounded-xl hover:bg-indigo-700 transition-colors text-lg">
+            <Link href="/intake" className="bg-sky-600 text-white font-bold px-8 py-4 rounded-xl hover:bg-sky-700 transition-colors text-lg">
               Get Your Free AI Audit
             </Link>
             <Link href="/intake" className="text-gray-700 font-semibold px-8 py-4 rounded-xl border border-gray-200 hover:border-gray-400 transition-colors text-lg">
