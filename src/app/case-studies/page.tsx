@@ -76,7 +76,7 @@ export default function CaseStudies() {
       {/* Hero */}
       <section className="bg-white pt-20 pb-16 px-6 border-b border-gray-100">
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-indigo-600 font-semibold text-sm uppercase tracking-wider mb-4">Proof</p>
+          <p className="text-sky-600 font-semibold text-sm uppercase tracking-wider mb-4">Proof</p>
           <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6">Real Results. Real Clients.</h1>
           <p className="text-xl text-gray-500 leading-relaxed">
             Every automation we build is custom, fully tested, and handed off to you live. Here's what that looks like in practice.
@@ -92,7 +92,7 @@ export default function CaseStudies() {
               {/* Left: Details */}
               <div className={i % 2 === 1 ? "md:col-start-2" : ""}>
                 <div className="text-4xl mb-4">{c.emoji}</div>
-                <p className="text-indigo-600 font-semibold text-sm uppercase tracking-wider mb-2">{c.industry}</p>
+                <p className="text-sky-600 font-semibold text-sm uppercase tracking-wider mb-2">{c.industry}</p>
                 <h2 className="text-2xl font-black text-gray-900 mb-4">{c.client}</h2>
 
                 <div className="mb-6">
@@ -131,7 +131,7 @@ export default function CaseStudies() {
                   </div>
                 </div>
 
-                <div className="bg-indigo-50 rounded-2xl p-6 border border-indigo-100">
+                <div className="bg-sky-50 rounded-2xl p-6 border border-sky-100">
                   <div className="flex text-yellow-400 text-sm mb-3">★★★★★</div>
                   <p className="text-gray-700 leading-relaxed mb-4 italic">"{c.quote}"</p>
                   <p className="font-bold text-gray-900 text-sm">{c.quoteName}</p>
@@ -144,19 +144,19 @@ export default function CaseStudies() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 px-6 bg-indigo-600">
+      <section className="py-20 px-6 bg-sky-600">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-4xl font-black text-white mb-4">Want Results Like These?</h2>
-          <p className="text-indigo-200 text-lg mb-8 leading-relaxed">
+          <p className="text-sky-200 text-lg mb-8 leading-relaxed">
             Tell us what's eating your time. We'll send you a free custom automation plan in 24 hours.
           </p>
           <Link
             href="/intake"
-            className="inline-block bg-white text-indigo-600 font-black px-10 py-5 rounded-xl hover:bg-indigo-50 transition-colors text-lg"
+            className="inline-block bg-white text-sky-600 font-black px-10 py-5 rounded-xl hover:bg-sky-50 transition-colors text-lg"
           >
             Get Your Free AI Audit →
           </Link>
-          <p className="text-indigo-300 text-sm mt-4">No commitment · Delivered in 24 hours</p>
+          <p className="text-sky-300 text-sm mt-4">No commitment · Delivered in 24 hours</p>
         </div>
       </section>
     </>
