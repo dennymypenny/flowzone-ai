@@ -1,5 +1,6 @@
 import Link from "next/link";
 import DemoAnimation from "@/components/DemoAnimation";
+import ServiceCards from "@/components/ServiceCards";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -126,53 +127,7 @@ export default function Home() {
       </section>
 
       {/* What we automate */}
-      <section className="bg-white py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 bg-sky-50 text-sky-700 text-xs font-semibold px-4 py-1.5 rounded-full mb-4 tracking-wide uppercase">
-              Our Services
-            </div>
-            <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">
-              What We Automate
-            </h2>
-            <p className="text-xl text-gray-500 max-w-2xl mx-auto">
-              If your team does it manually more than once a week, we can automate it.
-            </p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-gray-50 rounded-2xl p-6 hover:bg-sky-50 transition-colors border border-gray-100">
-              <div className="text-3xl mb-3">📩</div>
-              <h3 className="font-bold text-gray-900 text-lg mb-2">Lead Follow-Up</h3>
-              <p className="text-gray-500 text-sm">Auto-respond to new leads via email, SMS, or DMs within seconds of sign-up.</p>
-            </div>
-            <div className="bg-gray-50 rounded-2xl p-6 hover:bg-sky-50 transition-colors border border-gray-100">
-              <div className="text-3xl mb-3">🧾</div>
-              <h3 className="font-bold text-gray-900 text-lg mb-2">Invoicing &amp; Billing</h3>
-              <p className="text-gray-500 text-sm">Generate, send, and track invoices automatically. Get paid faster with zero manual work.</p>
-            </div>
-            <div className="bg-gray-50 rounded-2xl p-6 hover:bg-sky-50 transition-colors border border-gray-100">
-              <div className="text-3xl mb-3">📅</div>
-              <h3 className="font-bold text-gray-900 text-lg mb-2">Appointment Scheduling</h3>
-              <p className="text-gray-500 text-sm">Sync calendars, send reminders, and handle rescheduling — all on autopilot.</p>
-            </div>
-            <div className="bg-gray-50 rounded-2xl p-6 hover:bg-sky-50 transition-colors border border-gray-100">
-              <div className="text-3xl mb-3">📊</div>
-              <h3 className="font-bold text-gray-900 text-lg mb-2">Reporting &amp; Analytics</h3>
-              <p className="text-gray-500 text-sm">Pull data from any tool and deliver clean weekly summaries direct to your inbox.</p>
-            </div>
-            <div className="bg-gray-50 rounded-2xl p-6 hover:bg-sky-50 transition-colors border border-gray-100">
-              <div className="text-3xl mb-3">🤝</div>
-              <h3 className="font-bold text-gray-900 text-lg mb-2">Client Onboarding</h3>
-              <p className="text-gray-500 text-sm">Send welcome sequences, collect documents, and set up new clients in minutes.</p>
-            </div>
-            <div className="bg-gray-50 rounded-2xl p-6 hover:bg-sky-50 transition-colors border border-gray-100">
-              <div className="text-3xl mb-3">🔁</div>
-              <h3 className="font-bold text-gray-900 text-lg mb-2">Data Entry &amp; Sync</h3>
-              <p className="text-gray-500 text-sm">Eliminate copy-paste between your CRM, spreadsheets, and other platforms forever.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ServiceCards />
 
       {/* Testimonials */}
       <section className="bg-sky-50 py-20 px-6">
