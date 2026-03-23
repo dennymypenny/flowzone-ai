@@ -1,27 +1,82 @@
-import { ImageResponse } from "next/og";
-export const runtime = "edge";
-export const alt = "FlowZone AI";
+import { ImageResponse } from 'next/og';
+
+export const runtime = 'edge';
+export const alt = 'FlowZone AI | Automate Your Business in 48 Hours';
 export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+export const contentType = 'image/png';
+
 export default async function Image() {
   return new ImageResponse(
     (
-      <div style={{background:"white",width:"100%",height:"100%",display:"flex",flexDirection:"column",alignItems:"flex-start",justifyContent:"center",padding:"80px 100px",position:"relative",fontFamily:"system-ui,sans-serif"}}>
-        <div style={{position:"absolute",top:0,left:0,right:0,height:"8px",background:"#4F46E5",display:"flex"}} />
-        <div style={{display:"flex",alignItems:"center",gap:"14px",marginBottom:"48px"}}>
-          <div style={{display:"flex",alignItems:"center",gap:"8px"}}>
-            <div style={{width:"22px",height:"22px",borderRadius:"50%",background:"#4F46E5",display:"flex"}} />
-            <div style={{width:"30px",height:"2px",background:"#C7D2FE",display:"flex"}} />
-            <div style={{width:"17px",height:"17px",borderRadius:"50%",background:"#4F46E5",opacity:0.65,display:"flex"}} />
-            <div style={{width:"30px",height:"2px",background:"#C7D2FE",display:"flex"}} />
-            <div style={{width:"13px",height:"13px",borderRadius:"50%",background:"#4F46E5",opacity:0.35,display:"flex"}} />
+      <div
+        style={{
+          background: 'white',
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '80px',
+          fontFamily: 'system-ui, sans-serif',
+        }}
+      >
+        {/* Logo row: three dots + wordmark */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '52px' }}>
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#1E3A8A', display: 'flex' }} />
+            <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#60A5FA', display: 'flex' }} />
+            <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#BAE6FD', display: 'flex' }} />
           </div>
-          <span style={{fontSize:"34px",fontWeight:"800",color:"#111827"}}>FlowZone <span style={{color:"#4F46E5"}}>AI</span></span>
+          <span style={{ fontSize: '48px', fontWeight: '800', color: '#111827', letterSpacing: '-1px' }}>
+            FlowZone <span style={{ color: '#3B82F6' }}>AI</span>
+          </span>
         </div>
-        <h1 style={{fontSize:"70px",fontWeight:"900",color:"#111827",lineHeight:1.05,margin:"0 0 24px",letterSpacing:"-2px",maxWidth:"880px"}}>Automate Your Business <span style={{color:"#4F46E5"}}>in 48 Hours.</span></h1>
-        <p style={{fontSize:"26px",fontWeight:"normal",color:"#6B7280",margin:"0 0 44px",lineHeight:1.4,maxWidth:"680px"}}>Done-for-you AI workflow systems. Free audit delivered in 24 hours.</p>
-        <div style={{display:"flex",alignItems:"center",background:"#4F46E5",color:"white",borderRadius:"12px",padding:"16px 32px",fontSize:"22px",fontWeight:"700"}}>Get Your Free AI Audit</div>
-        <div style={{position:"absolute",bottom:"36px",right:"100px",fontSize:"20px",color:"#9CA3AF",fontWeight:"600",display:"flex"}}>flowzone.dev</div>
+
+        {/* Headline */}
+        <div
+          style={{
+            fontSize: '72px',
+            fontWeight: '800',
+            color: '#111827',
+            textAlign: 'center',
+            lineHeight: 1.1,
+            letterSpacing: '-2px',
+            marginBottom: '32px',
+            maxWidth: '1000px',
+          }}
+        >
+          Automate Your Business in 48 Hours
+        </div>
+
+        {/* Subtext */}
+        <div
+          style={{
+            fontSize: '28px',
+            color: '#6B7280',
+            textAlign: 'center',
+            maxWidth: '780px',
+            lineHeight: 1.5,
+            marginBottom: '52px',
+          }}
+        >
+          Done-for-you AI workflows that eliminate manual work and scale your operations.
+        </div>
+
+        {/* CTA pill */}
+        <div
+          style={{
+            background: '#1D4ED8',
+            color: 'white',
+            padding: '20px 52px',
+            borderRadius: '999px',
+            fontSize: '28px',
+            fontWeight: '700',
+            display: 'flex',
+          }}
+        >
+          Get Your Free AI Audit
+        </div>
       </div>
     ),
     { ...size }
