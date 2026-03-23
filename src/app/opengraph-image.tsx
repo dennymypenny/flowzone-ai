@@ -21,7 +21,6 @@ export default async function Image() {
           fontFamily: 'system-ui, sans-serif',
         }}
       >
-        {/* Logo row */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '44px' }}>
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#1E3A8A', display: 'flex' }} />
@@ -29,28 +28,27 @@ export default async function Image() {
             <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#BAE6FD', display: 'flex' }} />
           </div>
           <span style={{ fontSize: '40px', fontWeight: '800', color: '#111827', letterSpacing: '-1px' }}>
-            FlowZone <span style={{ color: '#3B82F6' }}>AI</span>
+            FlowZone{' '}
+          </span>
+          <span style={{ fontSize: '40px', fontWeight: '800', color: '#3B82F6', letterSpacing: '-1px' }}>
+            AI
           </span>
         </div>
-
-        {/* Hook line */}
         <div
           style={{
-            fontSize: '28px',
+            fontSize: '26px',
             fontWeight: '600',
             color: '#3B82F6',
-            textTransform: 'uppercase',
-            letterSpacing: '3px',
+            letterSpacing: '2px',
             marginBottom: '20px',
+            display: 'flex',
           }}
         >
-          Done for you in 48 hours
+          DONE FOR YOU IN 48 HOURS
         </div>
-
-        {/* Headline */}
         <div
           style={{
-            fontSize: '76px',
+            fontSize: '72px',
             fontWeight: '900',
             color: '#111827',
             textAlign: 'center',
@@ -58,13 +56,14 @@ export default async function Image() {
             letterSpacing: '-3px',
             marginBottom: '28px',
             maxWidth: '980px',
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
           }}
         >
-          Stop Doing It Manually.
-          <span style={{ color: '#1D4ED8' }}> We Automate Everything.</span>
+          <span>Stop Doing It Manually.</span>
+          <span style={{ color: '#1D4ED8' }}>&nbsp;We Automate Everything.</span>
         </div>
-
-        {/* Subtext */}
         <div
           style={{
             fontSize: '26px',
@@ -73,12 +72,11 @@ export default async function Image() {
             maxWidth: '720px',
             lineHeight: 1.5,
             marginBottom: '48px',
+            display: 'flex',
           }}
         >
           Custom AI workflows built and live in 48 hours — or your money back.
         </div>
-
-        {/* CTA */}
         <div
           style={{
             background: '#1D4ED8',
