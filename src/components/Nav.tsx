@@ -27,6 +27,7 @@ export default function Nav() {
           <Link href="/case-studies" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Case Studies</Link>
           <Link href="/pricing" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Pricing</Link>
           <Link href="/blog" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Blog</Link>
+                    <Link href="/ai-news" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">AI News</Link>Link></Link>
           <Link href="/intake" className="bg-sky-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-sky-700 transition-colors">
             Get Free AI Audit
           </Link>
@@ -49,6 +50,7 @@ export default function Nav() {
           <Link href="/case-studies" className="text-sm text-gray-700" onClick={() => setOpen(false)}>Case Studies</Link>
           <Link href="/pricing" className="text-sm text-gray-700" onClick={() => setOpen(false)}>Pricing</Link>
           <Link href="/blog" className="text-sm text-gray-700" onClick={() => setOpen(false)}>Blog</Link>
+                    <Link href="/ai-news" className="text-sm text-gray-700" onClick={() => setOpen(false)}>AI News</Link>Link>
           <Link href="/intake" className="bg-sky-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center" onClick={() => setOpen(false)}>
             Get Free AI Audit
           </Link>
