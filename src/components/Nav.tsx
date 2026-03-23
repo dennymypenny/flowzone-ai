@@ -10,11 +10,11 @@ export default function Nav() {
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
           <svg width="58" height="32" viewBox="0 0 58 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="9" cy="16" r="8" fill="#60A5FA"/>
+            <circle cx="9" cy="16" r="8" fill="#1E3A8A"/>
             <line x1="17" y1="16" x2="24" y2="16" stroke="#BAE6FD" strokeWidth="2.5"/>
             <circle cx="29" cy="16" r="8" fill="#60A5FA"/>
             <line x1="37" y1="16" x2="44" y2="16" stroke="#BAE6FD" strokeWidth="2.5"/>
-            <circle cx="49" cy="16" r="8" fill="#60A5FA"/>
+            <circle cx="49" cy="16" r="8" fill="#BAE6FD"/>
           </svg>
           <span className="text-xl font-bold text-gray-900 tracking-tight">
             FlowZone <span className="text-blue-400">AI</span>
