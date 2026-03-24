@@ -9,14 +9,14 @@ export default function Intake() {
   const [other, setOther] = useState("");
 
   const automations = [
-    { id: "leads", label: "Lead Follow-Up", icon: "ð¬" },
-    { id: "invoicing", label: "Invoicing & Billing", icon: "ð§¾" },
-    { id: "appointments", label: "Appointment Reminders", icon: "ð" },
-    { id: "onboarding", label: "Client Onboarding", icon: "ð¤" },
-    { id: "reviews", label: "Review Requests", icon: "â­" },
-    { id: "reporting", label: "Reporting & Analytics", icon: "ð" },
-    { id: "dataentry", label: "Data Entry / Sync", icon: "ð" },
-    { id: "other", label: "Something Else", icon: "ð¡" },
+    { id: "leads", label: "Lead Follow-Up", icon: "📬" },
+    { id: "invoicing", label: "Invoicing & Billing", icon: "🧾" },
+    { id: "appointments", label: "Appointment Reminders", icon: "📅" },
+    { id: "onboarding", label: "Client Onboarding", icon: "🤝" },
+    { id: "reviews", label: "Review Requests", icon: "⭐" },
+    { id: "reporting", label: "Reporting & Analytics", icon: "📊" },
+    { id: "dataentry", label: "Data Entry / Sync", icon: "🔄" },
+    { id: "other", label: "Something Else", icon: "💡" },
   ];
 
   const toggle = (id: string) => {
@@ -49,7 +49,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     return (
       <main className="min-h-screen bg-white flex items-center justify-center px-6">
         <div className="max-w-md w-full text-center py-20">
-          <div className="text-5xl mb-6">ð</div>
+          <div className="text-5xl mb-6">🎉</div>
           <h1 className="text-3xl font-black text-gray-900 mb-4">You&apos;re in!</h1>
           <p className="text-gray-500 text-lg leading-relaxed mb-8">
             We&apos;ll review what you shared and reach out within a few hours with your custom automation plan.
@@ -57,9 +57,9 @@ const handleSubmit = async (e: React.FormEvent) => {
           <div className="bg-blue-50 rounded-2xl p-6 text-left">
             <p className="text-sm font-semibold text-blue-700 mb-1">What happens next:</p>
             <ul className="text-sm text-blue-600 space-y-1">
-              <li>â We map out your automations</li>
-              <li>â You get a same-day response</li>
-              <li>â Live in 48 hours after kickoff</li>
+              <li>✓ We map out your automations</li>
+              <li>✓ You get a same-day response</li>
+              <li>✓ Live in 48 hours after kickoff</li>
             </ul>
           </div>
         </div>
@@ -75,7 +75,7 @@ const handleSubmit = async (e: React.FormEvent) => {
         <div className="text-center mb-10">
           <p className="text-sky-600 font-semibold text-sm tracking-widest uppercase mb-3">Free AI Audit</p>
           <h1 className="text-4xl font-black text-gray-900 leading-tight mb-3">
-            {step === 1 ? "Letâs get started" : "What do you want to automate?"}
+            {step === 1 ? "Let’s get started" : "What do you want to automate?"}
           </h1>
           <p className="text-gray-400 text-base">
             {step === 1
@@ -138,7 +138,7 @@ const handleSubmit = async (e: React.FormEvent) => {
               type="submit"
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl text-base transition mt-2"
             >
-              Next â
+              Next →
             </button>
           </form>
         )}
@@ -183,14 +183,14 @@ const handleSubmit = async (e: React.FormEvent) => {
                 onClick={() => setStep(1)}
                 className="flex-1 border border-gray-200 text-gray-600 font-semibold py-4 rounded-xl text-base hover:bg-gray-50 transition"
               >
-                â Back
+                ← Back
               </button>
               <button
                 type="submit"
                 disabled={selected.length === 0}
                 className="flex-2 flex-grow bg-blue-600 hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl text-base transition"
               >
-                Get My Free Audit â
+                Get My Free Audit →
               </button>
             </div>
             <p className="text-center text-xs text-gray-400">No commitment. We&apos;ll reply within a few hours.</p>
