@@ -25,10 +25,26 @@ export default function Intake() {
     );
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-  };
+const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
+          try {
+                await fetch("/api/submit-lead", {
+                        method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify({
+                                                  name: form.name,
+                                                            email: form.email,
+                                                                      business: form.business,
+                                                                                automations: selected,
+                                                                                          otherDetails: other,
+                                                                                                  }),
+                                                                                                        });
+                                                                                                            } catch (err) {
+                                                                                                                  console.error("Submission error:", err);
+                                                                                                                      }
+                                                                                                                          setSubmitted(true);
+                                                                                                                            };
+}
 
   if (submitted) {
     return (

@@ -18,6 +18,11 @@ export const metadata: Metadata = {
     description:
       "We build custom automations that eliminate manual work, reduce errors, and scale your operations. Free AI audit delivered in 24 hours.",
   },
+    twitter: {
+        card: "summary_large_image",
+            title: "FlowZone AI — Done-For-You Business Automation",
+                description: "We build custom automations that eliminate manual work, reduce errors, and scale your operations. Free AI audit delivered in 24 hours.",
+                  },
   keywords: [
     "business automation",
     "AI automation",
