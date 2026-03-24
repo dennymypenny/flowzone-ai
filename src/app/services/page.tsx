@@ -3,70 +3,70 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
     title: "Services | FlowZone AI",
-    description: "Done-for-you AI workflow systems for service businesses. Lead automation, invoicing, reporting, client onboarding and more — delivered in 7 days.",
+    description: "Done-for-you AI workflow systems for service businesses. Lead automation, invoicing, reporting, client onboarding and more â delivered in 7 days.",
 };
 
 const services = [
   {
-        icon: "⚡",
+        icon: "â¡",
         title: "Lead Follow-Up Automation",
-        description: "Every new lead gets a personalized reply in under 60 seconds — 24/7. We connect your contact forms, DMs, and ad leads into one system that responds, qualifies, and routes automatically.",
-        results: ["47 avg leads handled/week", "Response time: 1.8 seconds", "30–50% more booked calls"],
+        description: "Every new lead gets a personalized reply in under 60 seconds â 24/7. We connect your contact forms, DMs, and ad leads into one system that responds, qualifies, and routes automatically.",
+        results: ["47 avg leads handled/week", "Response time: 1.8 seconds", "30â50% more booked calls"],
         price: "From $1,200",
   },
   {
-        icon: "🧾",
+        icon: "ð§¾",
         title: "Invoice & Billing Automation",
-        description: "Mark a job complete and your invoice goes out automatically — pre-filled with client details, project scope, and payment link. Follow-ups send themselves if unpaid.",
+        description: "Mark a job complete and your invoice goes out automatically â pre-filled with client details, project scope, and payment link. Follow-ups send themselves if unpaid.",
         results: ["Zero manual invoicing", "Avg payment 2 days faster", "Integrated with QuickBooks, Stripe"],
         price: "From $900",
   },
   {
-        icon: "📊",
+        icon: "ð",
         title: "Automated Weekly Reports",
-        description: "Pull data from your CRM, analytics, ads, and accounting tools. Every Monday at 9am, a formatted performance report lands in your inbox — no compiling, no copy-paste.",
+        description: "Pull data from your CRM, analytics, ads, and accounting tools. Every Monday at 9am, a formatted performance report lands in your inbox â no compiling, no copy-paste.",
         results: ["5+ data sources in 4 seconds", "Custom KPI dashboards", "Client-ready or internal format"],
         price: "From $800",
   },
   {
-        icon: "🚀",
+        icon: "ð",
         title: "Client Onboarding System",
-        description: "When a proposal is accepted, your entire onboarding sequence fires automatically: welcome email, contract, intake form, project portal access, and kickoff call link — in minutes.",
-        results: ["Save 60–90 min per new client", "DocuSign + Calendly integrated", "Professional first impression"],
+        description: "When a proposal is accepted, your entire onboarding sequence fires automatically: welcome email, contract, intake form, project portal access, and kickoff call link â in minutes.",
+        results: ["Save 60â90 min per new client", "DocuSign + Calendly integrated", "Professional first impression"],
         price: "From $1,100",
   },
   {
-        icon: "⭐",
+        icon: "â­",
         title: "Review & Referral Automation",
         description: "3 days after project delivery, a personalized review request goes out automatically. Happy clients leave reviews. Great clients get a referral prompt. All hands-free.",
-        results: ["4–8x more Google reviews", "Automated referral tracking", "Boosts local SEO rankings"],
+        results: ["4â8x more Google reviews", "Automated referral tracking", "Boosts local SEO rankings"],
         price: "From $600",
   },
   {
-        icon: "🔁",
+        icon: "ð",
         title: "Full Workflow Audit + Build",
         description: "We map every repetitive process in your business, identify the highest-ROI automations, and build them all in one sprint. Most clients recover 10+ hours per week.",
         results: ["Custom automation roadmap", "7-day delivery", "Full handoff + training"],
         price: "From $3,500",
   },
   {
-        icon: "🌐",
+        icon: "ð",
         title: "Custom Website Build",
-        description: "We design and build fast, conversion-focused websites and landing pages from scratch — no templates. Whether you need a full business site, a sales page, or a client portal, we build it clean and deploy it fast.",
+        description: "We design and build fast, conversion-focused websites and landing pages from scratch â no templates. Whether you need a full business site, a sales page, or a client portal, we build it clean and deploy it fast.",
         results: ["Live in 7 days or less", "Mobile-first, fully responsive", "SEO-optimized structure"],
         price: "From $1,500",
   },
   {
-        icon: "📈",
+        icon: "ð",
         title: "Interactive Business Dashboards",
-        description: "Stop guessing what's working. We build live dashboards that pull data from your CRM, ad platforms, and finance tools into one clear view — updated automatically so you always know your numbers.",
+        description: "Stop guessing what's working. We build live dashboards that pull data from your CRM, ad platforms, and finance tools into one clear view â updated automatically so you always know your numbers.",
         results: ["Real-time KPI visibility", "Multi-source data in one view", "Custom metrics & filters"],
         price: "From $1,200",
   },
   {
-        icon: "📰",
+        icon: "ð°",
         title: "Newsletter Build & Automation",
-        description: "We set up your full newsletter operation — platform setup, design, and automated send sequences. You write or we help, and the system handles scheduling, segmentation, and delivery every time.",
+        description: "We set up your full newsletter operation â platform setup, design, and automated send sequences. You write or we help, and the system handles scheduling, segmentation, and delivery every time.",
         results: ["Full platform setup included", "Automated send sequences", "Subscriber growth tracking"],
         price: "From $800",
   },
@@ -74,7 +74,7 @@ const services = [
 
 const process = [
   { step: "01", title: "Free AI Audit", desc: "We review your current workflows and identify exactly where you're losing time and money. Delivered in 24 hours." },
-  { step: "02", title: "Custom Roadmap", desc: "You get a prioritized automation plan with ROI estimates for each workflow — before we build a single thing." },
+  { step: "02", title: "Custom Roadmap", desc: "You get a prioritized automation plan with ROI estimates for each workflow â before we build a single thing." },
   { step: "03", title: "We Build It", desc: "Our team builds, tests, and deploys your automations. Most projects go live within 7 days." },
   { step: "04", title: "Handoff + Support", desc: "Full walkthrough, documentation, and 30 days of support so everything keeps running smoothly." },
   ];
@@ -85,13 +85,13 @@ export default function Services() {
             {/* Hero */}
                 <section className="bg-white pt-20 pb-16 px-6 border-b border-gray-100">
                         <div className="max-w-3xl mx-auto text-center">
-                                  <p className="text-sky-600 font-semibold text-sm uppercase tracking-wider mb-4">What We Build</p>p>
+                                  <p className="text-sky-600 font-semibold text-sm uppercase tracking-wider mb-4">What We Build</p>
                                   <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6 leading-tight">
                                               Done-For-You<br />
                                               <span className="text-sky-500">AI Workflow Systems</span>span>
                                   </h1>h1>
                                   <p className="text-xl text-gray-500 leading-relaxed mb-8">
-                                              We design, build, and deploy custom automations for your business — delivered in 7 days or less. You focus on growth; we handle the grind.
+                                              We design, build, and deploy custom automations for your business â delivered in 7 days or less. You focus on growth; we handle the grind.
                                   </p>p>
                                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                                               <Link href="/intake" className="bg-sky-600 text-white font-bold px-8 py-4 rounded-xl hover:bg-sky-700 transition-colors">
@@ -161,7 +161,7 @@ export default function Services() {
                 <section className="py-14 px-6 bg-white border-t border-gray-100">
                         <div className="max-w-3xl mx-auto text-center">
                                   <h2 className="text-2xl font-black text-gray-900 mb-3">Transparent Pricing. No Retainers.</h2>h2>
-                                  <p className="text-gray-500 mb-2">Every project is scoped and priced upfront — no surprises, no monthly fees unless you want ongoing support.</p>p>
+                                  <p className="text-gray-500 mb-2">Every project is scoped and priced upfront â no surprises, no monthly fees unless you want ongoing support.</p>p>
                                   <p className="text-gray-400 text-sm mb-8">Most projects pay for themselves within 30 days through time savings and recovered revenue.</p>p>
                                   <Link href="/intake" className="inline-block bg-sky-600 text-white font-bold px-10 py-4 rounded-xl hover:bg-sky-700 transition-colors text-lg">
                                               Get Your Free Automation Audit &rarr;
