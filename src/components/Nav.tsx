@@ -30,8 +30,8 @@ export default function Nav() {
           <Link href="/pricing" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Pricing</Link>
           <div
             className="relative"
-            onMouseEnter={() => setBlogOpen(true)}
-            onMouseLeave={() => setBlogOpen(false)}
+            onMouseEnter={() => { clearTimeout(window._blogTimer); setBlogOpen(true); }}
+            onMouseLeave={() => { window._blogTimer = setTimeout(() => setBlogOpen(false), 150); }}
           >
             <button className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 transition-colors">
               Blog
@@ -40,7 +40,7 @@ export default function Nav() {
               </svg>
             </button>
             {blogOpen && (
-              <div className="absolute top-full left-0 mt-2 w-44 bg-white border border-gray-100 rounded-xl shadow-lg py-1 z-50">
+              <div className="absolute top-full pt-2 left-0 mt-2 w-44 bg-white border border-gray-100 rounded-xl shadow-lg py-1 z-50">
                 <Link href="/blog" className="block px-4 py-2.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors">Blog Posts</Link>
                 <Link href="/ai-news" className="block px-4 py-2.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors">AI News</Link>
               </div>
