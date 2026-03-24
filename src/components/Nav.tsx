@@ -30,8 +30,8 @@ export default function Nav() {
           <Link href="/pricing" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Pricing</Link>
           <div
             className="relative"
-            onMouseEnter={() => { clearTimeout(window._blogTimer); setBlogOpen(true); }}
-            onMouseLeave={() => { window._blogTimer = setTimeout(() => setBlogOpen(false), 150); }}
+            onMouseEnter={() => { clearTimeout((window as any)._blogTimer); setBlogOpen(true); }}
+            onMouseLeave={() => { (window as any)._blogTimer = setTimeout(() => setBlogOpen(false), 150); }}
           >
             <button className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 transition-colors">
               Blog
