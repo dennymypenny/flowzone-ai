@@ -3,26 +3,26 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
     title: "AI News & Resources | FlowZone AI",
-    description: "The best AI automation news, tools, and industry updates â curated for business owners who want to stay ahead.",
+    description: "The best AI automation news, tools, and industry updates — curated for business owners who want to stay ahead.",
 };
 
 const newsOutlets = [
   { name: "The Rundown AI", url: "https://www.therundown.ai", description: "Daily AI news digest covering the biggest developments in artificial intelligence.", tag: "Newsletter" },
   { name: "AI Breakfast", url: "https://www.aibreakfast.com", description: "Morning briefing on AI tools, product launches, and business use cases.", tag: "Newsletter" },
-  { name: "TechCrunch â AI", url: "https://techcrunch.com/category/artificial-intelligence/", description: "Breaking news and analysis on AI startups, funding, and enterprise adoption.", tag: "News" },
-  { name: "VentureBeat AI", url: "https://venturebeat.com/category/ai/", description: "Enterprise-focused AI coverage â tools, trends, and transformation stories.", tag: "News" },
+  { name: "TechCrunch — AI", url: "https://techcrunch.com/category/artificial-intelligence/", description: "Breaking news and analysis on AI startups, funding, and enterprise adoption.", tag: "News" },
+  { name: "VentureBeat AI", url: "https://venturebeat.com/category/ai/", description: "Enterprise-focused AI coverage — tools, trends, and transformation stories.", tag: "News" },
   { name: "The Neuron", url: "https://www.theneurondaily.com", description: "Practical AI newsletter focused on tools and workflows for business professionals.", tag: "Newsletter" },
-  { name: "Ben's Bites", url: "https://bensbites.co", description: "Curated roundup of everything happening in AI â tools, research, and opportunities.", tag: "Newsletter" },
+  { name: "Ben's Bites", url: "https://bensbites.co", description: "Curated roundup of everything happening in AI — tools, research, and opportunities.", tag: "Newsletter" },
   { name: "MIT Technology Review", url: "https://www.technologyreview.com/topic/artificial-intelligence/", description: "In-depth analysis on AI's impact on business and society.", tag: "Research" },
   { name: "Anthropic News", url: "https://www.anthropic.com/news", description: "Official updates from Anthropic on Claude and AI safety research.", tag: "Official" },
-  { name: "OpenAI Blog", url: "https://openai.com/blog", description: "Product updates and research from OpenAI â GPT, Sora, and beyond.", tag: "Official" },
+  { name: "OpenAI Blog", url: "https://openai.com/blog", description: "Product updates and research from OpenAI — GPT, Sora, and beyond.", tag: "Official" },
   { name: "Google DeepMind Blog", url: "https://deepmind.google/discover/blog/", description: "Research and product updates from Google's AI research division.", tag: "Official" },
   { name: "No Code MBA", url: "https://www.nocode.mba", description: "Tutorials and news on no-code and low-code automation tools for businesses.", tag: "Tools" },
-  { name: "Lenny's Newsletter", url: "https://www.lennysnewsletter.com", description: "Product and growth insights â increasingly AI-focused for operators and founders.", tag: "Newsletter" },
+  { name: "Lenny's Newsletter", url: "https://www.lennysnewsletter.com", description: "Product and growth insights — increasingly AI-focused for operators and founders.", tag: "Newsletter" },
   ];
 
 const tools = [
-  { name: "Make", url: "https://www.make.com", description: "Visual automation platform â connects any app without code." },
+  { name: "Make", url: "https://www.make.com", description: "Visual automation platform — connects any app without code." },
   { name: "n8n", url: "https://n8n.io", description: "Open-source workflow automation for technical teams." },
   { name: "Zapier", url: "https://zapier.com", description: "The original no-code automation tool." },
   { name: "Relevance AI", url: "https://relevanceai.com", description: "Build and deploy AI agents for business workflows." },
@@ -62,7 +62,7 @@ export default function AiNews() {
                                   <div className="mb-12">
                                               <p className="text-sky-600 font-semibold text-sm uppercase tracking-wider mb-3">What We Read</p>
                                               <h2 className="text-3xl font-black text-gray-900 mb-2">Top News Sources &amp; Newsletters</h2>
-                                              <p className="text-gray-500">These are the sources we follow to stay sharp â and bring that knowledge into every automation we build.</p>
+                                              <p className="text-gray-500">These are the sources we follow to stay sharp — and bring that knowledge into every automation we build.</p>
                                   </div>
                                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                                     {newsOutlets.map((outlet) => (
@@ -117,7 +117,7 @@ export default function AiNews() {
                         <div className="max-w-3xl mx-auto text-center">
                                   <h2 className="text-4xl font-black text-white mb-4">Want Us to Build These Into Your Business?</h2>
                                   <p className="text-sky-100 text-lg mb-8">
-                                              We follow every tool and trend on this page â and put it to work for our clients. Tell us what you want to automate.
+                                              We follow every tool and trend on this page — and put it to work for our clients. Tell us what you want to automate.
                                   </p>
                                   <Link href="/intake" className="inline-block bg-white text-sky-600 font-bold px-8 py-4 rounded-xl hover:bg-sky-50 transition-colors">
                                               Get Your Free AI Audit &#8594;
