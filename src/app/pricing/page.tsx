@@ -12,11 +12,10 @@ const plans = [
     icon: "📊",
     title: "Business Consulting + KPI Dashboard",
     price: "From $1,500",
-    timeline: "2–3 weeks",
     description:
       "We dig into your operations, identify your key metrics, and build you a live dashboard so you always know what's driving your business.",
     includes: [
-      "2-hour strategy + KPI mapping session",
+      "Strategy + KPI mapping session",
       "Custom executive dashboard (real-time data)",
       "Integration with your existing tools (Shopify, QuickBooks, etc.)",
       "Channel and revenue performance views",
@@ -29,7 +28,6 @@ const plans = [
     icon: "⚡",
     title: "Workflow Automation",
     price: "From $900",
-    timeline: "1–2 weeks",
     description:
       "Stop doing manually what a computer can do for you. We map your repetitive workflows and automate them end-to-end.",
     includes: [
@@ -46,9 +44,8 @@ const plans = [
     icon: "🎨",
     title: "Portfolio & Resume Site",
     price: "From $500",
-    timeline: "5–7 days",
     description:
-      "A clean, fast, professional site that makes recruiters and clients take you seriously — built and live in under a week.",
+      "A clean, fast, professional site that makes recruiters and clients take you seriously.",
     includes: [
       "Custom design tailored to your field",
       "Portfolio / case study pages",
@@ -63,7 +60,6 @@ const plans = [
     icon: "🌐",
     title: "Business Website & Landing Page",
     price: "From $800",
-    timeline: "1–2 weeks",
     description:
       "A modern, conversion-focused website that shows up on Google and turns visitors into leads — not just a pretty page.",
     includes: [
@@ -86,10 +82,6 @@ const faqs = [
   {
     q: "What if I need something custom?",
     a: "Most projects have custom elements. During your free consultation we'll scope exactly what you need and give you a firm quote before any work starts.",
-  },
-  {
-    q: "How fast can you actually deliver?",
-    a: "Timelines listed are realistic estimates, not marketing. A portfolio site really does go live in a week. Larger builds take longer — we won't rush and compromise quality.",
   },
   {
     q: "Do you work with individuals or just businesses?",
@@ -152,7 +144,6 @@ export default function Pricing() {
                 </div>
                 <div className="text-right">
                   <div className="text-2xl font-bold text-blue-700">{plan.price}</div>
-                  <div className="text-xs text-gray-400 mt-0.5">{plan.timeline}</div>
                 </div>
               </div>
 
@@ -208,7 +199,7 @@ export default function Pricing() {
       <section className="bg-blue-700 text-white py-16 px-6 text-center">
         <h2 className="text-3xl font-bold mb-3">Ready to get a real quote?</h2>
         <p className="text-blue-100 mb-8 max-w-xl mx-auto">
-          Tell us what you need. We will scope it, price it fairly, and deliver it on time.
+          Tell us what you need. We will scope it, price it fairly, and deliver it.
         </p>
         <Link
           href="/intake"
