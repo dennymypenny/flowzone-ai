@@ -1,173 +1,200 @@
-import type { Metadata } from "next";
 import Link from "next/link";
-
-export const metadata: Metadata = {
-    title: "Services | FlowZone AI",
-    description: "Done-for-you AI workflow systems for service businesses. Lead automation, invoicing, reporting, client onboarding and more — delivered in 7 days.",
-};
 
 const services = [
   {
-        icon: "⚡",
-        title: "Lead Follow-Up Automation",
-        description: "Every new lead gets a personalized reply in under 60 seconds — 24/7. We connect your contact forms, DMs, and ad leads into one system that responds, qualifies, and routes automatically.",
-        results: ["47 avg leads handled/week", "Response time: 1.8 seconds", "30–50% more booked calls"],
-        price: "From $1,200",
+    icon: "📊",
+    title: "Business Consulting + KPI Dashboards",
+    desc: "We sit down with you, map out your operations, and build real-time dashboards so you always know what's working — and what's not. Data that actually helps you make decisions.",
+    bullets: [
+      "Custom KPI and analytics dashboards",
+      "Workflow analysis and consulting sessions",
+      "Decision-ready reports and visualizations",
+    ],
+    price: "From $1,500",
+    cta: "/intake",
   },
   {
-        icon: "🧾",
-        title: "Invoice & Billing Automation",
-        description: "Mark a job complete and your invoice goes out automatically — pre-filled with client details, project scope, and payment link. Follow-ups send themselves if unpaid.",
-        results: ["Zero manual invoicing", "Avg payment 2 days faster", "Integrated with QuickBooks, Stripe"],
-        price: "From $900",
+    icon: "⚡",
+    title: "Workflow Automation",
+    desc: "We automate the repetitive work eating your time — lead follow-up, invoicing, reporting, and more. Set it up once, run it forever.",
+    bullets: [
+      "Lead capture and auto-reply systems",
+      "Invoice and billing automation",
+      "Automated reporting and data sync",
+    ],
+    price: "From $900",
+    cta: "/intake",
   },
   {
-        icon: "📊",
-        title: "Automated Weekly Reports",
-        description: "Pull data from your CRM, analytics, ads, and accounting tools. Every Monday at 9am, a formatted performance report lands in your inbox — no compiling, no copy-paste.",
-        results: ["5+ data sources in 4 seconds", "Custom KPI dashboards", "Client-ready or internal format"],
-        price: "From $800",
+    icon: "🎨",
+    title: "Portfolio & Resume Sites",
+    desc: "Stand out from the crowd. We build sharp personal websites and AI-polished resumes for job seekers, freelancers, and creatives who want to make a real impression.",
+    bullets: [
+      "Custom personal portfolio websites",
+      "AI-enhanced resume writing and design",
+      "LinkedIn and personal brand optimization",
+    ],
+    price: "From $500",
+    cta: "/intake",
   },
   {
-        icon: "🚀",
-        title: "Client Onboarding System",
-        description: "When a proposal is accepted, your entire onboarding sequence fires automatically: welcome email, contract, intake form, project portal access, and kickoff call link — in minutes.",
-        results: ["Save 60–90 min per new client", "DocuSign + Calendly integrated", "Professional first impression"],
-        price: "From $1,100",
+    icon: "🌐",
+    title: "Business Websites & Landing Pages",
+    desc: "Your website should work as hard as you do. We design and build clean, fast, conversion-focused sites and landing pages that represent your brand and drive action.",
+    bullets: [
+      "Full business websites and landing pages",
+      "Mobile-ready and SEO-optimized",
+      "Integrated contact forms and CTAs",
+    ],
+    price: "From $800",
+    cta: "/intake",
   },
-  {
-        icon: "⭐",
-        title: "Review & Referral Automation",
-        description: "3 days after project delivery, a personalized review request goes out automatically. Happy clients leave reviews. Great clients get a referral prompt. All hands-free.",
-        results: ["4–8x more Google reviews", "Automated referral tracking", "Boosts local SEO rankings"],
-        price: "From $600",
-  },
-  {
-        icon: "🔁",
-        title: "Full Workflow Audit + Build",
-        description: "We map every repetitive process in your business, identify the highest-ROI automations, and build them all in one sprint. Most clients recover 10+ hours per week.",
-        results: ["Custom automation roadmap", "7-day delivery", "Full handoff + training"],
-        price: "From $3,500",
-  },
-  {
-        icon: "🌐",
-        title: "Custom Website Build",
-        description: "We design and build fast, conversion-focused websites and landing pages from scratch — no templates. Whether you need a full business site, a sales page, or a client portal, we build it clean and deploy it fast.",
-        results: ["Live in 7 days or less", "Mobile-first, fully responsive", "SEO-optimized structure"],
-        price: "From $1,500",
-  },
-  {
-        icon: "📈",
-        title: "Interactive Business Dashboards",
-        description: "Stop guessing what's working. We build live dashboards that pull data from your CRM, ad platforms, and finance tools into one clear view — updated automatically so you always know your numbers.",
-        results: ["Real-time KPI visibility", "Multi-source data in one view", "Custom metrics & filters"],
-        price: "From $1,200",
-  },
-  {
-        icon: "📰",
-        title: "Newsletter Build & Automation",
-        description: "We set up your full newsletter operation — platform setup, design, and automated send sequences. You write or we help, and the system handles scheduling, segmentation, and delivery every time.",
-        results: ["Full platform setup included", "Automated send sequences", "Subscriber growth tracking"],
-        price: "From $800",
-  },
-  ];
+];
 
-const process = [
-  { step: "01", title: "Free AI Audit", desc: "We review your current workflows and identify exactly where you're losing time and money. Delivered in 24 hours." },
-  { step: "02", title: "Custom Roadmap", desc: "You get a prioritized automation plan with ROI estimates for each workflow — before we build a single thing." },
-  { step: "03", title: "We Build It", desc: "Our team builds, tests, and deploys your automations. Most projects go live within 7 days." },
-  { step: "04", title: "Handoff + Support", desc: "Full walkthrough, documentation, and 30 days of support so everything keeps running smoothly." },
-  ];
+const steps = [
+  {
+    num: "01",
+    title: "Free Consultation",
+    desc: "We learn about your business, your goals, and your current setup. No pressure — just a real conversation about what would help most.",
+  },
+  {
+    num: "02",
+    title: "Custom Proposal",
+    desc: "You get a clear proposal with scope, timeline, and pricing — before we start anything. No surprises.",
+  },
+  {
+    num: "03",
+    title: "We Build It",
+    desc: "Our team designs, builds, and delivers your dashboard, site, or automation. Most projects go live within 7 days.",
+  },
+  {
+    num: "04",
+    title: "Handoff + Support",
+    desc: "Full walkthrough, documentation, and 30 days of support so everything runs smoothly after launch.",
+  },
+];
 
 export default function Services() {
-    return (
-          <>
-            {/* Hero */}
-                <section className="bg-white pt-20 pb-16 px-6 border-b border-gray-100">
-                        <div className="max-w-3xl mx-auto text-center">
-                                  <p className="text-sky-600 font-semibold text-sm uppercase tracking-wider mb-4">What We Build</p>
-                                  <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6 leading-tight">
-                                              Done-For-You<br />
-                                              <span className="text-sky-500">AI Workflow Systems</span>
-                                  </h1>
-                                  <p className="text-xl text-gray-500 leading-relaxed mb-8">
-                                              We design, build, and deploy custom automations for your business — delivered in 7 days or less. You focus on growth; we handle the grind.
-                                  </p>
-                                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                              <Link href="/intake" className="bg-sky-600 text-white font-bold px-8 py-4 rounded-xl hover:bg-sky-700 transition-colors">
-                                                            Get Free AI Audit &rarr;
-                                              </Link>
-                                              <Link href="/case-studies" className="border border-gray-200 text-gray-700 font-bold px-8 py-4 rounded-xl hover:border-sky-300 hover:text-sky-600 transition-colors">
-                                                            See Case Studies
-                                              </Link>
-                                  </div>
-                        </div>
-                </section>
-          
-            {/* Services Grid */}
-                <section className="py-20 px-6 bg-white">
-                        <div className="max-w-5xl mx-auto">
-                                  <div className="text-center mb-14">
-                                              <p className="text-sky-600 font-semibold text-sm uppercase tracking-wider mb-3">Our Services</p>
-                                              <h2 className="text-4xl font-black text-gray-900">Everything We Build</h2>
-                                  </div>
-                                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {services.map((s, i) => (
-                          <div key={i} className="border border-gray-100 rounded-2xl p-7 hover:border-sky-200 hover:shadow-lg transition-all group">
-                                          <div className="text-3xl mb-4">{s.icon}</div>
-                                          <h3 className="text-xl font-black text-gray-900 mb-3">{s.title}</h3>
-                                          <p className="text-gray-500 text-sm leading-relaxed mb-5">{s.description}</p>
-                                          <ul className="space-y-1.5 mb-5">
-                                            {s.results.map((r, j) => (
-                                                <li key={j} className="flex items-center gap-2 text-sm text-gray-600">
-                                                                      <span className="text-sky-500 font-bold">&#10003;</span> {r}
-                                                </li>
-                                              ))}
-                                          </ul>
-                                          <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                                                            <span className="text-sky-600 font-black text-sm">{s.price}</span>
-                                                            <Link href="/intake" className="text-xs font-bold text-gray-400 hover:text-sky-600 transition-colors group-hover:text-sky-600">
-                                                                                Get started &rarr;
-                                                            </Link>
-                                          </div>
-                          </div>
-                        ))}
-                                  </div>
-                        </div>
-                </section>
-          
-            {/* Process */}
-                <section className="py-20 px-6 bg-gray-50 border-t border-gray-100">
-                        <div className="max-w-4xl mx-auto">
-                                  <div className="text-center mb-14">
-                                              <p className="text-sky-600 font-semibold text-sm uppercase tracking-wider mb-3">How It Works</p>
-                                              <h2 className="text-4xl font-black text-gray-900">From Audit to Automation in 7 Days</h2>
-                                  </div>
-                                  <div className="grid md:grid-cols-4 gap-6">
-                                    {process.map((p, i) => (
-                          <div key={i} className="text-center">
-                                          <div className="w-12 h-12 bg-sky-600 text-white text-lg font-black rounded-xl flex items-center justify-center mx-auto mb-4">
-                                            {p.step}
-                                          </div>
-                                          <h3 className="font-black text-gray-900 mb-2">{p.title}</h3>
-                                          <p className="text-sm text-gray-500 leading-relaxed">{p.desc}</p>
-                          </div>
-                        ))}
-                                  </div>
-                        </div>
-                </section>
-          
-            {/* Pricing note */}
-                <section className="py-14 px-6 bg-white border-t border-gray-100">
-                        <div className="max-w-3xl mx-auto text-center">
-                                  <h2 className="text-2xl font-black text-gray-900 mb-3">Transparent Pricing. No Retainers.</h2>
-                                  <p className="text-gray-500 mb-2">Every project is scoped and priced upfront — no surprises, no monthly fees unless you want ongoing support.</p>
-                                  <p className="text-gray-400 text-sm mb-8">Most projects pay for themselves within 30 days through time savings and recovered revenue.</p>
-                                  <Link href="/intake" className="inline-block bg-sky-600 text-white font-bold px-10 py-4 rounded-xl hover:bg-sky-700 transition-colors text-lg">
-                                              Get Your Free Automation Audit &rarr;
-                                  </Link>
-                        </div>
-                </section>
-          </>
-        );
+  return (
+    <main className="min-h-screen bg-white">
+      {/* Hero */}
+      <section className="bg-white pt-24 pb-16 px-6 text-center">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-blue-600 font-black uppercase tracking-widest text-sm mb-4">
+            WHAT WE DO
+          </p>
+          <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6 leading-tight">
+            Built for Businesses.
+            <br />
+            <span className="text-blue-600">Built for People.</span>
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+            We consult, design, and build — dashboards, automations, portfolios, and business sites. Whatever you need to grow, we deliver it fast.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/intake"
+              className="bg-blue-600 text-white px-8 py-4 rounded-xl font-black text-lg hover:bg-blue-700 transition-colors"
+            >
+              Get Free Consultation →
+            </Link>
+            <Link
+              href="/case-studies"
+              className="border-2 border-gray-200 text-gray-700 px-8 py-4 rounded-xl font-black text-lg hover:border-blue-600 hover:text-blue-600 transition-colors"
+            >
+              See Our Work
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Grid */}
+      <section className="py-20 px-6 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-blue-600 font-black uppercase tracking-widest text-sm mb-3">
+              OUR SERVICES
+            </p>
+            <h2 className="text-4xl font-black text-gray-900">
+              Everything We Build
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {services.map((s) => (
+              <div
+                key={s.title}
+                className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
+              >
+                <div className="text-4xl mb-4">{s.icon}</div>
+                <h3 className="text-xl font-black text-gray-900 mb-3">
+                  {s.title}
+                </h3>
+                <p className="text-gray-600 mb-5 leading-relaxed">{s.desc}</p>
+                <ul className="space-y-2 mb-6">
+                  {s.bullets.map((b) => (
+                    <li key={b} className="flex items-start gap-2 text-gray-700 text-sm">
+                      <span className="text-blue-600 font-black mt-0.5">✓</span>
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                  <span className="text-blue-600 font-black text-lg">{s.price}</span>
+                  <Link
+                    href={s.cta}
+                    className="text-sm font-black text-gray-700 hover:text-blue-600 transition-colors"
+                  >
+                    Get started →
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-blue-600 font-black uppercase tracking-widest text-sm mb-3">
+              HOW IT WORKS
+            </p>
+            <h2 className="text-4xl font-black text-gray-900">
+              From First Call to Final Delivery
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {steps.map((step) => (
+              <div key={step.num} className="text-center">
+                <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-black text-lg mx-auto mb-4">
+                  {step.num.replace("0", "")}
+                </div>
+                <h3 className="font-black text-gray-900 mb-2">{step.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20 px-6 bg-blue-600">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-3xl font-black text-white mb-4">
+            Not sure what you need?
+          </h2>
+          <p className="text-blue-100 text-lg mb-8">
+            Book a free consultation and we will figure it out together. No commitment, no pressure — just clarity on what would actually move the needle for you.
+          </p>
+          <Link
+            href="/intake"
+            className="bg-white text-blue-600 px-8 py-4 rounded-xl font-black text-lg hover:bg-blue-50 transition-colors inline-block"
+          >
+            Book Free Consultation →
+          </Link>
+        </div>
+      </section>
+    </main>
+  );
 }
