@@ -4,7 +4,7 @@ import ChatWidget from "@/app/components/ChatWidget";
 export const metadata = {
   title: "FlowZone AI | Consult. Build. Deliver.",
   description:
-    "We consult with businesses and individuals, then build exactly what they need — dashboards, automations, portfolio sites, and more.",
+    "We consult with businesses and individuals, then build exactly what they need â dashboards, automations, portfolio sites, and more.",
 };
 
 export default function Home() {
@@ -14,14 +14,14 @@ export default function Home() {
       <section className="relative bg-white pt-20 pb-0 px-6 overflow-hidden">
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-black mb-6 uppercase tracking-widest">
-            ✦ Consulting · Dashboards · Sites · Automation
+            â¦ Consulting Â· Dashboards Â· Sites Â· Automation
           </div>
           <h1 className="text-5xl md:text-7xl font-black text-gray-900 mb-5 leading-tight tracking-tight">
             We Consult. We Build. <br />
             <span className="text-sky-600">We Deliver.</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-500 max-w-3xl mx-auto mb-8 leading-relaxed">
-            We work with businesses and individuals to build exactly what they need — dashboards,
+            We work with businesses and individuals to build exactly what they need â dashboards,
             automations, portfolio sites, and more. Delivered fast.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
@@ -40,23 +40,23 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Wide rectangular chat — max-w-4xl, self-contained height */}
+        {/* Wide rectangular chat â max-w-4xl, self-contained height */}
         <div className="max-w-4xl mx-auto px-6 pb-16">
           <ChatWidget />
         </div>
       </section>
 
-      <section className="py-12 px-6 bg-gray-50 border-y border-gray-100">
+      <section className="py-12 px-6 bg-blue-50 border-y border-blue-100">
         <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
             { num: "50+", label: "PROJECTS BUILT" },
             { num: "7 Days", label: "AVERAGE DELIVERY" },
             { num: "100%", label: "DONE-FOR-YOU" },
-            { num: "5.0 ★", label: "CLIENT RATING" },
+            { num: "5.0 â", label: "CLIENT RATING" },
           ].map((s) => (
             <div key={s.label}>
               <div className="text-3xl font-black text-gray-900 mb-1">{s.num}</div>
-              <div className="text-xs font-black text-gray-400 uppercase tracking-widest">
+              <div className="text-xs font-black text-blue-400 uppercase tracking-widest">
                 {s.label}
               </div>
             </div>
@@ -72,46 +72,46 @@ export default function Home() {
             </p>
             <h2 className="text-4xl font-black text-gray-900">Everything We Build</h2>
             <p className="text-gray-500 mt-4 max-w-xl mx-auto">
-              From KPI dashboards to portfolio sites — we cover all the bases.
+              From KPI dashboards to portfolio sites â we cover all the bases.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
-                icon: "📊",
+                icon: "ð",
                 title: "Consulting + Dashboards",
                 desc: "Custom KPI dashboards and business consulting to drive real decisions.",
                 href: "/services",
               },
               {
-                icon: "⚡",
+                icon: "â¡",
                 title: "Workflow Automation",
-                desc: "Automate lead follow-up, invoicing, reporting — set it and forget it.",
+                desc: "Automate lead follow-up, invoicing, reporting â set it and forget it.",
                 href: "/services",
               },
               {
-                icon: "🎨",
+                icon: "ð¨",
                 title: "Portfolio and Resume Sites",
                 desc: "Stand-out personal sites and AI-polished resumes for individuals.",
                 href: "/services",
               },
               {
-                icon: "🌐",
+                icon: "ð",
                 title: "Business Websites",
                 desc: "Clean, fast, conversion-focused sites and landing pages.",
                 href: "/services",
               },
               {
-                icon: "🤔",
+                icon: "ð¤",
                 title: "Something Else?",
-                desc: "We do a lot more than what is listed here. If you need it built, we can probably build it — just tell us what you have in mind.",
+                desc: "We do a lot more than what is listed here. If you need it built, we can probably build it â just tell us what you have in mind.",
                 href: "/intake",
               },
             ].map((s) => (
               <Link
                 key={s.title}
                 href={s.href}
-                className="block bg-gray-50 rounded-2xl p-6 hover:bg-blue-50 hover:shadow-md transition-all group"
+                className="block bg-blue-50 rounded-2xl p-6 hover:bg-blue-100 hover:shadow-md transition-all group"
               >
                 <div className="text-3xl mb-3">{s.icon}</div>
                 <h3 className="font-black text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
@@ -133,7 +133,7 @@ export default function Home() {
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl font-black text-white mb-4">Ready to build something?</h2>
           <p className="text-blue-100 text-lg mb-8">
-            Tell us what you need — we will follow up by email with exactly how we can help. No
+            Tell us what you need â we will follow up by email with exactly how we can help. No
             calls required.
           </p>
           <Link
