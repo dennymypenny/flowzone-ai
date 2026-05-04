@@ -1,209 +1,104 @@
-import type { Metadata } from "next";
 import Link from "next/link";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Pricing | FlowZone AI",
-  description:
-    "Transparent pricing for consulting, dashboards, automation, portfolio sites, and business websites. Send us your project details and we will follow up by email.",
+  description: "Transparent pricing for every automation service FlowZone AI offers.",
 };
 
-const plans = [
-  {
-    icon: "📊",
-    title: "Business Consulting + KPI Dashboard",
-    price: "From $1,500",
-    description:
-      "We dig into your operations, identify your key metrics, and build you a live dashboard so you always know what's driving your business.",
-    includes: [
-      "Strategy + KPI mapping session",
-      "Custom executive dashboard (real-time data)",
-      "Integration with your existing tools (Shopify, QuickBooks, etc.)",
-      "Channel and revenue performance views",
-      "1 round of revisions + 30-day support",
-    ],
-    best: false,
-    cta: "Get started",
-  },
-  {
-    icon: "⚡",
-    title: "Workflow Automation",
-    price: "From $900",
-    description:
-      "Stop doing manually what a computer can do for you. We map your repetitive workflows and automate them end-to-end.",
-    includes: [
-      "Workflow audit + automation blueprint",
-      "End-to-end automation build (Zapier, Make, or custom)",
-      "Integration with your existing apps",
-      "Testing + error handling",
-      "Handoff documentation + 30-day support",
-    ],
-    best: true,
-    cta: "Get started",
-  },
-  {
-    icon: "🎨",
-    title: "Portfolio & Resume Site",
-    price: "From $500",
-    description:
-      "A clean, fast, professional site that makes recruiters and clients take you seriously.",
-    includes: [
-      "Custom design tailored to your field",
-      "Portfolio / case study pages",
-      "Resume or skills page",
-      "Contact form wired to your inbox",
-      "Mobile-optimized + deployed on Vercel",
-    ],
-    best: false,
-    cta: "Get started",
-  },
-  {
-    icon: "🌐",
-    title: "Business Website & Landing Page",
-    price: "From $800",
-    description:
-      "A modern, conversion-focused website that shows up on Google and turns visitors into leads — not just a pretty page.",
-    includes: [
-      "Homepage + up to 5 pages",
-      "SEO metadata + page speed optimization",
-      "Lead capture form or booking integration",
-      "Mobile-first responsive design",
-      "Deployed + connected to your domain",
-    ],
-    best: false,
-    cta: "Get started",
-  },
-];
-
-const faqs = [
-  {
-    q: "Do you offer payment plans?",
-    a: "Yes — we typically split projects 50% upfront and 50% on delivery. For larger projects we can discuss a milestone-based structure.",
-  },
-  {
-    q: "What if I need something custom?",
-    a: "Most projects have custom elements. Just send us your project details via email and we will scope exactly what you need and give you a firm quote before any work starts.",
-  },
-  {
-    q: "Do you work with individuals or just businesses?",
-    a: "Both. Freelancers, job seekers, consultants, small business owners, and growing companies are all clients we work with regularly.",
-  },
-  {
-    q: "What happens after the project is done?",
-    a: "Every project includes at least 30 days of post-launch support. We also offer ongoing retainers for clients who want continuous improvements.",
-  },
-  {
-    q: "How do I communicate with you?",
-    a: "Everything moves through email — no calls required. We respond within 24 hours and keep all project communication organized and on record.",
-  },
+const services = [
+  { icon: "🎯", name: "Lead Intake & CRM Automation", desc: "Capture, score, and route leads automatically into your CRM with instant follow-up.", from: "997" },
+  { icon: "📅", name: "Appointment Booking & Reminders", desc: "Automated confirmations, reminders, and reschedule handling end-to-end.", from: "797" },
+  { icon: "🤖", name: "Customer Support Triage", desc: "AI classifies, routes, and acknowledges support tickets without human input.", from: "1,197" },
+  { icon: "📊", name: "Automated Reporting & Dashboards", desc: "Weekly KPI reports delivered to your inbox — pulled from every tool you use.", from: "1,297" },
+  { icon: "💳", name: "Invoice & Payment Workflows", desc: "Auto-generate invoices, chase late payments, and sync your books automatically.", from: "897" },
+  { icon: "✍️", name: "Content Repurposing Automation", desc: "Turn one piece of content into posts, clips, and newsletters across every platform.", from: "897" },
+  { icon: "📧", name: "Email Sequence & Nurture", desc: "Behavior-triggered email flows that send the right message to the right person.", from: "797" },
+  { icon: "🔗", name: "Custom API & Tool Integrations", desc: "Connect any two platforms together with real-time data sync and webhooks.", from: "1,097" },
+  { icon: "🌐", name: "Website or Portfolio Development", desc: "Fast, mobile-first business sites and portfolios delivered in 7 days.", from: "497" },
+  { icon: "🤔", name: "Something Else — Custom Project", desc: "Have a unique workflow or idea? We'll scope it and build exactly what you need.", from: "497" },
 ];
 
 export default function Pricing() {
   return (
-    <main className="min-h-screen bg-white">
-      {/* Hero */}
-      <section className="bg-gradient-to-br from-blue-700 to-blue-900 text-white py-20 px-6 text-center">
-        <p className="text-blue-300 text-sm font-semibold uppercase tracking-widest mb-3">
-          ✦ Transparent Pricing
-        </p>
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">
-          Know What You&apos;re Getting Before You Pay
-        </h1>
-        <p className="text-blue-100 text-lg max-w-2xl mx-auto mb-8">
-          No surprise invoices. No scope creep. Send us your project details and we will follow up
-          by email with a firm quote.
-        </p>
-        <Link
-          href="/intake"
-          className="bg-white text-blue-700 font-semibold px-8 py-3 rounded-lg hover:bg-blue-50 transition"
-        >
-          Send Your Project Details
-        </Link>
-      </section>
-
-      {/* Pricing Cards */}
-      <section className="max-w-6xl mx-auto px-6 py-20">
-        <div className="grid md:grid-cols-2 gap-8">
-          {plans.map((plan) => (
-            <div
-              key={plan.title}
-              className={
-                "relative border rounded-2xl p-8 flex flex-col " +
-                (plan.best ? "border-blue-500 shadow-lg shadow-blue-100" : "border-gray-200")
-              }
-            >
-              {plan.best && (
-                <div className="absolute -top-3 left-6">
-                  <span className="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
-                    Most Popular
-                  </span>
-                </div>
-              )}
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <span className="text-2xl">{plan.icon}</span>
-                  <h2 className="text-xl font-bold text-gray-900 mt-2">{plan.title}</h2>
-                </div>
-                <div className="text-right">
-                  <div className="text-2xl font-bold text-blue-700">{plan.price}</div>
-                </div>
-              </div>
-              <p className="text-gray-600 text-sm mb-6">{plan.description}</p>
-              <ul className="space-y-2 mb-8 flex-1">
-                {plan.includes.map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-sm text-gray-700">
-                    <span className="text-blue-500 mt-0.5 flex-shrink-0">✓</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href="/intake"
-                className={
-                  "text-center font-semibold px-6 py-3 rounded-lg transition " +
-                  (plan.best
-                    ? "bg-blue-600 text-white hover:bg-blue-700"
-                    : "bg-gray-100 text-gray-800 hover:bg-gray-200")
-                }
-              >
-                {plan.cta}
-              </Link>
-            </div>
-          ))}
+    <>
+      <section className="bg-white pt-20 pb-16 px-6 border-b border-blue-100">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-blue-600 font-semibold text-sm uppercase tracking-wider mb-4">Transparent Pricing</p>
+          <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6">
+            Every Service. Every Price.
+          </h1>
+          <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed mb-8">
+            No retainers, no surprises. Each project is scoped and quoted upfront. Start with a free audit and we'll tell you exactly what it takes.
+          </p>
+          <Link href="/intake" className="inline-block bg-blue-600 text-white font-bold px-8 py-4 rounded-xl hover:bg-blue-700 transition-colors">
+            Get a Free Custom Quote →
+          </Link>
         </div>
-        <p className="text-center text-gray-400 text-sm mt-8">
-          Need something that spans multiple services? We offer bundled packages — just email us.
-        </p>
       </section>
 
-      {/* FAQ */}
-      <section className="bg-gray-50 border-t border-gray-100 py-20 px-6">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Common Questions</h2>
-          <div className="space-y-6">
-            {faqs.map((faq) => (
-              <div key={faq.q} className="bg-white border border-gray-200 rounded-xl p-6">
-                <h3 className="font-semibold text-gray-900 mb-2">{faq.q}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{faq.a}</p>
+      <section className="py-20 px-6 bg-blue-50">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {services.map((s) => (
+              <div key={s.name} className="bg-white rounded-2xl border border-blue-100 p-6 hover:shadow-md hover:border-blue-300 transition-all">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <span className="text-3xl">{s.icon}</span>
+                    <h3 className="font-black text-gray-900 text-lg leading-tight">{s.name}</h3>
+                  </div>
+                </div>
+                <p className="text-gray-500 text-sm leading-relaxed mb-4">{s.desc}</p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-xs text-blue-400 uppercase font-bold tracking-wide">Starting at</span>
+                    <div className="text-2xl font-black text-blue-600">${s.from}</div>
+                  </div>
+                  <Link href="/intake" className="text-sm bg-blue-600 text-white font-bold px-4 py-2 rounded-xl hover:bg-blue-700 transition-colors">
+                    Get Quote →
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-blue-700 text-white py-16 px-6 text-center">
-        <h2 className="text-3xl font-bold mb-3">Ready to get a real quote?</h2>
-        <p className="text-blue-100 mb-8 max-w-xl mx-auto">
-          Tell us what you need. We will scope it, price it fairly, and follow up by email. No
-          calls required.
-        </p>
-        <Link
-          href="/intake"
-          className="bg-white text-blue-700 font-semibold px-8 py-3 rounded-lg hover:bg-blue-50 transition"
-        >
-          Send Your Project Details
-        </Link>
+      <section className="py-16 px-6 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-blue-50 rounded-3xl p-10 text-center border border-blue-100">
+            <h2 className="text-3xl font-black text-gray-900 mb-4">Need Multiple Services?</h2>
+            <p className="text-gray-500 text-lg mb-6 max-w-xl mx-auto">
+              Bundle automations for a custom rate. Most clients save 20–30% when combining two or more services.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/intake" className="bg-blue-600 text-white font-bold px-8 py-4 rounded-xl hover:bg-blue-700 transition-colors">
+                Get a Bundle Quote →
+              </Link>
+              <Link href="mailto:flowzoneautomation@gmail.com" className="text-blue-600 font-semibold px-8 py-4 rounded-xl border-2 border-blue-200 hover:bg-blue-100 transition-colors">
+                Email Us Directly →
+              </Link>
+            </div>
+          </div>
+        </div>
       </section>
-    </main>
+
+      <section className="py-20 px-6 bg-blue-600">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-4xl font-black text-white mb-4">Not Sure Where to Start?</h2>
+          <p className="text-blue-100 text-lg mb-8">
+            Take our free AI audit — we'll review your workflow and tell you exactly what to automate first and what it will cost.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/intake" className="bg-white text-blue-600 font-bold px-8 py-4 rounded-xl hover:bg-blue-50 transition-colors">
+              Start Free AI Audit →
+            </Link>
+            <Link href="mailto:flowzoneautomation@gmail.com" className="text-white border border-blue-400 font-semibold px-8 py-4 rounded-xl hover:border-white transition-colors">
+              flowzoneautomation@gmail.com
+            </Link>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
