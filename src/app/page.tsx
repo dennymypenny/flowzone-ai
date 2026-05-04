@@ -1,8 +1,10 @@
 import Link from "next/link";
+import ChatWidget from "@/app/components/ChatWidget";
 
 export const metadata = {
   title: "FlowZone AI | Consult. Build. Deliver.",
-  description: "We consult with businesses and individuals, then build exactly what they need — dashboards, automations, portfolio sites, and more.",
+  description:
+    "We consult with businesses and individuals, then build exactly what they need — dashboards, automations, portfolio sites, and more.",
 };
 
 export default function Home() {
@@ -14,26 +16,40 @@ export default function Home() {
             ✦ Consulting · Dashboards · Sites · Automation
           </div>
           <h1 className="text-5xl md:text-7xl font-black text-gray-900 mb-6 leading-tight tracking-tight">
-            We Consult. We Build.
-            <br />
+            We Consult. We Build. <br />
             <span className="text-sky-600">We Deliver.</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-500 max-w-3xl mx-auto mb-10 leading-relaxed">
-            We work with businesses and individuals to build exactly what they need — dashboards, automations, portfolio sites, and more. Delivered fast.
+            We work with businesses and individuals to build exactly what they need — dashboards,
+            automations, portfolio sites, and more. Delivered fast.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/intake" className="bg-blue-600 text-white px-8 py-4 rounded-xl font-black text-lg hover:bg-blue-700 transition-all shadow-lg shadow-blue-200">
-              Get Free Consultation
+            <Link
+              href="/intake"
+              className="bg-blue-600 text-white px-8 py-4 rounded-xl font-black text-lg hover:bg-blue-700 transition-all shadow-lg shadow-blue-200"
+            >
+              Start Your Project
             </Link>
-            <Link href="/case-studies" className="border-2 border-gray-200 text-gray-700 px-8 py-4 rounded-xl font-black text-lg hover:border-blue-600 hover:text-blue-600 transition-all">
+            <Link
+              href="/case-studies"
+              className="border-2 border-gray-200 text-gray-700 px-8 py-4 rounded-xl font-black text-lg hover:border-blue-600 hover:text-blue-600 transition-all"
+            >
               See Our Work
             </Link>
           </div>
           <div className="flex flex-wrap justify-center gap-8 mt-12 text-sm text-gray-500">
-            <span><span className="text-green-500 font-black">★★★★★</span> 5.0 rated</span>
-            <span><span className="text-blue-600 font-black">✓</span> 50+ projects delivered</span>
-            <span><span className="text-blue-600 font-black">✓</span> 7 days or less</span>
-            <span><span className="text-blue-600 font-black">✓</span> No long-term contracts</span>
+            <span>
+              <span className="text-green-500 font-black">★★★★★</span> 5.0 rated
+            </span>
+            <span>
+              <span className="text-blue-600 font-black">✓</span> 50+ projects delivered
+            </span>
+            <span>
+              <span className="text-blue-600 font-black">✓</span> 7 days or less
+            </span>
+            <span>
+              <span className="text-blue-600 font-black">✓</span> No long-term contracts
+            </span>
           </div>
         </div>
       </section>
@@ -48,7 +64,9 @@ export default function Home() {
           ].map((s) => (
             <div key={s.label}>
               <div className="text-3xl font-black text-gray-900 mb-1">{s.num}</div>
-              <div className="text-xs font-black text-gray-400 uppercase tracking-widest">{s.label}</div>
+              <div className="text-xs font-black text-gray-400 uppercase tracking-widest">
+                {s.label}
+              </div>
             </div>
           ))}
         </div>
@@ -57,26 +75,58 @@ export default function Home() {
       <section className="py-20 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-blue-600 font-black uppercase tracking-widest text-sm mb-3">OUR SERVICES</p>
+            <p className="text-blue-600 font-black uppercase tracking-widest text-sm mb-3">
+              OUR SERVICES
+            </p>
             <h2 className="text-4xl font-black text-gray-900">Everything We Build</h2>
-            <p className="text-gray-500 mt-4 max-w-xl mx-auto">From KPI dashboards to portfolio sites — we cover all the bases.</p>
+            <p className="text-gray-500 mt-4 max-w-xl mx-auto">
+              From KPI dashboards to portfolio sites — we cover all the bases.
+            </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: "📊", title: "Consulting + Dashboards", desc: "Custom KPI dashboards and business consulting to drive real decisions.", href: "/services" },
-              { icon: "⚡", title: "Workflow Automation", desc: "Automate lead follow-up, invoicing, reporting — set it and forget it.", href: "/services" },
-              { icon: "🎨", title: "Portfolio and Resume Sites", desc: "Stand-out personal sites and AI-polished resumes for individuals.", href: "/services" },
-              { icon: "🌐", title: "Business Websites", desc: "Clean, fast, conversion-focused sites and landing pages.", href: "/services" },
+              {
+                icon: "📊",
+                title: "Consulting + Dashboards",
+                desc: "Custom KPI dashboards and business consulting to drive real decisions.",
+                href: "/services",
+              },
+              {
+                icon: "⚡",
+                title: "Workflow Automation",
+                desc: "Automate lead follow-up, invoicing, reporting — set it and forget it.",
+                href: "/services",
+              },
+              {
+                icon: "🎨",
+                title: "Portfolio and Resume Sites",
+                desc: "Stand-out personal sites and AI-polished resumes for individuals.",
+                href: "/services",
+              },
+              {
+                icon: "🌐",
+                title: "Business Websites",
+                desc: "Clean, fast, conversion-focused sites and landing pages.",
+                href: "/services",
+              },
             ].map((s) => (
-              <Link key={s.title} href={s.href} className="block bg-gray-50 rounded-2xl p-6 hover:bg-blue-50 hover:shadow-md transition-all group">
+              <Link
+                key={s.title}
+                href={s.href}
+                className="block bg-gray-50 rounded-2xl p-6 hover:bg-blue-50 hover:shadow-md transition-all group"
+              >
                 <div className="text-3xl mb-3">{s.icon}</div>
-                <h3 className="font-black text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">{s.title}</h3>
+                <h3 className="font-black text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                  {s.title}
+                </h3>
                 <p className="text-sm text-gray-600 leading-relaxed">{s.desc}</p>
               </Link>
             ))}
           </div>
           <div className="text-center mt-10">
-            <Link href="/services" className="text-blue-600 font-black hover:underline">View all services</Link>
+            <Link href="/services" className="text-blue-600 font-black hover:underline">
+              View all services
+            </Link>
           </div>
         </div>
       </section>
@@ -84,12 +134,20 @@ export default function Home() {
       <section className="py-20 px-6 bg-blue-600">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl font-black text-white mb-4">Ready to build something?</h2>
-          <p className="text-blue-100 text-lg mb-8">Book a free consultation and we will figure out exactly what you need.</p>
-          <Link href="/intake" className="bg-white text-blue-600 px-8 py-4 rounded-xl font-black text-lg hover:bg-blue-50 transition-colors inline-block">
-            Get Free Consultation
+          <p className="text-blue-100 text-lg mb-8">
+            Tell us what you need — we will follow up by email with exactly how we can help. No
+            calls required.
+          </p>
+          <Link
+            href="/intake"
+            className="bg-white text-blue-600 px-8 py-4 rounded-xl font-black text-lg hover:bg-blue-50 transition-colors inline-block"
+          >
+            Send Us Your Project Details
           </Link>
         </div>
       </section>
+
+      <ChatWidget />
     </main>
   );
 }
