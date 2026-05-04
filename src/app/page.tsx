@@ -10,20 +10,21 @@ export const metadata = {
 export default function Home() {
   return (
     <main className="min-h-screen bg-white">
-      <section className="relative bg-white pt-24 pb-12 px-6 overflow-hidden">
+      {/* Hero + Chat */}
+      <section className="relative bg-white pt-20 pb-0 px-6 overflow-hidden">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-black mb-8 uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-black mb-6 uppercase tracking-widest">
             ✦ Consulting · Dashboards · Sites · Automation
           </div>
-          <h1 className="text-5xl md:text-7xl font-black text-gray-900 mb-6 leading-tight tracking-tight">
+          <h1 className="text-5xl md:text-7xl font-black text-gray-900 mb-5 leading-tight tracking-tight">
             We Consult. We Build. <br />
             <span className="text-sky-600">We Deliver.</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-500 max-w-3xl mx-auto mb-10 leading-relaxed">
+          <p className="text-xl md:text-2xl text-gray-500 max-w-3xl mx-auto mb-8 leading-relaxed">
             We work with businesses and individuals to build exactly what they need — dashboards,
             automations, portfolio sites, and more. Delivered fast.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
             <Link
               href="/intake"
               className="bg-blue-600 text-white px-8 py-4 rounded-xl font-black text-lg hover:bg-blue-700 transition-all shadow-lg shadow-blue-200"
@@ -38,10 +39,12 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Inline chat */}
-          <ChatWidget />
+          {/* Full-height inline chat */}
+          <div className="w-full max-w-2xl mx-auto" style={{ height: "520px" }}>
+            <ChatWidget />
+          </div>
 
-          <div className="flex flex-wrap justify-center gap-8 mt-10 text-sm text-gray-500">
+          <div className="flex flex-wrap justify-center gap-8 mt-10 pb-16 text-sm text-gray-500">
             <span>
               <span className="text-green-500 font-black">★★★★★</span> 5.0 rated
             </span>
@@ -87,7 +90,7 @@ export default function Home() {
               From KPI dashboards to portfolio sites — we cover all the bases.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
                 icon: "📊",
@@ -112,6 +115,12 @@ export default function Home() {
                 title: "Business Websites",
                 desc: "Clean, fast, conversion-focused sites and landing pages.",
                 href: "/services",
+              },
+              {
+                icon: "🤔",
+                title: "Something Else?",
+                desc: "We do a lot more than what is listed here. If you need it built, we can probably build it — just tell us what you have in mind.",
+                href: "/intake",
               },
             ].map((s) => (
               <Link
