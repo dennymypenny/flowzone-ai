@@ -1,13 +1,11 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import Link from "next/link";
 
 type Role = "user" | "assistant";
 type ApiMsg = { role: Role; content: string };
-type Chip = { label: string; href: string };
-type DisplayMsg = { role: "user" | "bot"; text: string; chips?: Chip[] };
+type DisplayMsg = { role: "user" | "bot"; text: string };
 
-const INIT_CHIPS = [
+const CHIPS = [
   "I need a KPI dashboard",
   "Automate my workflows",
   "Build my portfolio site",
@@ -15,44 +13,13 @@ const INIT_CHIPS = [
   "Something else",
 ];
 
-function getResponseChips(text: string): Chip[] {
-  const t = text.toLowerCase();
-  const chips: Chip[] = [];
-
-  if (t.includes("dashboard") || t.includes("kpi") || t.includes("report")) {
-    chips.push({ label: "See Reporting Services →", href: "/services#reporting" });
-  } else if (t.includes("lead") || t.includes("crm") || t.includes("sales")) {
-    chips.push({ label: "See Lead Automation →", href: "/services#sales" });
-  } else if (t.includes("email") || t.includes("nurture") || t.includes("sequence")) {
-    chips.push({ label: "See Email Automation →", href: "/services#email" });
-  } else if (t.includes("support") || t.includes("ticket")) {
-    chips.push({ label: "See Support Triage →", href: "/services#support" });
-  } else if (t.includes("invoice") || t.includes("payment") || t.includes("billing")) {
-    chips.push({ label: "See Payment Workflows →", href: "/services#finance" });
-  } else if (t.includes("website") || t.includes("portfolio") || t.includes("site")) {
-    chips.push({ label: "See Web Services →", href: "/services#web" });
-  } else if (t.includes("content") || t.includes("social") || t.includes("blog")) {
-    chips.push({ label: "See Content Automation →", href: "/services#marketing" });
-  } else if (t.includes("booking") || t.includes("appointment") || t.includes("schedul")) {
-    chips.push({ label: "See Booking Automation →", href: "/services#operations" });
-  } else if (t.includes("integrat") || t.includes("api") || t.includes("connect")) {
-    chips.push({ label: "See Integrations →", href: "/services#integrations" });
-  } else {
-    chips.push({ label: "View All Services →", href: "/services" });
-  }
-
-  // Always add the audit CTA
-  chips.push({ label: "Get Free AI Audit →", href: "/intake" });
-  return chips;
-}
-
 function FlowZoneLogo() {
   return (
-    <svg viewBox="0 0 80 28" xmlns="http://www.w3.org/2000/svg" className="w-8 h-7">
-      <line x1="14" y1="14" x2="66" y2="14" stroke="#93c5fd" strokeWidth="1.5"/>
-      <circle cx="14" cy="14" r="13" fill="#1e3a8a" />
-      <circle cx="40" cy="14" r="13" fill="#4a7fcb" />
-      <circle cx="66" cy="14" r="13" fill="#bfdbfe" />
+    <svg viewBox="0 0 76 28" xmlns="http://www.w3.org/2000/svg" className="w-8 h-7">
+      <line x1="13" y1="14" x2="63" y2="14" stroke="#93c5fd" strokeWidth="1.5"/>
+      <circle cx="13" cy="14" r="12" fill="#1e3a8a" />
+      <circle cx="38" cy="14" r="9" fill="#4a7fcb" />
+      <circle cx="63" cy="14" r="7" fill="#bfdbfe" />
     </svg>
   );
 }
@@ -87,18 +54,11 @@ export default function ChatWidget() {
         body: JSON.stringify({ messages: newHistory }),
       });
       const data = await res.json();
-      const reply = data.text ?? "We can help with that! Tell us more at /intake and we'll put together a free plan.";
+      const reply = data.text ?? "Sorry, something went wrong. Email us at flowzoneautomation@gmail.com.";
       setHistory((h) => [...h, { role: "assistant", content: reply }]);
-      setDisplay((d) => [...d, { role: "bot", text: reply, chips: getResponseChips(reply) }]);
+      setDisplay((d) => [...d, { role: "bot", text: reply }]);
     } catch {
-      setDisplay((d) => [
-        ...d,
-        {
-          role: "bot",
-          text: "Connection issue — but we can still help! Send us your project details.",
-          chips: [{ label: "Start Here →", href: "/intake" }],
-        },
-      ]);
+      setDisplay((d) => [...d, { role: "bot", text: "Connection error. Email us at flowzoneautomation@gmail.com." }]);
     } finally {
       setLoading(false);
     }
@@ -111,12 +71,12 @@ export default function ChatWidget() {
     >
       {/* Header */}
       <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100 bg-white">
-        <div className="w-9 h-9 rounded-full bg-white border border-gray-100 flex items-center justify-center shrink-0">
+        <div className="w-9 h-9 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0">
           <FlowZoneLogo />
         </div>
         <div>
           <p className="text-sm font-bold text-gray-900">FlowZone AI</p>
-          <p className="text-xs text-gray-400">Automation assistant</p>
+          <p className="text-xs text-blue-500 font-medium">Automation assistant</p>
         </div>
       </div>
 
@@ -125,21 +85,21 @@ export default function ChatWidget() {
         {isEmpty && (
           <div className="flex flex-col items-start gap-3">
             <div className="flex items-start gap-2">
-              <div className="w-7 h-7 rounded-full bg-white border border-gray-100 flex items-center justify-center shrink-0 mt-0.5">
+              <div className="w-7 h-7 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0 mt-0.5">
                 <FlowZoneLogo />
               </div>
               <div className="bg-gray-100 rounded-2xl rounded-tl-sm px-4 py-3 max-w-sm">
                 <p className="text-sm text-gray-800">
-                  Hi! I&apos;m the FlowZone assistant. What can we build or automate for your business today?
+                  Hi! I&apos;m the FlowZone assistant. What can we automate for your business today?
                 </p>
               </div>
             </div>
             <div className="flex flex-wrap gap-2 ml-9">
-              {INIT_CHIPS.map((chip) => (
+              {CHIPS.map((chip) => (
                 <button
                   key={chip}
                   onClick={() => send(chip)}
-                  className="text-xs bg-white border border-gray-200 text-gray-700 px-3 py-1.5 rounded-full hover:border-indigo-400 hover:text-indigo-600 transition-colors"
+                  className="text-xs bg-white border border-gray-200 text-gray-700 px-3 py-1.5 rounded-full hover:border-blue-400 hover:text-blue-600 transition-colors"
                 >
                   {chip}
                 </button>
@@ -149,42 +109,27 @@ export default function ChatWidget() {
         )}
 
         {display.map((msg, i) => (
-          <div key={i} className={`flex flex-col ${msg.role === "user" ? "items-end" : "items-start"} gap-1.5`}>
-            <div className={`flex items-start gap-2 ${msg.role === "user" ? "flex-row-reverse" : ""}`}>
-              {msg.role === "bot" && (
-                <div className="w-7 h-7 rounded-full bg-white border border-gray-100 flex items-center justify-center shrink-0 mt-0.5">
-                  <FlowZoneLogo />
-                </div>
-              )}
-              <div
-                className={`px-4 py-3 rounded-2xl max-w-xs sm:max-w-sm text-sm leading-relaxed ${
-                  msg.role === "user"
-                    ? "bg-indigo-600 text-white rounded-tr-sm"
-                    : "bg-gray-100 text-gray-800 rounded-tl-sm"
-                }`}
-              >
-                {msg.text}
-              </div>
-            </div>
-            {msg.chips && msg.chips.length > 0 && (
-              <div className="flex flex-wrap gap-2 ml-9">
-                {msg.chips.map((chip) => (
-                  <Link
-                    key={chip.href}
-                    href={chip.href}
-                    className="text-xs bg-indigo-50 border border-indigo-200 text-indigo-700 font-semibold px-3 py-1.5 rounded-full hover:bg-indigo-100 transition-colors"
-                  >
-                    {chip.label}
-                  </Link>
-                ))}
+          <div key={i} className={`flex items-start gap-2 ${msg.role === "user" ? "flex-row-reverse" : ""}`}>
+            {msg.role === "bot" && (
+              <div className="w-7 h-7 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0 mt-0.5">
+                <FlowZoneLogo />
               </div>
             )}
+            <div
+              className={`px-4 py-3 rounded-2xl max-w-xs sm:max-w-sm text-sm leading-relaxed ${
+                msg.role === "user"
+                  ? "bg-blue-600 text-white rounded-tr-sm"
+                  : "bg-gray-100 text-gray-800 rounded-tl-sm"
+              }`}
+            >
+              {msg.text}
+            </div>
           </div>
         ))}
 
         {loading && (
           <div className="flex items-start gap-2">
-            <div className="w-7 h-7 rounded-full bg-white border border-gray-100 flex items-center justify-center shrink-0 mt-0.5">
+            <div className="w-7 h-7 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0 mt-0.5">
               <FlowZoneLogo />
             </div>
             <div className="bg-gray-100 rounded-2xl rounded-tl-sm px-4 py-3 flex items-center gap-1">
@@ -216,7 +161,7 @@ export default function ChatWidget() {
           <button
             onClick={() => send(input)}
             disabled={!input.trim() || loading}
-            className="w-8 h-8 bg-indigo-600 rounded-xl flex items-center justify-center text-white disabled:opacity-40 hover:bg-indigo-700 transition-colors shrink-0"
+            className="w-8 h-8 bg-blue-600 rounded-xl flex items-center justify-center text-white disabled:opacity-40 hover:bg-blue-700 transition-colors shrink-0"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M12 19V5M5 12l7-7 7 7" strokeLinecap="round" strokeLinejoin="round" />
