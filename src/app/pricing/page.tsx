@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Pricing | FlowZone AI",
   description:
-    "Transparent pricing for consulting, dashboards, automation, portfolio sites, and business websites. Every project starts with a free consultation.",
+    "Transparent pricing for consulting, dashboards, automation, portfolio sites, and business websites. Send us your project details and we will follow up by email.",
 };
 
 const plans = [
@@ -81,7 +81,7 @@ const faqs = [
   },
   {
     q: "What if I need something custom?",
-    a: "Most projects have custom elements. During your free consultation we'll scope exactly what you need and give you a firm quote before any work starts.",
+    a: "Most projects have custom elements. Just send us your project details via email and we will scope exactly what you need and give you a firm quote before any work starts.",
   },
   {
     q: "Do you work with individuals or just businesses?",
@@ -90,6 +90,10 @@ const faqs = [
   {
     q: "What happens after the project is done?",
     a: "Every project includes at least 30 days of post-launch support. We also offer ongoing retainers for clients who want continuous improvements.",
+  },
+  {
+    q: "How do I communicate with you?",
+    a: "Everything moves through email — no calls required. We respond within 24 hours and keep all project communication organized and on record.",
   },
 ];
 
@@ -105,14 +109,14 @@ export default function Pricing() {
           Know What You&apos;re Getting Before You Pay
         </h1>
         <p className="text-blue-100 text-lg max-w-2xl mx-auto mb-8">
-          No surprise invoices. No scope creep. Every project starts with a free consultation and a
-          firm quote.
+          No surprise invoices. No scope creep. Send us your project details and we will follow up
+          by email with a firm quote.
         </p>
         <Link
           href="/intake"
           className="bg-white text-blue-700 font-semibold px-8 py-3 rounded-lg hover:bg-blue-50 transition"
         >
-          Book Your Free Consultation
+          Send Your Project Details
         </Link>
       </section>
 
@@ -124,9 +128,7 @@ export default function Pricing() {
               key={plan.title}
               className={
                 "relative border rounded-2xl p-8 flex flex-col " +
-                (plan.best
-                  ? "border-blue-500 shadow-lg shadow-blue-100"
-                  : "border-gray-200")
+                (plan.best ? "border-blue-500 shadow-lg shadow-blue-100" : "border-gray-200")
               }
             >
               {plan.best && (
@@ -136,7 +138,6 @@ export default function Pricing() {
                   </span>
                 </div>
               )}
-
               <div className="flex items-start justify-between mb-4">
                 <div>
                   <span className="text-2xl">{plan.icon}</span>
@@ -146,9 +147,7 @@ export default function Pricing() {
                   <div className="text-2xl font-bold text-blue-700">{plan.price}</div>
                 </div>
               </div>
-
               <p className="text-gray-600 text-sm mb-6">{plan.description}</p>
-
               <ul className="space-y-2 mb-8 flex-1">
                 {plan.includes.map((item) => (
                   <li key={item} className="flex items-start gap-2 text-sm text-gray-700">
@@ -157,7 +156,6 @@ export default function Pricing() {
                   </li>
                 ))}
               </ul>
-
               <Link
                 href="/intake"
                 className={
@@ -172,18 +170,15 @@ export default function Pricing() {
             </div>
           ))}
         </div>
-
         <p className="text-center text-gray-400 text-sm mt-8">
-          Need something that spans multiple services? We offer bundled packages — ask us during your consultation.
+          Need something that spans multiple services? We offer bundled packages — just email us.
         </p>
       </section>
 
       {/* FAQ */}
       <section className="bg-gray-50 border-t border-gray-100 py-20 px-6">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
-            Common Questions
-          </h2>
+          <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Common Questions</h2>
           <div className="space-y-6">
             {faqs.map((faq) => (
               <div key={faq.q} className="bg-white border border-gray-200 rounded-xl p-6">
@@ -199,13 +194,14 @@ export default function Pricing() {
       <section className="bg-blue-700 text-white py-16 px-6 text-center">
         <h2 className="text-3xl font-bold mb-3">Ready to get a real quote?</h2>
         <p className="text-blue-100 mb-8 max-w-xl mx-auto">
-          Tell us what you need. We will scope it, price it fairly, and deliver it.
+          Tell us what you need. We will scope it, price it fairly, and follow up by email. No
+          calls required.
         </p>
         <Link
           href="/intake"
           className="bg-white text-blue-700 font-semibold px-8 py-3 rounded-lg hover:bg-blue-50 transition"
         >
-          Start Your Free Consultation
+          Send Your Project Details
         </Link>
       </section>
     </main>
