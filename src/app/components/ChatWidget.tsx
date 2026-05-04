@@ -15,11 +15,11 @@ const CHIPS = [
 
 function FlowZoneLogo() {
   return (
-    <svg viewBox="0 0 76 28" xmlns="http://www.w3.org/2000/svg" className="w-8 h-7">
-      <line x1="13" y1="14" x2="63" y2="14" stroke="#93c5fd" strokeWidth="1.5"/>
-      <circle cx="13" cy="14" r="12" fill="#1e3a8a" />
-      <circle cx="38" cy="14" r="9" fill="#4a7fcb" />
-      <circle cx="63" cy="14" r="7" fill="#bfdbfe" />
+    <svg viewBox="0 0 90 32" xmlns="http://www.w3.org/2000/svg" className="w-9 h-8">
+      <line x1="16" y1="16" x2="74" y2="16" stroke="#93c5fd" strokeWidth="1.5"/>
+      <circle cx="16" cy="16" r="14" fill="#1e3a8a" />
+      <circle cx="45" cy="16" r="14" fill="#5b8dd9" />
+      <circle cx="74" cy="16" r="14" fill="#bfdbfe" />
     </svg>
   );
 }
