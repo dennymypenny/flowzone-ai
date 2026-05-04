@@ -10,7 +10,7 @@ export const metadata = {
 export default function Home() {
   return (
     <main className="min-h-screen bg-white">
-      {/* Hero + Chat */}
+      {/* Hero */}
       <section className="relative bg-white pt-20 pb-0 px-6 overflow-hidden">
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-black mb-6 uppercase tracking-widest">
@@ -38,26 +38,11 @@ export default function Home() {
               See Our Work
             </Link>
           </div>
+        </div>
 
-          {/* Full-height inline chat */}
-          <div className="w-full max-w-2xl mx-auto" style={{ height: "520px" }}>
-            <ChatWidget />
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-8 mt-10 pb-16 text-sm text-gray-500">
-            <span>
-              <span className="text-green-500 font-black">★★★★★</span> 5.0 rated
-            </span>
-            <span>
-              <span className="text-blue-600 font-black">✓</span> 50+ projects delivered
-            </span>
-            <span>
-              <span className="text-blue-600 font-black">✓</span> 7 days or less
-            </span>
-            <span>
-              <span className="text-blue-600 font-black">✓</span> No long-term contracts
-            </span>
-          </div>
+        {/* Wide rectangular chat — max-w-4xl, self-contained height */}
+        <div className="max-w-4xl mx-auto px-6 pb-16">
+          <ChatWidget />
         </div>
       </section>
 
