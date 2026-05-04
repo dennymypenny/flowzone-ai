@@ -10,7 +10,7 @@ export const metadata = {
 export default function Home() {
   return (
     <main className="min-h-screen bg-white">
-      <section className="relative bg-white pt-24 pb-20 px-6 overflow-hidden">
+      <section className="relative bg-white pt-24 pb-12 px-6 overflow-hidden">
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-black mb-8 uppercase tracking-widest">
             ✦ Consulting · Dashboards · Sites · Automation
@@ -23,7 +23,7 @@ export default function Home() {
             We work with businesses and individuals to build exactly what they need — dashboards,
             automations, portfolio sites, and more. Delivered fast.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Link
               href="/intake"
               className="bg-blue-600 text-white px-8 py-4 rounded-xl font-black text-lg hover:bg-blue-700 transition-all shadow-lg shadow-blue-200"
@@ -37,7 +37,11 @@ export default function Home() {
               See Our Work
             </Link>
           </div>
-          <div className="flex flex-wrap justify-center gap-8 mt-12 text-sm text-gray-500">
+
+          {/* Inline chat */}
+          <ChatWidget />
+
+          <div className="flex flex-wrap justify-center gap-8 mt-10 text-sm text-gray-500">
             <span>
               <span className="text-green-500 font-black">★★★★★</span> 5.0 rated
             </span>
@@ -146,8 +150,6 @@ export default function Home() {
           </Link>
         </div>
       </section>
-
-      <ChatWidget />
     </main>
   );
 }
