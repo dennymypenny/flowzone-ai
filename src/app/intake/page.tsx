@@ -13,8 +13,14 @@ export default function Intake() {
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
-    name: "", email: "", business: "", type: "business",
-    service: "", goal: "", timeline: "", budget: "",
+    name: "",
+    email: "",
+    business: "",
+    type: "business",
+    service: "",
+    goal: "",
+    timeline: "",
+    budget: "",
   });
 
   const update = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }));
@@ -37,9 +43,13 @@ export default function Intake() {
           <div className="text-6xl mb-6">🎉</div>
           <h1 className="text-3xl font-black text-gray-900 mb-4">You are all set!</h1>
           <p className="text-gray-600 text-lg mb-8">
-            Thanks, {form.name}! We will review your info and reach out within 24 hours to schedule your free consultation.
+            Thanks, {form.name}! We will review your details and follow up within 24 hours by
+            email with next steps. No calls required.
           </p>
-          <Link href="/" className="bg-blue-600 text-white px-8 py-4 rounded-xl font-black hover:bg-blue-700 transition-colors inline-block">
+          <Link
+            href="/"
+            className="bg-blue-600 text-white px-8 py-4 rounded-xl font-black hover:bg-blue-700 transition-colors inline-block"
+          >
             Back to Home
           </Link>
         </div>
@@ -52,9 +62,9 @@ export default function Intake() {
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-10">
-          <p className="text-blue-600 font-black uppercase tracking-widest text-sm mb-3">FREE CONSULTATION</p>
-          <h1 className="text-4xl font-black text-gray-900 mb-3">Let us get started</h1>
-          <p className="text-gray-500">Two quick steps. No commitment.</p>
+          <p className="text-blue-600 font-black uppercase tracking-widest text-sm mb-3">GET STARTED</p>
+          <h1 className="text-4xl font-black text-gray-900 mb-3">Tell us about your project</h1>
+          <p className="text-gray-500">Two quick steps. We will follow up by email within 24 hours.</p>
           {/* Step indicator */}
           <div className="flex items-center justify-center gap-3 mt-6">
             <div className={`w-8 h-8 rounded-full flex items-center justify-center font-black text-sm ${step >= 1 ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-500"}`}>1</div>
@@ -67,7 +77,6 @@ export default function Intake() {
           {step === 1 && (
             <div className="space-y-5">
               <h2 className="text-xl font-black text-gray-900 mb-6">About you</h2>
-
               {/* Business or Individual toggle */}
               <div>
                 <label className="block text-sm font-black text-gray-700 mb-2">I am a...</label>
@@ -83,7 +92,6 @@ export default function Intake() {
                   ))}
                 </div>
               </div>
-
               <div>
                 <label className="block text-sm font-black text-gray-700 mb-2">Your name</label>
                 <input
@@ -94,7 +102,6 @@ export default function Intake() {
                   className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-600 transition-colors"
                 />
               </div>
-
               <div>
                 <label className="block text-sm font-black text-gray-700 mb-2">Email address</label>
                 <input
@@ -105,7 +112,6 @@ export default function Intake() {
                   className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-600 transition-colors"
                 />
               </div>
-
               <div>
                 <label className="block text-sm font-black text-gray-700 mb-2">
                   {form.type === "business" ? "Business name" : "Your role or profession"}
@@ -118,7 +124,6 @@ export default function Intake() {
                   className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-600 transition-colors"
                 />
               </div>
-
               <button
                 onClick={() => setStep(2)}
                 disabled={!form.name || !form.email || !form.business}
@@ -132,7 +137,6 @@ export default function Intake() {
           {step === 2 && (
             <div className="space-y-5">
               <h2 className="text-xl font-black text-gray-900 mb-6">What do you need?</h2>
-
               {/* Service selection */}
               <div>
                 <label className="block text-sm font-black text-gray-700 mb-3">Select a service</label>
@@ -154,7 +158,6 @@ export default function Intake() {
                   ))}
                 </div>
               </div>
-
               {/* Goal */}
               <div>
                 <label className="block text-sm font-black text-gray-700 mb-2">What is your main goal?</label>
@@ -166,7 +169,6 @@ export default function Intake() {
                   className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-600 transition-colors resize-none"
                 />
               </div>
-
               {/* Timeline + Budget row */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -198,7 +200,6 @@ export default function Intake() {
                   </select>
                 </div>
               </div>
-
               <div className="flex gap-3 pt-2">
                 <button
                   onClick={() => setStep(1)}
@@ -211,7 +212,7 @@ export default function Intake() {
                   disabled={!form.service || !form.goal}
                   className="flex-1 bg-blue-600 text-white py-4 rounded-xl font-black text-lg hover:bg-blue-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  Book Free Consultation
+                  Send My Project Details
                 </button>
               </div>
             </div>
@@ -219,7 +220,7 @@ export default function Intake() {
         </div>
 
         <p className="text-center text-gray-400 text-sm mt-6">
-          No spam. No commitment. We will reach out within 24 hours.
+          No spam. No calls. We will follow up by email within 24 hours.
         </p>
       </div>
     </main>
