@@ -48,10 +48,11 @@ function getResponseChips(text: string): Chip[] {
 
 function FlowZoneLogo() {
   return (
-    <svg viewBox="0 0 68 24" xmlns="http://www.w3.org/2000/svg" className="w-7 h-6">
-      <circle cx="12" cy="12" r="11" fill="#1e3a8a" />
-      <circle cx="34" cy="12" r="9" fill="#4a7fcb" />
-      <circle cx="54" cy="12" r="7" fill="#bfdbfe" />
+    <svg viewBox="0 0 80 28" xmlns="http://www.w3.org/2000/svg" className="w-8 h-7">
+      <line x1="14" y1="14" x2="66" y2="14" stroke="#93c5fd" strokeWidth="1.5"/>
+      <circle cx="14" cy="14" r="13" fill="#1e3a8a" />
+      <circle cx="40" cy="14" r="13" fill="#4a7fcb" />
+      <circle cx="66" cy="14" r="13" fill="#bfdbfe" />
     </svg>
   );
 }
