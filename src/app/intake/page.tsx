@@ -2,227 +2,290 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const services = [
-  { id: "consulting", icon: "📊", label: "Business Consulting + KPI Dashboard", desc: "Map my operations and build a real-time dashboard" },
-  { id: "automation", icon: "⚡", label: "Workflow Automation", desc: "Automate lead follow-up, invoicing, or reporting" },
-  { id: "portfolio", icon: "🎨", label: "Portfolio or Resume Site", desc: "Build my personal website or polish my resume" },
-  { id: "website", icon: "🌐", label: "Business Website or Landing Page", desc: "Design and build a site for my business" },
-];
-
 export default function Intake() {
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
-    name: "",
-    email: "",
-    business: "",
-    type: "business",
-    service: "",
-    goal: "",
-    timeline: "",
-    budget: "",
+    name: "", email: "", company: "", website: "",
+    serviceType: "",
+    needs: "", monthlyRevenue: "",
+    biggestPain: "", manualTask: "", timeSpent: "", tools: "",
+    budget: "", timeline: "", extras: "",
   });
 
-  const update = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }));
+  const set = (key: string, val: string) => setForm((f) => ({ ...f, [key]: val }));
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    fetch("/api/submit-lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    }).catch(console.error);
     try {
-      await fetch("/api/submit-lead", {
+      await fetch("https://formsubmit.co/ajax/flowzoneautomation@gmail.com", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          ...form,
+          _subject: "New AI Audit Request — FlowZone",
+          _captcha: "false",
+          _template: "table",
+        }),
       });
-    } catch (_) {}
+    } catch (err) {
+      console.error(err);
+    }
+    setSubmitting(false);
     setSubmitted(true);
   };
 
   if (submitted) {
     return (
-      <main className="min-h-screen bg-white flex items-center justify-center px-6">
-        <div className="max-w-lg text-center">
+      <div className="min-h-screen bg-white flex items-center justify-center px-6 py-20">
+        <div className="max-w-xl text-center">
           <div className="text-6xl mb-6">🎉</div>
-          <h1 className="text-3xl font-black text-gray-900 mb-4">You are all set!</h1>
-          <p className="text-gray-600 text-lg mb-8">
-            Thanks, {form.name}! We will review your details and follow up within 24 hours by
-            email with next steps. No calls required.
+          <h1 className="text-4xl font-black text-gray-900 mb-4">Your AI Audit is Being Prepared!</h1>
+          <p className="text-gray-500 text-lg leading-relaxed mb-10">
+            We'll review your answers and send your custom automation plan to{" "}
+            <span className="text-indigo-600 font-semibold">{form.email}</span> within{" "}
+            <strong className="text-gray-900">24 hours</strong>.
           </p>
-          <Link
-            href="/"
-            className="bg-blue-600 text-white px-8 py-4 rounded-xl font-black hover:bg-blue-700 transition-colors inline-block"
-          >
-            Back to Home
-          </Link>
+          <div className="bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-2xl p-8 text-left mb-8 shadow-xl">
+            <div className="text-yellow-300 text-sm font-bold uppercase tracking-wider mb-3">⚡ Want Faster Results?</div>
+            <h2 className="text-2xl font-black text-white mb-3">AI Scan & Diagnosis — $97</h2>
+            <p className="text-indigo-100 leading-relaxed mb-6">
+              Skip the wait. We'll audit your entire workflow, identify your top 3 automation opportunities,
+              and deliver a full prioritized roadmap with ROI estimates — in <strong>48 hours</strong>.
+            </p>
+            <ul className="space-y-2 mb-6">
+              {["Complete workflow audit", "3 automation opportunities ranked by ROI", "Tool recommendations + integration plan", "48-hour delivery guarantee"].map((item) => (
+                <li key={item} className="flex items-center gap-2 text-indigo-100 text-sm">
+                  <span className="text-yellow-300">✓</span> {item}
+                </li>
+              ))}
+            </ul>
+            <Link href="/scan" className="block w-full bg-white text-indigo-700 font-black py-4 rounded-xl text-center hover:bg-indigo-50 transition-colors text-lg">
+              Get the AI Scan for $97 →
+            </Link>
+            <p className="text-indigo-300 text-xs text-center mt-3">30-day money-back guarantee</p>
+          </div>
+          <p className="text-gray-400 text-sm">
+            Prefer to talk through it?{" "}
+            <Link href="/book" className="text-indigo-600 hover:underline font-semibold">Book a free 20-min call →</Link>
+          </p>
         </div>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 py-20 px-6">
-      <div className="max-w-2xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-10">
-          <p className="text-blue-600 font-black uppercase tracking-widest text-sm mb-3">GET STARTED</p>
-          <h1 className="text-4xl font-black text-gray-900 mb-3">Tell us about your project</h1>
-          <p className="text-gray-500">Two quick steps. We will follow up by email within 24 hours.</p>
-          {/* Step indicator */}
-          <div className="flex items-center justify-center gap-3 mt-6">
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center font-black text-sm ${step >= 1 ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-500"}`}>1</div>
-            <div className={`h-1 w-16 rounded ${step >= 2 ? "bg-blue-600" : "bg-gray-200"}`} />
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center font-black text-sm ${step >= 2 ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-500"}`}>2</div>
-          </div>
+    <>
+      <section className="bg-white pt-20 pb-10 px-6 border-b border-gray-100">
+        <div className="max-w-2xl mx-auto text-center">
+          <p className="text-indigo-600 font-semibold text-sm uppercase tracking-wider mb-4">Free AI Audit</p>
+          <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">Tell Us About Your Business</h1>
+          <p className="text-gray-500 leading-relaxed">
+            Answer a few questions and we'll send you a free, custom automation plan within 24 hours — no sales pitch, no pressure.
+          </p>
         </div>
+      </section>
 
-        <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-          {step === 1 && (
-            <div className="space-y-5">
-              <h2 className="text-xl font-black text-gray-900 mb-6">About you</h2>
-              {/* Business or Individual toggle */}
-              <div>
-                <label className="block text-sm font-black text-gray-700 mb-2">I am a...</label>
-                <div className="flex gap-3">
-                  {["business", "individual"].map(t => (
-                    <button
-                      key={t}
-                      onClick={() => update("type", t)}
-                      className={`flex-1 py-3 px-4 rounded-xl border-2 font-black text-sm capitalize transition-colors ${form.type === t ? "border-blue-600 bg-blue-50 text-blue-600" : "border-gray-200 text-gray-500 hover:border-gray-300"}`}
-                    >
-                      {t === "business" ? "🏢 Business" : "👤 Individual"}
-                    </button>
-                  ))}
-                </div>
+      <section className="py-16 px-6 bg-gray-50">
+        <div className="max-w-2xl mx-auto">
+          <div className="flex items-center gap-2 mb-10">
+            {[1, 2, 3].map((s) => (
+              <div key={s} className="flex items-center gap-2 flex-1">
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${step >= s ? "bg-indigo-600 text-white" : "bg-gray-200 text-gray-400"}`}>{s}</div>
+                <div className={`h-1 flex-1 rounded-full ${s < 3 ? (step > s ? "bg-indigo-600" : "bg-gray-200") : "hidden"}`} />
               </div>
-              <div>
-                <label className="block text-sm font-black text-gray-700 mb-2">Your name</label>
-                <input
-                  type="text"
-                  value={form.name}
-                  onChange={e => update("name", e.target.value)}
-                  placeholder="First and last name"
-                  className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-600 transition-colors"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-black text-gray-700 mb-2">Email address</label>
-                <input
-                  type="email"
-                  value={form.email}
-                  onChange={e => update("email", e.target.value)}
-                  placeholder="you@example.com"
-                  className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-600 transition-colors"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-black text-gray-700 mb-2">
-                  {form.type === "business" ? "Business name" : "Your role or profession"}
-                </label>
-                <input
-                  type="text"
-                  value={form.business}
-                  onChange={e => update("business", e.target.value)}
-                  placeholder={form.type === "business" ? "Acme Corp" : "e.g. Graphic Designer, Software Engineer"}
-                  className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-600 transition-colors"
-                />
-              </div>
-              <button
-                onClick={() => setStep(2)}
-                disabled={!form.name || !form.email || !form.business}
-                className="w-full bg-blue-600 text-white py-4 rounded-xl font-black text-lg hover:bg-blue-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-              >
-                Next
-              </button>
-            </div>
-          )}
+            ))}
+          </div>
+          <div className="flex justify-between text-xs text-gray-400 mb-10 -mt-6">
+            <span>Your Business</span>
+            <span className="ml-4">Your Challenge</span>
+            <span>Budget & Goals</span>
+          </div>
 
-          {step === 2 && (
-            <div className="space-y-5">
-              <h2 className="text-xl font-black text-gray-900 mb-6">What do you need?</h2>
-              {/* Service selection */}
-              <div>
-                <label className="block text-sm font-black text-gray-700 mb-3">Select a service</label>
-                <div className="space-y-3">
-                  {services.map(s => (
-                    <button
-                      key={s.id}
-                      onClick={() => update("service", s.id)}
-                      className={`w-full text-left p-4 rounded-xl border-2 transition-colors ${form.service === s.id ? "border-blue-600 bg-blue-50" : "border-gray-200 hover:border-gray-300"}`}
-                    >
-                      <div className="flex items-start gap-3">
-                        <span className="text-2xl">{s.icon}</span>
-                        <div>
-                          <div className={`font-black text-sm ${form.service === s.id ? "text-blue-600" : "text-gray-900"}`}>{s.label}</div>
-                          <div className="text-gray-500 text-xs mt-0.5">{s.desc}</div>
-                        </div>
-                      </div>
-                    </button>
-                  ))}
+          <form onSubmit={handleSubmit} className="bg-white rounded-3xl border border-gray-200 p-8 shadow-sm space-y-6">
+
+            {step === 1 && (
+              <>
+                <h2 className="text-2xl font-black text-gray-900">About You & Your Business</h2>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1.5">Your Name *</label>
+                    <input required value={form.name} onChange={(e) => set("name", e.target.value)}
+                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 transition-colors"
+                      placeholder="Jane Smith" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email *</label>
+                    <input required type="email" value={form.email} onChange={(e) => set("email", e.target.value)}
+                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 transition-colors"
+                      placeholder="jane@company.com" />
+                  </div>
                 </div>
-              </div>
-              {/* Goal */}
-              <div>
-                <label className="block text-sm font-black text-gray-700 mb-2">What is your main goal?</label>
-                <textarea
-                  value={form.goal}
-                  onChange={e => update("goal", e.target.value)}
-                  placeholder="Tell us what you are trying to achieve or what problem you need solved..."
-                  rows={3}
-                  className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-600 transition-colors resize-none"
-                />
-              </div>
-              {/* Timeline + Budget row */}
-              <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1.5">Business Name</label>
+                    <input value={form.company} onChange={(e) => set("company", e.target.value)}
+                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 transition-colors"
+                      placeholder="Acme Inc." />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1.5">Website</label>
+                    <input value={form.website} onChange={(e) => set("website", e.target.value)}
+                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 transition-colors"
+                      placeholder="https://yoursite.com" />
+                  </div>
+                </div>
                 <div>
-                  <label className="block text-sm font-black text-gray-700 mb-2">Timeline</label>
-                  <select
-                    value={form.timeline}
-                    onChange={e => update("timeline", e.target.value)}
-                    className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-600 transition-colors"
-                  >
-                    <option value="">Select...</option>
-                    <option>ASAP</option>
-                    <option>Within 2 weeks</option>
-                    <option>Within a month</option>
-                    <option>Just exploring</option>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">What type of service are you looking for?</label>
+                  <select value={form.serviceType} onChange={(e) => set("serviceType", e.target.value)}
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 transition-colors bg-white">
+                    <option value="">Select a service...</option>
+                    <option>Lead Intake & CRM Automation</option>
+                    <option>Appointment Booking & Reminders</option>
+                    <option>Customer Support Triage</option>
+                    <option>Automated Reporting & Dashboards</option>
+                    <option>Invoice & Payment Workflows</option>
+                    <option>Content Repurposing Automation</option>
+                    <option>Email Sequence & Nurture</option>
+                    <option>Custom API & Tool Integrations</option>
+                    <option>Website or Portfolio Development</option>
+                    <option>Something Else — I'll Explain Below</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-black text-gray-700 mb-2">Budget range</label>
-                  <select
-                    value={form.budget}
-                    onChange={e => update("budget", e.target.value)}
-                    className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-600 transition-colors"
-                  >
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">What do you need automated? *</label>
+                  <textarea required value={form.needs} onChange={(e) => set("needs", e.target.value)}
+                    rows={3}
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 transition-colors resize-none"
+                    placeholder="e.g. I want to automate my lead intake, follow-up emails, and reporting..." />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">Monthly Revenue (optional)</label>
+                  <select value={form.monthlyRevenue} onChange={(e) => set("monthlyRevenue", e.target.value)}
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 transition-colors bg-white">
+                    <option value="">Prefer not to say</option>
+                    <option>Under $5k/mo</option>
+                    <option>$5k–$20k/mo</option>
+                    <option>$20k–$100k/mo</option>
+                    <option>$100k+/mo</option>
+                  </select>
+                </div>
+                <button type="button" onClick={() => setStep(2)}
+                  disabled={!form.name || !form.email || !form.needs}
+                  className="w-full bg-indigo-600 text-white font-bold py-4 rounded-xl hover:bg-indigo-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                  Continue →
+                </button>
+              </>
+            )}
+
+            {step === 2 && (
+              <>
+                <h2 className="text-2xl font-black text-gray-900">Your Biggest Challenge</h2>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">What's your biggest operational pain right now? *</label>
+                  <textarea required value={form.biggestPain} onChange={(e) => set("biggestPain", e.target.value)}
+                    rows={3}
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 transition-colors resize-none"
+                    placeholder="e.g. We spend 3 hours every Monday manually pulling reports from 4 different tools..." />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">Describe the specific manual task you want automated *</label>
+                  <textarea required value={form.manualTask} onChange={(e) => set("manualTask", e.target.value)}
+                    rows={3}
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 transition-colors resize-none"
+                    placeholder="e.g. When a lead submits our Typeform, I manually add them to HubSpot, send an email, and post in Slack..." />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">How many hours/week does this take? *</label>
+                  <select required value={form.timeSpent} onChange={(e) => set("timeSpent", e.target.value)}
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 transition-colors bg-white">
+                    <option value="">Select...</option>
+                    <option>Less than 1 hour</option>
+                    <option>1–3 hours</option>
+                    <option>3–6 hours</option>
+                    <option>6–10 hours</option>
+                    <option>10+ hours</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">What tools are involved?</label>
+                  <input value={form.tools} onChange={(e) => set("tools", e.target.value)}
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 transition-colors"
+                    placeholder="e.g. HubSpot, Gmail, Slack, Airtable, Typeform" />
+                </div>
+                <div className="flex gap-3">
+                  <button type="button" onClick={() => setStep(1)}
+                    className="flex-1 border border-gray-200 text-gray-600 font-semibold py-4 rounded-xl hover:border-gray-400 transition-colors">
+                    ← Back
+                  </button>
+                  <button type="button" onClick={() => setStep(3)}
+                    disabled={!form.biggestPain || !form.manualTask || !form.timeSpent}
+                    className="flex-[2] bg-indigo-600 text-white font-bold py-4 rounded-xl hover:bg-indigo-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                    Continue →
+                  </button>
+                </div>
+              </>
+            )}
+
+            {step === 3 && (
+              <>
+                <h2 className="text-2xl font-black text-gray-900">Budget & Timeline</h2>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">What's your budget for this automation? *</label>
+                  <select required value={form.budget} onChange={(e) => set("budget", e.target.value)}
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 transition-colors bg-white">
                     <option value="">Select...</option>
                     <option>Under $500</option>
-                    <option>$500 - $1,000</option>
-                    <option>$1,000 - $2,500</option>
-                    <option>$2,500+</option>
+                    <option>$500–$1,000</option>
+                    <option>$1,000–$2,500</option>
+                    <option>$2,500–$5,000</option>
+                    <option>$5,000+</option>
+                    <option>Not sure yet</option>
                   </select>
                 </div>
-              </div>
-              <div className="flex gap-3 pt-2">
-                <button
-                  onClick={() => setStep(1)}
-                  className="px-6 py-4 rounded-xl border-2 border-gray-200 font-black text-gray-600 hover:border-gray-300 transition-colors"
-                >
-                  Back
-                </button>
-                <button
-                  onClick={handleSubmit}
-                  disabled={!form.service || !form.goal}
-                  className="flex-1 bg-blue-600 text-white py-4 rounded-xl font-black text-lg hover:bg-blue-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-                >
-                  Send My Project Details
-                </button>
-              </div>
-            </div>
-          )}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">How soon do you want this live? *</label>
+                  <select required value={form.timeline} onChange={(e) => set("timeline", e.target.value)}
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 transition-colors bg-white">
+                    <option value="">Select...</option>
+                    <option>ASAP — this week</option>
+                    <option>Within 2 weeks</option>
+                    <option>This month</option>
+                    <option>Next quarter</option>
+                    <option>Just exploring for now</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">Anything else we should know?</label>
+                  <textarea value={form.extras} onChange={(e) => set("extras", e.target.value)}
+                    rows={3}
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-400 transition-colors resize-none"
+                    placeholder="Previous automation attempts, special requirements, team structure, anything relevant..." />
+                </div>
+                <div className="flex gap-3">
+                  <button type="button" onClick={() => setStep(2)}
+                    className="flex-1 border border-gray-200 text-gray-600 font-semibold py-4 rounded-xl hover:border-gray-400 transition-colors">
+                    ← Back
+                  </button>
+                  <button type="submit"
+                    disabled={!form.budget || !form.timeline || submitting}
+                    className="flex-[2] bg-indigo-600 text-white font-bold py-4 rounded-xl hover:bg-indigo-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                    {submitting ? "Sending..." : "Get My Free AI Audit →"}
+                  </button>
+                </div>
+              </>
+            )}
+          </form>
+          <p className="text-center text-xs text-gray-400 mt-6">Your info is kept private. We'll never spam you or share your data.</p>
         </div>
-
-        <p className="text-center text-gray-400 text-sm mt-6">
-          No spam. No calls. We will follow up by email within 24 hours.
-        </p>
-      </div>
-    </main>
+      </section>
+    </>
   );
 }
