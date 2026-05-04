@@ -44,16 +44,16 @@ export default function Intake() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center px-6 py-20">
+      <div className="min-h-screen bg-blue-50 flex items-center justify-center px-6 py-20">
         <div className="max-w-xl text-center">
           <div className="text-6xl mb-6">🎉</div>
-          <h1 className="text-4xl font-black text-gray-900 mb-4">Your AI Audit is Being Prepared!</h1>
+          <h1 className="text-4xl font-black text-blue-900 mb-4">Your AI Audit is Being Prepared!</h1>
           <p className="text-gray-500 text-lg leading-relaxed mb-10">
             We'll review your answers and send your custom automation plan to{" "}
             <span className="text-indigo-600 font-semibold">{form.email}</span> within{" "}
             <strong className="text-gray-900">24 hours</strong>.
           </p>
-          <div className="bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-2xl p-8 text-left mb-8 shadow-xl">
+          <div className="bg-gradient-to-br from-blue-700 to-blue-900 rounded-2xl p-8 text-left mb-8 shadow-xl">
             <div className="text-yellow-300 text-sm font-bold uppercase tracking-wider mb-3">⚡ Want Faster Results?</div>
             <h2 className="text-2xl font-black text-white mb-3">AI Scan & Diagnosis — $97</h2>
             <p className="text-indigo-100 leading-relaxed mb-6">
@@ -67,7 +67,7 @@ export default function Intake() {
                 </li>
               ))}
             </ul>
-            <Link href="/scan" className="block w-full bg-white text-indigo-700 font-black py-4 rounded-xl text-center hover:bg-indigo-50 transition-colors text-lg">
+            <Link href="/scan" className="block w-full bg-white text-blue-700 font-black py-4 rounded-xl text-center hover:bg-indigo-50 transition-colors text-lg">
               Get the AI Scan for $97 →
             </Link>
             <p className="text-indigo-300 text-xs text-center mt-3">30-day money-back guarantee</p>
