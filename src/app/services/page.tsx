@@ -3,28 +3,28 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Services",
-  description: "Explore FlowZone AI's full range of done-for-you automation services — from lead intake to invoice workflows.",
+  description: "Explore FlowZone AI's full range of done-for-you automation services â from lead intake to invoice workflows.",
 };
 
 const services = [
   {
-    icon: "🎯",
+    icon: "ð¯",
     category: "Sales",
     title: "Lead Intake & Qualification",
-    description: "Stop losing leads to slow follow-up. We build automations that capture incoming leads from any source, score them with AI, send personalized responses within seconds, and push everything into your CRM — without you touching a single button.",
+    description: "Stop losing leads to slow follow-up. We build automations that capture incoming leads from any source, score them with AI, send personalized responses within seconds, and push everything into your CRM â without you touching a single button.",
     outcomes: ["Instant lead response (< 60 seconds)", "Auto-CRM entry & tagging", "Slack/email notifications for hot leads", "AI-personalized outreach emails"],
     tools: ["HubSpot", "Salesforce", "Airtable", "Typeform", "Calendly"],
   },
   {
-    icon: "📅",
+    icon: "ð",
     category: "Operations",
     title: "Appointment Booking & Reminders",
-    description: "End the back-and-forth scheduling chaos. We automate your entire booking flow — from calendar link to confirmation email to reminder sequence — so clients show up prepared and no-shows drop dramatically.",
+    description: "End the back-and-forth scheduling chaos. We automate your entire booking flow â from calendar link to confirmation email to reminder sequence â so clients show up prepared and no-shows drop dramatically.",
     outcomes: ["Automated booking confirmations", "Multi-step reminder sequences", "Reschedule/cancel handling", "Post-call follow-up automation"],
     tools: ["Calendly", "Google Calendar", "Acuity", "Zoom", "Gmail"],
   },
   {
-    icon: "🤖",
+    icon: "ð¤",
     category: "Support",
     title: "Customer Support Triage",
     description: "Handle more support volume without more headcount. Our AI triage systems read incoming support tickets, classify them by urgency and type, auto-route to the right person or team, and send instant acknowledgement to the customer.",
@@ -32,7 +32,7 @@ const services = [
     tools: ["Zendesk", "Intercom", "Freshdesk", "Slack", "Linear"],
   },
   {
-    icon: "📊",
+    icon: "ð",
     category: "Reporting",
     title: "Automated Reporting & Dashboards",
     description: "Get your weekly numbers without lifting a finger. We build automated reporting pipelines that pull data from all your tools, compile it into clean summaries, and deliver them to your inbox or Slack every Monday morning.",
@@ -40,34 +40,34 @@ const services = [
     tools: ["Google Sheets", "Notion", "Airtable", "Slack", "Looker"],
   },
   {
-    icon: "💳",
+    icon: "ð³",
     category: "Finance",
     title: "Invoice & Payment Workflows",
-    description: "Get paid faster with zero manual effort. We automate your entire invoicing cycle — from generating invoices when a project milestone hits, to sending payment reminders, to updating your books when payment lands.",
+    description: "Get paid faster with zero manual effort. We automate your entire invoicing cycle â from generating invoices when a project milestone hits, to sending payment reminders, to updating your books when payment lands.",
     outcomes: ["Auto-invoice generation on triggers", "Automated payment reminder sequences", "Late payment escalation flows", "Accounting software sync"],
     tools: ["Stripe", "QuickBooks", "Xero", "PayPal", "Notion"],
   },
   {
-    icon: "✍️",
+    icon: "âï¸",
     category: "Marketing",
     title: "Content Repurposing Automation",
-    description: "Publish once, distribute everywhere. We build systems that take your core content — a podcast, blog post, or video — and automatically generate social posts, email newsletters, and short-form clips for every platform.",
-    outcomes: ["Blog → social posts (automated)", "Podcast → clips + show notes", "YouTube → email digest", "Consistent multi-channel publishing"],
+    description: "Publish once, distribute everywhere. We build systems that take your core content â a podcast, blog post, or video â and automatically generate social posts, email newsletters, and short-form clips for every platform.",
+    outcomes: ["Blog â social posts (automated)", "Podcast â clips + show notes", "YouTube â email digest", "Consistent multi-channel publishing"],
     tools: ["Notion", "Buffer", "Beehiiv", "Zapier", "Make"],
   },
   {
-    icon: "📧",
+    icon: "ð§",
     category: "Email",
     title: "Email Sequence & Nurture Automation",
-    description: "Build relationships while you sleep. We design and automate full email nurture sequences that trigger based on user behavior — clicks, sign-ups, purchases — so every lead gets the right message at the right time.",
+    description: "Build relationships while you sleep. We design and automate full email nurture sequences that trigger based on user behavior â clicks, sign-ups, purchases â so every lead gets the right message at the right time.",
     outcomes: ["Behavior-triggered email flows", "Segmentation & personalization", "A/B testing automation", "Unsubscribe & list hygiene handling"],
     tools: ["Mailchimp", "Klaviyo", "ActiveCampaign", "Beehiiv", "HubSpot"],
   },
   {
-    icon: "🔗",
+    icon: "ð",
     category: "Integrations",
     title: "Custom API & Tool Integrations",
-    description: "Got a tool that doesn't play nice with others? We build custom integrations between any platforms using APIs, webhooks, and middleware — so your entire stack finally works as one connected system.",
+    description: "Got a tool that doesn't play nice with others? We build custom integrations between any platforms using APIs, webhooks, and middleware â so your entire stack finally works as one connected system.",
     outcomes: ["Any-to-any tool connection", "Real-time data sync", "Webhook processing & routing", "Custom middleware development"],
     tools: ["Zapier", "Make", "n8n", "REST APIs", "Webhooks"],
   },
@@ -86,7 +86,7 @@ export default function Services() {
             We specialize in high-impact, done-for-you automations across sales, ops, support, finance, and marketing.
           </p>
           <Link href="/intake" className="inline-block bg-indigo-600 text-white font-bold px-8 py-4 rounded-xl hover:bg-indigo-700 transition-colors">
-            Get Your Free AI Audit →
+            Get Your Free AI Audit â
           </Link>
         </div>
       </section>
@@ -108,7 +108,7 @@ export default function Services() {
                   <ul className="space-y-2">
                     {s.outcomes.map((o) => (
                       <li key={o} className="flex items-start gap-2 text-sm text-gray-600">
-                        <span className="text-green-500 mt-0.5 shrink-0">✓</span> {o}
+                        <span className="text-green-500 mt-0.5 shrink-0">â</span> {o}
                       </li>
                     ))}
                   </ul>
@@ -131,24 +131,24 @@ export default function Services() {
       <section className="py-16 px-6 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white rounded-3xl border-2 border-dashed border-indigo-200 p-10 text-center">
-            <div className="text-5xl mb-4">🤔</div>
+            <div className="text-5xl mb-4">ð¤</div>
             <p className="text-xs font-bold text-indigo-600 uppercase tracking-widest mb-3">Custom Work</p>
             <h2 className="text-3xl font-black text-gray-900 mb-4">Something Else Entirely?</h2>
             <p className="text-gray-500 text-lg leading-relaxed max-w-xl mx-auto mb-8">
-              We do a lot more than what's listed here. If you have a workflow, problem, or idea that doesn't fit neatly into a category — we want to hear it. Seriously, just tell us what you're dealing with.
+              We do a lot more than what's listed here. If you have a workflow, problem, or idea that doesn't fit neatly into a category â we want to hear it. Seriously, just tell us what you're dealing with.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/intake"
                 className="bg-indigo-600 text-white font-bold px-8 py-4 rounded-xl hover:bg-indigo-700 transition-colors"
               >
-                Tell Us What You Need →
+                Tell Us What You Need â
               </Link>
               <Link
                 href="/#chat"
-                className="text-gray-700 font-semibold px-8 py-4 rounded-xl border border-gray-200 hover:border-gray-400 transition-colors"
+                className="text-blue-600 font-semibold px-8 py-4 rounded-xl border-2 border-blue-200 hover:bg-blue-50 hover:border-blue-400 transition-colors"
               >
-                Chat With Our AI First →
+                Chat With Our AI First â
               </Link>
             </div>
           </div>
@@ -162,10 +162,10 @@ export default function Services() {
           <p className="text-indigo-200 text-lg mb-8">We build custom automations for any workflow. Tell us what you're dealing with and we'll design a solution.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/intake" className="bg-white text-indigo-600 font-bold px-8 py-4 rounded-xl hover:bg-indigo-50 transition-colors">
-              Get Your Free AI Audit →
+              Get Your Free AI Audit â
             </Link>
             <Link href="/intake" className="text-white border border-indigo-400 font-semibold px-8 py-4 rounded-xl hover:border-white transition-colors">
-              Submit Your Workflow →
+              Submit Your Workflow â
             </Link>
           </div>
         </div>
