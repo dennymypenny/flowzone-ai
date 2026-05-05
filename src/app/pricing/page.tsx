@@ -1,87 +1,51 @@
-import Link from "next/link";
-import type { Metadata } from "next";
+'use client';
 
-export const metadata: Metadata = {
-  title: "Pricing",
-  description: "Simple, transparent pricing for FlowZone AI automations. No retainers. No fluff. Just results.",
-};
+import Link from 'next/link';
 
 const services = [
-  { icon: "🎯", name: "Lead Intake & CRM Automation", price: "$997", desc: "Capture, score, and route leads automatically. Instant follow-up, CRM synced, hot leads flagged in Slack." },
-  { icon: "📅", name: "Appointment Booking & Reminders", price: "$797", desc: "Full booking flow with confirmations, reminders, and post-call follow-ups. No more no-shows." },
-  { icon: "🤖", name: "Customer Support Triage", price: "$1,197", desc: "AI reads, classifies, and routes every ticket. Instant customer acknowledgements and escalation triggers." },
-  { icon: "📊", name: "Automated Reporting & Dashboards", price: "$1,297", desc: "Weekly KPI reports delivered to your inbox or Slack — automatically. No manual data pulling." },
-  { icon: "💳", name: "Invoice & Payment Workflows", price: "$897", desc: "Auto-generate invoices, send reminders, sync with your accounting software when payment lands." },
-  { icon: "✍️", name: "Content Repurposing Automation", price: "$897", desc: "Turn one piece of content into social posts, newsletters, and clips across every platform." },
-  { icon: "📧", name: "Email Nurture Sequences", price: "$797", desc: "Behavior-triggered email flows that send the right message at the right time, on autopilot." },
-  { icon: "🔗", name: "Custom API & Tool Integrations", price: "$1,097", desc: "Connect any two tools that don't talk to each other. Webhooks, middleware, real-time sync." },
-  { icon: "🌐", name: "Website or Portfolio", price: "$497", desc: "Clean, fast, professional site built and deployed. Perfect for agencies, freelancers, and small businesses." },
-  { icon: "🤔", name: "Custom Workflow", price: "$497+", desc: "Have something unique in mind? Tell us what you need and we'll build it." },
+  { name: 'Lead Intake & CRM Automation', price: '$997', description: 'Capture, qualify, and follow up with leads automatically. Never let a prospect slip away.', features: ['Lead capture forms', 'CRM integration', 'Automated follow-up emails', 'Lead scoring', 'Pipeline tracking'], icon: '🎯' },
+  { name: 'Appointment Booking & Reminders', price: '$797', description: 'Automate your entire booking flow with confirmations, reminders, and follow-ups that run on autopilot.', features: ['Online booking integration', 'SMS & email reminders', 'No-show reduction', 'Calendar sync', 'Rescheduling automation'], icon: '📅' },
+  { name: 'AI Chatbot Agent for Your Website', price: '$897', description: 'A custom AI chatbot trained on your business, embedded on your site to handle FAQs, qualify leads, and capture contact info 24/7.', features: ['Custom AI training', 'Lead qualification', 'FAQ automation', '24/7 availability', 'CRM handoff', 'Mobile responsive'], icon: '🤖' },
+  { name: 'Customer Support Triage', price: '$1,197', description: 'Automatically sort, prioritize, and respond to customer inquiries so your team focuses on what matters.', features: ['Email triage automation', 'Auto-responses', 'Priority routing', 'Support ticketing', 'Response templates'], icon: '🎧' },
+  { name: 'Automated Reporting & Dashboards', price: '$1,297', description: 'Get real-time visibility into your business with automated reports delivered straight to your inbox.', features: ['Custom dashboards', 'Scheduled email reports', 'KPI tracking', 'Multi-source data', 'Visual analytics'], icon: '📊' },
+  { name: 'Invoice & Payment Workflows', price: '$897', description: 'Automate your entire billing cycle from invoice generation to payment reminders and reconciliation.', features: ['Auto invoice generation', 'Payment reminders', 'Stripe integration', 'Overdue follow-ups', 'Payment tracking'], icon: '💳' },
+  { name: 'Content Repurposing Automation', price: '$897', description: 'Turn one piece of content into many. Automatically repurpose blogs, videos, and podcasts across channels.', features: ['Blog to social posts', 'Video transcription', 'Email newsletters', 'Multi-platform posting', 'Content calendar'], icon: '♻️' },
+  { name: 'Email Nurture Sequences', price: '$797', description: 'Build automated email sequences that warm up leads and convert them into paying customers.', features: ['Drip campaigns', 'Behavioral triggers', 'A/B testing', 'Segmentation', 'Performance tracking'], icon: '📧' },
+  { name: 'Custom API & Tool Integrations', price: '$1,097', description: 'Connect any two tools in your stack. We build the custom bridges that make your software actually work together.', features: ['Zapier alternatives', 'Custom webhooks', 'REST API integrations', 'Data sync', 'Error monitoring'], icon: '🔌' },
+  { name: 'Website or Portfolio', price: '$497', description: 'A fast, clean, professional website built in Next.js and deployed on Vercel. Ready in 7 days.', features: ['Next.js + Tailwind', 'Mobile responsive', 'SEO optimized', 'Custom domain', 'Vercel hosting'], icon: '🌐' },
+  { name: 'Something Else', price: '$497+', description: 'Have a custom project in mind? Describe what you need and we will scope it out and build it.', features: ['Custom scoping', 'Flexible pricing', 'Any tech stack', 'Full ownership', 'Ongoing support available'], icon: '✨' },
 ];
 
-export default function Pricing() {
+export default function PricingPage() {
   return (
-    <>
-      {/* Hero */}
-      <section className="bg-white pt-20 pb-16 px-6 border-b border-gray-100">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="text-blue-600 font-semibold text-sm uppercase tracking-wider mb-4">Pricing</p>
-          <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6">Simple, Flat-Rate Pricing</h1>
-          <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed mb-8">
-            No retainers. No hourly rates. No surprises. Pay once, get your automation built and delivered in 7 days or less.
-          </p>
-          <Link href="/intake" className="inline-block bg-blue-600 text-white font-bold px-8 py-4 rounded-xl hover:bg-blue-700 transition-colors">
-            Start My Project →
-          </Link>
+    <main className='min-h-screen bg-gray-50 py-16 px-4'>
+      <div className='max-w-6xl mx-auto'>
+        <div className='text-center mb-14'>
+          <h1 className='text-4xl font-bold text-gray-900 mb-4'>Simple, Flat-Rate Pricing</h1>
+          <p className='text-lg text-gray-600 max-w-2xl mx-auto'>Every automation is scoped, built, and delivered in 7 days or less. No retainers, no surprises.</p>
         </div>
-      </section>
-
-      {/* Services grid */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-6">
-          {services.map((s) => (
-            <div key={s.name} className="bg-blue-50 rounded-2xl p-6 flex flex-col gap-4">
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  <span className="text-3xl">{s.icon}</span>
-                  <h2 className="text-base font-bold text-gray-900 leading-snug">{s.name}</h2>
-                </div>
-                <span className="text-xl font-black text-blue-600 shrink-0">{s.price}</span>
-              </div>
-              <p className="text-sm text-gray-500 leading-relaxed">{s.desc}</p>
-              <Link
-                href={`/intake?service=${encodeURIComponent(s.name)}`}
-                className="mt-auto inline-block text-center bg-blue-600 text-white font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-blue-700 transition-colors"
-              >
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+          {services.map((service) => (
+            <div key={service.name} className='bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col hover:shadow-md transition-shadow'>
+              <div className='text-3xl mb-3'>{service.icon}</div>
+              <h2 className='text-lg font-bold text-gray-900 mb-1'>{service.name}</h2>
+              <p className='text-blue-600 font-bold text-2xl mb-3'>{service.price}</p>
+              <p className='text-gray-600 text-sm mb-4 flex-grow'>{service.description}</p>
+              <ul className='space-y-1 mb-6'>
+                {service.features.map((f) => (
+                  <li key={f} className='flex items-center gap-2 text-sm text-gray-700'>
+                    <span className='text-blue-500'>&#10003;</span> {f}
+                  </li>
+                ))}
+              </ul>
+              <Link href={'/intake?' + 'service=' + encodeURIComponent(service.name)} className='block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl transition-colors'>
                 Start This Project →
               </Link>
             </div>
           ))}
         </div>
-      </section>
-
-      {/* Bundle callout */}
-      <section className="py-12 px-6 bg-blue-50">
-        <div className="max-w-3xl mx-auto bg-white rounded-3xl border border-blue-100 p-10 text-center shadow-sm">
-          <div className="text-4xl mb-4">💼</div>
-          <h2 className="text-2xl font-black text-gray-900 mb-3">Need more than one?</h2>
-          <p className="text-gray-500 mb-6">Bundle 2 or more automations and we&apos;ll work out a custom package price. Tell us what you need and we&apos;ll send a combined proposal.</p>
-          <Link href="/intake" className="inline-block bg-blue-600 text-white font-bold px-8 py-4 rounded-xl hover:bg-blue-700 transition-colors">
-            Get a Bundle Quote →
-          </Link>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-20 px-6 bg-blue-600">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-black text-white mb-4">Not sure which one you need?</h2>
-          <p className="text-blue-200 text-lg mb-8">Tell us what you&apos;re dealing with and we&apos;ll recommend the right solution — no commitment required.</p>
-          <Link href="/intake" className="bg-white text-blue-600 font-bold px-8 py-4 rounded-xl hover:bg-blue-50 transition-colors inline-block">
-            Talk to Us First →
-          </Link>
-        </div>
-      </section>
-    </>
+        <div className='text-center mt-14 text-gray-500 text-sm'>All projects include a free scoping call, full code ownership, and delivery in 7 days or less.</div>
+      </div>
+    </main>
   );
 }
