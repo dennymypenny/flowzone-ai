@@ -7,16 +7,16 @@ export const metadata: Metadata = {
 };
 
 const services = [
-  { icon: "🎯", name: "Lead Intake & CRM Automation", price: "$997", amount: "997", note: "Lead+Intake+%26+CRM+Automation", desc: "Capture, score, and route leads automatically. Instant follow-up, CRM synced, hot leads flagged in Slack." },
-  { icon: "📅", name: "Appointment Booking & Reminders", price: "$797", amount: "797", note: "Appointment+Booking+%26+Reminders", desc: "Full booking flow with confirmations, reminders, and post-call follow-ups. No more no-shows." },
-  { icon: "🤖", name: "Customer Support Triage", price: "$1,197", amount: "1197", note: "Customer+Support+Triage", desc: "AI reads, classifies, and routes every ticket. Instant customer acknowledgements and escalation triggers." },
-  { icon: "📊", name: "Automated Reporting & Dashboards", price: "$1,297", amount: "1297", note: "Automated+Reporting+%26+Dashboards", desc: "Weekly KPI reports delivered to your inbox or Slack — automatically. No manual data pulling." },
-  { icon: "💳", name: "Invoice & Payment Workflows", price: "$897", amount: "897", note: "Invoice+%26+Payment+Workflows", desc: "Auto-generate invoices, send reminders, sync with your accounting software when payment lands." },
-  { icon: "✍️", name: "Content Repurposing Automation", price: "$897", amount: "897", note: "Content+Repurposing+Automation", desc: "Turn one piece of content into social posts, newsletters, and clips across every platform." },
-  { icon: "📧", name: "Email Nurture Sequences", price: "$797", amount: "797", note: "Email+Nurture+Sequences", desc: "Behavior-triggered email flows that send the right message at the right time, on autopilot." },
-  { icon: "🔗", name: "Custom API & Tool Integrations", price: "$1,097", amount: "1097", note: "Custom+API+%26+Tool+Integrations", desc: "Connect any two tools that don't talk to each other. Webhooks, middleware, real-time sync." },
-  { icon: "🌐", name: "Website or Portfolio", price: "$497", amount: "497", note: "Website+or+Portfolio", desc: "Clean, fast, professional site built and deployed. Perfect for agencies, freelancers, and small businesses." },
-  { icon: "🤔", name: "Custom Workflow", price: "$497+", amount: "497", note: "Custom+Workflow", desc: "Have something unique in mind? Tell us what you need and we'll build it." },
+  { icon: "🎯", name: "Lead Intake & CRM Automation", price: "$997", desc: "Capture, score, and route leads automatically. Instant follow-up, CRM synced, hot leads flagged in Slack." },
+  { icon: "📅", name: "Appointment Booking & Reminders", price: "$797", desc: "Full booking flow with confirmations, reminders, and post-call follow-ups. No more no-shows." },
+  { icon: "🤖", name: "Customer Support Triage", price: "$1,197", desc: "AI reads, classifies, and routes every ticket. Instant customer acknowledgements and escalation triggers." },
+  { icon: "📊", name: "Automated Reporting & Dashboards", price: "$1,297", desc: "Weekly KPI reports delivered to your inbox or Slack — automatically. No manual data pulling." },
+  { icon: "💳", name: "Invoice & Payment Workflows", price: "$897", desc: "Auto-generate invoices, send reminders, sync with your accounting software when payment lands." },
+  { icon: "✍️", name: "Content Repurposing Automation", price: "$897", desc: "Turn one piece of content into social posts, newsletters, and clips across every platform." },
+  { icon: "📧", name: "Email Nurture Sequences", price: "$797", desc: "Behavior-triggered email flows that send the right message at the right time, on autopilot." },
+  { icon: "🔗", name: "Custom API & Tool Integrations", price: "$1,097", desc: "Connect any two tools that don't talk to each other. Webhooks, middleware, real-time sync." },
+  { icon: "🌐", name: "Website or Portfolio", price: "$497", desc: "Clean, fast, professional site built and deployed. Perfect for agencies, freelancers, and small businesses." },
+  { icon: "🤔", name: "Custom Workflow", price: "$497+", desc: "Have something unique in mind? Tell us what you need and we'll build it." },
 ];
 
 export default function Pricing() {
@@ -26,9 +26,7 @@ export default function Pricing() {
       <section className="bg-white pt-20 pb-16 px-6 border-b border-gray-100">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-blue-600 font-semibold text-sm uppercase tracking-wider mb-4">Pricing</p>
-          <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6">
-            Simple, Flat-Rate Pricing
-          </h1>
+          <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6">Simple, Flat-Rate Pricing</h1>
           <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed mb-8">
             No retainers. No hourly rates. No surprises. Pay once, get your automation built and delivered in 7 days or less.
           </p>
@@ -51,14 +49,12 @@ export default function Pricing() {
                 <span className="text-xl font-black text-blue-600 shrink-0">{s.price}</span>
               </div>
               <p className="text-sm text-gray-500 leading-relaxed">{s.desc}</p>
-              <a
-                href={`https://venmo.com/u/flowzoneautomation?txn=pay&amount=${s.amount}&note=FlowZone+AI+-+${s.note}`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href={`/intake?service=${encodeURIComponent(s.name)}`}
                 className="mt-auto inline-block text-center bg-blue-600 text-white font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-blue-700 transition-colors"
               >
-                Pay & Get Started →
-              </a>
+                Start This Project →
+              </Link>
             </div>
           ))}
         </div>
