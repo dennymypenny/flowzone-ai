@@ -1,169 +1,125 @@
-"use client";
-import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+'use client';
 
-const SERVICES: { label: string; price: string; amount: string }[] = [
-  { label: "Lead Intake & CRM Automation", price: "$997", amount: "997" },
-  { label: "Appointment Booking & Reminders", price: "$797", amount: "797" },
-  { label: "Customer Support Triage", price: "$1,197", amount: "1197" },
-  { label: "Automated Reporting & Dashboards", price: "$1,297", amount: "1297" },
-  { label: "Invoice & Payment Workflows", price: "$897", amount: "897" },
-  { label: "Content Repurposing Automation", price: "$897", amount: "897" },
-  { label: "Email Nurture Sequences", price: "$797", amount: "797" },
-  { label: "Custom API & Tool Integrations", price: "$1,097", amount: "1097" },
-  { label: "Website or Portfolio", price: "$497", amount: "497" },
-  { label: "Something Else — I'll Explain Below", price: "$497+", amount: "497" },
-];
+import { useState, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+
+const serviceMap: Record<string, { label: string; amount: number }> = {
+  'Lead Intake & CRM Automation': { label: 'Lead Intake & CRM Automation', amount: 997 },
+  'Appointment Booking & Reminders': { label: 'Appointment Booking & Reminders', amount: 797 },
+  'AI Chatbot Agent for Your Website': { label: 'AI Chatbot Agent for Your Website', amount: 897 },
+  'Customer Support Triage': { label: 'Customer Support Triage', amount: 1197 },
+  'Automated Reporting & Dashboards': { label: 'Automated Reporting & Dashboards', amount: 1297 },
+  'Invoice & Payment Workflows': { label: 'Invoice & Payment Workflows', amount: 897 },
+  'Content Repurposing Automation': { label: 'Content Repurposing Automation', amount: 897 },
+  'Email Nurture Sequences': { label: 'Email Nurture Sequences', amount: 797 },
+  'Custom API & Tool Integrations': { label: 'Custom API & Tool Integrations', amount: 1097 },
+  'Website or Portfolio': { label: 'Website or Portfolio', amount: 497 },
+  'Something Else': { label: 'Something Else', amount: 497 },
+};
 
 function IntakeForm() {
   const searchParams = useSearchParams();
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    business: "",
-    service: "",
-    description: "",
-  });
+  const preSelected = searchParams.get('service') || '';
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [business, setBusiness] = useState('');
+  const [service, setService] = useState(preSelected);
+  const [details, setDetails] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
-  useEffect(() => {
-    const serviceParam = searchParams.get("service");
-    if (serviceParam) {
-      const match = SERVICES.find((s) => s.label === serviceParam);
-      if (match) setForm((f) => ({ ...f, service: match.label }));
-    }
-  }, [searchParams]);
-
-  const set = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
-  const selectedService = SERVICES.find((s) => s.label === form.service);
-  const venmoNote = encodeURIComponent(`FlowZone AI - ${form.service}`);
-  const venmoURL = selectedService
-    ? `https://venmo.com/u/flowzoneautomation?txn=pay&amount=${selectedService.amount}&note=${venmoNote}`
-    : "https://venmo.com/u/flowzoneautomation";
+  const selectedService = serviceMap[service];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
     try {
-      const res = await fetch("/api/intake", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+      await fetch('/api/intake', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, business, service, details }),
       });
-      if (!res.ok) throw new Error("Failed");
-      setSubmitted(true);
-    } catch {
-      setError("Something went wrong. Please email us at flowzoneautomation@gmail.com.");
-    } finally {
-      setLoading(false);
-    }
+    } catch {}
+    setLoading(false);
+    setSubmitted(true);
   };
 
   if (submitted) {
+    const venmoNote = selectedService ? selectedService.label : service || 'FlowZone Project';
+    const venmoAmount = selectedService ? selectedService.amount : 497;
+    const venmoUrl = 'https://venmo.com/u/flowzoneautomation?txn=pay&amount=' + venmoAmount + '&note=' + encodeURIComponent(venmoNote);
     return (
-      <div className="min-h-screen bg-blue-50 flex items-center justify-center px-6 py-20">
-        <div className="bg-white rounded-3xl shadow-xl p-10 max-w-lg w-full text-center">
-          <div className="text-5xl mb-4">🎉</div>
-          <h1 className="text-3xl font-black text-blue-900 mb-2">Almost there!</h1>
-          <p className="text-gray-500 text-base mb-8">
-            We received your project details. Complete your payment below and we&apos;ll get started right away.
-          </p>
-          <div className="bg-blue-50 rounded-2xl p-6 mb-6">
-            <p className="text-xs font-bold text-blue-600 uppercase tracking-widest mb-3">Your Order</p>
-            <p className="text-lg font-bold text-gray-900 mb-1">{form.service}</p>
-            <p className="text-4xl font-black text-blue-600 mb-6">{selectedService?.price ?? "Custom"}</p>
-            <a
-              href={venmoURL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl transition-colors text-lg"
-            >
-              Pay with Venmo →
-            </a>
-            <p className="text-xs text-gray-400 mt-3">Opens Venmo with amount pre-filled</p>
+      <div className='text-center py-12'>
+        <div className='text-5xl mb-4'>🎉</div>
+        <h2 className='text-2xl font-bold text-gray-900 mb-2'>You're all set!</h2>
+        <p className='text-gray-600 mb-8'>We received your project details and will be in touch within 24 hours to confirm everything and get started.</p>
+        {selectedService && (
+          <div className='bg-blue-50 border border-blue-200 rounded-xl p-4 mb-8 inline-block'>
+            <p className='text-blue-800 font-semibold'>{selectedService.label}</p>
+            <p className='text-blue-600 text-2xl font-bold'>${selectedService.amount}</p>
           </div>
-          <div className="text-left bg-gray-50 rounded-2xl p-5 mb-6">
-            <p className="text-sm font-bold text-gray-700 mb-3">What happens next</p>
-            <ul className="space-y-2 text-sm text-gray-500">
-              <li className="flex gap-2"><span className="text-blue-500 shrink-0">1.</span> Complete payment on Venmo</li>
-              <li className="flex gap-2"><span className="text-blue-500 shrink-0">2.</span> We confirm and review your project</li>
-              <li className="flex gap-2"><span className="text-blue-500 shrink-0">3.</span> Delivered in 7 days or less</li>
-            </ul>
-          </div>
-          <p className="text-sm text-gray-400">Questions? <a href="mailto:flowzoneautomation@gmail.com" className="text-blue-600 hover:underline">flowzoneautomation@gmail.com</a></p>
+        )}
+        <div>
+          <a href={venmoUrl} target='_blank' rel='noopener noreferrer' className='inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl transition-colors'>
+            Pay with Venmo →
+          </a>
+          <p className='text-gray-400 text-xs mt-3'>Payment locks in your spot. Pre-fill only works in the Venmo mobile app.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-blue-50 py-16 px-6">
-      <div className="max-w-xl mx-auto">
-        <div className="text-center mb-10">
-          <p className="text-blue-600 font-semibold text-sm uppercase tracking-wider mb-3">Get Started</p>
-          <h1 className="text-4xl font-black text-gray-900 mb-3">Tell Us What You Need</h1>
-          <p className="text-gray-500 text-lg">Fill this out and we&apos;ll get your automation started right away.</p>
+    <form onSubmit={handleSubmit} className='space-y-4'>
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+        <div>
+          <label className='block text-sm font-medium text-gray-700 mb-1'>Name *</label>
+          <input required value={name} onChange={e => setName(e.target.value)} className='w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500' placeholder='Your name' />
         </div>
-        <form onSubmit={handleSubmit} className="bg-white rounded-3xl shadow-xl p-8 space-y-5">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1.5">Your Name <span className="text-blue-500">*</span></label>
-              <input required type="text" placeholder="Jane Smith" value={form.name} onChange={(e) => set("name", e.target.value)}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-400 transition-colors" />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email <span className="text-blue-500">*</span></label>
-              <input required type="email" placeholder="jane@company.com" value={form.email} onChange={(e) => set("email", e.target.value)}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-400 transition-colors" />
-            </div>
-          </div>
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Business Name</label>
-            <input type="text" placeholder="Acme Inc." value={form.business} onChange={(e) => set("business", e.target.value)}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-400 transition-colors" />
-          </div>
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">What do you need? <span className="text-blue-500">*</span></label>
-            <select required value={form.service} onChange={(e) => set("service", e.target.value)}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 focus:outline-none focus:border-blue-400 transition-colors bg-white">
-              <option value="">Select a service...</option>
-              {SERVICES.map((s) => (
-                <option key={s.label} value={s.label}>{s.label} — {s.price}</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Tell us more <span className="text-blue-500">*</span></label>
-            <textarea required rows={4} placeholder="Describe what you're dealing with, what tools you use, and what outcome you're looking for..."
-              value={form.description} onChange={(e) => set("description", e.target.value)}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-400 transition-colors resize-none" />
-          </div>
-          {selectedService && (
-            <div className="bg-blue-50 rounded-xl px-4 py-3 flex items-center justify-between">
-              <p className="text-sm text-gray-600 font-medium">{selectedService.label}</p>
-              <p className="text-lg font-black text-blue-600">{selectedService.price}</p>
-            </div>
-          )}
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-          <button type="submit" disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition-colors disabled:opacity-50 text-base">
-            {loading ? "Sending..." : "Continue to Payment →"}
-          </button>
-          <p className="text-xs text-center text-gray-400">No calls required · Delivered in 7 days or less</p>
-        </form>
+        <div>
+          <label className='block text-sm font-medium text-gray-700 mb-1'>Email *</label>
+          <input required type='email' value={email} onChange={e => setEmail(e.target.value)} className='w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500' placeholder='you@example.com' />
+        </div>
       </div>
-    </div>
+      <div>
+        <label className='block text-sm font-medium text-gray-700 mb-1'>Business Name</label>
+        <input value={business} onChange={e => setBusiness(e.target.value)} className='w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500' placeholder='Your business name' />
+      </div>
+      <div>
+        <label className='block text-sm font-medium text-gray-700 mb-1'>Service *</label>
+        <select required value={service} onChange={e => setService(e.target.value)} className='w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500'>
+          <option value=''>Select a service...</option>
+          {Object.keys(serviceMap).map(s => <option key={s} value={s}>{s}</option>)}
+        </select>
+        {selectedService && (
+          <p className='text-blue-600 font-semibold text-sm mt-1'>${selectedService.amount} flat rate</p>
+        )}
+      </div>
+      <div>
+        <label className='block text-sm font-medium text-gray-700 mb-1'>Tell us about your project</label>
+        <textarea value={details} onChange={e => setDetails(e.target.value)} rows={4} className='w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500' placeholder='What do you need automated? Any tools you currently use?' />
+      </div>
+      <button type='submit' disabled={loading} className='w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-bold py-3 rounded-xl transition-colors'>
+        {loading ? 'Submitting...' : 'Submit Project Request →'}
+      </button>
+    </form>
   );
 }
 
 export default function IntakePage() {
   return (
-    <Suspense>
-      <IntakeForm />
-    </Suspense>
+    <main className='min-h-screen bg-gray-50 py-16 px-4'>
+      <div className='max-w-xl mx-auto'>
+        <div className='text-center mb-8'>
+          <h1 className='text-3xl font-bold text-gray-900 mb-2'>Start Your Project</h1>
+          <p className='text-gray-600'>Fill out the form below and we will get back to you within 24 hours.</p>
+        </div>
+        <div className='bg-white rounded-2xl shadow-sm border border-gray-100 p-8'>
+          <Suspense fallback={<div>Loading...</div>}>
+            <IntakeForm />
+          </Suspense>
+        </div>
+      </div>
+    </main>
   );
 }
