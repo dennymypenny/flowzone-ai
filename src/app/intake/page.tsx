@@ -1,5 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 const SERVICES: { label: string; price: string; amount: string }[] = [
   { label: "Lead Intake & CRM Automation", price: "$997", amount: "997" },
@@ -14,7 +16,8 @@ const SERVICES: { label: string; price: string; amount: string }[] = [
   { label: "Something Else — I'll Explain Below", price: "$497+", amount: "497" },
 ];
 
-export default function IntakePage() {
+function IntakeForm() {
+  const searchParams = useSearchParams();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -26,10 +29,16 @@ export default function IntakePage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    const serviceParam = searchParams.get("service");
+    if (serviceParam) {
+      const match = SERVICES.find((s) => s.label === serviceParam);
+      if (match) setForm((f) => ({ ...f, service: match.label }));
+    }
+  }, [searchParams]);
+
   const set = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
-
   const selectedService = SERVICES.find((s) => s.label === form.service);
-
   const venmoNote = encodeURIComponent(`FlowZone AI - ${form.service}`);
   const venmoURL = selectedService
     ? `https://venmo.com/u/flowzoneautomation?txn=pay&amount=${selectedService.amount}&note=${venmoNote}`
@@ -48,7 +57,7 @@ export default function IntakePage() {
       if (!res.ok) throw new Error("Failed");
       setSubmitted(true);
     } catch {
-      setError("Something went wrong. Please email us directly at flowzoneautomation@gmail.com.");
+      setError("Something went wrong. Please email us at flowzoneautomation@gmail.com.");
     } finally {
       setLoading(false);
     }
@@ -63,8 +72,6 @@ export default function IntakePage() {
           <p className="text-gray-500 text-base mb-8">
             We received your project details. Complete your payment below and we&apos;ll get started right away.
           </p>
-
-          {/* Payment box */}
           <div className="bg-blue-50 rounded-2xl p-6 mb-6">
             <p className="text-xs font-bold text-blue-600 uppercase tracking-widest mb-3">Your Order</p>
             <p className="text-lg font-bold text-gray-900 mb-1">{form.service}</p>
@@ -79,16 +86,14 @@ export default function IntakePage() {
             </a>
             <p className="text-xs text-gray-400 mt-3">Opens Venmo with amount pre-filled</p>
           </div>
-
           <div className="text-left bg-gray-50 rounded-2xl p-5 mb-6">
             <p className="text-sm font-bold text-gray-700 mb-3">What happens next</p>
             <ul className="space-y-2 text-sm text-gray-500">
               <li className="flex gap-2"><span className="text-blue-500 shrink-0">1.</span> Complete payment on Venmo</li>
-              <li className="flex gap-2"><span className="text-blue-500 shrink-0">2.</span> We confirm and review your project details</li>
-              <li className="flex gap-2"><span className="text-blue-500 shrink-0">3.</span> Your automation is delivered in 7 days or less</li>
+              <li className="flex gap-2"><span className="text-blue-500 shrink-0">2.</span> We confirm and review your project</li>
+              <li className="flex gap-2"><span className="text-blue-500 shrink-0">3.</span> Delivered in 7 days or less</li>
             </ul>
           </div>
-
           <p className="text-sm text-gray-400">Questions? <a href="mailto:flowzoneautomation@gmail.com" className="text-blue-600 hover:underline">flowzoneautomation@gmail.com</a></p>
         </div>
       </div>
@@ -98,98 +103,67 @@ export default function IntakePage() {
   return (
     <div className="min-h-screen bg-blue-50 py-16 px-6">
       <div className="max-w-xl mx-auto">
-        {/* Header */}
         <div className="text-center mb-10">
           <p className="text-blue-600 font-semibold text-sm uppercase tracking-wider mb-3">Get Started</p>
           <h1 className="text-4xl font-black text-gray-900 mb-3">Tell Us What You Need</h1>
           <p className="text-gray-500 text-lg">Fill this out and we&apos;ll get your automation started right away.</p>
         </div>
-
-        {/* Form */}
         <form onSubmit={handleSubmit} className="bg-white rounded-3xl shadow-xl p-8 space-y-5">
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">Your Name <span className="text-blue-500">*</span></label>
-              <input
-                required
-                type="text"
-                placeholder="Jane Smith"
-                value={form.name}
-                onChange={(e) => set("name", e.target.value)}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-400 transition-colors"
-              />
+              <input required type="text" placeholder="Jane Smith" value={form.name} onChange={(e) => set("name", e.target.value)}
+                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-400 transition-colors" />
             </div>
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email <span className="text-blue-500">*</span></label>
-              <input
-                required
-                type="email"
-                placeholder="jane@company.com"
-                value={form.email}
-                onChange={(e) => set("email", e.target.value)}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-400 transition-colors"
-              />
+              <input required type="email" placeholder="jane@company.com" value={form.email} onChange={(e) => set("email", e.target.value)}
+                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-400 transition-colors" />
             </div>
           </div>
-
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">Business Name</label>
-            <input
-              type="text"
-              placeholder="Acme Inc."
-              value={form.business}
-              onChange={(e) => set("business", e.target.value)}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-400 transition-colors"
-            />
+            <input type="text" placeholder="Acme Inc." value={form.business} onChange={(e) => set("business", e.target.value)}
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-400 transition-colors" />
           </div>
-
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">What do you need? <span className="text-blue-500">*</span></label>
-            <select
-              required
-              value={form.service}
-              onChange={(e) => set("service", e.target.value)}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 focus:outline-none focus:border-blue-400 transition-colors bg-white"
-            >
+            <select required value={form.service} onChange={(e) => set("service", e.target.value)}
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 focus:outline-none focus:border-blue-400 transition-colors bg-white">
               <option value="">Select a service...</option>
               {SERVICES.map((s) => (
                 <option key={s.label} value={s.label}>{s.label} — {s.price}</option>
               ))}
             </select>
           </div>
-
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">Tell us more <span className="text-blue-500">*</span></label>
-            <textarea
-              required
-              rows={4}
-              placeholder="Describe what you're dealing with, what tools you use, and what outcome you're looking for..."
-              value={form.description}
-              onChange={(e) => set("description", e.target.value)}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-400 transition-colors resize-none"
-            />
+            <textarea required rows={4} placeholder="Describe what you're dealing with, what tools you use, and what outcome you're looking for..."
+              value={form.description} onChange={(e) => set("description", e.target.value)}
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-400 transition-colors resize-none" />
           </div>
-
           {selectedService && (
             <div className="bg-blue-50 rounded-xl px-4 py-3 flex items-center justify-between">
               <p className="text-sm text-gray-600 font-medium">{selectedService.label}</p>
               <p className="text-lg font-black text-blue-600">{selectedService.price}</p>
             </div>
           )}
-
           {error && <p className="text-red-500 text-sm">{error}</p>}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition-colors disabled:opacity-50 text-base"
-          >
+          <button type="submit" disabled={loading}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition-colors disabled:opacity-50 text-base">
             {loading ? "Sending..." : "Continue to Payment →"}
           </button>
-
-          <p className="text-xs text-center text-gray-400">We reply within 24 hours · No calls required · Delivered in 7 days or less</p>
+          <p className="text-xs text-center text-gray-400">No calls required · Delivered in 7 days or less</p>
         </form>
       </div>
     </div>
+  );
+}
+
+export default function IntakePage() {
+  return (
+    <Suspense>
+      <IntakeForm />
+    </Suspense>
   );
 }
