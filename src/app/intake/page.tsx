@@ -1,43 +1,59 @@
-'use client';
+"use client";
+import { useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 
-import { useState, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+const services = [
+  "Lead Intake & CRM Automation",
+  "Appointment Booking & Reminders",
+  "AI Chatbot Agent",
+  "Customer Support Triage",
+  "Automated Reporting & Dashboards",
+  "Invoice & Payment Workflows",
+  "Content Repurposing Automation",
+  "Email Nurture Sequences",
+  "Custom API & Tool Integrations",
+  "Website or Portfolio",
+  "Something Else",
+];
 
-const serviceMap: Record<string, { label: string; amount: number }> = {
-  'Lead Intake & CRM Automation': { label: 'Lead Intake & CRM Automation', amount: 997 },
-  'Appointment Booking & Reminders': { label: 'Appointment Booking & Reminders', amount: 797 },
-  'AI Chatbot Agent for Your Website': { label: 'AI Chatbot Agent for Your Website', amount: 897 },
-  'Customer Support Triage': { label: 'Customer Support Triage', amount: 1197 },
-  'Automated Reporting & Dashboards': { label: 'Automated Reporting & Dashboards', amount: 1297 },
-  'Invoice & Payment Workflows': { label: 'Invoice & Payment Workflows', amount: 897 },
-  'Content Repurposing Automation': { label: 'Content Repurposing Automation', amount: 897 },
-  'Email Nurture Sequences': { label: 'Email Nurture Sequences', amount: 797 },
-  'Custom API & Tool Integrations': { label: 'Custom API & Tool Integrations', amount: 1097 },
-  'Website or Portfolio': { label: 'Website or Portfolio', amount: 497 },
-  'Something Else': { label: 'Something Else', amount: 497 },
+const venmoAmounts: Record<string, number> = {
+  "Lead Intake & CRM Automation": 997,
+  "Appointment Booking & Reminders": 797,
+  "AI Chatbot Agent": 897,
+  "Customer Support Triage": 1197,
+  "Automated Reporting & Dashboards": 1297,
+  "Invoice & Payment Workflows": 897,
+  "Content Repurposing Automation": 897,
+  "Email Nurture Sequences": 797,
+  "Custom API & Tool Integrations": 1097,
+  "Website or Portfolio": 497,
+  "Something Else": 497,
 };
 
 function IntakeForm() {
   const searchParams = useSearchParams();
-  const preSelected = searchParams.get('service') || '';
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [business, setBusiness] = useState('');
-  const [service, setService] = useState(preSelected);
-  const [details, setDetails] = useState('');
+  const preselected = searchParams.get("service") || "";
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    business: "",
+    service: preselected,
+    description: "",
+  });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const selectedService = serviceMap[service];
+  const set = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await fetch('/api/intake', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, business, service, details }),
+      await fetch("/api/intake", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
       });
     } catch {}
     setLoading(false);
@@ -45,81 +61,123 @@ function IntakeForm() {
   };
 
   if (submitted) {
-    const venmoNote = selectedService ? selectedService.label : service || 'FlowZone Project';
-    const venmoAmount = selectedService ? selectedService.amount : 497;
-    const venmoUrl = 'https://venmo.com/u/flowzoneautomation?txn=pay&amount=' + venmoAmount + '&note=' + encodeURIComponent(venmoNote);
+    const amount = venmoAmounts[form.service] || 497;
+    const note = encodeURIComponent(`FlowZone AI – ${form.service}`);
+    const venmoUrl = `https://venmo.com/u/flowzoneautomation?txn=pay&amount=${amount}&note=${note}`;
     return (
-      <div className='text-center py-12'>
-        <div className='text-5xl mb-4'>🎉</div>
-        <h2 className='text-2xl font-bold text-gray-900 mb-2'>You're all set!</h2>
-        <p className='text-gray-600 mb-8'>We received your project details and will be in touch within 24 hours to confirm everything and get started.</p>
-        {selectedService && (
-          <div className='bg-blue-50 border border-blue-200 rounded-xl p-4 mb-8 inline-block'>
-            <p className='text-blue-800 font-semibold'>{selectedService.label}</p>
-            <p className='text-blue-600 text-2xl font-bold'>${selectedService.amount}</p>
-          </div>
-        )}
-        <div>
-          <a href={venmoUrl} target='_blank' rel='noopener noreferrer' className='inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl transition-colors'>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-6">
+        <div className="max-w-md w-full bg-white rounded-2xl border border-gray-200 p-10 text-center">
+          <div className="text-5xl mb-4">✅</div>
+          <h2 className="text-2xl font-black text-gray-900 mb-3">You're all set!</h2>
+          <p className="text-gray-500 mb-8 leading-relaxed">
+            We received your project details. Complete your payment below to lock in your spot and get started.
+          </p>
+          <a
+            href={venmoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition-colors text-lg mb-4"
+          >
             Pay with Venmo →
           </a>
-          <p className='text-gray-400 text-xs mt-3'>Payment locks in your spot. Pre-fill only works in the Venmo mobile app.</p>
+          <p className="text-xs text-gray-400">
+            You'll receive a confirmation email within 24 hours of payment.
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className='space-y-4'>
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-        <div>
-          <label className='block text-sm font-medium text-gray-700 mb-1'>Name *</label>
-          <input required value={name} onChange={e => setName(e.target.value)} className='w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500' placeholder='Your name' />
+    <div className="min-h-screen bg-gray-50 py-20 px-6">
+      <div className="max-w-xl mx-auto">
+        <div className="text-center mb-10">
+          <p className="text-blue-600 font-semibold text-sm uppercase tracking-wider mb-3">Get Started</p>
+          <h1 className="text-4xl font-black text-gray-900 mb-3">Start Your Project</h1>
+          <p className="text-gray-500">Fill out the form below and we'll get your automation built and delivered in 7 days or less.</p>
         </div>
-        <div>
-          <label className='block text-sm font-medium text-gray-700 mb-1'>Email *</label>
-          <input required type='email' value={email} onChange={e => setEmail(e.target.value)} className='w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500' placeholder='you@example.com' />
-        </div>
+
+        <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-200 p-8 space-y-5">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Full Name</label>
+            <input
+              type="text"
+              required
+              value={form.name}
+              onChange={(e) => set("name", e.target.value)}
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Jane Smith"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email Address</label>
+            <input
+              type="email"
+              required
+              value={form.email}
+              onChange={(e) => set("email", e.target.value)}
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="jane@company.com"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Business Name</label>
+            <input
+              type="text"
+              required
+              value={form.business}
+              onChange={(e) => set("business", e.target.value)}
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Acme Co."
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Service</label>
+            <select
+              required
+              value={form.service}
+              onChange={(e) => set("service", e.target.value)}
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+            >
+              <option value="">Select a service...</option>
+              {services.map((s) => (
+                <option key={s} value={s}>{s}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Tell us about your workflow</label>
+            <textarea
+              required
+              rows={4}
+              value={form.description}
+              onChange={(e) => set("description", e.target.value)}
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+              placeholder="Describe what you want automated and any tools you currently use..."
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition-colors disabled:opacity-50"
+          >
+            {loading ? "Submitting..." : "Submit Project →"}
+          </button>
+        </form>
       </div>
-      <div>
-        <label className='block text-sm font-medium text-gray-700 mb-1'>Business Name</label>
-        <input value={business} onChange={e => setBusiness(e.target.value)} className='w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500' placeholder='Your business name' />
-      </div>
-      <div>
-        <label className='block text-sm font-medium text-gray-700 mb-1'>Service *</label>
-        <select required value={service} onChange={e => setService(e.target.value)} className='w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500'>
-          <option value=''>Select a service...</option>
-          {Object.keys(serviceMap).map(s => <option key={s} value={s}>{s}</option>)}
-        </select>
-        {selectedService && (
-          <p className='text-blue-600 font-semibold text-sm mt-1'>${selectedService.amount} flat rate</p>
-        )}
-      </div>
-      <div>
-        <label className='block text-sm font-medium text-gray-700 mb-1'>Tell us about your project</label>
-        <textarea value={details} onChange={e => setDetails(e.target.value)} rows={4} className='w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500' placeholder='What do you need automated? Any tools you currently use?' />
-      </div>
-      <button type='submit' disabled={loading} className='w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-bold py-3 rounded-xl transition-colors'>
-        {loading ? 'Submitting...' : 'Submit Project Request →'}
-      </button>
-    </form>
+    </div>
   );
 }
 
 export default function IntakePage() {
   return (
-    <main className='min-h-screen bg-gray-50 py-16 px-4'>
-      <div className='max-w-xl mx-auto'>
-        <div className='text-center mb-8'>
-          <h1 className='text-3xl font-bold text-gray-900 mb-2'>Start Your Project</h1>
-          <p className='text-gray-600'>Fill out the form below and we will get back to you within 24 hours.</p>
-        </div>
-        <div className='bg-white rounded-2xl shadow-sm border border-gray-100 p-8'>
-          <Suspense fallback={<div>Loading...</div>}>
-            <IntakeForm />
-          </Suspense>
-        </div>
-      </div>
-    </main>
+    <Suspense fallback={<div className="min-h-screen bg-gray-50" />}>
+      <IntakeForm />
+    </Suspense>
   );
 }
