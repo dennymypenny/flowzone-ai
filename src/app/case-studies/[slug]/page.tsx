@@ -396,7 +396,7 @@ export default async function CaseStudyPage({ params }: Props) {
                   <p className="font-bold text-gray-900 text-sm">{c.client}</p>
                 </div>
                 <p className="text-gray-400 text-xs mb-3">{c.industry}</p>
-                <p className="text-blue-600 font-bold text-sm">{c.metric} â</p>
+                <p className="text-blue-600 font-bold text-sm">{c.metrics[0].value} â</p>
               </Link>
             ))}
           </div>
