@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Book a Free Call",
-  description: "Schedule a free 20-minute discovery call with FlowZone AI to get your custom automation plan.",
+  description: "Schedule a free 20-minute discovery call with FlowZone AI to get your custom systems plan.",
 };
 
 export default function Book() {
@@ -15,7 +15,7 @@ export default function Book() {
           <p className="text-indigo-600 font-semibold text-sm uppercase tracking-wider mb-4">Free Discovery Call</p>
           <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6">Book Your Free 20-Min Call</h1>
           <p className="text-xl text-gray-500 leading-relaxed">
-            Tell us what you're working on. We'll identify your top automation opportunity and give you a free plan — no pitch, no pressure.
+            Tell us what you're working on. We'll identify your top systems opportunity and give you a free plan — no pitch, no pressure.
           </p>
         </div>
       </section>
@@ -54,7 +54,7 @@ export default function Book() {
               <div className="space-y-5">
                 {[
                   { icon: "🎯", title: "We learn about your business", body: "Tell us what you do, how big your team is, and where you're spending the most manual time." },
-                  { icon: "🔍", title: "We identify your #1 opportunity", body: "We'll pinpoint the highest-ROI automation for your specific situation — based on time saved, revenue impact, and complexity." },
+                  { icon: "🔍", title: "We identify your #1 opportunity", body: "We'll pinpoint the highest-ROI system for your specific situation — based on time saved, revenue impact, and complexity." },
                   { icon: "🗺️", title: "You get a free custom plan", body: "We'll map out exactly what we'd build, what tools we'd connect, and what the outcome would look like." },
                   { icon: "🤝", title: "Zero pressure", body: "If it's not a good fit, we'll tell you. No hard sell, no follow-up spam. Just an honest conversation." },
                 ].map((item) => (
@@ -80,7 +80,7 @@ export default function Book() {
 
             <div className="border border-gray-200 rounded-2xl p-6">
               <p className="font-bold text-gray-900 text-sm mb-1">Prefer to start async?</p>
-              <p className="text-gray-400 text-sm mb-4">Fill out our intake form and we'll put together your automation plan within 24 hours.</p>
+              <p className="text-gray-400 text-sm mb-4">Fill out our intake form and we'll put together your system plan within 24 hours.</p>
               <Link href="/intake" className="text-indigo-600 font-semibold text-sm hover:text-indigo-800 transition-colors">
                 Fill out the intake form →
               </Link>
@@ -97,7 +97,7 @@ export default function Book() {
             {[
               { quote: "Best 20 minutes I've spent on my business this quarter. Left with a clear plan and a clear ROI.", name: "James R.", role: "Agency owner" },
               { quote: "I expected a sales pitch. Instead I got 20 minutes of genuinely useful advice. Hired them on the spot.", name: "Lena C.", role: "E-commerce founder" },
-              { quote: "They identified an automation I hadn't even thought of that ended up saving us 6 hours a week.", name: "Raj S.", role: "Operations Director" },
+              { quote: "They identified a system I hadn't even thought of that ended up saving us 6 hours a week.", name: "Raj S.", role: "Operations Director" },
             ].map((t) => (
               <div key={t.name} className="bg-white rounded-2xl p-6 border border-gray-100 text-left">
                 <div className="flex text-yellow-400 text-sm mb-3">★★★★★</div>

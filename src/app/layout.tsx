@@ -5,33 +5,33 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: {
-    default: "FlowZone AI | Automate Your Business in 48 Hours",
+    default: "FlowZone AI | Creative and Business Studio",
     template: "%s | FlowZone AI",
   },
   description:
-    "FlowZone AI builds done-for-you automations that save your team 10+ hours a week. Get a free AI audit and custom automation plan delivered in 24 hours.",
+    "FlowZone AI is a creative and business studio. We turn ideas into brands, sites and systems that make money. Free audit and custom build plan delivered in 24 hours.",
   metadataBase: new URL("https://flowzone.dev"),
   openGraph: {
     siteName: "FlowZone AI",
     type: "website",
-    title: "FlowZone AI — Done-For-You Business Automation",
+    title: "FlowZone AI — Creative and Business Studio",
     description:
-      "We build custom automations that eliminate manual work, reduce errors, and scale your operations. Free AI audit delivered in 24 hours.",
+      "We turn ideas into brands, sites and systems that make money. Designed, built and delivered in days, not months.",
   },
     twitter: {
         card: "summary_large_image",
-            title: "FlowZone AI — Done-For-You Business Automation",
-                description: "We build custom automations that eliminate manual work, reduce errors, and scale your operations. Free AI audit delivered in 24 hours.",
+            title: "FlowZone AI — Creative and Business Studio",
+                description: "We turn ideas into brands, sites and systems that make money. Designed, built and delivered in days, not months.",
                   },
   keywords: [
-    "business automation",
-    "AI automation",
-    "workflow automation",
-    "done-for-you automation",
-    "no-code automation",
-    "Zapier alternative",
-    "Make automation",
-    "HubSpot automation",
+    "creative studio",
+    "business studio",
+    "business systems",
+    "done-for-you systems",
+    "website design and build",
+    "brand launch",
+    "ecommerce storefront",
+    "AI systems",
   ],
 };
 

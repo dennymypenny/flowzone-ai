@@ -76,7 +76,7 @@ export default function ChatWidget() {
         </div>
         <div>
           <p className="text-sm font-bold text-gray-900">FlowZone AI</p>
-          <p className="text-xs text-blue-500 font-medium">Automation assistant</p>
+          <p className="text-xs text-blue-500 font-medium">Systems assistant</p>
         </div>
       </div>
 
@@ -155,7 +155,7 @@ export default function ChatWidget() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && send(input)}
-            placeholder="Ask me anything about automation..."
+            placeholder="Ask me anything about systems..."
             className="flex-1 bg-transparent text-sm text-gray-800 placeholder-gray-400 outline-none"
           />
           <button

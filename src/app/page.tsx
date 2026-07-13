@@ -2,8 +2,8 @@ import Link from "next/link";
 import ChatWidget from "@/app/components/ChatWidget";
 
 export const metadata = {
-  title: "FlowZone AI | Consult. Build. Deliver.",
-  description: "We consult with businesses and individuals, then build exactly what they need — dashboards, automations, portfolio sites, and more. Done for you in days.",
+  title: "FlowZone AI | Creative and Business Studio",
+  description: "FlowZone AI is a creative and business studio. We turn ideas into brands, sites and systems that make money. Designed, built and delivered in days.",
 };
 
 export default function Home() {
@@ -14,14 +14,14 @@ export default function Home() {
         <div className="absolute top-20 right-1/4 w-64 h-64 bg-sky-400/10 rounded-full blur-3xl pointer-events-none" />
         <div className="max-w-5xl mx-auto text-center relative z-10">
           <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-400/20 text-blue-300 px-4 py-2 rounded-full text-sm font-black mb-6 uppercase tracking-widest">
-            ✦ Consulting · Dashboards · Sites · Automation
+            ✦ Creative and Business Studio · Brands · Sites · Systems
           </div>
           <h1 className="text-5xl md:text-7xl font-black text-white mb-5 leading-tight tracking-tight">
-            We Consult. We Build. <br />
-            <span className="text-sky-400">We Deliver.</span>
+            You Bring the Idea. <br />
+            <span className="text-sky-400">We Build the Whole Thing.</span>
           </h1>
           <p className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto mb-8 leading-relaxed">
-            We work with businesses and individuals to build exactly what they need — dashboards, automations, portfolio sites, and more. Delivered fast.
+            FlowZone AI is a creative and business studio. We turn ideas into brands, sites and systems that actually make money. AI gives us the speed, humans give it the taste. Delivered in days, not months.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
             <Link href="/intake" className="bg-blue-500 text-white px-8 py-4 rounded-xl font-black text-lg hover:bg-blue-400 transition-all shadow-lg shadow-blue-500/30">
@@ -58,14 +58,14 @@ export default function Home() {
           <div className="text-center mb-16">
             <p className="text-blue-600 font-black uppercase tracking-widest text-sm mb-3">OUR SERVICES</p>
             <h2 className="text-4xl font-black text-gray-900">Everything We Build</h2>
-            <p className="text-gray-500 mt-4 max-w-xl mx-auto">From KPI dashboards to portfolio sites — we cover all the bases.</p>
+            <p className="text-gray-500 mt-4 max-w-xl mx-auto">From full storefronts to the systems that run them. If your idea needs it, we build it.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               { icon: "📊", title: "Consulting + Dashboards", desc: "Custom KPI dashboards and business consulting to drive real decisions.", href: "/services" },
-              { icon: "⚡", title: "Workflow Automation", desc: "Automate lead follow-up, invoicing, reporting — set it and forget it.", href: "/services" },
+              { icon: "⚡", title: "Business Systems", desc: "Lead follow-up, invoicing, reporting that runs itself. Set it up once and it works while you sleep.", href: "/services" },
               { icon: "🎨", title: "Portfolio and Resume Sites", desc: "Stand-out personal sites and AI-polished resumes for individuals.", href: "/services" },
-              { icon: "🌐", title: "Business Websites", desc: "Clean, fast, conversion-focused sites and landing pages.", href: "/services" },
+              { icon: "🌐", title: "Brands and Storefronts", desc: "Full brand sites and online stores, clean, fast and built to sell.", href: "/services" },
               { icon: "🤔", title: "Something Else?", desc: "We do a lot more than what is listed here. If you need it built, we can probably build it — just tell us what you have in mind.", href: "/intake" },
             ].map((s) => (
               <Link key={s.title} href={s.href} className="block bg-gray-50 rounded-2xl p-6 hover:bg-blue-50 hover:shadow-md transition-all group">

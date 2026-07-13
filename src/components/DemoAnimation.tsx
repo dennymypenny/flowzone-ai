@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 
 const demos = [
   {
-    badge: "Lead Automation",
+    badge: "Lead Systems",
     image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=700&q=80",
     imageAlt: "Business professional responding to clients",
     video: "https://assets.mixkit.co/videos/preview/mixkit-hands-typing-on-a-laptop-keyboard-close-up-2-3004-large.mp4",
@@ -17,7 +17,7 @@ const demos = [
     caption: "Every new lead gets a personalized follow-up instantly — while you focus on delivering work.",
   },
   {
-    badge: "Invoice Automation",
+    badge: "Invoice Systems",
     image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=700&q=80",
     imageAlt: "Freelancer completing a project",
     video: "https://assets.mixkit.co/videos/preview/mixkit-man-types-on-a-laptop-in-an-office-2-7457-large.mp4",

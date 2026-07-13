@@ -125,7 +125,7 @@ function ServiceCard({ s }: { s: typeof services[0] }) {
             href="/intake"
             className="inline-flex items-center gap-1.5 text-white text-xs font-bold bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full hover:bg-white/30 transition-colors"
           >
-            Automate this &rarr;
+            Build this &rarr;
           </Link>
         </div>
       </div>
@@ -139,8 +139,8 @@ export default function ServiceCards() {
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-14">
           <p className="text-sky-600 font-semibold text-sm uppercase tracking-wider mb-3">Our Services</p>
-          <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">What We Automate</h2>
-          <p className="text-gray-500 text-lg">If your team does it manually more than once a week, we can automate it.</p>
+          <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">Systems We Build</h2>
+          <p className="text-gray-500 text-lg">If you do it manually more than once a week, we can build a system that does it for you.</p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {services.map((s, i) => (

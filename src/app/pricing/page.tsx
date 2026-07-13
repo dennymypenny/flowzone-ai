@@ -3,15 +3,15 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Pricing",
-  description: "Flat-rate AI automations for small businesses. Delivered in 7 days or less.",
+  description: "Flat-rate AI systems for small businesses. Delivered in 7 days or less.",
 };
 
 const services = [
   {
-    name: "Lead Intake & CRM Automation",
+    name: "Lead Intake & CRM Systems",
     desc: "Capture leads from your site, auto-respond, and pipe everything into your CRM — zero manual data entry.",
     price: "$997",
-    slug: "Lead Intake & CRM Automation",
+    slug: "Lead Intake & CRM Systems",
   },
   {
     name: "Appointment Booking & Reminders",
@@ -44,10 +44,10 @@ const services = [
     slug: "Invoice & Payment Workflows",
   },
   {
-    name: "Content Repurposing Automation",
+    name: "Content Repurposing Systems",
     desc: "Turn one piece of content into a week of posts, emails, and short-form clips — automatically.",
     price: "$897",
-    slug: "Content Repurposing Automation",
+    slug: "Content Repurposing Systems",
   },
   {
     name: "Email Nurture Sequences",
@@ -123,7 +123,7 @@ export default function Pricing() {
           <h2 className="text-3xl font-black text-gray-900 text-center mb-12">Every Project Includes</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { icon: "🚀", title: "7-Day Delivery", body: "Most automations ship in 3–7 business days. You get a working, tested product — not a rough draft." },
+              { icon: "🚀", title: "7-Day Delivery", body: "Most systems ship in 3–7 business days. You get a working, tested product — not a rough draft." },
               { icon: "📖", title: "Full Documentation", body: "Every build comes with clear docs explaining what it does, how to use it, and how to request changes." },
               { icon: "🤝", title: "Post-Launch Support", body: "30 days of support after delivery. Something breaks? We fix it free, no questions asked." },
               { icon: "🔒", title: "Secure & Reliable", body: "Industry-standard security on every integration. Your data and your clients' data are always protected." },
@@ -145,7 +145,7 @@ export default function Pricing() {
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-4xl font-black text-white mb-4">Not Sure Where to Start?</h2>
           <p className="text-blue-200 text-lg mb-8">
-            Fill out the intake form and describe your workflow. We'll recommend the right automation and get it built fast.
+            Fill out the intake form and describe your workflow. We'll recommend the right system and get it built fast.
           </p>
           <Link
             href="/intake"

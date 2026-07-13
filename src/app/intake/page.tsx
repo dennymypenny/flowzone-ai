@@ -3,13 +3,13 @@ import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
 const services = [
-  "Lead Intake & CRM Automation",
+  "Lead Intake & CRM Systems",
   "Appointment Booking & Reminders",
   "AI Chatbot Agent",
   "Customer Support Triage",
   "Automated Reporting & Dashboards",
   "Invoice & Payment Workflows",
-  "Content Repurposing Automation",
+  "Content Repurposing Systems",
   "Email Nurture Sequences",
   "Custom API & Tool Integrations",
   "Website or Portfolio",
@@ -17,13 +17,13 @@ const services = [
 ];
 
 const venmoAmounts: Record<string, number> = {
-  "Lead Intake & CRM Automation": 997,
+  "Lead Intake & CRM Systems": 997,
   "Appointment Booking & Reminders": 797,
   "AI Chatbot Agent": 897,
   "Customer Support Triage": 1197,
   "Automated Reporting & Dashboards": 1297,
   "Invoice & Payment Workflows": 897,
-  "Content Repurposing Automation": 897,
+  "Content Repurposing Systems": 897,
   "Email Nurture Sequences": 797,
   "Custom API & Tool Integrations": 1097,
   "Website or Portfolio": 497,
@@ -94,7 +94,7 @@ function IntakeForm() {
         <div className="text-center mb-10">
           <p className="text-blue-600 font-semibold text-sm uppercase tracking-wider mb-3">Get Started</p>
           <h1 className="text-4xl font-black text-gray-900 mb-3">Start Your Project</h1>
-          <p className="text-gray-500">Fill out the form below and we'll get your automation built and delivered in 7 days or less.</p>
+          <p className="text-gray-500">Fill out the form below and we'll get your system built and delivered in 7 days or less.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-200 p-8 space-y-5">

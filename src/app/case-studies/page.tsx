@@ -10,7 +10,7 @@ const cases = [
   {
     slug: "verde-supply",
     client: "Verde Supply Co.",
-    tag: "E-Commerce Automation",
+    tag: "E-Commerce Systems",
     industry: "Retail & E-Commerce",
     location: "Austin, TX",
     metric: "4.8x ROI in 90 days",
@@ -24,7 +24,7 @@ const cases = [
   {
     slug: "pinnacle-media",
     client: "Pinnacle Media Group",
-    tag: "Reporting Automation",
+    tag: "Reporting Systems",
     industry: "Marketing Agency",
     location: "New York, NY",
     metric: "12 hrs/week saved",
@@ -38,7 +38,7 @@ const cases = [
   {
     slug: "sofia-navarro",
     client: "Sofia Navarro Design",
-    tag: "Lead & Invoice Automation",
+    tag: "Lead & Invoice Systems",
     industry: "Design Consultancy",
     location: "Miami, FL",
     metric: "3x leads responded to",
@@ -72,7 +72,7 @@ const cases = [
     metric: "3x lead-to-appointment rate",
     stat: "$2.4M",
     statLabel: "additional Q1 closings",
-    excerpt: "An independent brokerage was receiving 200+ leads per month with no follow-up system. We built the CRM automation and nurture sequences that turned leads into clients.",
+    excerpt: "An independent brokerage was receiving 200+ leads per month with no follow-up system. We built the CRM systems and nurture sequences that turned leads into clients.",
     color: "bg-blue-50 border-blue-200",
     badge: "bg-blue-100 text-blue-700",
     icon: "🏡",
@@ -80,7 +80,7 @@ const cases = [
   {
     slug: "luxe-medspa",
     client: "Luxe MedSpa",
-    tag: "Appointment Automation",
+    tag: "Appointment Systems",
     industry: "Health & Wellness",
     location: "Los Angeles, CA",
     metric: "63% no-show reduction",
@@ -94,7 +94,7 @@ const cases = [
   {
     slug: "james-okafor",
     client: "Okafor Consulting",
-    tag: "Admin & Invoice Automation",
+    tag: "Admin & Invoice Systems",
     industry: "Software Consulting",
     location: "Chicago, IL",
     metric: "2x project capacity",

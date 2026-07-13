@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "AI Scan & Diagnosis — $97 | FlowZone AI",
-  description: "Get a complete audit of your business workflows, 3 automation opportunities ranked by ROI, and a prioritized roadmap — delivered in 48 hours.",
+  description: "Get a complete audit of your business workflows, 3 system opportunities ranked by ROI, and a prioritized roadmap — delivered in 48 hours.",
 };
 
 const deliverables = [
@@ -14,7 +14,7 @@ const deliverables = [
   },
   {
     icon: "Top 3",
-    title: "3 Automation Opportunities",
+    title: "3 Systems Opportunities",
     desc: "Ranked by ROI — we identify the three highest-impact workflows to automate first.",
   },
   {
@@ -42,7 +42,7 @@ export default function ScanPage() {
             AI Scan &amp; Diagnosis
           </h1>
           <p className="text-xl text-gray-500 mb-4 leading-relaxed">
-            We audit your business, identify your top 3 automation opportunities ranked by ROI,
+            We audit your business, identify your top 3 system opportunities ranked by ROI,
             and deliver a prioritized roadmap — all in 48 hours.
           </p>
           <div className="text-4xl font-black text-sky-600 mb-8">$97</div>

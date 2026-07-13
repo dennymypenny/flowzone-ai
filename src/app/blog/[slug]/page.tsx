@@ -40,8 +40,8 @@ const posts: Post[] = [
       { type: "h2", text: "Step 2: Write Your Auto-Response Templates" },
       { type: "p", text: "Your first message needs to do three things: acknowledge the inquiry, set expectations, and move the lead toward a next step (booking a call, answering a question, or viewing a resource)." },
       { type: "callout", text: "Example: 'Hi [Name], thanks for reaching out to FlowZone AI! I got your message and will personally review your situation within 2 hours. In the meantime, here's a quick look at how we've helped businesses like yours: [link]. Talk soon — Denny'" },
-      { type: "p", text: "Personalize this with merge fields. Most automation tools let you pull in the lead's name, company, and what they inquired about. A message that feels personal converts significantly better than a generic autoresponder." },
-      { type: "h2", text: "Step 3: Build the Automation in Make.com" },
+      { type: "p", text: "Personalize this with merge fields. Most workflow tools let you pull in the lead's name, company, and what they inquired about. A message that feels personal converts significantly better than a generic autoresponder." },
+      { type: "h2", text: "Step 3: Build the Systems in Make.com" },
       { type: "ul", items: [
         "Trigger: New form submission (Typeform, Webflow, or WordPress)",
         "Action 1: Add row to Airtable CRM with lead details",
@@ -54,7 +54,7 @@ const posts: Post[] = [
       { type: "p", text: "Not all leads are equal. Add a simple scoring layer: assign points based on budget indicated, company size, urgency, and source. Leads above a threshold get flagged for immediate personal follow-up. Leads below get nurtured via an automated email sequence." },
       { type: "h2", text: "The Result" },
       { type: "p", text: "Our clients who implement this system typically see a 30–50% increase in booked calls within the first two weeks — with zero extra time spent on manual follow-up. One landscaping client went from missing 60% of leads to closing every qualified inquiry within 24 hours." },
-      { type: "callout", text: "Want this built for your business? We'll set up your entire lead intake automation in 48 hours. Get your free AI audit to see exactly what we'd build." },
+      { type: "callout", text: "Want this built for your business? We'll set up your entire lead intake system in 48 hours. Get your free AI audit to see exactly what we'd build." },
     ],
   },
   {
@@ -66,9 +66,9 @@ const posts: Post[] = [
     tag: "Strategy",
     author: "FlowZone AI Team",
     content: [
-      { type: "p", text: "When business owners come to us wanting automation, the most common mistake is trying to automate everything at once. The smarter approach: identify the 5 workflows that eat the most time and have the most consistent process — and start there. These are the workflows that reliably save service businesses 10+ hours every single week." },
+      { type: "p", text: "When business owners come to us wanting systems, the most common mistake is trying to automate everything at once. The smarter approach: identify the 5 workflows that eat the most time and have the most consistent process — and start there. These are the workflows that reliably save service businesses 10+ hours every single week." },
       { type: "h2", text: "1. Lead Follow-Up" },
-      { type: "p", text: "We covered this in depth in our lead intake guide, but it bears repeating: automated lead follow-up is the single highest-ROI automation for any service business. A 60-second response time versus a 47-hour average is the difference between a closed deal and a lost opportunity." },
+      { type: "p", text: "We covered this in depth in our lead intake guide, but it bears repeating: automated lead follow-up is the single highest-ROI system for any service business. A 60-second response time versus a 47-hour average is the difference between a closed deal and a lost opportunity." },
       { type: "p", text: "Time saved per week: 3–5 hours. Revenue recovered: often $2,000–$10,000/month for active businesses." },
       { type: "h2", text: "2. Invoice Generation & Payment Follow-Up" },
       { type: "p", text: "Manual invoicing is a silent time thief. Between logging into your accounting tool, filling in project details, attaching to an email, and chasing unpaid invoices — most service businesses spend 3–6 hours per week on billing." },
@@ -83,29 +83,29 @@ const posts: Post[] = [
       { type: "p", text: "Most service businesses know they should be asking for reviews but never get around to it. Automate a post-project sequence: 3 days after project completion, send a personalized email asking for a Google or Trustpilot review. If they click the link, great. If not, a gentle follow-up 5 days later." },
       { type: "p", text: "Businesses that implement this consistently average 4–8x more reviews within 90 days — which directly impacts SEO rankings and inbound leads." },
       { type: "h2", text: "Where to Start" },
-      { type: "p", text: "If you're new to automation, start with lead follow-up. It's the fastest to implement and has the most immediate revenue impact. From there, move to invoicing, then onboarding. Each one builds on the last and creates a business that runs more smoothly every week." },
-      { type: "callout", text: "Not sure which of these to tackle first for your specific business? Get a free AI audit — we'll map out your exact automation roadmap in 24 hours." },
+      { type: "p", text: "If you're new to systems, start with lead follow-up. It's the fastest to implement and has the most immediate revenue impact. From there, move to invoicing, then onboarding. Each one builds on the last and creates a business that runs more smoothly every week." },
+      { type: "callout", text: "Not sure which of these to tackle first for your specific business? Get a free AI audit — we'll map out your exact systems roadmap in 24 hours." },
     ],
   },
   {
     slug: "make-vs-zapier-for-business-automation",
-    title: "Make vs Zapier: Which Is Better for Business Automation in 2026?",
+    title: "Make vs Zapier: Which Is Better for Business Systems in 2026?",
     excerpt: "Both platforms are popular, but they serve very different use cases. Here's how we choose between them for our clients.",
     date: "March 5, 2026",
     readTime: "7 min read",
     tag: "Tools",
     author: "FlowZone AI Team",
     content: [
-      { type: "p", text: "If you've started researching business automation, you've almost certainly encountered both Make (formerly Integromat) and Zapier. They're the two dominant platforms in the no-code automation space — and they're very different tools that serve different needs. Here's how we think about the decision for every client we work with." },
+      { type: "p", text: "If you've started researching business systems, you've almost certainly encountered both Make (formerly Integromat) and Zapier. They're the two dominant platforms in the no-code systems space — and they're very different tools that serve different needs. Here's how we think about the decision for every client we work with." },
       { type: "h2", text: "Zapier: The Beginner-Friendly Powerhouse" },
-      { type: "p", text: "Zapier was built with simplicity in mind. Its linear, step-by-step 'Zap' format is intuitive for anyone to understand, and it connects with over 7,000 apps — more than any other platform. If your automation need is straightforward (when X happens, do Y), Zapier is usually the fastest way to get it live." },
+      { type: "p", text: "Zapier was built with simplicity in mind. Its linear, step-by-step 'Zap' format is intuitive for anyone to understand, and it connects with over 7,000 apps — more than any other platform. If your system need is straightforward (when X happens, do Y), Zapier is usually the fastest way to get it live." },
       { type: "ul", items: [
         "Pros: Easiest to learn, 7,000+ app integrations, reliable uptime, great support docs",
         "Cons: Gets expensive quickly at scale, limited logic for complex multi-step flows",
-        "Best for: Simple 2–3 step automations, teams with no technical background",
+        "Best for: Simple 2–3 step systems, teams with no technical background",
         "Pricing: Free tier limited; paid plans from $19.99/month for 750 tasks"
       ]},
-      { type: "h2", text: "Make: The Visual Automation Builder" },
+      { type: "h2", text: "Make: The Visual Systems Builder" },
       { type: "p", text: "Make is more powerful and significantly more affordable at scale. Instead of linear steps, it uses a visual canvas where you can build complex workflows with branching logic, iterators, error handling, and data transformations. It's the tool we use for 80% of our client builds at FlowZone AI." },
       { type: "ul", items: [
         "Pros: Visual builder, complex logic support, much cheaper per operation, excellent data transformation tools",
@@ -114,28 +114,28 @@ const posts: Post[] = [
         "Pricing: Free tier available; paid plans from $9/month for 10,000 operations"
       ]},
       { type: "h2", text: "The Price Difference Is Significant" },
-      { type: "p", text: "At 50,000 operations per month — which is realistic for an active business running lead follow-up, invoicing, and reporting automations — Zapier costs around $299/month. Make costs $16/month for the same volume. Over a year, that's a $3,396 difference for identical functionality." },
+      { type: "p", text: "At 50,000 operations per month — which is realistic for an active business running lead follow-up, invoicing, and reporting systems — Zapier costs around $299/month. Make costs $16/month for the same volume. Over a year, that's a $3,396 difference for identical functionality." },
       { type: "h2", text: "How We Choose for Clients" },
-      { type: "p", text: "We use Zapier when: the client needs something live in under an hour, the integration isn't supported by Make, or the team will be managing the automation themselves without technical support." },
-      { type: "p", text: "We use Make when: the workflow has multiple branches or conditions, the business is processing high volumes, the automation involves data transformation or aggregation, or cost efficiency is a priority." },
+      { type: "p", text: "We use Zapier when: the client needs something live in under an hour, the integration isn't supported by Make, or the team will be managing the system themselves without technical support." },
+      { type: "p", text: "We use Make when: the workflow has multiple branches or conditions, the business is processing high volumes, the system involves data transformation or aggregation, or cost efficiency is a priority." },
       { type: "h2", text: "Our Recommendation" },
-      { type: "p", text: "For most small to medium service businesses: start with Zapier to validate the automation, then migrate to Make once it's proven. For any business that's serious about building a scalable automation infrastructure, Make is the better long-term investment." },
+      { type: "p", text: "For most small to medium service businesses: start with Zapier to validate the system, then migrate to Make once it's proven. For any business that's serious about building a scalable systems infrastructure, Make is the better long-term investment." },
       { type: "callout", text: "We build on both platforms and will always recommend the right tool for your specific situation — not the most expensive one. Get your free AI audit to see what we'd recommend for your business." },
     ],
   },
   {
     slug: "ai-automation-roi-calculator",
-    title: "How to Calculate the ROI of Automation Before You Build",
-    excerpt: "Don't guess — use this simple formula to prove the value of automation to yourself (or your boss) before committing a dollar.",
+    title: "How to Calculate the ROI of Systems Before You Build",
+    excerpt: "Don't guess — use this simple formula to prove the value of systems to yourself (or your boss) before committing a dollar.",
     date: "February 28, 2026",
     readTime: "5 min read",
     tag: "Finance",
     author: "FlowZone AI Team",
     content: [
-      { type: "p", text: "One of the most common objections we hear before starting an automation project is: 'How do I know this will actually be worth it?' It's a fair question. The answer is to run the numbers before you build — and the math is simpler than most people expect." },
+      { type: "p", text: "One of the most common objections we hear before starting a system project is: 'How do I know this will actually be worth it?' It's a fair question. The answer is to run the numbers before you build — and the math is simpler than most people expect." },
       { type: "h2", text: "The Core Formula" },
       { type: "callout", text: "Monthly ROI = (Hours saved per month × Your hourly rate) − Monthly tool cost" },
-      { type: "p", text: "That's it. If your time is worth $100/hour and a workflow saves you 10 hours per month, that's $1,000 in value recovered. If the tool costs $50/month, your net ROI is $950/month — or $11,400/year from a single automation." },
+      { type: "p", text: "That's it. If your time is worth $100/hour and a workflow saves you 10 hours per month, that's $1,000 in value recovered. If the tool costs $50/month, your net ROI is $950/month — or $11,400/year from a single systems." },
       { type: "h2", text: "Step 1: Time the Manual Process" },
       { type: "p", text: "Before building anything, track how long the manual version takes. Don't estimate — actually time it over a week. Most people significantly underestimate repetitive task time. Invoice generation might feel like 10 minutes but adds up to 3 hours a week when you include formatting, emailing, and follow-ups." },
       { type: "h2", text: "Step 2: Calculate Monthly Hours Wasted" },
@@ -143,7 +143,7 @@ const posts: Post[] = [
       { type: "h2", text: "Step 3: Factor in Error Costs" },
       { type: "p", text: "Manual processes produce errors. A missed lead follow-up might cost a $3,000 project. A late invoice might delay $5,000 in cash flow by two weeks. These costs are real but often overlooked in ROI calculations. Conservative estimates only — but include them." },
       { type: "h2", text: "Step 4: Add the Revenue Side" },
-      { type: "p", text: "Some automations don't just save time — they actively generate revenue. A lead follow-up system that converts one extra client per month at an average project value of $2,500 has a revenue impact of $30,000/year. That dwarfs the cost of any automation tool." },
+      { type: "p", text: "Some systems don't just save time — they actively generate revenue. A lead follow-up system that converts one extra client per month at an average project value of $2,500 has a revenue impact of $30,000/year. That dwarfs the cost of any workflow tool." },
       { type: "h2", text: "A Real Example" },
       { type: "ul", items: [
         "Process: Lead follow-up + CRM entry",
@@ -152,7 +152,7 @@ const posts: Post[] = [
         "Monthly time value: $1,200",
         "Tool cost: $29/month (Make.com pro plan)",
         "Net monthly ROI: $1,171",
-        "Annual ROI: $14,052 — from one automation"
+        "Annual ROI: $14,052 — from one system"
       ]},
       { type: "p", text: "When you lay it out this way, the question is rarely 'Is it worth it?' — it's 'Why didn't we do this sooner?'" },
       { type: "callout", text: "Want us to run the ROI calculation for your specific business? That's exactly what we do in your free AI audit — no obligation, delivered in 24 hours." },
@@ -160,16 +160,16 @@ const posts: Post[] = [
   },
   {
     slug: "airtable-automation-guide",
-    title: "The Complete Guide to Airtable Automation for Small Teams",
-    excerpt: "Airtable is more powerful than most people realize. Here's how to use its native automations — plus when to bring in external tools.",
+    title: "The Complete Guide to Airtable Automations for Small Teams",
+    excerpt: "Airtable is more powerful than most people realize. Here's how to use its native Automations — plus when to bring in external tools.",
     date: "February 20, 2026",
     readTime: "10 min read",
     tag: "Tutorial",
     author: "FlowZone AI Team",
     content: [
-      { type: "p", text: "Airtable is one of the most underrated tools in the small business stack. Most teams use it as a fancy spreadsheet — but it has a robust native automation engine that can handle a surprising number of workflows without any external tools. Here's how to unlock it." },
+      { type: "p", text: "Airtable is one of the most underrated tools in the small business stack. Most teams use it as a fancy spreadsheet — but it has a robust native systems engine that can handle a surprising number of workflows without any external tools. Here's how to unlock it." },
       { type: "h2", text: "What Airtable Automations Can Do Natively" },
-      { type: "p", text: "Airtable's built-in automation builder supports triggers and actions that cover most common business workflows. You can trigger automations when a record is created, when a field changes, when a date arrives, or on a custom schedule." },
+      { type: "p", text: "Airtable's built-in Automations builder supports triggers and actions that cover most common business workflows. You can trigger automations when a record is created, when a field changes, when a date arrives, or on a custom schedule." },
       { type: "ul", items: [
         "Send email notifications when a lead status changes",
         "Create new records when a form is submitted",
@@ -193,9 +193,9 @@ const posts: Post[] = [
       { type: "h3", text: "5. Review Request Sequence" },
       { type: "p", text: "Trigger: When 'Project Status' changes to 'Delivered'. Action: Wait 3 days (using Airtable's delay feature). Action: Send the client a personalized review request email with your Google review link." },
       { type: "h2", text: "When to Bring in External Tools" },
-      { type: "p", text: "Airtable's native automations are powerful but have limits. You'll want to bring in Make.com or Zapier when you need: two-way syncing with external apps, complex conditional logic with multiple branches, data transformation before sending to another system, or integrations Airtable doesn't natively support (like QuickBooks or Stripe)." },
-      { type: "p", text: "The sweet spot for most small teams: use Airtable automations for everything internal, and connect Make.com for anything that needs to talk to the outside world." },
-      { type: "callout", text: "We build Airtable systems for service businesses every week. If you want a custom Airtable setup with automations built for your exact workflow, start with a free AI audit." },
+      { type: "p", text: "Airtable's native Automations are powerful but have limits. You'll want to bring in Make.com or Zapier when you need: two-way syncing with external apps, complex conditional logic with multiple branches, data transformation before sending to another system, or integrations Airtable doesn't natively support (like QuickBooks or Stripe)." },
+      { type: "p", text: "The sweet spot for most small teams: use Airtable Automations for everything internal, and connect Make.com for anything that needs to talk to the outside world." },
+      { type: "callout", text: "We build Airtable Automations for service businesses every week. If you want a custom Airtable setup with automations built for your exact workflow, start with a free AI audit." },
     ],
   },
 ];
@@ -292,7 +292,7 @@ export default async function BlogPost({
       <section className="py-16 px-6 bg-sky-50 border-t border-sky-100">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-2xl font-black text-gray-900 mb-4">Ready to automate your business?</h2>
-          <p className="text-gray-500 mb-6">Get a free custom automation plan &mdash; delivered in 24 hours.</p>
+          <p className="text-gray-500 mb-6">Get a free custom systems plan &mdash; delivered in 24 hours.</p>
           <Link
             href="/intake"
             className="inline-block bg-sky-600 text-white font-bold px-8 py-4 rounded-xl hover:bg-sky-700 transition-colors"

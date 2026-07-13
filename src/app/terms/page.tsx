@@ -19,14 +19,14 @@ export default function TermsPage() {
         <section className="mb-10">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Description of Services</h2>
           <p className="text-gray-600 leading-relaxed mb-3">
-            FlowZone AI provides AI-powered business automation services, including but not limited to:
+            FlowZone AI provides AI-powered business systems services, including but not limited to:
           </p>
           <ul className="list-disc list-inside text-gray-600 space-y-2 leading-relaxed">
             <li>Automated lead follow-up workflows</li>
-            <li>Invoicing and billing automation</li>
+            <li>Invoicing and billing systems</li>
             <li>Appointment scheduling systems</li>
             <li>Reporting and analytics dashboards</li>
-            <li>Client onboarding automation</li>
+            <li>Client onboarding systems</li>
             <li>Data entry and synchronization solutions</li>
           </ul>
           <p className="text-gray-600 leading-relaxed mt-3">
@@ -66,7 +66,7 @@ export default function TermsPage() {
           <ul className="list-disc list-inside text-gray-600 space-y-2 leading-relaxed">
             <li><strong>Fees:</strong> All fees are stated in U.S. dollars unless otherwise specified and are non-refundable except as explicitly stated in our refund policy.</li>
             <li><strong>Payment:</strong> You authorize us to charge your designated payment method for all applicable fees.</li>
-            <li><strong>48-Hour Delivery Guarantee:</strong> If we fail to deliver your automation workflow within 48 hours of project kickoff (excluding weekends and holidays), you are entitled to a full refund upon request.</li>
+            <li><strong>48-Hour Delivery Guarantee:</strong> If we fail to deliver your system workflow within 48 hours of project kickoff (excluding weekends and holidays), you are entitled to a full refund upon request.</li>
             <li><strong>Scope Changes:</strong> Changes to project scope after kickoff may affect delivery timelines and pricing and will be agreed upon in writing.</li>
           </ul>
         </section>
@@ -74,13 +74,13 @@ export default function TermsPage() {
         <section className="mb-10">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Intellectual Property</h2>
           <p className="text-gray-600 leading-relaxed mb-3">
-            <strong>Our IP:</strong> The FlowZone AI name, logo, website design, proprietary automation frameworks, templates, and all related intellectual property are owned by FlowZone AI and are protected by applicable copyright, trademark, and other intellectual property laws.
+            <strong>Our IP:</strong> The FlowZone AI name, logo, website design, proprietary systems frameworks, templates, and all related intellectual property are owned by FlowZone AI and are protected by applicable copyright, trademark, and other intellectual property laws.
           </p>
           <p className="text-gray-600 leading-relaxed mb-3">
             <strong>Your IP:</strong> You retain ownership of all data, content, and materials you provide to us. By using our services, you grant us a limited, non-exclusive license to use your materials solely to provide our services to you.
           </p>
           <p className="text-gray-600 leading-relaxed">
-            <strong>Deliverables:</strong> Upon full payment, you own the automation workflows and systems we build specifically for your business. We retain the right to use general methodologies, techniques, and non-proprietary knowledge gained during the engagement.
+            <strong>Deliverables:</strong> Upon full payment, you own the workflows and systems we build specifically for your business. We retain the right to use general methodologies, techniques, and non-proprietary knowledge gained during the engagement.
           </p>
         </section>
 
@@ -111,7 +111,7 @@ export default function TermsPage() {
         <section className="mb-10">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Disclaimer of Warranties</h2>
           <p className="text-gray-600 leading-relaxed">
-            OUR SERVICES ARE PROVIDED &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot; WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. WE DO NOT WARRANT THAT OUR SERVICES WILL BE UNINTERRUPTED, ERROR-FREE, OR COMPLETELY SECURE. RESULTS FROM USING OUR AUTOMATION SERVICES MAY VARY AND WE MAKE NO GUARANTEES REGARDING SPECIFIC BUSINESS OUTCOMES.
+            OUR SERVICES ARE PROVIDED &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot; WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. WE DO NOT WARRANT THAT OUR SERVICES WILL BE UNINTERRUPTED, ERROR-FREE, OR COMPLETELY SECURE. RESULTS FROM USING OUR SYSTEMS SERVICES MAY VARY AND WE MAKE NO GUARANTEES REGARDING SPECIFIC BUSINESS OUTCOMES.
           </p>
         </section>
 

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "You're In | FlowZone AI",
-  description: "We received your request and will send your free automation plan within 24 hours.",
+  description: "We received your request and will send your free systems plan within 24 hours.",
 };
 
 export default function ThankYou() {
@@ -21,7 +21,7 @@ export default function ThankYou() {
         You&apos;re In.
       </h1>
       <p className="text-xl text-gray-500 max-w-md mb-10">
-        We received your request. Your free custom automation plan will land in your inbox within <span className="text-indigo-600 font-semibold">24 hours</span>.
+        We received your request. Your free custom systems plan will land in your inbox within <span className="text-indigo-600 font-semibold">24 hours</span>.
       </p>
 
       {/* What happens next */}
@@ -30,7 +30,7 @@ export default function ThankYou() {
         <div className="space-y-4">
           <div className="flex items-start gap-3">
             <div className="w-7 h-7 rounded-full bg-indigo-600 text-white text-sm font-bold flex items-center justify-center shrink-0 mt-0.5">1</div>
-            <p className="text-gray-700 text-sm">We review your submission and map out your automation opportunities.</p>
+            <p className="text-gray-700 text-sm">We review your submission and map out your system opportunities.</p>
           </div>
           <div className="flex items-start gap-3">
             <div className="w-7 h-7 rounded-full bg-indigo-600 text-white text-sm font-bold flex items-center justify-center shrink-0 mt-0.5">2</div>
@@ -38,7 +38,7 @@ export default function ThankYou() {
           </div>
           <div className="flex items-start gap-3">
             <div className="w-7 h-7 rounded-full bg-indigo-600 text-white text-sm font-bold flex items-center justify-center shrink-0 mt-0.5">3</div>
-            <p className="text-gray-700 text-sm">If it looks good, we get to work. First automation live in 48 hours.</p>
+            <p className="text-gray-700 text-sm">If it looks good, we get to work. First system live in 48 hours.</p>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
     title: "AI News & Resources | FlowZone AI",
-    description: "The best AI automation news, tools, and industry updates — curated for business owners who want to stay ahead.",
+    description: "The best AI systems news, tools, and industry updates — curated for business owners who want to stay ahead.",
 };
 
 const newsOutlets = [
@@ -17,14 +17,14 @@ const newsOutlets = [
   { name: "Anthropic News", url: "https://www.anthropic.com/news", description: "Official updates from Anthropic on Claude and AI safety research.", tag: "Official" },
   { name: "OpenAI Blog", url: "https://openai.com/blog", description: "Product updates and research from OpenAI — GPT, Sora, and beyond.", tag: "Official" },
   { name: "Google DeepMind Blog", url: "https://deepmind.google/discover/blog/", description: "Research and product updates from Google's AI research division.", tag: "Official" },
-  { name: "No Code MBA", url: "https://www.nocode.mba", description: "Tutorials and news on no-code and low-code automation tools for businesses.", tag: "Tools" },
+  { name: "No Code MBA", url: "https://www.nocode.mba", description: "Tutorials and news on no-code and low-code workflow tools for businesses.", tag: "Tools" },
   { name: "Lenny's Newsletter", url: "https://www.lennysnewsletter.com", description: "Product and growth insights — increasingly AI-focused for operators and founders.", tag: "Newsletter" },
   ];
 
 const tools = [
-  { name: "Make", url: "https://www.make.com", description: "Visual automation platform — connects any app without code." },
-  { name: "n8n", url: "https://n8n.io", description: "Open-source workflow automation for technical teams." },
-  { name: "Zapier", url: "https://zapier.com", description: "The original no-code automation tool." },
+  { name: "Make", url: "https://www.make.com", description: "Visual systems platform — connects any app without code." },
+  { name: "n8n", url: "https://n8n.io", description: "Open-source workflow systems for technical teams." },
+  { name: "Zapier", url: "https://zapier.com", description: "The original no-code workflow tool." },
   { name: "Relevance AI", url: "https://relevanceai.com", description: "Build and deploy AI agents for business workflows." },
   { name: "Lindy AI", url: "https://www.lindy.ai", description: "AI employee platform for automating business tasks." },
   { name: "Clay", url: "https://www.clay.com", description: "AI-powered prospecting and outreach enrichment." },
@@ -51,7 +51,7 @@ export default function AiNews() {
                                               AI News &amp; Resources
                                   </h1>
                                   <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
-                                              The best newsletters, news outlets, and tools to keep you current on AI and automation. We follow all of this so we can bring it directly into your business.
+                                              The best newsletters, news outlets, and tools to keep you current on AI and systems. We follow all of this so we can bring it directly into your business.
                                   </p>
                         </div>
                 </section>
@@ -62,7 +62,7 @@ export default function AiNews() {
                                   <div className="mb-12">
                                               <p className="text-sky-600 font-semibold text-sm uppercase tracking-wider mb-3">What We Read</p>
                                               <h2 className="text-3xl font-black text-gray-900 mb-2">Top News Sources &amp; Newsletters</h2>
-                                              <p className="text-gray-500">These are the sources we follow to stay sharp — and bring that knowledge into every automation we build.</p>
+                                              <p className="text-gray-500">These are the sources we follow to stay sharp — and bring that knowledge into every system we build.</p>
                                   </div>
                                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                                     {newsOutlets.map((outlet) => (
@@ -92,8 +92,8 @@ export default function AiNews() {
                         <div className="max-w-6xl mx-auto">
                                   <div className="mb-12">
                                               <p className="text-sky-600 font-semibold text-sm uppercase tracking-wider mb-3">The Stack</p>
-                                              <h2 className="text-3xl font-black text-gray-900 mb-2">AI Automation Tools We Use</h2>
-                                              <p className="text-gray-500">The platforms powering the automations we build for clients every day.</p>
+                                              <h2 className="text-3xl font-black text-gray-900 mb-2">AI Tools We Use</h2>
+                                              <p className="text-gray-500">The platforms powering the systems we build for clients every day.</p>
                                   </div>
                                   <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                                     {tools.map((tool) => (

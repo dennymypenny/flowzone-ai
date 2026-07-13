@@ -3,10 +3,18 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Services | FlowZone AI",
-  description: "Done-for-you AI automations across sales, ops, support, finance, and marketing.",
+  description: "Full brand sites and storefronts, plus done-for-you systems across sales, ops, support, finance and marketing.",
 };
 
 const services = [
+  {
+    icon: "🛍️",
+    category: "Creative",
+    title: "Brand Sites & Storefronts",
+    description: "Your idea deserves more than a template. We design and build full brand sites and online stores that look premium and convert, like CardsRG, a collector storefront we took from idea to live shop.",
+    outcomes: ["Full site or storefront designed and built", "Copy, layout and product pages done for you", "Stripe checkout and payments wired up", "Live in days, not months"],
+    tools: ["Next.js", "Vercel", "Stripe", "Shopify", "Figma"],
+  },
   {
     icon: "🎯",
     category: "Sales",
@@ -20,7 +28,7 @@ const services = [
     category: "Operations",
     title: "Appointment Booking & Reminders",
     description: "We automate your entire booking flow — from calendar link to confirmation email to reminder sequence — so clients show up prepared and no-shows drop dramatically.",
-    outcomes: ["Automated booking confirmations", "Multi-step reminder sequences", "Reschedule/cancel handling", "Post-call follow-up automation"],
+    outcomes: ["Automated booking confirmations", "Multi-step reminder sequences", "Reschedule/cancel handling", "Post-call follow-up built in"],
     tools: ["Calendly", "Google Calendar", "Acuity", "Zoom", "Gmail"],
   },
   {
@@ -34,8 +42,8 @@ const services = [
   {
     icon: "📊",
     category: "Reporting",
-    title: "Automated Reporting & Dashboards",
-    description: "We build automated reporting pipelines that pull data from all your tools, compile it into clean summaries, and deliver them to your inbox or Slack every week — zero manual work.",
+    title: "Reporting & Dashboard Systems",
+    description: "We build reporting systems that pull data from all your tools, compile it into clean summaries, and deliver them to your inbox or Slack every week — zero manual work.",
     outcomes: ["Weekly KPI summaries on autopilot", "Multi-source data aggregation", "Custom Slack/email digests", "Real-time dashboard updates"],
     tools: ["Google Sheets", "Notion", "Airtable", "Slack", "Looker"],
   },
@@ -50,17 +58,17 @@ const services = [
   {
     icon: "✍️",
     category: "Marketing",
-    title: "Content Repurposing Automation",
+    title: "Content Repurposing Systems",
     description: "We build systems that take your core content — a podcast, blog post, or video — and automatically generate social posts, email newsletters, and short-form clips for every platform.",
-    outcomes: ["Blog → social posts (automated)", "Podcast → clips + show notes", "YouTube → email digest", "Consistent multi-channel publishing"],
+    outcomes: ["Blog → social posts (hands-free)", "Podcast → clips + show notes", "YouTube → email digest", "Consistent multi-channel publishing"],
     tools: ["Notion", "Buffer", "Beehiiv", "Zapier", "Make"],
   },
   {
     icon: "📧",
     category: "Email",
-    title: "Email Sequence & Nurture Automation",
-    description: "We design and automate full email nurture sequences triggered by user behavior — clicks, sign-ups, purchases — so every lead gets the right message at the right time.",
-    outcomes: ["Behavior-triggered email flows", "Segmentation & personalization", "A/B testing automation", "Unsubscribe & list hygiene handling"],
+    title: "Email Nurture Systems",
+    description: "We design full email nurture systems triggered by user behavior — clicks, sign-ups, purchases — so every lead gets the right message at the right time.",
+    outcomes: ["Behavior-triggered email flows", "Segmentation & personalization", "A/B testing built in", "Unsubscribe & list hygiene handling"],
     tools: ["Mailchimp", "Klaviyo", "ActiveCampaign", "Beehiiv", "HubSpot"],
   },
   {
@@ -80,10 +88,10 @@ export default function Services() {
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-blue-600 font-semibold text-sm uppercase tracking-wider mb-4">What We Build</p>
           <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6">
-            AI Automations for Every Part of Your Business
+            Brands, Sites and Systems for Every Part of Your Business
           </h1>
           <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed mb-8">
-            High-impact, done-for-you automations across sales, ops, support, finance, and marketing.
+            We are a creative and business studio. We build the brand that gets you noticed and the systems that keep it running. AI gives us speed, humans give it taste.
           </p>
           <Link href="/intake" className="inline-block bg-blue-600 text-white font-bold px-8 py-4 rounded-xl hover:bg-blue-700 transition-colors">
             Get Your Free AI Audit →
@@ -149,7 +157,7 @@ export default function Services() {
 
       <section className="py-20 px-6 bg-blue-600">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-black text-white mb-4">Ready to Automate?</h2>
+          <h2 className="text-4xl font-black text-white mb-4">Ready to Build?</h2>
           <p className="text-blue-100 text-lg mb-8">Tell us what you're dealing with and we'll design a custom solution — free audit, no commitment.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/intake" className="bg-white text-blue-600 font-bold px-8 py-4 rounded-xl hover:bg-blue-50 transition-colors">

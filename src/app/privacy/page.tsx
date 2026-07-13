@@ -18,9 +18,9 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="text-xl font-bold text-gray-900 mb-3">1. Who We Are</h2>
             <p>
-              FlowZone AI (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) is a done-for-you AI automation
+              FlowZone AI (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) is a done-for-you AI systems
               agency operating at <a href="https://flowzone.dev" className="text-sky-600 hover:underline">flowzone.dev</a>.
-              We build custom workflow automations for small and mid-size businesses using tools such as Make.com,
+              We build custom workflow systems for small and mid-size businesses using tools such as Make.com,
               Zapier, Airtable, and other no-code/low-code platforms. This Privacy Policy explains how we collect,
               use, disclose, and protect information when you visit our website or engage our services.
             </p>
@@ -47,7 +47,7 @@ export default function PrivacyPolicy() {
             <h2 className="text-xl font-bold text-gray-900 mb-3">3. How We Use Your Information</h2>
             <p className="mb-3">We use the information we collect to:</p>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Deliver, manage, and improve our automation services.</li>
+              <li>Deliver, manage, and improve our systems services.</li>
               <li>Respond to your inquiries, schedule consultations, and send project updates.</li>
               <li>Process payments and send invoices or receipts.</li>
               <li>Send you service-related communications and, with your consent, marketing emails.</li>
@@ -61,7 +61,7 @@ export default function PrivacyPolicy() {
             <h2 className="text-xl font-bold text-gray-900 mb-3">4. Information Sharing</h2>
             <p className="mb-3">We may share your information with trusted third parties solely to operate our business:</p>
             <ul className="list-disc pl-6 space-y-2">
-              <li><strong>Service providers:</strong> Stripe (payments), Google Workspace (email), Vercel (website hosting), Airtable, Make.com, Zapier, and similar platforms used to deliver your automation project.</li>
+              <li><strong>Service providers:</strong> Stripe (payments), Google Workspace (email), Vercel (website hosting), Airtable, Make.com, Zapier, and similar platforms used to deliver your system project.</li>
               <li><strong>Legal requirements:</strong> If required by law, court order, or government authority.</li>
               <li><strong>Business transfers:</strong> In the event of a merger, acquisition, or sale of assets, your information may be transferred to the successor entity.</li>
             </ul>

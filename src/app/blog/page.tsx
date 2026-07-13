@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Blog | FlowZone AI",
-  description: "Automation insights, case studies, and how-to guides from the FlowZone AI team.",
+  description: "Systems insights, case studies, and how-to guides from the FlowZone AI team.",
 };
 
 const posts = [
@@ -27,7 +27,7 @@ const posts = [
   },
   {
     slug: "make-vs-zapier-for-business-automation",
-    title: "Make vs Zapier: Which Is Better for Business Automation in 2026?",
+    title: "Make vs Zapier: Which Is Better for Business Systems in 2026?",
     excerpt:
       "Both platforms are popular, but they serve very different use cases. Here's how we choose between them for our clients.",
     date: "March 5, 2026",
@@ -36,18 +36,18 @@ const posts = [
   },
   {
     slug: "ai-automation-roi-calculator",
-    title: "How to Calculate the ROI of Automation Before You Build",
+    title: "How to Calculate the ROI of Systems Before You Build",
     excerpt:
-      "Don't guess — use this simple formula to prove the value of automation to yourself (or your boss) before committing a dollar.",
+      "Don't guess — use this simple formula to prove the value of systems to yourself (or your boss) before committing a dollar.",
     date: "February 28, 2026",
     readTime: "5 min read",
     tag: "Finance",
   },
   {
     slug: "airtable-automation-guide",
-    title: "The Complete Guide to Airtable Automation for Small Teams",
+    title: "The Complete Guide to Airtable Automations for Small Teams",
     excerpt:
-      "Airtable is more powerful than most people realize. Here's how to use its native automations — plus when to bring in external tools.",
+      "Airtable is more powerful than most people realize. Here's how to use its native Automations — plus when to bring in external tools.",
     date: "February 20, 2026",
     readTime: "10 min read",
     tag: "Tutorial",
@@ -67,7 +67,7 @@ export default function Blog() {
       <section className="bg-white pt-20 pb-16 px-6 border-b border-gray-100">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-sky-600 font-semibold text-sm uppercase tracking-wider mb-4">Blog</p>
-          <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6">Automation Insights</h1>
+          <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6">Systems Insights</h1>
           <p className="text-xl text-gray-500 leading-relaxed">
             Guides, case studies, and tutorials from the FlowZone AI team.
           </p>
@@ -106,7 +106,7 @@ export default function Blog() {
       <section className="py-16 px-6 bg-sky-50 border-t border-sky-100">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-2xl font-black text-gray-900 mb-4">Ready to automate your business?</h2>
-          <p className="text-gray-500 mb-6">Get a free custom automation plan &mdash; delivered in 24 hours.</p>
+          <p className="text-gray-500 mb-6">Get a free custom systems plan &mdash; delivered in 24 hours.</p>
           <Link
             href="/intake"
             className="inline-block bg-sky-600 text-white font-bold px-8 py-4 rounded-xl hover:bg-sky-700 transition-colors"
