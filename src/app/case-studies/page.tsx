@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Case Studies",
-  description: "Real results from real clients. See how FlowZone AI has helped businesses automate workflows, save time, and grow revenue.",
+  description: "See how FlowZone AI helps businesses launch brands, sites and storefronts, plus the systems that run them.",
 };
 
 const cases = [
@@ -199,7 +199,7 @@ export default function CaseStudies() {
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-4xl font-black text-gray-900 mb-4">Your Business Could Be Next</h2>
           <p className="text-gray-500 text-lg mb-8">
-            Every client above started with one conversation. Tell us what you want automated and we will build it in 7 days or less.
+            Every client above started with one conversation. You bring the idea and we build the whole thing, in 7 days or less.
           </p>
           <Link href="/intake" className="inline-block bg-blue-600 text-white font-bold px-10 py-4 rounded-xl hover:bg-blue-700 transition-colors text-lg">
             Start Your Project →

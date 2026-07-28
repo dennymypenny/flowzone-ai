@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
     title: "AI News & Resources | FlowZone AI",
-    description: "The best AI systems news, tools, and industry updates — curated for business owners who want to stay ahead.",
+    description: "The best AI news, tools and industry updates, curated for business owners who want to stay ahead.",
 };
 
 const newsOutlets = [
@@ -51,7 +51,7 @@ export default function AiNews() {
                                               AI News &amp; Resources
                                   </h1>
                                   <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
-                                              The best newsletters, news outlets, and tools to keep you current on AI and systems. We follow all of this so we can bring it directly into your business.
+                                              The best newsletters, news outlets and tools to keep you current on AI and the systems it powers. We follow all of it so we can bring it straight into the work we build for you.
                                   </p>
                         </div>
                 </section>
@@ -62,7 +62,7 @@ export default function AiNews() {
                                   <div className="mb-12">
                                               <p className="text-sky-600 font-semibold text-sm uppercase tracking-wider mb-3">What We Read</p>
                                               <h2 className="text-3xl font-black text-gray-900 mb-2">Top News Sources &amp; Newsletters</h2>
-                                              <p className="text-gray-500">These are the sources we follow to stay sharp — and bring that knowledge into every system we build.</p>
+                                              <p className="text-gray-500">These are the sources we follow to stay sharp, and that knowledge goes into every brand, site and system we build.</p>
                                   </div>
                                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                                     {newsOutlets.map((outlet) => (
@@ -93,7 +93,7 @@ export default function AiNews() {
                                   <div className="mb-12">
                                               <p className="text-sky-600 font-semibold text-sm uppercase tracking-wider mb-3">The Stack</p>
                                               <h2 className="text-3xl font-black text-gray-900 mb-2">AI Tools We Use</h2>
-                                              <p className="text-gray-500">The platforms powering the systems we build for clients every day.</p>
+                                              <p className="text-gray-500">The platforms behind the brands, sites and systems we build for clients every day.</p>
                                   </div>
                                   <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                                     {tools.map((tool) => (
@@ -117,7 +117,7 @@ export default function AiNews() {
                         <div className="max-w-3xl mx-auto text-center">
                                   <h2 className="text-4xl font-black text-white mb-4">Want Us to Build These Into Your Business?</h2>
                                   <p className="text-sky-100 text-lg mb-8">
-                                              We follow every tool and trend on this page — and put it to work for our clients. Tell us what you want to automate.
+                                              We follow every tool and trend on this page and put it to work for our clients. You bring the idea. We build the whole thing.
                                   </p>
                                   <Link href="/intake" className="inline-block bg-white text-sky-600 font-bold px-8 py-4 rounded-xl hover:bg-sky-50 transition-colors">
                                               Get Your Free AI Audit &#8594;

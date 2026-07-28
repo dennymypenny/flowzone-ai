@@ -22,7 +22,7 @@ export default function TermsPage() {
             FlowZone AI provides AI-powered business systems services, including but not limited to:
           </p>
           <ul className="list-disc list-inside text-gray-600 space-y-2 leading-relaxed">
-            <li>Automated lead follow-up workflows</li>
+            <li>Lead follow-up systems</li>
             <li>Invoicing and billing systems</li>
             <li>Appointment scheduling systems</li>
             <li>Reporting and analytics dashboards</li>

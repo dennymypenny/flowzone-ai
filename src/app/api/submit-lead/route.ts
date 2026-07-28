@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
       from: "FlowZone AI <onboarding@resend.dev>",
       to: "flowzoneautomation@gmail.com",
       subject: `New Audit Request: ${name} — ${business}`,
-      html: `<div style="font-family:sans-serif;max-width:600px"><h2 style="color:#1E3A8A">New Free AI Audit Request</h2><p><b>Name:</b> ${name}</p><p><b>Email:</b> <a href="mailto:${email}">${email}</a></p><p><b>Business:</b> ${business}</p><p><b>Wants to automate:</b> ${systemsList}</p>${otherDetails ? `<p><b>Details:</b> ${otherDetails}</p>` : ""}<hr/><p style="color:#888;font-size:12px">Submitted via flowzone.dev/intake</p></div>`,
+      html: `<div style="font-family:sans-serif;max-width:600px"><h2 style="color:#1E3A8A">New Free AI Audit Request</h2><p><b>Name:</b> ${name}</p><p><b>Email:</b> <a href="mailto:${email}">${email}</a></p><p><b>Business:</b> ${business}</p><p><b>Wants built:</b> ${systemsList}</p>${otherDetails ? `<p><b>Details:</b> ${otherDetails}</p>` : ""}<hr/><p style="color:#888;font-size:12px">Submitted via flowzone.dev/intake</p></div>`,
     });
 
     await resend.emails.send({

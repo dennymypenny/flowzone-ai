@@ -15,7 +15,7 @@ export default function Book() {
           <p className="text-indigo-600 font-semibold text-sm uppercase tracking-wider mb-4">Free Discovery Call</p>
           <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6">Book Your Free 20-Min Call</h1>
           <p className="text-xl text-gray-500 leading-relaxed">
-            Tell us what you're working on. We'll identify your top systems opportunity and give you a free plan — no pitch, no pressure.
+            Tell us the idea you're sitting on. We'll identify your top systems opportunity and give you a free plan. No pitch, no pressure.
           </p>
         </div>
       </section>
@@ -53,9 +53,9 @@ export default function Book() {
               <h2 className="text-2xl font-black text-gray-900 mb-6">What to Expect</h2>
               <div className="space-y-5">
                 {[
-                  { icon: "🎯", title: "We learn about your business", body: "Tell us what you do, how big your team is, and where you're spending the most manual time." },
-                  { icon: "🔍", title: "We identify your #1 opportunity", body: "We'll pinpoint the highest-ROI system for your specific situation — based on time saved, revenue impact, and complexity." },
-                  { icon: "🗺️", title: "You get a free custom plan", body: "We'll map out exactly what we'd build, what tools we'd connect, and what the outcome would look like." },
+                  { icon: "🎯", title: "We learn about your business", body: "Tell us what you do, who you serve and where your time is disappearing every week." },
+                  { icon: "🔍", title: "We identify your #1 opportunity", body: "We'll pinpoint the highest-ROI thing to build for your specific situation, based on time saved, revenue impact and complexity." },
+                  { icon: "🗺️", title: "You get a free custom plan", body: "We'll map out exactly what we'd build, how the pieces connect and what the outcome would look like." },
                   { icon: "🤝", title: "Zero pressure", body: "If it's not a good fit, we'll tell you. No hard sell, no follow-up spam. Just an honest conversation." },
                 ].map((item) => (
                   <div key={item.title} className="flex gap-4 items-start">
@@ -72,7 +72,7 @@ export default function Book() {
             <div className="bg-indigo-50 rounded-2xl p-6 border border-indigo-100">
               <p className="text-indigo-700 font-bold text-sm mb-3">💡 Come prepared with:</p>
               <ul className="space-y-2 text-sm text-indigo-600">
-                <li className="flex items-start gap-2"><span>•</span> The task(s) eating your time most</li>
+                <li className="flex items-start gap-2"><span>•</span> The idea or the task eating your time most</li>
                 <li className="flex items-start gap-2"><span>•</span> Tools you currently use (CRM, email, etc.)</li>
                 <li className="flex items-start gap-2"><span>•</span> Roughly how often you do it per week</li>
               </ul>

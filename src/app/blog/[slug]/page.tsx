@@ -291,13 +291,13 @@ export default async function BlogPost({
 
       <section className="py-16 px-6 bg-sky-50 border-t border-sky-100">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-2xl font-black text-gray-900 mb-4">Ready to automate your business?</h2>
-          <p className="text-gray-500 mb-6">Get a free custom systems plan &mdash; delivered in 24 hours.</p>
+          <h2 className="text-2xl font-black text-gray-900 mb-4">Ready to build the whole thing?</h2>
+          <p className="text-gray-500 mb-6">Tell us the idea. We will come back with a plan in 24 hours.</p>
           <Link
             href="/intake"
             className="inline-block bg-sky-600 text-white font-bold px-8 py-4 rounded-xl hover:bg-sky-700 transition-colors"
           >
-            Get Your Free AI Audit &rarr;
+            Get Your Free Build Plan &rarr;
           </Link>
         </div>
       </section>

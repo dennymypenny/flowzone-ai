@@ -7,7 +7,7 @@ type DisplayMsg = { role: "user" | "bot"; text: string };
 
 const CHIPS = [
   "I need a KPI dashboard",
-  "Automate my workflows",
+  "Build me a system that runs itself",
   "Build my portfolio site",
   "I need a business website",
   "Something else",
@@ -90,7 +90,7 @@ export default function ChatWidget() {
               </div>
               <div className="bg-gray-100 rounded-2xl rounded-tl-sm px-4 py-3 max-w-sm">
                 <p className="text-sm text-gray-800">
-                  Hi! I&apos;m the FlowZone assistant. What can we automate for your business today?
+                  Hi! I&apos;m the FlowZone assistant. What are we building for you today?
                 </p>
               </div>
             </div>

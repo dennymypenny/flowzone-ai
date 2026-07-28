@@ -2,33 +2,33 @@ import { NextRequest, NextResponse } from "next/server";
 
 const SYSTEM = `You are the FlowZone AI assistant. FlowZone AI is a creative and business studio that turns ideas into brands, sites, storefronts, dashboards and the systems that run them.
 
-Keep every reply to 1-2 short sentences. Always end by pointing to /intake or our email flowzoneautomation@gmail.com. We can do anything — if unsure, say we'll figure it out together. Never mention pricing.`;
+Keep every reply to 1-2 short sentences. Always end by pointing to /intake or our email flowzoneautomation@gmail.com. If you are unsure whether we can build something, say we'll figure it out together. We sell three flat packages, Starter at $997, Growth at $2,497 and Scale as a custom quote, so send pricing questions to /pricing.`;
 
 function keywordFallback(message: string): string {
   const m = message.toLowerCase();
   if (m.includes("dashboard") || m.includes("kpi") || m.includes("report"))
-    return "We build live KPI dashboards that update automatically from all your tools. Start at /intake or email flowzoneautomation@gmail.com.";
+    return "We build live KPI dashboards that pull from every tool you already run, so the numbers stay current without you touching them. Start at /intake or email flowzoneautomation@gmail.com.";
   if (m.includes("lead") || m.includes("crm") || m.includes("sales") || m.includes("follow"))
-    return "We automate lead capture and CRM entry so every lead gets a response in under 60 seconds. Start at /intake or email flowzoneautomation@gmail.com.";
+    return "We build lead intake that captures, sorts and answers every new lead in under 60 seconds, hands-free. Start at /intake or email flowzoneautomation@gmail.com.";
   if (m.includes("automat") || m.includes("workflow") || m.includes("manual"))
-    return "We map and automate any manual workflow end-to-end, delivered in 7 days or less. Start at /intake or email flowzoneautomation@gmail.com.";
+    return "Tell us the manual work eating your week and we build a system that runs it for you, start to finish. Start at /intake or email flowzoneautomation@gmail.com.";
   if (m.includes("email") || m.includes("nurture") || m.includes("sequence"))
-    return "We build behavior-triggered email sequences that send the right message at the right time. Start at /intake or email flowzoneautomation@gmail.com.";
+    return "We build email flows that send the right message at the right moment once someone acts. Start at /intake or email flowzoneautomation@gmail.com.";
   if (m.includes("support") || m.includes("ticket") || m.includes("helpdesk"))
-    return "We build AI triage systems that auto-route support tickets and send instant customer replies. Start at /intake or email flowzoneautomation@gmail.com.";
+    return "We build AI triage that routes support tickets and sends instant customer replies, with you reviewing anything that matters. Start at /intake or email flowzoneautomation@gmail.com.";
   if (m.includes("invoice") || m.includes("payment") || m.includes("billing"))
-    return "We automate invoicing, payment reminders, and bookkeeping sync so you get paid faster. Start at /intake or email flowzoneautomation@gmail.com.";
+    return "We build invoicing, payment reminders and bookkeeping sync into one system so you get paid faster. Start at /intake or email flowzoneautomation@gmail.com.";
   if (m.includes("website") || m.includes("portfolio") || m.includes("site"))
-    return "We build fast, conversion-focused websites and portfolios delivered in 7 days. Start at /intake or email flowzoneautomation@gmail.com.";
+    return "We design and build fast sites, storefronts and portfolios that look like you and convert. Start at /intake or email flowzoneautomation@gmail.com.";
   if (m.includes("content") || m.includes("social") || m.includes("blog"))
-    return "We automate content repurposing across social, email, and video — publish once, distribute everywhere. Start at /intake or email flowzoneautomation@gmail.com.";
+    return "We build content pipelines across social, email and video, so you publish once and it lands everywhere. Start at /intake or email flowzoneautomation@gmail.com.";
   if (m.includes("booking") || m.includes("appointment") || m.includes("schedul"))
-    return "We automate your full booking flow — confirmations, reminders, and reschedules. Start at /intake or email flowzoneautomation@gmail.com.";
+    return "We build the whole booking flow, confirmations and reminders and reschedules, so your calendar runs itself. Start at /intake or email flowzoneautomation@gmail.com.";
   if (m.includes("integrat") || m.includes("api") || m.includes("connect") || m.includes("zapier"))
-    return "We connect any tools together using APIs and webhooks — no matter the platform. Start at /intake or email flowzoneautomation@gmail.com.";
+    return "We wire your tools together with APIs and webhooks, whatever platforms you are on. Start at /intake or email flowzoneautomation@gmail.com.";
   if (m.includes("price") || m.includes("cost") || m.includes("how much"))
-    return "Pricing depends on your project scope — we'll give you a custom quote after a free audit. Start at /intake or email flowzoneautomation@gmail.com.";
-  return "We can build or automate almost anything for your business. Tell us what you need at /intake or email flowzoneautomation@gmail.com.";
+    return "Three flat packages, Starter at $997, Growth at $2,497 and Scale as a custom quote. See what each one includes at /pricing or email flowzoneautomation@gmail.com.";
+  return "You bring the idea, we build the whole thing, brand and site and the systems that run it. Tell us what you need at /intake or email flowzoneautomation@gmail.com.";
 }
 
 export async function POST(req: NextRequest) {
@@ -60,6 +60,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ text: keywordFallback(lastMessage) });
   } catch {
-    return NextResponse.json({ text: "We can help with that! Email us at flowzoneautomation@gmail.com or visit /intake." });
+    return NextResponse.json({ text: "We can build that. Email us at flowzoneautomation@gmail.com or visit /intake." });
   }
 }

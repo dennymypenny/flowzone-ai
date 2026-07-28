@@ -3,75 +3,61 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Pricing",
-  description: "Flat-rate AI systems for small businesses. Delivered in 7 days or less.",
+  description:
+    "Three flat-rate packages for brands, sites, storefronts and the systems that run them. One-time payment, no retainers, delivered in days.",
 };
 
-const services = [
+const tiers = [
   {
-    name: "Lead Intake & CRM Systems",
-    desc: "Capture leads from your site, auto-respond, and pipe everything into your CRM — zero manual data entry.",
+    name: "Starter",
     price: "$997",
-    slug: "Lead Intake & CRM Systems",
+    tagline: "One thing, built properly.",
+    best: false,
+    blurb:
+      "You know exactly what you need. A site, a storefront, a dashboard, one system. We build it and hand it over finished.",
+    includes: [
+      "One complete build (site, storefront, or system)",
+      "Brand-matched design, not a template",
+      "Mobile-first and fast, deployed live on your domain",
+      "One full round of revisions",
+      "30 days of post-launch support",
+    ],
+    cta: "Start with Starter",
   },
   {
-    name: "Appointment Booking & Reminders",
-    desc: "Automated booking flows, confirmation texts, and reminder sequences that cut no-shows significantly.",
-    price: "$797",
-    slug: "Appointment Booking & Reminders",
+    name: "Growth",
+    price: "$2,497",
+    tagline: "The whole thing, running on its own.",
+    best: true,
+    blurb:
+      "The one most people want. Brand, site or storefront, and one business system wired into it so the thing actually runs after launch.",
+    includes: [
+      "Everything in Starter",
+      "Brand identity: logo, palette, type, and usage rules",
+      "Full site or storefront, up to 6 pages",
+      "One business system built in (lead intake, booking, invoicing, or reporting)",
+      "Payments, forms and email wired end to end",
+      "Two rounds of revisions",
+      "60 days of post-launch support",
+    ],
+    cta: "Start with Growth",
   },
   {
-    name: "AI Chatbot Agent",
-    desc: "A custom AI assistant on your site that answers questions, qualifies leads, and routes inquiries 24/7.",
-    price: "$897",
-    slug: "AI Chatbot Agent",
-  },
-  {
-    name: "Customer Support Triage",
-    desc: "AI that reads incoming support requests, classifies them, and routes or responds automatically.",
-    price: "$1,197",
-    slug: "Customer Support Triage",
-  },
-  {
-    name: "Automated Reporting & Dashboards",
-    desc: "Live dashboards and scheduled email reports that pull from your tools so you always know your numbers.",
-    price: "$1,297",
-    slug: "Automated Reporting & Dashboards",
-  },
-  {
-    name: "Invoice & Payment Workflows",
-    desc: "Auto-generate invoices, send payment reminders, and reconcile payments without lifting a finger.",
-    price: "$897",
-    slug: "Invoice & Payment Workflows",
-  },
-  {
-    name: "Content Repurposing Systems",
-    desc: "Turn one piece of content into a week of posts, emails, and short-form clips — automatically.",
-    price: "$897",
-    slug: "Content Repurposing Systems",
-  },
-  {
-    name: "Email Nurture Sequences",
-    desc: "Multi-step email flows that warm leads, re-engage past clients, and drive bookings on autopilot.",
-    price: "$797",
-    slug: "Email Nurture Sequences",
-  },
-  {
-    name: "Custom API & Tool Integrations",
-    desc: "Connect any two tools that don't talk to each other. If it has an API or webhook, we can wire it up.",
-    price: "$1,097",
-    slug: "Custom API & Tool Integrations",
-  },
-  {
-    name: "Website or Portfolio",
-    desc: "A clean, fast, conversion-focused website built in Next.js and deployed to Vercel — ready in days.",
-    price: "$497",
-    slug: "Website or Portfolio",
-  },
-  {
-    name: "Something Else",
-    desc: "Have a workflow problem that doesn't fit a category? Tell us what you need and we'll scope it out.",
-    price: "$497+",
-    slug: "Something Else",
+    name: "Scale",
+    price: "Custom",
+    tagline: "You have more moving parts.",
+    best: false,
+    blurb:
+      "Multiple brands, a bigger catalog, or systems that have to talk to tools you already run. We scope it together and quote it flat.",
+    includes: [
+      "Everything in Growth",
+      "Multi-brand or large-catalog storefronts",
+      "Custom API and tool integrations",
+      "Ongoing build partnership if you want it",
+      "Direct line to me, not a support queue",
+      "Flat quote before any work starts",
+    ],
+    cta: "Get a Quote",
   },
 ];
 
@@ -82,36 +68,60 @@ export default function Pricing() {
       <section className="bg-white pt-20 pb-16 px-6 border-b border-gray-100">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-blue-600 font-semibold text-sm uppercase tracking-wider mb-4">Pricing</p>
-          <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6">Simple, Flat-Rate Pricing</h1>
+          <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6">Three Ways to Work Together</h1>
           <p className="text-xl text-gray-500 leading-relaxed mb-6">
-            Pick what you need. One-time payment, delivered in 7 days or less. No retainers, no surprises.
+            Flat rate, paid once, delivered in days. No retainers, no hourly billing, no surprises at the end.
           </p>
           <div className="bg-blue-50 border border-blue-100 rounded-2xl px-6 py-4 inline-block">
             <p className="text-blue-700 font-semibold text-sm">
-              💡 Most clients see 10x ROI within 90 days — saved time, fewer errors, and more revenue.
+              💡 Not sure which one fits? Tell us the idea and we will point you at the right tier, even if it is the cheaper one.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Service cards */}
+      {/* Tiers */}
       <section className="py-20 px-6 bg-white">
-        <div className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((s) => (
-            <div key={s.name} className="border border-gray-200 rounded-2xl p-7 flex flex-col hover:border-blue-400 hover:shadow-md transition-all">
-              <div className="flex-1">
-                <p className="font-black text-gray-900 text-lg mb-2">{s.name}</p>
-                <p className="text-sm text-gray-500 leading-relaxed mb-6">{s.desc}</p>
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-3 gap-6 items-start">
+          {tiers.map((t) => (
+            <div
+              key={t.name}
+              className={`rounded-2xl p-8 flex flex-col h-full transition-all ${
+                t.best
+                  ? "border-2 border-blue-600 shadow-xl lg:-mt-4 lg:pb-12 bg-white"
+                  : "border border-gray-200 hover:border-blue-400 hover:shadow-md bg-white"
+              }`}
+            >
+              {t.best && (
+                <span className="self-start bg-blue-600 text-white text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full mb-4">
+                  Most Popular
+                </span>
+              )}
+              <p className="font-black text-gray-900 text-2xl">{t.name}</p>
+              <p className="text-sm font-semibold text-blue-600 mb-4">{t.tagline}</p>
+              <div className="flex items-end gap-2 mb-4">
+                <span className="text-4xl font-black text-gray-900">{t.price}</span>
+                {t.price !== "Custom" && <span className="text-sm text-gray-400 mb-1.5">one time</span>}
               </div>
-              <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
-                <span className="text-2xl font-black text-blue-600">{s.price}</span>
-                <Link
-                  href={`/intake?service=${encodeURIComponent(s.slug)}`}
-                  className="bg-blue-600 text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:bg-blue-700 transition-colors"
-                >
-                  Start This Project →
-                </Link>
-              </div>
+              <p className="text-sm text-gray-500 leading-relaxed mb-6">{t.blurb}</p>
+              <ul className="space-y-2.5 mb-8 flex-1">
+                {t.includes.map((line) => (
+                  <li key={line} className="flex gap-2.5 text-sm text-gray-600 leading-relaxed">
+                    <span className="text-blue-600 font-bold shrink-0">✓</span>
+                    <span>{line}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href={`/intake?service=${encodeURIComponent(t.name)}`}
+                className={`block text-center font-bold px-5 py-3.5 rounded-xl transition-colors mt-auto ${
+                  t.best
+                    ? "bg-blue-600 text-white hover:bg-blue-700"
+                    : "border-2 border-gray-200 text-gray-900 hover:border-blue-600 hover:text-blue-600"
+                }`}
+              >
+                {t.cta} →
+              </Link>
             </div>
           ))}
         </div>
@@ -123,12 +133,12 @@ export default function Pricing() {
           <h2 className="text-3xl font-black text-gray-900 text-center mb-12">Every Project Includes</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { icon: "🚀", title: "7-Day Delivery", body: "Most systems ship in 3–7 business days. You get a working, tested product — not a rough draft." },
+              { icon: "🚀", title: "Fast Delivery", body: "Most builds ship in 3–7 business days. You get a working, tested product, not a rough draft." },
+              { icon: "🎨", title: "A Human on It", body: "AI gives us the speed. A person makes the calls on taste, layout and what actually reads well." },
               { icon: "📖", title: "Full Documentation", body: "Every build comes with clear docs explaining what it does, how to use it, and how to request changes." },
-              { icon: "🤝", title: "Post-Launch Support", body: "30 days of support after delivery. Something breaks? We fix it free, no questions asked." },
-              { icon: "🔒", title: "Secure & Reliable", body: "Industry-standard security on every integration. Your data and your clients' data are always protected." },
-              { icon: "⚙️", title: "Tool Agnostic", body: "We work with 200+ tools. If it has an API or webhook, we can build with it." },
-              { icon: "🔧", title: "Revision Included", body: "One full round of revisions is included in every project. We get it right." },
+              { icon: "🤝", title: "Post-Launch Support", body: "Support after delivery is built into every tier. Something breaks, we fix it free." },
+              { icon: "🔒", title: "Secure and Reliable", body: "Industry-standard security on every build. Your data and your customers' data stay protected." },
+              { icon: "⚙️", title: "Tool Agnostic", body: "We work with 200+ tools. If it has an API or a webhook, we can build with it." },
             ].map((item) => (
               <div key={item.title} className="bg-white rounded-2xl p-6 border border-gray-100">
                 <div className="text-3xl mb-3">{item.icon}</div>
@@ -145,7 +155,7 @@ export default function Pricing() {
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-4xl font-black text-white mb-4">Not Sure Where to Start?</h2>
           <p className="text-blue-200 text-lg mb-8">
-            Fill out the intake form and describe your workflow. We'll recommend the right system and get it built fast.
+            Tell us the idea in a few sentences. We will come back with the right tier, a scope, and a delivery date.
           </p>
           <Link
             href="/intake"

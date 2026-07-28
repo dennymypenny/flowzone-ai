@@ -374,7 +374,7 @@ export default async function CaseStudyPage({ params }: Props) {
             {/* CTA */}
             <div className="bg-blue-600 rounded-2xl p-6 text-center">
               <p className="font-black text-white text-lg mb-2">Get These Results</p>
-              <p className="text-blue-200 text-sm mb-5 leading-relaxed">Tell us what you want automated. We will build it in 7 days or less.</p>
+              <p className="text-blue-200 text-sm mb-5 leading-relaxed">You bring the idea. We build the whole thing, in 7 days or less.</p>
               <Link href="/intake" className="block bg-white text-blue-600 font-bold py-3 rounded-xl hover:bg-blue-50 transition-colors text-sm">
                 Start Your Project â
               </Link>
