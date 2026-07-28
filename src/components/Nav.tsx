@@ -26,7 +26,7 @@ export default function Nav() {
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
           <Link href="/services" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Services</Link>
-          <Link href="/case-studies" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Case Studies</Link>
+          <Link href="/how-we-work" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">How We Work</Link>
           <Link href="/pricing" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Pricing</Link>
           <div
             className="relative"
@@ -63,7 +63,7 @@ export default function Nav() {
       {open && (
         <div className="md:hidden border-t border-gray-100 bg-white px-6 py-4 flex flex-col gap-4">
           <Link href="/services" className="text-sm text-gray-700" onClick={() => setOpen(false)}>Services</Link>
-          <Link href="/case-studies" className="text-sm text-gray-700" onClick={() => setOpen(false)}>Case Studies</Link>
+          <Link href="/how-we-work" className="text-sm text-gray-700" onClick={() => setOpen(false)}>How We Work</Link>
           <Link href="/pricing" className="text-sm text-gray-700" onClick={() => setOpen(false)}>Pricing</Link>
           <button
             className="flex items-center justify-between text-sm text-gray-700 text-left w-full"

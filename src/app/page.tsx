@@ -27,8 +27,8 @@ export default function Home() {
             <Link href="/intake" className="bg-blue-500 text-white px-8 py-4 rounded-xl font-black text-lg hover:bg-blue-400 transition-all shadow-lg shadow-blue-500/30">
               Start Your Project
             </Link>
-            <Link href="/case-studies" className="border-2 border-white/20 text-white px-8 py-4 rounded-xl font-black text-lg hover:border-sky-400 hover:text-sky-400 transition-all">
-              See Our Work
+            <Link href="/how-we-work" className="border-2 border-white/20 text-white px-8 py-4 rounded-xl font-black text-lg hover:border-sky-400 hover:text-sky-400 transition-all">
+              See How It Works
             </Link>
           </div>
         </div>
