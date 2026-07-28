@@ -40,10 +40,10 @@ export default function Home() {
       <section className="py-10 px-6 bg-slate-900">
         <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           {[
-            { num: "50+", label: "Projects Built", color: "text-violet-400", border: "border-violet-500/30" },
+            { num: "1:1", label: "Direct Founder Access", color: "text-violet-400", border: "border-violet-500/30" },
             { num: "7 Days", label: "Guaranteed Delivery", color: "text-sky-400", border: "border-sky-500/30" },
             { num: "100%", label: "Done-For-You", color: "text-emerald-400", border: "border-emerald-500/30" },
-            { num: "5.0 ★", label: "Client Rating", color: "text-orange-400", border: "border-orange-500/30" },
+            { num: "$0", label: "Retainers Required", color: "text-orange-400", border: "border-orange-500/30" },
           ].map((s) => (
             <div key={s.label} className={`border ${s.border} bg-white/5 rounded-2xl py-6 px-4`}>
               <div className={`text-3xl font-black ${s.color} mb-1`}>{s.num}</div>
