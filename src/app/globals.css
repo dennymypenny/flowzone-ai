@@ -29,8 +29,15 @@ body {
   color: #0A0B0E;
 }
 
+/* Square edges everywhere. No pills, no rounded corners.
+   SVG shapes are untouched, so the logo dots stay round. */
+*,
+*::before,
+*::after {
+  border-radius: 0 !important;
+}
+
 @layer components {
-  /* Tight, modern display type wherever font-display is used */
   .font-display {
     font-weight: 500;
     letter-spacing: -0.032em;
@@ -49,25 +56,24 @@ body {
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 text-sm font-medium px-6 py-3 rounded-lg transition-all duration-200;
+    @apply inline-flex items-center justify-center gap-2 text-sm font-medium px-6 py-3 transition-colors duration-200;
   }
   .btn-primary {
-    @apply btn bg-accent text-white hover:bg-accent-deep shadow-glowbtn;
+    @apply btn bg-accent text-[#0A0B0E] hover:bg-accent-light;
   }
   .btn-ghost {
     @apply btn border border-rule text-ink hover:bg-raised hover:border-ink/25;
   }
   .btn-onink {
-    @apply btn bg-paper text-ink hover:bg-accent hover:text-white;
+    @apply btn bg-paper text-ink hover:bg-accent hover:text-[#0A0B0E];
   }
 
   .panel {
-    @apply bg-raised border border-rule rounded-xl;
+    @apply bg-raised border border-rule;
   }
 }
 
 @layer utilities {
-  /* Blue wash behind the hero */
   .glow {
     background-image:
       radial-gradient(58rem 30rem at 14% -12%, rgba(91, 140, 255, 0.20), transparent 62%),
@@ -83,19 +89,5 @@ body {
 
   .fade-b {
     mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
-  }
-
-  /* Hairline top highlight for panels */
-  .hairline::before {
-    content: "";
-    position: absolute;
-    inset: 0 0 auto 0;
-    height: 1px;
-    background: linear-gradient(
-      to right,
-      transparent,
-      rgba(255, 255, 255, 0.14),
-      transparent
-    );
   }
 }

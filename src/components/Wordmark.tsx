@@ -1,21 +1,36 @@
+/**
+ * FlowZone mark: three connected dots, no container and no background.
+ * Sits directly on whatever surface it is placed on.
+ */
 export default function Wordmark({
-  tone = "ink",
+  showName = true,
   className = "",
+  size = 18,
 }: {
-  tone?: "ink" | "paper";
+  showName?: boolean;
   className?: string;
+  size?: number;
 }) {
-  const color = tone === "paper" ? "text-paper" : "text-ink";
+  const w = (size * 58) / 18;
   return (
-    <span className={`inline-flex items-center gap-2.5 ${color} ${className}`}>
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>
-        <rect width="18" height="18" rx="4" fill="currentColor" fillOpacity="0.08" />
-        <rect x="4" y="4" width="4" height="4" rx="1" fill="#5B8CFF" />
-        <rect x="10" y="4" width="4" height="4" rx="1" fill="currentColor" fillOpacity="0.45" />
-        <rect x="4" y="10" width="4" height="4" rx="1" fill="currentColor" fillOpacity="0.45" />
-        <rect x="10" y="10" width="4" height="4" rx="1" fill="currentColor" fillOpacity="0.2" />
+    <span className={`inline-flex items-center gap-2.5 text-ink ${className}`}>
+      <svg
+        width={w}
+        height={size}
+        viewBox="0 0 58 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden
+      >
+        <line x1="10" y1="9" x2="24" y2="9" stroke="#5B8CFF" strokeOpacity="0.35" strokeWidth="1.5" />
+        <line x1="34" y1="9" x2="48" y2="9" stroke="#5B8CFF" strokeOpacity="0.35" strokeWidth="1.5" />
+        <circle cx="6" cy="9" r="5.5" fill="#5B8CFF" />
+        <circle cx="29" cy="9" r="5.5" fill="#8FB2FF" />
+        <circle cx="52" cy="9" r="5.5" fill="#D6E2FF" />
       </svg>
-      <span className="font-display text-[17px] leading-none">FlowZone</span>
+      {showName && (
+        <span className="font-display text-[17px] leading-none">FlowZone</span>
+      )}
     </span>
   );
 }

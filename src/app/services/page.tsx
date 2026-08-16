@@ -72,9 +72,10 @@ export default function Services() {
           </h1>
           <div className="grid md:grid-cols-12 gap-10 mt-12 items-end">
             <p className="md:col-span-6 lede max-w-reading">
-              You can buy any one of these on its own. Most people should buy all three,
-              because the seams between a brand, a site and the system behind it are
-              where projects usually fall apart.
+              Brand identity is the studio's strongest work and where most projects
+              start. You can buy any one part on its own, but we can take the whole
+              thing end to end, and the seams between the three are exactly where
+              projects usually fall apart.
             </p>
             <div className="md:col-span-6 md:flex md:justify-end">
               <Link href="/pricing" className="btn-primary">
@@ -126,19 +127,20 @@ export default function Services() {
           <div className="md:col-span-5">
             <p className="label mb-6">Scope</p>
             <h2 className="display text-4xl md:text-5xl">
-              If it does not fit these three, we are probably not the studio.
+              So where does everything else go?
             </h2>
           </div>
           <div className="md:col-span-7">
             <p className="text-ink-soft leading-relaxed max-w-reading">
-              A studio that says yes to everything has no point of view, and you can
-              feel it in the work. So this is the whole list. Most requests that sound
-              like something else are one of these three wearing a different name, and
-              we will tell you which one on the first email.
+              Underneath one of the three. A landing page, a rebrand, a pitch deck, a
+              product catalog, a booking flow, a dashboard: they are all Brand, Site or
+              System wearing a different name, and we will tell you which one on the
+              first email.
             </p>
             <p className="text-ink-soft leading-relaxed max-w-reading mt-4">
-              If your project genuinely sits outside it, we will say so and point you
-              somewhere better rather than take the money and learn on your budget.
+              We can take a project from a blank page to a live business, which is the
+              point of grouping it this way. Three names instead of a menu of eleven,
+              so you can see the whole shape of the work before you commit to any of it.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 mt-10">
               <Link href="/intake" className="btn-primary">

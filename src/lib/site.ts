@@ -10,13 +10,16 @@ export const SITE = {
 
   // The one descriptor. Used in nav, footer, metadata and the chat.
   descriptor:
-    "A creative studio building brands, sites and the systems that run them.",
+    "A creative studio led by brand identity. The mark, the words, the feel, and the site and systems that carry it.",
 
   // Displayed publicly. Must have a working mailbox before this ships.
   email: "hello@flowzone.dev",
 
   // Where lead notifications are actually delivered. Server side only.
   leadInbox: "flowzoneautomation@gmail.com",
+
+  // Denny's only real social. Keep it visible.
+  linkedin: "https://www.linkedin.com/in/dennisvaldesjr/",
 
   url: "https://flowzone.dev",
 } as const;
@@ -26,9 +29,10 @@ export const PILLARS = [
     num: "01",
     name: "Brand",
     line: "What people recognize you by.",
+    lead: true,
     body:
-      "Name treatment, logo, palette, type and the rules for using them. Built so the site and everything after it has something to be built from.",
-    items: ["Logo and wordmark", "Color and type system", "Voice and messaging", "Usage guide you can hand to anyone"],
+      "This is what the studio is best at. The mark, the palette, the type, the voice and the feel, decided properly so everything after it has something to be built from.",
+    items: ["Logo and wordmark", "Color and type system", "Voice, copy and messaging", "Usage guide you can hand to anyone"],
   },
   {
     num: "02",

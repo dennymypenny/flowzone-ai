@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { SITE } from "@/lib/site";
+import Wordmark from "@/components/Wordmark";
 
 type Role = "user" | "assistant";
 type ApiMsg = { role: Role; content: string };
@@ -13,10 +14,6 @@ const CHIPS = [
   "I have a site, I need the system behind it",
   "Something else",
 ];
-
-function Mark() {
-  return <span className="block w-1.5 h-1.5 rounded-full bg-accent" aria-hidden />;
-}
 
 export default function ChatWidget() {
   const [display, setDisplay] = useState<DisplayMsg[]>([]);
@@ -65,10 +62,7 @@ export default function ChatWidget() {
     <div className="flex flex-col panel overflow-hidden" style={{ minHeight: "440px" }}>
       {/* Header */}
       <div className="flex items-center justify-between px-6 py-4 border-b border-rule">
-        <div className="flex items-center gap-3">
-          <Mark />
-          <p className="font-display text-xl leading-none">FlowZone</p>
-        </div>
+        <Wordmark size={16} />
         <p className="label">Studio assistant</p>
       </div>
 

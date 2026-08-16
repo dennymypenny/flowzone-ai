@@ -25,9 +25,10 @@ export default function About() {
           </h1>
           <p className="lede max-w-reading mt-10">
             FlowZone is a creative studio built on one belief. Every idea worth
-            starting deserves a real brand, a real site and real systems behind it. AI
-            gives us the speed. A person gives it the taste, the judgment and the
-            finish.
+            starting deserves a real brand, a real site and real systems behind it.
+            Brand identity is the part we are best at, the mark and the words and the
+            feel, and we carry it through everything else we build. AI gives us the
+            speed. A person gives it the taste, the judgment and the finish.
           </p>
         </div>
       </section>
@@ -72,7 +73,7 @@ export default function About() {
             <p className="label">Where The Studio Is</p>
             <p className="label hidden sm:block">No inflated numbers</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-10">
+          <div className="grid md:grid-cols-3 gap-x-10 gap-y-12">
             {[
               {
                 t: "Founded in 2026",
@@ -85,6 +86,14 @@ export default function About() {
               {
                 t: "Real work only",
                 b: "Everything on the work page is live and was built here. No concepts dressed up as clients.",
+              },
+              {
+                t: "Strongest at brand",
+                b: "Identity, copy and the feel of a thing. That is the work we care most about and the reason the rest holds together.",
+              },
+              {
+                t: "Able to take the whole build",
+                b: "Blank page to live business, without handing you off to a second vendor halfway through.",
               },
             ].map((i) => (
               <div key={i.t}>

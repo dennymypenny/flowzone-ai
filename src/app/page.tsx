@@ -31,9 +31,10 @@ export default function Home() {
           </h1>
 
           <p className="lede max-w-reading mt-8">
-            FlowZone is a small creative studio. We build the brand, the site and the
-            system that runs it, as one piece of work rather than three invoices. A
-            model does the fast part. A person decides what is good.
+            FlowZone is a creative studio. Brand identity is what we are best at, the
+            mark and the words and the feel, and we carry it straight through the site
+            and the systems behind it. One studio, the whole build. A model does the
+            fast part. A person decides what is good.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 mt-10">
@@ -74,9 +75,9 @@ export default function Home() {
               One piece of work.
             </h2>
             <p className="md:col-span-6 text-ink-soft leading-relaxed font-light self-end max-w-reading">
-              Most studios sell you one of these and leave you to find the other two.
-              A brand with no site is a logo. A site with no system is a brochure. We
-              do the whole arc so the seams do not show.
+              Brand is where we are strongest, and it is where every project starts.
+              But a brand with no site is a logo and a site with no system is a
+              brochure, so we build all three and you never hand off between vendors.
             </p>
           </div>
 
@@ -85,7 +86,13 @@ export default function Home() {
               <div key={p.name} className="panel p-7 flex flex-col">
                 <div className="flex items-baseline justify-between mb-8">
                   <p className="label">{p.num}</p>
-                  <span className="w-6 h-px bg-rule" />
+                  {"lead" in p && p.lead ? (
+                    <p className="font-mono text-[11px] uppercase tracking-label text-accent">
+                      Our strength
+                    </p>
+                  ) : (
+                    <span className="w-6 h-px bg-rule" />
+                  )}
                 </div>
                 <h3 className="font-display text-3xl mb-1.5">{p.name}</h3>
                 <p className="text-sm text-accent mb-5">{p.line}</p>
