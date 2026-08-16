@@ -3,6 +3,7 @@ import ChatWidget from "@/app/components/ChatWidget";
 import WorkSession from "@/app/components/WorkSession";
 import MessageUs from "@/components/MessageUs";
 import FlowField from "@/app/components/FlowField";
+import FlowRide from "@/app/components/FlowRide";
 import { SITE, PILLARS } from "@/lib/site";
 
 export const metadata = {
@@ -70,9 +71,7 @@ export default function Home() {
 
           <div className="flex flex-col sm:flex-row gap-3 mt-10">
             <MessageUs className="btn-primary shine" />
-            <Link href="/work" className="btn-ghost">
-              See the work <span className="arrow">→</span>
-            </Link>
+            <FlowRide />
           </div>
 
           {/* Value at a glance */}

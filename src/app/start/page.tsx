@@ -64,8 +64,9 @@ export default function Start() {
             <span className="text-gradient-white">.</span>
           </h1>
           <p className="lede max-w-reading mt-10">
-            Three dots, three moves. Your idea goes in one end and comes out the
-            other as files you own.
+            Flow Mode is our free playground. Type your idea, shape it into a
+            name, a logo, colours, words and a video, and leave with the files.
+            Three dots, three moves.
           </p>
         </div>
       </section>
