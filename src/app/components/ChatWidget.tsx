@@ -21,11 +21,16 @@ export default function ChatWidget() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const isEmpty = display.length === 0;
 
+  // Scroll the transcript itself, never the page. scrollIntoView here used to
+  // drag the whole window down to the widget on first load.
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (display.length === 0) return;
+    const el = scrollRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
   }, [display, loading]);
 
   const send = async (text: string) => {
@@ -67,7 +72,7 @@ export default function ChatWidget() {
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
         {isEmpty && (
           <div className="flex flex-col items-start gap-5">
             <p className="text-ink-soft leading-relaxed max-w-md">
