@@ -4,6 +4,7 @@ import Playground from "@/app/components/Playground";
 import WorkSession from "@/app/components/WorkSession";
 import WritingTrack from "@/app/components/WritingTrack";
 import ContentTrack from "@/app/components/ContentTrack";
+import Tilt3D from "@/app/components/Tilt3D";
 
 /**
  * Four tracks, one dropdown.
@@ -27,6 +28,7 @@ const TRACKS = [
     name: "Design",
     blurb: "Name, colours, a real vector logo and references. Leave with the files.",
     accent: "#A78BFA",
+    rgb: "167, 139, 250",
   },
   {
     id: "writing",
@@ -34,6 +36,7 @@ const TRACKS = [
     name: "Writing",
     blurb: "Scripts, landing pages and emails, built from the structure that makes them work.",
     accent: "#5B9BF9",
+    rgb: "91, 155, 249",
   },
   {
     id: "content",
@@ -41,6 +44,7 @@ const TRACKS = [
     name: "Content and reels",
     blurb: "Timed shot plans, captions, thumbnails. Editable to the last second.",
     accent: "#2DD4BF",
+    rgb: "45, 212, 191",
   },
   {
     id: "brief",
@@ -48,6 +52,7 @@ const TRACKS = [
     name: "The brief",
     blurb: "Six questions that turn a vague idea into something you can hand to anyone.",
     accent: "#34D399",
+    rgb: "52, 211, 153",
   },
 ];
 
@@ -82,39 +87,51 @@ export default function StartModes() {
           {TRACKS.map((t) => {
             const active = t.id === track;
             return (
-              <button
-                key={t.id}
-                role="tab"
-                aria-selected={active}
-                onClick={() => pick(t.id)}
-                className="relative overflow-hidden text-left p-5 rounded-2xl border transition-all duration-300"
-                style={{
-                  borderColor: active ? `${t.accent}66` : "rgba(255,255,255,0.09)",
-                  background: active
-                    ? `linear-gradient(180deg, ${t.accent}1f 0%, rgba(255,255,255,0.02) 100%), linear-gradient(to bottom, #131F35, #0E1728)`
-                    : "linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))",
-                  boxShadow: active
-                    ? `inset 0 1px 0 rgba(255,255,255,0.12), 0 18px 44px -18px ${t.accent}59`
-                    : "inset 0 1px 0 rgba(255,255,255,0.05)",
-                }}
-              >
-                {active && (
-                  <span
-                    className="absolute -top-10 left-1/2 -translate-x-1/2 w-32 h-20 rounded-full blur-2xl opacity-30 pointer-events-none"
-                    style={{ background: t.accent }}
-                  />
-                )}
-                <span className="block text-2xl mb-3 leading-none">{t.icon}</span>
-                <span
-                  className="block font-display text-base leading-tight mb-1.5 transition-colors"
-                  style={{ color: active ? "#F1F3F7" : "#9AA7BE" }}
+              <Tilt3D key={t.id} max={9}>
+                <button
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => pick(t.id)}
+                  className={`relative overflow-hidden w-full h-full text-left p-5 rounded-2xl border transition-all duration-300 hover:scale-[1.02] active:scale-[0.97] ${
+                    active ? "game-active shine" : ""
+                  }`}
+                  style={{
+                    ["--ga" as string]: t.rgb,
+                    borderColor: active ? `${t.accent}66` : "rgba(255,255,255,0.09)",
+                    background: active
+                      ? `linear-gradient(180deg, ${t.accent}1f 0%, rgba(255,255,255,0.02) 100%), linear-gradient(to bottom, #131F35, #0E1728)`
+                      : "linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))",
+                    boxShadow: active ? undefined : "inset 0 1px 0 rgba(255,255,255,0.05)",
+                  }}
                 >
-                  {t.name}
-                </span>
-                <span className="block text-xs text-ink-mute font-light leading-relaxed">
-                  {t.blurb}
-                </span>
-              </button>
+                  {active && (
+                    <span
+                      className="absolute -top-10 left-1/2 -translate-x-1/2 w-32 h-20 rounded-full blur-2xl opacity-30 pointer-events-none"
+                      style={{ background: t.accent }}
+                    />
+                  )}
+                  <span className="flex items-center justify-between mb-3">
+                    <span className="block text-2xl leading-none">{t.icon}</span>
+                    {active && (
+                      <span
+                        className="text-[10px] font-medium uppercase tracking-label"
+                        style={{ color: t.accent }}
+                      >
+                        ▶ Selected
+                      </span>
+                    )}
+                  </span>
+                  <span
+                    className="block font-display text-base leading-tight mb-1.5 transition-colors"
+                    style={{ color: active ? "#F1F3F7" : "#9AA7BE" }}
+                  >
+                    {t.name}
+                  </span>
+                  <span className="block text-xs text-ink-mute font-light leading-relaxed">
+                    {t.blurb}
+                  </span>
+                </button>
+              </Tilt3D>
             );
           })}
         </div>

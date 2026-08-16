@@ -53,7 +53,7 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 mt-10">
-            <MessageUs className="btn-primary" />
+            <MessageUs className="btn-primary shine" />
             <Link href="/work" className="btn-ghost">
               See the work <span className="arrow">→</span>
             </Link>
@@ -342,7 +342,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <p className="label mb-6">How it works</p>
           <h2 className="display text-4xl md:text-5xl max-w-3xl mb-14">
-            Four steps, and you are busy for about twenty minutes of it.
+            Four levels, and you are busy for about twenty minutes of it.
           </h2>
 
           <div className="hidden lg:block relative h-px mb-4 mx-[12.5%]">
@@ -354,7 +354,7 @@ export default function Home() {
               {
                 i: "✍️",
                 c: "#5B9BF9",
-                step: "Step 1",
+                step: "Level 1",
                 day: "The spark",
                 t: "Send the intention",
                 b: "One short form. A few sentences about what you want to exist. No discovery call, no brief, no deck. You get back a scope, a price and a date, and that date is the one we work to.",
@@ -363,7 +363,7 @@ export default function Home() {
               {
                 i: "👀",
                 c: "#A78BFA",
-                step: "Step 2",
+                step: "Level 2",
                 day: "First look",
                 t: "See a real direction",
                 b: "Not a mood board. An actual first pass in a browser, with your words and your colors in it, while the idea still has heat on it.",
@@ -372,7 +372,7 @@ export default function Home() {
               {
                 i: "🔨",
                 c: "#FBBF24",
-                step: "Step 3",
+                step: "Level 3",
                 day: "The build",
                 t: "We build it all",
                 b: "Real pages, real copy, real payments, real forms. The system gets wired in and tested with live data.",
@@ -381,13 +381,13 @@ export default function Home() {
               {
                 i: "🚀",
                 c: "#34D399",
-                step: "Step 4",
+                step: "Level 4",
                 day: "Live",
                 t: "It goes live and it is yours",
                 b: "On your domain, tested on a phone, handed over with docs. You own the code and the accounts.",
                 you: "Approve it",
               },
-            ].map((x) => (
+            ].map((x, gi) => (
               <div key={x.step} className="panel panel-lift p-6 flex flex-col">
                 <span className="block text-2xl mb-4 leading-none">{x.i}</span>
                 <div className="flex items-baseline gap-2 mb-3">
@@ -398,6 +398,19 @@ export default function Home() {
                     {x.step}
                   </p>
                   <p className="label">· {x.day}</p>
+                </div>
+                {/* Level meter, filled to here */}
+                <div className="flex gap-1.5 mb-4" aria-hidden>
+                  {[0, 1, 2, 3].map((seg) => (
+                    <span
+                      key={seg}
+                      className="h-[3px] flex-1 rounded-full"
+                      style={{
+                        background: seg <= gi ? x.c : "#1D2942",
+                        opacity: seg <= gi ? 0.9 : 1,
+                      }}
+                    />
+                  ))}
                 </div>
                 <h3 className="font-display text-xl leading-snug mb-2.5">{x.t}</h3>
                 <p className="text-sm text-ink-soft font-light leading-relaxed mb-5">
@@ -635,7 +648,7 @@ export default function Home() {
             date. No discovery call required.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <MessageUs className="btn-primary" />
+            <MessageUs className="btn-primary shine" />
             <a href={SITE.mailto} className="btn-ghost">
               Start an email <span className="arrow">→</span>
             </a>

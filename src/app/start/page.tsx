@@ -107,7 +107,7 @@ export default function Start() {
             you need, a price and a date.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href={SITE.mailto} className="btn-primary">
+            <a href={SITE.mailto} className="btn-primary shine">
               Start an email <span className="arrow">→</span>
             </a>
             <Link href="/services" className="btn-ghost">

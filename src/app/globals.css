@@ -250,6 +250,60 @@ button {
     to { transform: translate3d(2%, 3%, 0) scale(1.06); opacity: 1; }
   }
 
+  /* ----------------------------------------------------------------
+     The video game layer. Light sweeps, power pulses and real tilt.
+     Cool, not cartoon: the physics of a good game menu.
+     ---------------------------------------------------------------- */
+
+  /* A light sweep that crosses every few seconds, press-start energy */
+  .shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .shine::after {
+    content: "";
+    position: absolute;
+    top: -60%;
+    bottom: -60%;
+    left: -60%;
+    width: 34%;
+    transform: skewX(-20deg);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.38), transparent);
+    animation: shine-sweep 4.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    pointer-events: none;
+  }
+  @keyframes shine-sweep {
+    0% { left: -60%; }
+    16% { left: 130%; }
+    100% { left: 130%; }
+  }
+
+  /* The selected item breathes, like a character select screen.
+     Colour comes from --ga, set inline per card. */
+  .game-active {
+    --ga: 91, 140, 255;
+    animation: powerpulse 2.4s ease-in-out infinite;
+  }
+  @keyframes powerpulse {
+    0%, 100% {
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 0 0 1px rgba(var(--ga), 0.35),
+        0 14px 40px -14px rgba(var(--ga), 0.4);
+    }
+    50% {
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.16),
+        0 0 0 1px rgba(var(--ga), 0.7),
+        0 18px 54px -12px rgba(var(--ga), 0.65);
+    }
+  }
+
+  /* Buttons press like buttons */
+  .btn:active {
+    transform: translateY(1px) scale(0.98);
+  }
+
   /* Arrows lean forward on hover */
   .btn .arrow {
     transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
@@ -264,7 +318,9 @@ button {
   .pulse-1,
   .pulse-2,
   .pulse-3,
-  .drift {
+  .drift,
+  .shine::after,
+  .game-active {
     animation: none !important;
   }
 }
