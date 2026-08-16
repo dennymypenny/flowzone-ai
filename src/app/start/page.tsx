@@ -45,10 +45,10 @@ export default function Start() {
               You keep the brief either way.
             </h2>
             <p className="md:col-span-6 text-ink-soft font-light leading-relaxed self-end max-w-reading">
-              This is not a lead form wearing a costume. A brief is the thing every
-              designer, developer and agency will ask you for, and the reason quotes
-              come back vague is that almost nobody has one. Walk out with this and you
-              can brief anybody, including us.
+              A brief is the thing every designer, developer and agency asks you for,
+              and the reason quotes come back vague is that almost nobody has one.
+              Walk out with this and you can brief anybody. We are one option on that
+              list, not the point of it.
             </p>
           </div>
 

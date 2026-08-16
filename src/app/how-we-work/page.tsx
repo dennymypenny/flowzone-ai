@@ -80,6 +80,10 @@ const faqs = [
     a: "Then it is a Scale project and we quote it flat after we understand it. Send it over either way. If it is smaller than you think, we will tell you and point you at the cheaper package.",
   },
   {
+    q: "Why would I pay you when I could just ask AI?",
+    a: "Because you have to know what to ask for, and most people arrive knowing they want something without being able to say what. Because a logo takes ten minutes and making a mark, a palette, a voice, a site and a checkout all agree with each other is fifty decisions, which is the actual job. Because projects die at ninety percent, not at the start, when the payment webhook fires twice and the layout breaks on a phone. And because a chat window is not accountable to you on a Friday night. If you have taste, some technical confidence and free evenings, genuinely build it yourself. We are not selling access to AI, you already have that. We are the judgment on top of it and the person who finishes.",
+  },
+  {
     q: "How fast is this, really?",
     a: "Fast, but we do not sell you a number before we know what you are asking for. You get a real date with your scope and your price, before you pay, and that is the date we work to. What we will promise is that it starts the day you say go and it does not sit in a queue. Things move here because we are as excited to see the thing exist as you are.",
   },

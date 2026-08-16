@@ -484,6 +484,86 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ---------- The obvious question ---------- */}
+      <section data-flow className="border-t border-rule px-6 py-24">
+        <div className="max-w-6xl mx-auto">
+          <p className="label mb-6">The obvious question</p>
+          <div className="grid md:grid-cols-12 gap-10 mb-16">
+            <h2 className="md:col-span-7 display text-4xl md:text-5xl">
+              Why not just ask AI
+              <br />
+              to do all this?
+            </h2>
+            <p className="md:col-span-5 text-ink-soft font-light leading-relaxed self-end max-w-reading">
+              Fair. You have the same models we do, and they are extraordinary. Here is
+              the honest answer about where they stop, and where you genuinely do not
+              need us.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-x-14 gap-y-12">
+            {[
+              {
+                n: "01",
+                c: "#4C7BE8",
+                t: "You have to know what to ask for",
+                b: "AI gives you exactly what you describe. Most people arrive knowing they want something and unable to say what, which is not a prompting problem, it is the actual work. Getting from a vague intention to a specific brief happens before anything gets typed into a model.",
+              },
+              {
+                n: "02",
+                c: "#5B9BF9",
+                t: "One logo is easy, fifty agreeing decisions are not",
+                b: "A mark, a palette, a type scale, a voice, a homepage, product pages, checkout, an intake flow. Each one takes ten minutes. Making all of them look and sound like the same company is the whole job, and it is where doing it yourself falls apart.",
+              },
+              {
+                n: "03",
+                c: "#FBBF24",
+                t: "The last ten percent is where projects die",
+                b: "You will get to something impressive in an afternoon. Then comes the domain, the payment webhook firing twice, the layout breaking on a phone, the form quietly going nowhere. Projects do not die at the start, they die at ninety percent, six weeks in, at one in the morning.",
+              },
+              {
+                n: "04",
+                c: "#34D399",
+                t: "Nobody is accountable to a chat window",
+                b: "A model will not notice it got something wrong, will not fix it for free, and will not answer when checkout breaks on a Friday night. You are hiring a person who is on the hook for the result, and who you can reply to.",
+              },
+            ].map((x) => (
+              <div key={x.n} className="border-t-2 pt-6" style={{ borderTopColor: x.c }}>
+                <p
+                  className="text-[11px] font-medium uppercase tracking-label mb-3"
+                  style={{ color: x.c }}
+                >
+                  {x.n}
+                </p>
+                <h3 className="font-display text-2xl leading-snug mb-3">{x.t}</h3>
+                <p className="text-sm text-ink-soft font-light leading-relaxed">{x.b}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-14 panel p-8 md:p-10 grid md:grid-cols-12 gap-8">
+            <div className="md:col-span-7">
+              <p className="label mb-4">And when you should not hire us</p>
+              <p className="text-ink-soft font-light leading-relaxed max-w-reading">
+                If you have taste, some technical confidence and free evenings, build it
+                yourself. You will do a decent job, you will learn a lot and you will
+                keep the money. We would rather say that than take it from someone who
+                did not need to spend it.
+              </p>
+              <p className="text-ink font-light leading-relaxed max-w-reading mt-4">
+                We are not selling you access to AI. You already have that. We are the
+                judgment on top of it, and the person who finishes.
+              </p>
+            </div>
+            <div className="md:col-span-5 md:text-right md:self-end">
+              <Link href="/how-we-work" className="btn-ghost">
+                More straight answers <span className="arrow">→</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ---------- The philosophy line ---------- */}
       <section data-flow className="border-t border-rule px-6 py-24">
         <div className="max-w-4xl mx-auto text-center">

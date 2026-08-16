@@ -148,12 +148,12 @@ export default function SavePrompt() {
             <p className="font-display text-xl leading-snug mb-2.5">
               {hasSession
                 ? "Want your brief emailed to you?"
-                : "Want the brief tool, without the sales part?"}
+                : "Want a real brief for your idea?"}
             </p>
             <p className="text-sm text-ink-soft font-light leading-relaxed mb-5">
               {hasSession
                 ? "Right now it only lives in this browser. Clear your history and it is gone. Drop an email and we will send you a copy you actually own."
-                : "The work session turns a vague idea into a real brief you can hand to anyone, us included. Leave an email and we will send you your copy when you finish it."}
+                : "Six questions turn a vague idea into a brief you can hand to anyone. Leave an email and your copy lands in your inbox when you finish it, yours to keep."}
             </p>
 
             <div className="flex gap-2">
