@@ -73,10 +73,90 @@ export default function FlowRide({ className = "" }: { className?: string }) {
   const boost = useRef(0); // 0 = cruising, ramps to 1 when boosting
   const boosting = useRef(false);
   const alive = useRef(false);
+  const audio = useRef<{ ctx: AudioContext; gain: GainNode; filter: BiquadFilterNode } | null>(null);
+
+  /** The thinking sound: filtered wind, made from nothing, no file. */
+  const startSound = () => {
+    try {
+      const AC = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AC) return;
+      const ctx = new AC();
+      const len = ctx.sampleRate * 2;
+      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      const data = buf.getChannelData(0);
+      let last = 0;
+      for (let i = 0; i < len; i++) {
+        // brown-ish noise: deep and airy rather than hissy
+        const white = Math.random() * 2 - 1;
+        last = (last + 0.02 * white) / 1.02;
+        data[i] = last * 3.2;
+      }
+      const src = ctx.createBufferSource();
+      src.buffer = buf;
+      src.loop = true;
+      const filter = ctx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.value = 320;
+      const gain = ctx.createGain();
+      gain.gain.value = 0;
+      src.connect(filter).connect(gain).connect(ctx.destination);
+      src.start();
+      gain.gain.linearRampToValueAtTime(0.16, ctx.currentTime + 1.2);
+      audio.current = { ctx, gain, filter };
+    } catch {
+      /* silence is acceptable */
+    }
+  };
+
+  /** A soft ping when a thought is grabbed. */
+  const ping = () => {
+    try {
+      const a = audio.current;
+      if (!a) return;
+      const o = a.ctx.createOscillator();
+      const g = a.ctx.createGain();
+      o.type = "sine";
+      o.frequency.value = 740;
+      o.frequency.exponentialRampToValueAtTime(1180, a.ctx.currentTime + 0.18);
+      g.gain.value = 0.12;
+      g.gain.exponentialRampToValueAtTime(0.001, a.ctx.currentTime + 0.5);
+      o.connect(g).connect(a.ctx.destination);
+      o.start();
+      o.stop(a.ctx.currentTime + 0.55);
+    } catch {
+      /* fine */
+    }
+  };
+
+  /** Boost leans the wind up; landing fades everything out. */
+  const soundBoost = () => {
+    try {
+      const a = audio.current;
+      if (!a) return;
+      a.filter.frequency.linearRampToValueAtTime(1400, a.ctx.currentTime + 1.2);
+      a.gain.gain.linearRampToValueAtTime(0.24, a.ctx.currentTime + 0.8);
+      a.gain.gain.linearRampToValueAtTime(0, a.ctx.currentTime + 1.7);
+      window.setTimeout(() => {
+        try {
+          a.ctx.close();
+        } catch {
+          /* fine */
+        }
+        audio.current = null;
+      }, 2000);
+    } catch {
+      /* fine */
+    }
+  };
 
   useEffect(() => {
     return () => {
       alive.current = false;
+      try {
+        audio.current?.ctx.close();
+      } catch {
+        /* fine */
+      }
     };
   }, []);
 
@@ -86,6 +166,7 @@ export default function FlowRide({ className = "" }: { className?: string }) {
     if (!clean) return;
     grabbedIdea.current = clean;
     setTyped("");
+    ping();
     setAct("feel");
   };
 
@@ -102,10 +183,13 @@ export default function FlowRide({ className = "" }: { className?: string }) {
         /* ignore */
       }
     }
+    ping();
+    soundBoost();
     boosting.current = true;
   };
 
   const land = () => {
+    soundBoost();
     boosting.current = true;
   };
 
@@ -126,6 +210,7 @@ export default function FlowRide({ className = "" }: { className?: string }) {
     boost.current = 0;
     boosting.current = false;
     alive.current = true;
+    startSound();
 
     window.requestAnimationFrame(() => {
       const canvas = canvasRef.current;
