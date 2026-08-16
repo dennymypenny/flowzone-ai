@@ -81,7 +81,7 @@ export default function StartModes() {
 
   return (
     <div>
-      <div className="mb-8">
+      <div className="mb-8 scroll-mt-24" id="pick-your-flow">
         <p className="label mb-4">Pick your flow</p>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3" role="tablist" aria-label="Flow Mode tracks">
           {TRACKS.map((t) => {

@@ -1,0 +1,316 @@
+"use client";
+import { useEffect, useRef, useState } from "react";
+
+/**
+ * Type what the video should say. Get a video.
+ *
+ * A real one: a vertical reel rendered live in the visitor's browser from
+ * real photographs of their thing, with their words as title cards, in the
+ * studio's colours, then handed over as a file they keep. Canvas paints the
+ * frames, MediaRecorder records the canvas. No render farm, no key, no
+ * cost, works offline once the photos are in.
+ *
+ * This is the whole studio pitch in miniature: arrive with a sentence,
+ * leave with the running thing.
+ */
+
+type Shot = { id: string; thumb: string };
+
+const W = 720;
+const H = 1280;
+const SCENE_MS = 3000;
+const CARD_MS = 2200;
+
+const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+
+function wrap(c: CanvasRenderingContext2D, text: string, max: number): string[] {
+  const words = text.split(/\s+/).filter(Boolean);
+  const lines: string[] = [];
+  let line = "";
+  for (const w of words) {
+    const t = line ? line + " " + w : w;
+    if (c.measureText(t).width > max && line) {
+      lines.push(line);
+      line = w;
+    } else {
+      line = t;
+    }
+  }
+  if (line) lines.push(line);
+  return lines.slice(0, 4);
+}
+
+export default function VideoSpark({ topic }: { topic: string }) {
+  const [prompt, setPrompt] = useState("");
+  const [phase, setPhase] = useState<"idle" | "loading" | "rendering" | "done" | "failed">("idle");
+  const [progress, setProgress] = useState(0);
+  const [videoUrl, setVideoUrl] = useState("");
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const abort = useRef(false);
+
+  useEffect(() => {
+    return () => {
+      abort.current = true;
+      if (videoUrl) URL.revokeObjectURL(videoUrl);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const supported =
+    typeof window !== "undefined" &&
+    typeof HTMLCanvasElement !== "undefined" &&
+    "captureStream" in HTMLCanvasElement.prototype &&
+    typeof MediaRecorder !== "undefined";
+
+  const make = async () => {
+    const line = prompt.trim() || `why ${topic} matters`;
+    setPhase("loading");
+    setProgress(0);
+    if (videoUrl) {
+      URL.revokeObjectURL(videoUrl);
+      setVideoUrl("");
+    }
+
+    try {
+      // 1. Real photographs of the thing.
+      const res = await fetch(`/api/moodboard?q=${encodeURIComponent(topic)}`);
+      const data = await res.json();
+      const shots: Shot[] = (data.ok ? data.shots : []).slice(0, 4);
+      if (!shots.length) throw new Error("no shots");
+
+      const imgs: HTMLImageElement[] = [];
+      await Promise.all(
+        shots.map(
+          (s) =>
+            new Promise<void>((resolve) => {
+              const im = new Image();
+              im.onload = () => {
+                imgs.push(im);
+                resolve();
+              };
+              im.onerror = () => resolve();
+              im.src = `/api/imageproxy?src=${encodeURIComponent(s.thumb)}`;
+            })
+        )
+      );
+      if (!imgs.length) throw new Error("no images loaded");
+
+      // 2. The script: their words become the cards.
+      const canvas = canvasRef.current;
+      if (!canvas) throw new Error("no canvas");
+      canvas.width = W;
+      canvas.height = H;
+      const c = canvas.getContext("2d");
+      if (!c) throw new Error("no context");
+
+      const scenes: Array<{ kind: "card" | "photo"; text: string; img?: HTMLImageElement; ms: number }> = [
+        { kind: "card", text: topic.toUpperCase(), ms: CARD_MS },
+        ...imgs.map((im, i) => ({
+          kind: "photo" as const,
+          img: im,
+          text: i === 0 ? line : i === 1 ? "real thing. real feeling." : i === 2 ? "you imagine it" : "we get it moving",
+          ms: SCENE_MS,
+        })),
+        { kind: "card", text: "made in flow mode · flowzone.dev", ms: CARD_MS },
+      ];
+      const total = scenes.reduce((n, s) => n + s.ms, 0);
+
+      // 3. Record the canvas as an actual file.
+      const stream = canvas.captureStream(30);
+      const mime =
+        MediaRecorder.isTypeSupported("video/webm;codecs=vp9")
+          ? "video/webm;codecs=vp9"
+          : MediaRecorder.isTypeSupported("video/webm")
+            ? "video/webm"
+            : "video/mp4";
+      const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 5_000_000 });
+      const chunks: BlobPart[] = [];
+      rec.ondataavailable = (e) => e.data.size && chunks.push(e.data);
+      const finished = new Promise<Blob>((resolve) => {
+        rec.onstop = () => resolve(new Blob(chunks, { type: mime.split(";")[0] }));
+      });
+
+      setPhase("rendering");
+      rec.start(250);
+      const t0 = performance.now();
+
+      await new Promise<void>((resolve) => {
+        const frame = (now: number) => {
+          const t = now - t0;
+          if (abort.current) return resolve();
+          if (t >= total) return resolve();
+          setProgress(Math.min(99, Math.round((t / total) * 100)));
+
+          // Which scene are we in
+          let acc = 0;
+          let sc = scenes[scenes.length - 1];
+          let local = 1;
+          for (const s of scenes) {
+            if (t < acc + s.ms) {
+              sc = s;
+              local = (t - acc) / s.ms;
+              break;
+            }
+            acc += s.ms;
+          }
+
+          // Paint
+          c.fillStyle = "#080D18";
+          c.fillRect(0, 0, W, H);
+
+          if (sc.kind === "photo" && sc.img) {
+            const im = sc.img;
+            const zoom = 1.08 + ease(local) * 0.12;
+            const iw = im.width;
+            const ih = im.height;
+            const scale = Math.max(W / iw, H / ih) * zoom;
+            const dw = iw * scale;
+            const dh = ih * scale;
+            const dx = (W - dw) / 2 + Math.sin(local * Math.PI) * 14;
+            const dy = (H - dh) / 2 - ease(local) * 26;
+            c.drawImage(im, dx, dy, dw, dh);
+            // navy wash top and bottom so the words always read
+            const g = c.createLinearGradient(0, 0, 0, H);
+            g.addColorStop(0, "rgba(8,13,24,0.55)");
+            g.addColorStop(0.35, "rgba(8,13,24,0)");
+            g.addColorStop(0.68, "rgba(8,13,24,0)");
+            g.addColorStop(1, "rgba(8,13,24,0.82)");
+            c.fillStyle = g;
+            c.fillRect(0, 0, W, H);
+          } else {
+            // brand card: aurora glow
+            const g1 = c.createRadialGradient(W * 0.2, -100, 60, W * 0.2, -100, 900);
+            g1.addColorStop(0, "rgba(91,155,249,0.5)");
+            g1.addColorStop(1, "rgba(8,13,24,0)");
+            c.fillStyle = g1;
+            c.fillRect(0, 0, W, H);
+            const g2 = c.createRadialGradient(W * 0.9, H + 80, 60, W * 0.9, H + 80, 800);
+            g2.addColorStop(0, "rgba(30,58,138,0.6)");
+            g2.addColorStop(1, "rgba(8,13,24,0)");
+            c.fillStyle = g2;
+            c.fillRect(0, 0, W, H);
+          }
+
+          // three dots, always
+          const dotY = 108;
+          const cx = W / 2;
+          const r = 9;
+          const cols = ["#1E3A8A", "#5B9BF9", "#C6E4F8"];
+          c.strokeStyle = "rgba(221,238,251,0.7)";
+          c.lineWidth = 2;
+          c.beginPath();
+          c.moveTo(cx - 36 + r, dotY);
+          c.lineTo(cx + 36 - r, dotY);
+          c.stroke();
+          cols.forEach((col, i) => {
+            const pulse = 1 + 0.18 * Math.max(0, Math.sin((t / 600) * Math.PI - i * 0.9));
+            c.fillStyle = col;
+            c.beginPath();
+            c.arc(cx - 36 + i * 36, dotY, r * pulse, 0, Math.PI * 2);
+            c.fill();
+          });
+
+          // words
+          const appear = ease(Math.min(1, local * 2.2));
+          c.globalAlpha = appear;
+          c.fillStyle = "#F1F3F7";
+          c.textAlign = "center";
+          const big = sc.kind === "card";
+          c.font = `600 ${big ? 64 : 52}px Poppins, system-ui, sans-serif`;
+          const lines = wrap(c, sc.text, W - 130);
+          const lh = big ? 78 : 64;
+          const baseY = big ? H / 2 - ((lines.length - 1) * lh) / 2 : H - 210 - (lines.length - 1) * lh;
+          lines.forEach((ln, i) => {
+            c.fillText(ln, W / 2, baseY + i * lh + (1 - appear) * 28);
+          });
+          c.globalAlpha = 1;
+
+          window.requestAnimationFrame(frame);
+        };
+        window.requestAnimationFrame(frame);
+      });
+
+      rec.stop();
+      const blob = await finished;
+      if (abort.current) return;
+      setVideoUrl(URL.createObjectURL(blob));
+      setProgress(100);
+      setPhase("done");
+    } catch {
+      setPhase("failed");
+    }
+  };
+
+  if (!supported) return null;
+
+  return (
+    <div className="mt-6 max-w-xl">
+      <p className="label mb-3">Now make it move</p>
+      <div className="flex flex-col sm:flex-row gap-3">
+        <input
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && phase !== "rendering" && phase !== "loading" && make()}
+          placeholder={`A video of why ${topic} matters...`}
+          aria-label="Describe the video to generate"
+          className="flex-1 bg-paper-deep/80 text-ink placeholder-ink-mute border border-rule px-5 py-3.5 text-sm font-light outline-none focus:border-accent transition-colors"
+        />
+        <button
+          onClick={make}
+          disabled={phase === "rendering" || phase === "loading"}
+          className="btn-primary shine !px-5 !py-3 text-sm disabled:opacity-60"
+        >
+          {phase === "loading" ? "Gathering..." : phase === "rendering" ? `Filming ${progress}%` : "🎬 Generate the video"}
+        </button>
+      </div>
+
+      {(phase === "rendering" || phase === "loading") && (
+        <div className="mt-4 h-[3px] rounded-full bg-rule overflow-hidden">
+          <div
+            className="h-full rounded-full transition-all duration-300"
+            style={{ width: `${progress}%`, background: "linear-gradient(90deg,#1E3A8A,#5B9BF9,#C6E4F8)" }}
+          />
+        </div>
+      )}
+      {phase === "failed" && (
+        <p className="text-sm text-ink-soft font-light mt-4">
+          Could not pull photos for that just now. Try again, or try different words.
+        </p>
+      )}
+
+      {/* The working surface. Visible while filming so the generation IS the show. */}
+      <canvas
+        ref={canvasRef}
+        className={`mt-5 w-full max-w-[300px] rounded-2xl border border-white/15 shadow-[0_40px_80px_-28px_rgba(0,0,0,0.85)] ${
+          phase === "rendering" ? "block" : "hidden"
+        }`}
+      />
+
+      {phase === "done" && videoUrl && (
+        <div className="mt-5">
+          <video
+            src={videoUrl}
+            controls
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full max-w-[300px] rounded-2xl border border-white/15 shadow-[0_40px_80px_-28px_rgba(0,0,0,0.85)]"
+          />
+          <div className="flex gap-3 mt-4">
+            <a
+              href={videoUrl}
+              download={`${topic.replace(/\s+/g, "-")}-reel.webm`}
+              className="btn-primary !px-5 !py-2.5 text-sm"
+            >
+              ⬇️ Keep the video
+            </a>
+            <button onClick={make} className="btn-ghost !px-5 !py-2.5 text-sm">
+              Roll another take <span className="arrow">→</span>
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
