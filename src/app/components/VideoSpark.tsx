@@ -40,8 +40,26 @@ function wrap(c: CanvasRenderingContext2D, text: string, max: number): string[] 
   return lines.slice(0, 4);
 }
 
+/**
+ * The little writer. Type nothing, press the wand, get a line worth
+ * filming. Runs on templates and the visitor's own topic, so it is
+ * instant, free, and different every press.
+ */
+const LINES = [
+  (t: string) => `why ${t} deserves more credit than it gets`,
+  (t: string) => `the feeling of walking into a place that takes ${t} seriously`,
+  (t: string) => `what makes people fall in love with ${t}`,
+  (t: string) => `${t}, done properly, changes someone's whole day`,
+  (t: string) => `nobody needed ${t} until they saw it done right`,
+  (t: string) => `the difference between ${t} and great ${t}`,
+  (t: string) => `this is your sign to finally start the ${t} thing`,
+  (t: string) => `${t} is not a product, it is a mood`,
+];
+
 export default function VideoSpark({ topic }: { topic: string }) {
   const [prompt, setPrompt] = useState("");
+  const [lineIdx, setLineIdx] = useState(-1);
+  const typerRef = useRef<number | undefined>(undefined);
   const [phase, setPhase] = useState<"idle" | "loading" | "rendering" | "done" | "failed">("idle");
   const [progress, setProgress] = useState(0);
   const [videoUrl, setVideoUrl] = useState("");
@@ -56,6 +74,21 @@ export default function VideoSpark({ topic }: { topic: string }) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  /** The wand: pick the next line, type it in like a tiny ghostwriter. */
+  const writeForMe = () => {
+    const next = (lineIdx + 1) % LINES.length;
+    setLineIdx(next);
+    const full = LINES[next](topic || "the thing");
+    window.clearInterval(typerRef.current);
+    let i = 0;
+    setPrompt("");
+    typerRef.current = window.setInterval(() => {
+      i += 2;
+      setPrompt(full.slice(0, i));
+      if (i >= full.length) window.clearInterval(typerRef.current);
+    }, 24);
+  };
 
   const supported =
     typeof window !== "undefined" &&
@@ -73,16 +106,32 @@ export default function VideoSpark({ topic }: { topic: string }) {
     }
 
     try {
-      // 1. Real photographs of the thing.
-      const res = await fetch(`/api/moodboard?q=${encodeURIComponent(topic)}`);
-      const data = await res.json();
-      const shots: Shot[] = (data.ok ? data.shots : []).slice(0, 4);
-      if (!shots.length) throw new Error("no shots");
+      // 1. The visitor's own photos first, then real photographs of the thing.
+      let sources: string[] = [];
+      try {
+        const ups = JSON.parse(window.localStorage.getItem("flowzone.uploads.v1") || "[]");
+        if (Array.isArray(ups)) sources = ups.slice(0, 4);
+      } catch {
+        /* ignore */
+      }
+      if (sources.length < 4) {
+        try {
+          const res = await fetch(`/api/moodboard?q=${encodeURIComponent(topic)}`);
+          const data = await res.json();
+          const shots: Shot[] = (data.ok ? data.shots : []).slice(0, 4 - sources.length);
+          sources = sources.concat(
+            shots.map((s) => `/api/imageproxy?src=${encodeURIComponent(s.thumb)}`)
+          );
+        } catch {
+          /* their own photos may be enough */
+        }
+      }
+      if (!sources.length) throw new Error("no shots");
 
       const imgs: HTMLImageElement[] = [];
       await Promise.all(
-        shots.map(
-          (s) =>
+        sources.map(
+          (u) =>
             new Promise<void>((resolve) => {
               const im = new Image();
               im.onload = () => {
@@ -90,7 +139,7 @@ export default function VideoSpark({ topic }: { topic: string }) {
                 resolve();
               };
               im.onerror = () => resolve();
-              im.src = `/api/imageproxy?src=${encodeURIComponent(s.thumb)}`;
+              im.src = u;
             })
         )
       );
@@ -264,14 +313,24 @@ export default function VideoSpark({ topic }: { topic: string }) {
     <div className="mt-6 max-w-xl">
       <p className="label mb-3">Now make it move</p>
       <div className="flex flex-col sm:flex-row gap-3">
-        <input
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && phase !== "rendering" && phase !== "loading" && make()}
-          placeholder={`A video of why ${topic} matters...`}
-          aria-label="Describe the video to generate"
-          className="flex-1 bg-paper-deep/80 text-ink placeholder-ink-mute border border-rule px-5 py-3.5 text-sm font-light outline-none focus:border-accent transition-colors"
-        />
+        <div className="relative flex-1">
+          <input
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && phase !== "rendering" && phase !== "loading" && make()}
+            placeholder={`A video of why ${topic} matters...`}
+            aria-label="Describe the video to generate"
+            className="w-full bg-paper-deep/80 text-ink placeholder-ink-mute border border-rule pl-5 pr-32 py-3.5 text-sm font-light outline-none focus:border-accent transition-colors"
+          />
+          <button
+            onClick={writeForMe}
+            type="button"
+            title="Let the little writer do it"
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-xs border border-rule text-ink-soft px-3 py-1.5 rounded-lg hover:text-ink hover:border-accent transition-colors"
+          >
+            ✨ Write it for me
+          </button>
+        </div>
         <button
           onClick={make}
           disabled={phase === "rendering" || phase === "loading"}

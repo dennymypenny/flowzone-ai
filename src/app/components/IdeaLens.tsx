@@ -5,15 +5,13 @@ import VideoSpark from "@/app/components/VideoSpark";
 
 /**
  * Type a thing, see the thing, pick it, move on.
+ * Or skip all of that and drop your own.
  *
  * One photograph at a time, big, in a card that tilts toward the pointer.
- * Not a wall of options: a single frame, a reroll, and a pick. Click the
- * picture or the pick button and it is saved as the vibe for this session,
- * the page moves you on to the tracks, and a small bar remembers your
- * choice with a way to change it.
- *
- * Images are openly licensed, pulled live from the open web. The credit
- * rides along quietly: it appears on hover, never as a caption.
+ * Drag photos from your desktop anywhere onto this block and they become
+ * the vibe and star in the video. Files never leave the browser: they are
+ * downscaled to a data URL on the visitor's own machine and stored
+ * locally, which is also what makes them safe to paint into the reel.
  */
 
 type Shot = {
@@ -26,7 +24,45 @@ type Shot = {
 };
 
 const KEY = "flowzone.idealens.v1";
+const UPLOADS_KEY = "flowzone.uploads.v1";
 const STARTERS = ["a bakery", "a barbershop", "a sneaker shop"];
+
+/** Shrink a dropped image on-device so storage stays small and paint stays fast. */
+function shrink(file: File): Promise<string | null> {
+  return new Promise((resolve) => {
+    if (!file.type.startsWith("image/")) return resolve(null);
+    const url = URL.createObjectURL(file);
+    const im = new Image();
+    im.onload = () => {
+      const max = 1280;
+      const scale = Math.min(1, max / Math.max(im.width, im.height));
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.round(im.width * scale);
+      canvas.height = Math.round(im.height * scale);
+      const c = canvas.getContext("2d");
+      if (!c) {
+        URL.revokeObjectURL(url);
+        return resolve(null);
+      }
+      c.drawImage(im, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(url);
+      try {
+        resolve(canvas.toDataURL("image/jpeg", 0.82));
+      } catch {
+        resolve(null);
+      }
+    };
+    im.onerror = () => {
+      URL.revokeObjectURL(url);
+      resolve(null);
+    };
+    im.src = url;
+  });
+}
+
+/** Data URLs render directly; web images go through the same-origin pass. */
+const src = (thumb: string) =>
+  thumb.startsWith("data:") ? thumb : `/api/imageproxy?src=${encodeURIComponent(thumb)}`;
 
 export default function IdeaLens() {
   const [q, setQ] = useState("");
@@ -35,18 +71,22 @@ export default function IdeaLens() {
   const [busy, setBusy] = useState(false);
   const [shown, setShown] = useState("");
   const [chosen, setChosen] = useState<{ q: string; thumb: string } | null>(null);
+  const [failed, setFailed] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
+  const [uploadCount, setUploadCount] = useState(0);
   const timer = useRef<number | undefined>(undefined);
+  const fileRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     try {
       const saved = window.localStorage.getItem(KEY);
       if (saved) setChosen(JSON.parse(saved));
+      const ups = window.localStorage.getItem(UPLOADS_KEY);
+      if (ups) setUploadCount((JSON.parse(ups) as string[]).length);
     } catch {
       /* ignore */
     }
   }, []);
-
-  const [failed, setFailed] = useState(false);
 
   const fetchShots = async (query: string) => {
     const term = query.trim();
@@ -81,9 +121,7 @@ export default function IdeaLens() {
 
   const shot = shots[idx];
 
-  const pick = () => {
-    if (!shot) return;
-    const sel = { q: shown, thumb: shot.thumb };
+  const keep = (sel: { q: string; thumb: string }) => {
     setChosen(sel);
     setShots([]);
     setQ("");
@@ -95,6 +133,35 @@ export default function IdeaLens() {
     document.getElementById("pick-your-flow")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const pick = () => {
+    if (!shot) return;
+    keep({ q: shown, thumb: shot.thumb });
+  };
+
+  /** Dropped or browsed files become the vibe and feed the video. */
+  const addFiles = async (list: FileList | File[]) => {
+    const files = Array.from(list).slice(0, 6);
+    if (!files.length) return;
+    setBusy(true);
+    const datas = (await Promise.all(files.map(shrink))).filter(Boolean) as string[];
+    setBusy(false);
+    if (!datas.length) return;
+    let existing: string[] = [];
+    try {
+      existing = JSON.parse(window.localStorage.getItem(UPLOADS_KEY) || "[]");
+    } catch {
+      /* ignore */
+    }
+    const all = [...datas, ...existing].slice(0, 6);
+    try {
+      window.localStorage.setItem(UPLOADS_KEY, JSON.stringify(all));
+    } catch {
+      /* storage full: carry on with what fits in memory */
+    }
+    setUploadCount(all.length);
+    keep({ q: q.trim() || shown || "your own photos", thumb: datas[0] });
+  };
+
   const clear = () => {
     setChosen(null);
     try {
@@ -104,21 +171,52 @@ export default function IdeaLens() {
     }
   };
 
-  // Already picked: one quiet line, then the next move.
+  const dropProps = {
+    onDragOver: (e: React.DragEvent) => {
+      e.preventDefault();
+      setDragOver(true);
+    },
+    onDragLeave: () => setDragOver(false),
+    onDrop: (e: React.DragEvent) => {
+      e.preventDefault();
+      setDragOver(false);
+      if (e.dataTransfer?.files?.length) addFiles(e.dataTransfer.files);
+    },
+  };
+
+  const dropRing = dragOver
+    ? "outline outline-2 outline-accent outline-offset-8 rounded-2xl"
+    : "";
+
+  // Already picked: one quiet line, then the next move. Still a drop target.
   if (chosen && !shots.length) {
     return (
-      <div>
+      <div {...dropProps} className={`relative transition-all ${dropRing}`}>
+        {dragOver && (
+          <p className="absolute -top-8 left-0 label text-accent">Drop them in</p>
+        )}
         <div className="flex items-center gap-4 rounded-2xl border border-rule bg-paper-deep/70 p-3 pr-5 max-w-xl">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={`/api/imageproxy?src=${encodeURIComponent(chosen.thumb)}`}
+            src={src(chosen.thumb)}
             alt={chosen.q}
             className="w-16 h-16 object-cover rounded-xl border border-white/15"
           />
           <div className="flex-1 min-w-0">
             <p className="label mb-1">Your vibe</p>
-            <p className="text-sm text-ink font-light truncate">{chosen.q}</p>
+            <p className="text-sm text-ink font-light truncate">
+              {chosen.q}
+              {uploadCount > 0 && (
+                <span className="text-ink-mute"> · {uploadCount} of your photos in</span>
+              )}
+            </p>
           </div>
+          <button
+            onClick={() => fileRef.current?.click()}
+            className="text-xs border border-rule text-ink-soft px-3 py-2 hover:text-ink hover:border-accent transition-colors shrink-0"
+          >
+            + Add photos
+          </button>
           <button
             onClick={clear}
             className="text-xs border border-rule text-ink-soft px-3 py-2 hover:text-ink hover:border-accent transition-colors shrink-0"
@@ -126,13 +224,26 @@ export default function IdeaLens() {
             Change it
           </button>
         </div>
+        <input
+          ref={fileRef}
+          type="file"
+          accept="image/*"
+          multiple
+          className="hidden"
+          onChange={(e) => e.target.files && addFiles(e.target.files)}
+        />
         <VideoSpark topic={chosen.q} />
       </div>
     );
   }
 
   return (
-    <div>
+    <div {...dropProps} className={`relative transition-all ${dropRing}`}>
+      {dragOver && (
+        <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-paper/80 pointer-events-none">
+          <p className="font-display text-2xl text-accent">Drop your photos in 📥</p>
+        </div>
+      )}
       <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
         <div className="relative flex-1 max-w-xl">
           <input
@@ -166,6 +277,21 @@ export default function IdeaLens() {
         </div>
       </div>
 
+      <button
+        onClick={() => fileRef.current?.click()}
+        className="mt-3 text-xs text-ink-mute hover:text-ink transition-colors"
+      >
+        📥 Or drag your own photos anywhere here, or click to browse
+      </button>
+      <input
+        ref={fileRef}
+        type="file"
+        accept="image/*"
+        multiple
+        className="hidden"
+        onChange={(e) => e.target.files && addFiles(e.target.files)}
+      />
+
       {failed && !busy && (
         <div className="mt-6 flex items-center gap-4">
           <p className="text-sm text-ink-soft font-light">
@@ -192,7 +318,7 @@ export default function IdeaLens() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 key={shot.id}
-                src={`/api/imageproxy?src=${encodeURIComponent(shot.thumb)}`}
+                src={src(shot.thumb)}
                 alt={shown}
                 onError={() => setIdx((i) => (i + 1) % Math.max(1, shots.length))}
                 className="w-full h-[300px] sm:h-[380px] object-cover block"

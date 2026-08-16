@@ -22,16 +22,40 @@ export default function Home() {
 
         <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-20 md:pt-32 md:pb-28">
 
-          <p className="chip mb-8">
-            <svg width="26" height="10" viewBox="0 0 58 18" fill="none" aria-hidden>
-              <line x1="10.5" y1="9" x2="23.5" y2="9" stroke="#DDEEFB" strokeWidth="1.6" />
-              <line x1="34.5" y1="9" x2="46.5" y2="9" stroke="#DDEEFB" strokeWidth="1.6" />
-              <circle cx="6" cy="9" r="5.6" fill="#4C7BE8" />
-              <circle cx="29" cy="9" r="5.6" fill="#5B9BF9" />
-              <circle cx="52" cy="9" r="5.6" fill="#C6E4F8" />
-            </svg>
-            Brand · Site · System, one studio
-          </p>
+          {/* The mark, spelled out: each dot is a word */}
+          <div className="flex items-center flex-wrap gap-y-2 mb-8" aria-label="Brand, site and system, one studio">
+            {[
+              { w: "Brand", c: "#4C7BE8", pulse: "pulse-1" },
+              { w: "Site", c: "#5B9BF9", pulse: "pulse-2" },
+              { w: "System", c: "#C6E4F8", pulse: "pulse-3" },
+            ].map((d, i) => (
+              <span key={d.w} className="flex items-center">
+                {i > 0 && (
+                  <span
+                    className="block w-7 h-px mx-3"
+                    style={{ background: "linear-gradient(90deg, transparent, rgba(221,238,251,0.45), transparent)" }}
+                    aria-hidden
+                  />
+                )}
+                <span className="flex items-center gap-2">
+                  <span
+                    className={`block w-2.5 h-2.5 rounded-full ${d.pulse}`}
+                    style={{ background: d.c, boxShadow: `0 0 12px ${d.c}66` }}
+                    aria-hidden
+                  />
+                  <span
+                    className="text-[11px] font-medium uppercase tracking-label"
+                    style={{ color: d.c }}
+                  >
+                    {d.w}
+                  </span>
+                </span>
+              </span>
+            ))}
+            <span className="text-[11px] font-medium uppercase tracking-label text-ink-mute ml-3">
+              · one studio
+            </span>
+          </div>
 
           <h1 className="display text-[3rem] sm:text-6xl md:text-[5.25rem] max-w-4xl">
             <span className="text-gradient-white">You imagine it.</span>
