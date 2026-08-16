@@ -62,7 +62,7 @@ export default function ChatWidget() {
     <div className="flex flex-col panel overflow-hidden" style={{ minHeight: "440px" }}>
       {/* Header */}
       <div className="flex items-center justify-between px-6 py-4 border-b border-rule">
-        <Wordmark size={16} />
+        <Wordmark tone="dark" size={16} />
         <p className="label">Studio assistant</p>
       </div>
 
@@ -71,8 +71,9 @@ export default function ChatWidget() {
         {isEmpty && (
           <div className="flex flex-col items-start gap-5">
             <p className="text-ink-soft leading-relaxed max-w-md">
-              Tell me what you are trying to launch and I will tell you which of the
-              three parts you actually need. No sales pitch.
+              Tell me what you are trying to get moving and I will tell you which of
+              the three parts you actually need, roughly what it costs and how long it
+              takes. Then send it over in an email and a person picks it up.
             </p>
             <div className="flex flex-wrap gap-2">
               {CHIPS.map((chip) => (
@@ -117,6 +118,16 @@ export default function ChatWidget() {
         )}
 
         <div ref={bottomRef} />
+      </div>
+
+      {/* Nudge to a real person */}
+      <div className="border-t border-rule px-6 py-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:justify-between bg-paper-deep">
+        <p className="text-sm text-ink-soft font-light">
+          Answers here are quick. Real scope and a date come by email.
+        </p>
+        <a href={SITE.mailto} className="btn-primary !px-4 !py-2.5 shrink-0">
+          Send us the details <span className="arrow">→</span>
+        </a>
       </div>
 
       {/* Input */}

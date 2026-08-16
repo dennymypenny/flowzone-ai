@@ -113,9 +113,9 @@ export default function Work() {
               the studio is rather than where it wants to be.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 mt-10">
-              <Link href="/intake" className="btn-primary">
-                Start a project
-              </Link>
+              <a href={SITE.mailto} className="btn-primary">
+                Start an email <span className="arrow">→</span>
+              </a>
               <Link href="/how-we-work" className="btn-ghost">
                 How we work
               </Link>

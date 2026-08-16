@@ -151,9 +151,9 @@ export default function Services() {
               so you can see the whole shape of the work before you commit to any of it.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 mt-10">
-              <Link href="/intake" className="btn-primary">
-                Tell us the idea
-              </Link>
+              <a href={SITE.mailto} className="btn-primary">
+                Start an email <span className="arrow">→</span>
+              </a>
               <a href={`mailto:${SITE.email}`} className="btn-ghost">
                 {SITE.email}
               </a>

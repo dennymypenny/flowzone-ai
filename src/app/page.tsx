@@ -15,12 +15,6 @@ export default function Home() {
         <div className="absolute inset-0 aurora pointer-events-none" />
 
         <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-20 md:pt-32 md:pb-28">
-          <div className="start start-1 inline-flex items-center gap-2.5 border border-rule bg-raised/60 pl-2 pr-3.5 py-1.5 mb-10">
-            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-            <span className="text-[11px] font-medium uppercase tracking-label text-ink-soft">
-              Creative studio · Brand, site, system
-            </span>
-          </div>
 
           <h1 className="start start-2 display text-[3rem] sm:text-6xl md:text-[5.25rem] max-w-4xl">
             You imagine it.
@@ -41,9 +35,9 @@ export default function Home() {
           </p>
 
           <div className="start start-5 flex flex-col sm:flex-row gap-3 mt-10">
-            <Link href="/intake" className="btn-primary">
-              Start a project <span className="arrow">→</span>
-            </Link>
+            <a href={SITE.mailto} className="btn-primary">
+              Start an email <span className="arrow">→</span>
+            </a>
             <Link href="/work" className="btn-ghost">
               See the work <span className="arrow">→</span>
             </Link>
@@ -302,34 +296,34 @@ export default function Home() {
       </section>
 
       {/* ---------- Work ---------- */}
-      <section data-flow className="border-t border-rule px-6 py-24">
+      <section data-flow className="bg-white text-[#0B1322] px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-baseline justify-between mb-10">
-            <p className="label">Selected work</p>
-            <Link href="/work" className="label hover:text-ink transition-colors">
+            <p className="text-[11px] font-medium uppercase tracking-label text-[#3D6FE8]">Selected work</p>
+            <Link href="/work" className="text-[11px] font-medium uppercase tracking-label text-[#647089] hover:text-[#3D6FE8] transition-colors">
               All work →
             </Link>
           </div>
 
-          <Link href="/work" className="group block panel overflow-hidden">
+          <Link href="/work" className="group block border border-[#E8EEF7] bg-white overflow-hidden">
             <img
               src="/assets/crg-cards.jpg"
               alt="CardsRG product grid showing graded Lionel Messi and Stan Lee cards with prices and cart buttons"
               className="w-full h-auto block transition-transform duration-700 group-hover:scale-[1.015]"
             />
-            <div className="grid md:grid-cols-12 gap-6 p-7 border-t border-rule">
+            <div className="grid md:grid-cols-12 gap-6 p-7 border-t border-[#E8EEF7]">
               <div className="md:col-span-7">
-                <h3 className="font-display text-2xl group-hover:text-accent transition-colors">
+                <h3 className="font-display text-2xl text-[#0B1322] group-hover:text-accent transition-colors">
                   CardsRG
                 </h3>
-                <p className="text-sm text-ink-soft mt-2 font-light leading-relaxed max-w-reading">
+                <p className="text-sm text-[#647089] mt-2 font-light leading-relaxed max-w-reading">
                   A collector trading card storefront taken from an idea to a live shop.
                   Brand mark, full storefront, product pages, cart and checkout.
                 </p>
               </div>
               <div className="md:col-span-5 md:text-right">
-                <p className="label mb-2">Brand · Storefront · Checkout</p>
-                <p className="text-[11px] font-medium text-ink-mute">cardsrg.com</p>
+                <p className="text-[11px] font-medium uppercase tracking-label text-[#647089] mb-2">Brand · Storefront · Checkout</p>
+                <p className="text-[11px] font-medium text-[#3D6FE8]">cardsrg.com</p>
               </div>
             </div>
           </Link>
@@ -431,15 +425,12 @@ export default function Home() {
             date. No discovery call required.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/intake" className="btn-primary">
-              Start a project
-            </Link>
-            <a
-              href={`mailto:${SITE.email}`}
-              className="btn border border-rule text-ink hover:bg-raised hover:border-ink/25"
-            >
-              {SITE.email}
+            <a href={SITE.mailto} className="btn-primary">
+              Start an email <span className="arrow">→</span>
             </a>
+            <Link href="/pricing" className="btn-ghost">
+              See pricing first
+            </Link>
           </div>
         </div>
       </section>

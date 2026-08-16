@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-6 py-20">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
           <div className="md:col-span-5">
-            <Wordmark />
+            <Wordmark tone="dark" />
             <p className="font-display text-3xl md:text-4xl leading-[1.08] text-ink mt-7 max-w-sm">
               {SITE.line}
             </p>

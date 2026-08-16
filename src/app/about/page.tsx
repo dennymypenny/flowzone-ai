@@ -159,9 +159,9 @@ export default function About() {
             {SITE.line}
           </h2>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/intake" className="btn-primary">
-              Start a project
-            </Link>
+            <a href={SITE.mailto} className="btn-primary">
+              Start an email <span className="arrow">→</span>
+            </a>
             <a
               href={`mailto:${SITE.email}`}
               className="btn border border-rule text-ink hover:bg-raised hover:border-ink/25"

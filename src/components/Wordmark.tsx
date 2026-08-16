@@ -14,14 +14,21 @@ export default function Wordmark({
   showName = true,
   className = "",
   size = 18,
+  tone = "light",
 }: {
   showName?: boolean;
   className?: string;
   size?: number;
+  /** "light" for the white nav, "dark" for dark surfaces */
+  tone?: "light" | "dark";
 }) {
   const w = (size * 58) / 18;
   return (
-    <span className={`inline-flex items-center gap-2.5 text-ink ${className}`}>
+    <span
+      className={`inline-flex items-center gap-2.5 ${
+        tone === "light" ? "text-[#0B1322]" : "text-ink"
+      } ${className}`}
+    >
       <svg
         width={w}
         height={size}
@@ -48,7 +55,9 @@ export default function Wordmark({
         </g>
       </svg>
       {showName && (
-        <span className="font-display text-[17px] leading-none">FlowZone</span>
+        <span className="font-display text-[19px] leading-none">
+          FlowZone <span className="text-accent">AI</span>
+        </span>
       )}
     </span>
   );

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Blog | FlowZone AI",
@@ -108,7 +109,7 @@ export default function Blog() {
           <h2 className="text-2xl font-display font-normal text-ink mb-4">Ready to build the whole thing?</h2>
           <p className="text-ink-mute mb-6">Tell us the idea. We will come back with a plan in 24 hours.</p>
           <Link
-            href="/intake"
+            href={SITE.mailto}
             className="inline-block bg-accent text-white font-bold px-8 py-4 rounded-xl hover:bg-accent-deep transition-colors"
           >
             Get Your Free Build Plan &rarr;

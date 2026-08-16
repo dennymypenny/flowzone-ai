@@ -13,7 +13,7 @@ The studio's one line is: "${SITE.line}" A model does the fast part. A person de
 
 Real shipped work: cardsrg.com, a collector trading card storefront we built end to end. The studio is early and takes a small number of projects at a time. Never invent clients, testimonials, ratings or stats. If asked how many clients we have had, say we are early and point to cardsrg.com.
 
-Keep every reply to 1 or 2 short sentences. End by pointing to /intake or ${E}. Send pricing questions to /pricing: three flat packages, Starter at $997, Growth at $2,497 and Scale as a custom quote.
+Keep every reply to 1 or 2 short sentences. ALWAYS end by asking them to send the details in an email to ${E}, because a person reads it and comes back with real scope, a price and a date. The chat gives quick answers, the email is where a project actually starts. Send pricing questions to /pricing: three flat packages, Starter at $997, Growth at $2,497 and Scale as a custom quote.
 
 Voice rules, follow strictly. Never use the words "automate", "automated" or "automation" to describe what we do, even when the visitor uses them. Say we build systems, or that something runs itself, or that it is hands free. Never use em dashes. Never use an Oxford comma. Do not gush, do not use exclamation marks and do not call anything "amazing".`;
 
@@ -21,39 +21,39 @@ function keywordFallback(message: string): string {
   const m = message.toLowerCase();
 
   if (m.includes("price") || m.includes("cost") || m.includes("how much") || m.includes("budget"))
-    return `Three flat packages, Starter at $997, Growth at $2,497 and Scale as a custom quote. See what each includes at /pricing or email ${E}.`;
+    return `Three flat packages, Starter at $997, Growth at $2,497 and Scale as a custom quote. See what each includes at /pricing, then email ${E} and we will tell you which one fits.`;
 
   if (m.includes("template") || m.includes("generic") || m.includes("looks bad") || m.includes("ugly"))
-    return `That is usually a Brand problem showing up on the Site. We build the identity first, then design the site against it. Start at /intake or email ${E}.`;
+    return `That is usually a Brand problem showing up on the Site. We build the identity first, then design the site against it. Send me the details at ${E} and a person comes back with scope and a date.`;
 
   if (m.includes("brand") || m.includes("logo") || m.includes("identity") || m.includes("rebrand"))
-    return `Brand is part one: logo, palette, type, voice and the rules for using them, so everything after it has something to be built from. Start at /intake or email ${E}.`;
+    return `Brand is part one: logo, palette, type, voice and the rules for using them, so everything after it has something to be built from. Send me the details at ${E} and a person comes back with scope and a date.`;
 
   if (m.includes("store") || m.includes("shop") || m.includes("ecommerce") || m.includes("product") || m.includes("checkout"))
-    return `Storefronts are our favorite kind of project, cardsrg.com is one we built end to end. Tell us the catalog at /intake or email ${E}.`;
+    return `Storefronts are our favorite kind of project, cardsrg.com is one we built end to end. Email ${E} with what you are selling and we will come back with scope and a date.`;
 
   if (m.includes("website") || m.includes("site") || m.includes("landing") || m.includes("portfolio"))
-    return `Site is part two, custom designed against your brand rather than a theme, and live on your own domain. Start at /intake or email ${E}.`;
+    return `Site is part two, custom designed against your brand rather than a theme, and live on your own domain. Send me the details at ${E} and a person comes back with scope and a date.`;
 
   if (m.includes("lead") || m.includes("crm") || m.includes("follow") || m.includes("intake"))
-    return `That is a System, part three. Lead intake that captures, sorts and answers every enquiry without you touching it. Start at /intake or email ${E}.`;
+    return `That is a System, part three. Lead intake that captures, sorts and answers every enquiry without you touching it. Send me the details at ${E} and a person comes back with scope and a date.`;
 
   if (m.includes("booking") || m.includes("appointment") || m.includes("schedul") || m.includes("calendar"))
-    return `Booking, confirmations and reminders is a System build, wired into your site so the calendar runs itself. Start at /intake or email ${E}.`;
+    return `Booking, confirmations and reminders is a System build, wired into your site so the calendar runs itself. Send me the details at ${E} and a person comes back with scope and a date.`;
 
   if (m.includes("invoice") || m.includes("payment") || m.includes("billing"))
-    return `Invoicing, reminders and books that stay in sync is a System build, so you get paid without chasing. Start at /intake or email ${E}.`;
+    return `Invoicing, reminders and books that stay in sync is a System build, so you get paid without chasing. Send me the details at ${E} and a person comes back with scope and a date.`;
 
   if (m.includes("dashboard") || m.includes("kpi") || m.includes("report") || m.includes("analytics"))
-    return `Reporting is a System build, pulling from the tools you already run so the numbers stay current on their own. Start at /intake or email ${E}.`;
+    return `Reporting is a System build, pulling from the tools you already run so the numbers stay current on their own. Send me the details at ${E} and a person comes back with scope and a date.`;
 
   if (m.includes("automat") || m.includes("workflow") || m.includes("manual") || m.includes("integrat") || m.includes("api"))
-    return `Tell us the manual work eating your week and we build the System that runs it, connected to the tools you already have. Start at /intake or email ${E}.`;
+    return `Tell us the manual work eating your week and we build the System that runs it, connected to the tools you already have. Send me the details at ${E} and a person comes back with scope and a date.`;
 
   if (m.includes("work") || m.includes("portfolio") || m.includes("client") || m.includes("example"))
-    return `We are early and we say so. The work page has cardsrg.com, a storefront we built end to end, and everything on it is live. See /work or email ${E}.`;
+    return `We are early and we say so. The work page has cardsrg.com, a storefront we built end to end, and everything on it is live. See /work, then email ${E} and we will walk you through what we built.`;
 
-  return `We build three things: the brand, the site and the system that runs it. Tell us what you are launching at /intake or email ${E}.`;
+  return `We build three things: the brand, the site and the system that runs it. Email ${E} with what you are getting moving and a person comes straight back.`;
 }
 
 export async function POST(req: NextRequest) {
@@ -88,7 +88,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ text: keywordFallback(lastMessage) });
   } catch {
     return NextResponse.json({
-      text: `We can probably help. Email us at ${E} or start at /intake.`,
+      text: `We can probably help. Email us at ${E} and a person will come back to you.`,
     });
   }
 }

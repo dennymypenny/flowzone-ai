@@ -23,6 +23,10 @@ export const SITE = {
   linkedin: "https://www.linkedin.com/company/116623924/",
   linkedinFounder: "https://www.linkedin.com/in/dennisvaldesjr/",
 
+  // Prefilled mailto used by every primary CTA
+  mailto:
+    "mailto:flowzoneautomation@gmail.com?subject=New%20project%20for%20FlowZone&body=Hi%20FlowZone%2C%0A%0AHere%20is%20what%20I%20want%20to%20get%20moving%3A%0A%0A%0AWhat%20I%20already%20have%20(brand%2C%20site%2C%20anything)%3A%0A%0A%0AWhen%20I%20want%20it%20live%3A%0A%0A%0AThanks%2C%0A",
+
   url: "https://flowzone.dev",
 } as const;
 
