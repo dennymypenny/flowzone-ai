@@ -129,6 +129,153 @@ export default function Services() {
         </div>
       </section>
 
+      {/* ---------- Named builds ---------- */}
+      <section data-flow className="border-t border-rule px-6 py-24">
+        <div className="max-w-6xl mx-auto">
+          <p className="label mb-6">The builds</p>
+          <div className="grid md:grid-cols-12 gap-10 mb-14">
+            <h2 className="md:col-span-6 display text-4xl md:text-5xl">
+              Four things you can
+              <br />
+              actually order.
+            </h2>
+            <div className="md:col-span-6 self-end">
+              <p className="text-ink-soft font-light leading-relaxed max-w-reading">
+                A build is a fixed piece of work with a name, a price and a date. We
+                scope it before you pay, we do all of it, and we hand it over finished
+                and live. There is no discovery phase, no hourly meter and no invoice
+                at the end that is bigger than the number you agreed to.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            {[
+              {
+                icon: "\u{1F3A8}",
+                c: "#4C7BE8",
+                name: "The Identity Build",
+                one: "Everything people recognize you by, and the rules that keep it that way.",
+                what: [
+                  "Logo, wordmark and any secondary marks",
+                  "Color palette and type system, with the reasoning written down",
+                  "Voice, positioning line and the words you repeat everywhere",
+                  "Social avatars, banners and email signature set up",
+                  "A usage guide you can hand to a printer, a contractor or a new hire",
+                ],
+                takes: "About a week",
+                from: "From $600",
+                right: "You are launching, or your business has outgrown a logo you made in a hurry.",
+              },
+              {
+                icon: "\u{1F310}",
+                c: "#5B9BF9",
+                name: "The Site Build",
+                one: "A marketing site that explains you properly and asks for the sale.",
+                what: [
+                  "Up to six pages, custom designed against your brand",
+                  "Every word written for you, not a template you fill in",
+                  "Contact and enquiry forms landing in your inbox",
+                  "Fast on a phone, tested before it ships",
+                  "Live on your own domain, and you own the code",
+                ],
+                takes: "About a week",
+                from: "From $600",
+                right: "People are already finding you and the site is doing nothing to help.",
+              },
+              {
+                icon: "\u{1F6D2}",
+                c: "#A78BFA",
+                name: "The Storefront Build",
+                one: "A real shop. Products, cart, checkout, money in your account.",
+                what: [
+                  "Full storefront designed around your catalog",
+                  "Product pages built for how your buyers actually decide",
+                  "Cart, checkout and payments wired end to end",
+                  "Inventory, categories and search set up",
+                  "Order notifications and the admin you need to run it",
+                ],
+                takes: "One to two weeks",
+                from: "From $2,497",
+                right: "You are selling through DMs, a marketplace, or nothing at all yet.",
+              },
+              {
+                icon: "\u{2699}\u{FE0F}",
+                c: "#34D399",
+                name: "The Engine Build",
+                one: "The machinery behind the site, so the business runs without you doing it by hand.",
+                what: [
+                  "Lead intake that captures, sorts and replies in seconds",
+                  "Booking with confirmations and reminders that stop no-shows",
+                  "Invoicing, payment chasing and books that stay in sync",
+                  "Weekly reporting that arrives without you asking",
+                  "Connected to the tools you already use, not replacing them",
+                ],
+                takes: "About a week",
+                from: "From $600",
+                right: "Launch went fine and now you do the same three jobs by hand every day.",
+              },
+            ].map((b) => (
+              <div key={b.name} className="panel p-8 flex flex-col relative overflow-hidden">
+                <span
+                  className="absolute top-0 left-0 h-[3px] w-full"
+                  style={{ background: b.c }}
+                />
+                <span className="block text-2xl mb-5 mt-1 leading-none">{b.icon}</span>
+                <h3 className="font-display text-3xl mb-2">{b.name}</h3>
+                <p className="text-sm mb-6" style={{ color: b.c }}>
+                  {b.one}
+                </p>
+
+                <p className="label mb-4">What is in it</p>
+                <ul className="space-y-2.5 mb-7">
+                  {b.what.map((w) => (
+                    <li key={w} className="text-sm text-ink-soft font-light flex gap-3 leading-relaxed">
+                      <span style={{ color: b.c }}>/</span>
+                      {w}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-auto border-t border-rule pt-5 grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="label mb-1.5">How long</p>
+                    <p className="text-sm text-ink font-light">{b.takes}</p>
+                  </div>
+                  <div>
+                    <p className="label mb-1.5">Price</p>
+                    <p className="text-sm text-ink font-light">{b.from}</p>
+                  </div>
+                  <div className="col-span-2">
+                    <p className="label mb-1.5">Right for you if</p>
+                    <p className="text-sm text-ink-soft font-light leading-relaxed">
+                      {b.right}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 panel p-8 grid md:grid-cols-12 gap-8 items-center">
+            <div className="md:col-span-8">
+              <p className="label mb-3">Stacking them</p>
+              <p className="text-ink-soft font-light leading-relaxed">
+                Most people take Identity and Site together, because a site designed
+                before the brand exists is a guess. Add the Engine when the launch is
+                working and the manual jobs start piling up. Take all of it at once and
+                it is quoted as one project, not three.
+              </p>
+            </div>
+            <div className="md:col-span-4 md:text-right">
+              <a href={SITE.mailto} className="btn-primary">
+                Ask which one fits <span className="arrow">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Scope honesty */}
       <section data-flow className="bg-paper-deep px-6 py-24 mt-8">
         <div className="max-w-6xl mx-auto grid md:grid-cols-12 gap-10">

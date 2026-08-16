@@ -24,8 +24,9 @@ export default function Work() {
             on purpose.
           </h1>
           <p className="lede max-w-reading mt-10">
-            The studio is early. We would rather show you one shop we actually built,
-            end to end, than a grid of logos we had nothing to do with.
+This is where the studio starts, and it started from something we
+            actually care about. One shop, built end to end, by people who wanted it
+            to be good more than they wanted it to be finished.
           </p>
         </div>
       </section>
@@ -97,20 +98,27 @@ export default function Work() {
       <section data-flow className="bg-paper-deep px-6 py-24">
         <div className="max-w-6xl mx-auto grid md:grid-cols-12 gap-10">
           <div className="md:col-span-5">
-            <p className="label mb-6">Straight Answer</p>
-            <h2 className="display text-4xl md:text-5xl">Why is this list short?</h2>
+            <p className="label mb-6">The Honest Bit</p>
+            <h2 className="display text-4xl md:text-5xl">
+              New studio.
+              <br />
+              Not a new obsession.
+            </h2>
           </div>
           <div className="md:col-span-7">
             <p className="text-ink-soft leading-relaxed max-w-reading">
-              Because it is honest. The studio is new and takes on a small number of
-              projects at a time. You could pad a work page with concepts and stock
-              mockups and most people would never check. We would rather you hire us
-              knowing exactly what has been shipped.
+              FlowZone is new. The thing it is built on is not. Brand, design and the
+              way a company sounds have been the obsession for years, long before any
+              of it had a name or an invoice attached. This page is short because the
+              studio is at the beginning, not because the work is a side interest we
+              picked up recently.
             </p>
             <p className="text-ink-soft leading-relaxed max-w-reading mt-4">
-              What you get in exchange for being early: the person who replies to your
-              email is the person who builds the thing, and the pricing reflects where
-              the studio is rather than where it wants to be.
+              It also means everything here is real. No concepts dressed up as clients,
+              no logos we had nothing to do with. And what you get for arriving early
+              is the version of a studio everyone says they want later: the person who
+              answers your email is the person who builds the thing, and the pricing
+              reflects where we are rather than where we intend to be.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 mt-10">
               <a href={SITE.mailto} className="btn-primary">

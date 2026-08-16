@@ -65,11 +65,11 @@ const principles = [
 const faqs = [
   {
     q: "How many clients have you worked with?",
-    a: "We are early. The studio has shipped real work, including cardsrg.com, a full collector trading card storefront, and we take on a small number of projects at a time on purpose. You get a lot more attention than you would from a shop juggling thirty accounts, and the pricing reflects where we are rather than where we want to be.",
+    a: "The studio is new, the craft is not. Brand and design have been the obsession for years before any of it had a name attached. Real shipped work includes cardsrg.com, a full collector trading card storefront, and we take a small number of projects at a time on purpose. You get a lot more attention than you would from a shop juggling thirty accounts, and the pricing reflects where we are rather than where we intend to be.",
   },
   {
     q: "Why is the work page so short?",
-    a: "Because it is honest. Everything on it is live and was built here. We could pad it with concepts and stock mockups and most people would never check, but you would find out eventually and that is a bad way to start.",
+    a: "Because everything on it is real and was built here. We could pad it with concepts and stock mockups and most people would never check, but you would find out eventually and that is a bad way to start a relationship that runs on trust.",
   },
   {
     q: "What if I do not like the first direction?",
