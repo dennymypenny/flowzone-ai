@@ -2,7 +2,7 @@ import Link from "next/link";
 import ChatWidget from "@/app/components/ChatWidget";
 import WorkSession from "@/app/components/WorkSession";
 import MessageUs from "@/components/MessageUs";
-import NodeFilm from "@/app/components/NodeFilm";
+import FlowField from "@/app/components/FlowField";
 import { SITE, PILLARS } from "@/lib/site";
 
 export const metadata = {
@@ -18,7 +18,7 @@ export default function Home() {
         <div className="absolute inset-0 aurora drift pointer-events-none" />
         <div className="absolute inset-0 gridlight pointer-events-none" />
         {/* The mark, explained: points scatter, connect, resolve, then flow on. */}
-        <NodeFilm />
+        <FlowField />
 
         <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-20 md:pt-32 md:pb-28">
 
@@ -184,17 +184,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------- Point of view ---------- */}
-      <section data-flow className="border-t border-rule px-6 py-24">
+      {/* ---------- Point of view, on white for contrast ---------- */}
+      <section data-flow className="bg-white text-[#0B1322] px-6 py-28">
         <div className="max-w-6xl mx-auto">
-          <p className="label mb-6">Where we have a point of view</p>
+          <p className="text-[11px] font-medium uppercase tracking-label text-[#3D6FE8] mb-6">
+            Where we have a point of view
+          </p>
           <div className="grid md:grid-cols-12 gap-10 mb-16">
-            <h2 className="md:col-span-7 display text-4xl md:text-5xl">
+            <h2 className="md:col-span-7 font-display text-4xl md:text-5xl leading-[1.05] text-[#0B1322]">
               Brand identity and communications
               <br />
               are the home discipline here.
             </h2>
-            <p className="md:col-span-5 text-ink-soft font-light leading-relaxed self-end max-w-reading">
+            <p className="md:col-span-5 text-[#49566E] font-light leading-relaxed self-end max-w-reading">
               Not a service line we added. It is the thing the studio is built
               around, and it is why the sites and systems hold together instead of
               looking assembled. Here is what we actually think, so you can decide
@@ -236,16 +238,18 @@ export default function Home() {
                 >
                   {x.n}
                 </p>
-                <h3 className="font-display text-2xl leading-snug mb-3">{x.t}</h3>
-                <p className="text-sm text-ink-soft font-light leading-relaxed">{x.b}</p>
+                <h3 className="font-display text-2xl leading-snug mb-3 text-[#0B1322]">{x.t}</h3>
+                <p className="text-sm text-[#49566E] font-light leading-relaxed">{x.b}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-14 panel p-8 grid md:grid-cols-12 gap-8 items-center">
+          <div className="mt-14 rounded-2xl border border-[#DCE5F2] bg-[#F6F9FE] p-8 grid md:grid-cols-12 gap-8 items-center">
             <div className="md:col-span-8">
-              <p className="label mb-3">What that covers</p>
-              <p className="text-ink-soft font-light leading-relaxed">
+              <p className="text-[11px] font-medium uppercase tracking-label text-[#3D6FE8] mb-3">
+                What that covers
+              </p>
+              <p className="text-[#49566E] font-light leading-relaxed">
                 Naming and name treatment, logo and wordmark, colour and type systems,
                 verbal identity and tone, positioning and messaging hierarchy, launch
                 copy, and the usage guide that keeps it all intact after we hand it
@@ -253,7 +257,10 @@ export default function Home() {
               </p>
             </div>
             <div className="md:col-span-4 md:text-right">
-              <Link href="/work" className="btn-ghost">
+              <Link
+                href="/work"
+                className="btn border border-[#C9D6EA] text-[#0B1322] hover:bg-white"
+              >
                 See it applied <span className="arrow">→</span>
               </Link>
             </div>
@@ -290,12 +297,21 @@ export default function Home() {
           </div>
 
           <Link href="/work" className="group block">
-            <div className="overflow-hidden rounded-2xl border border-[#DCE5F2] shadow-[0_30px_70px_-30px_rgba(11,19,34,0.45)]">
-              <img
-                src="/assets/crg-hero.jpg"
-                alt="CardsRG storefront homepage, dark with the headline Rip. Pull. Collect."
-                className="w-full h-auto block transition-transform duration-700 group-hover:scale-[1.015]"
-              />
+            <div className="grid md:grid-cols-12 gap-4">
+              <div className="md:col-span-8 overflow-hidden rounded-2xl border border-[#DCE5F2] shadow-[0_30px_70px_-30px_rgba(11,19,34,0.45)]">
+                <img
+                  src="/assets/crg-hero.jpg"
+                  alt="CardsRG storefront homepage, dark with the headline Rip. Pull. Collect."
+                  className="w-full h-full object-cover block transition-transform duration-700 group-hover:scale-[1.015]"
+                />
+              </div>
+              <div className="md:col-span-4 overflow-hidden rounded-2xl border border-[#DCE5F2] shadow-[0_30px_70px_-30px_rgba(11,19,34,0.45)]">
+                <img
+                  src="/assets/crg-cards.jpg"
+                  alt="CardsRG product grid showing real graded card listings"
+                  className="w-full h-full object-cover block transition-transform duration-700 group-hover:scale-[1.02]"
+                />
+              </div>
             </div>
 
             <div className="grid md:grid-cols-12 gap-6 mt-8 items-start">
@@ -595,16 +611,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------- The philosophy line ---------- */}
-      <section data-flow className="border-t border-rule px-6 py-24">
+      {/* ---------- The philosophy line, white for punch ---------- */}
+      <section data-flow className="bg-white text-[#0B1322] px-6 py-28">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="label mb-8">Why it can be this fast</p>
-          <p className="display text-3xl md:text-5xl leading-[1.15]">
+          <p className="text-[11px] font-medium uppercase tracking-label text-[#3D6FE8] mb-8">
+            Why it can be this fast
+          </p>
+          <p className="font-display text-3xl md:text-5xl leading-[1.15] text-[#0B1322]">
             AI gives us the speed.
             <br />
-            Humans give it the <span className="text-accent">taste</span>.
+            Humans give it the <span className="text-gradient">taste</span>.
           </p>
-          <p className="text-ink-soft font-light leading-relaxed mt-8 max-w-reading mx-auto">
+          <p className="text-[#49566E] font-light leading-relaxed mt-8 max-w-reading mx-auto">
             A model can produce a hundred layouts in a minute. Knowing which one is
             right is the part you are actually paying for, and it is the part that does
             not get delegated. That is the whole trade: a week instead of two months,

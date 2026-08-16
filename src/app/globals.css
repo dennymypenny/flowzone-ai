@@ -299,6 +299,14 @@ button {
     }
   }
 
+  /* Idea photos arriving from depth */
+  @keyframes ideain {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -30%) translateZ(-80px) rotate(0deg) scale(0.7);
+    }
+  }
+
   /* Buttons press like buttons */
   .btn:active {
     transform: translateY(1px) scale(0.98);

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import StartModes from "@/app/components/StartModes";
+import IdeaLens from "@/app/components/IdeaLens";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -37,6 +38,10 @@ export default function Start() {
             Roll colours, make a real logo, pull references off the open web, and
             leave holding files you own.
           </p>
+
+          <div className="mt-12">
+            <IdeaLens />
+          </div>
         </div>
       </section>
 
