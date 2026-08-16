@@ -51,7 +51,7 @@ export default function ContactForm({ accent = "#5B9BF9" }: { accent?: string })
   if (state === "done") {
     return (
       <div className="panel p-8">
-        <span className="block text-3xl mb-4 leading-none">✅</span>
+        <span className="block text-3xl mb-4 leading-none">✓</span>
         <p className="font-display text-2xl mb-3">Sent. A person is reading it.</p>
         <p className="text-sm text-ink-soft font-light leading-relaxed max-w-reading">
           You will get a reply with which parts you actually need, what it costs and a

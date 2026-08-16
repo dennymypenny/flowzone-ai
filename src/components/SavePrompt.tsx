@@ -132,7 +132,7 @@ export default function SavePrompt() {
 
         {state === "done" ? (
           <div>
-            <span className="block text-2xl mb-3 leading-none">✅</span>
+            <span className="block text-2xl mb-3 leading-none">✓</span>
             <p className="font-display text-xl mb-2">Sent. Check your inbox.</p>
             <p className="text-sm text-ink-soft font-light leading-relaxed">
               {hasSession

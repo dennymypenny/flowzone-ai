@@ -57,7 +57,7 @@ function IntakeForm() {
     return (
       <div className="min-h-screen bg-paper-deep flex items-center justify-center px-6">
         <div className="max-w-md w-full bg-paper rounded-xl border border-rule p-10 text-center">
-          <div className="text-5xl mb-4">✅</div>
+          <div className="text-5xl mb-4">✓</div>
           <h2 className="text-2xl font-display font-normal text-ink mb-3">You&apos;re all set!</h2>
           {amount ? (
             <>

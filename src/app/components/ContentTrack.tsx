@@ -296,7 +296,7 @@ export default function ContentTrack({ accent }: { accent: string }) {
 
           {/* Ask for changes in plain words */}
           <div className="panel p-6 mb-4">
-            <p className="label mb-2">💬 Or just say what you want changed</p>
+            <p className="label mb-2"> Or just say what you want changed</p>
             <p className="text-sm text-ink-soft font-light leading-relaxed mb-4">
               Type it the way you would say it out loud. The plan below updates.
             </p>

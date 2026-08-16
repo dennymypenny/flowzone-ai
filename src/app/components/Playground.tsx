@@ -625,7 +625,7 @@ export default function Playground() {
               onClick={copyCSS}
               className="btn border border-rule text-ink-soft hover:text-ink hover:bg-raised !px-4 !py-2.5 text-xs mt-4"
             >
-              {copied === "css" ? "✅ Copied" : "Copy as CSS variables"}
+              {copied === "css" ? "✓ Copied" : "Copy as CSS variables"}
             </button>
             <Principle
               title="how palettes actually hold together"

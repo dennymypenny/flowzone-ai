@@ -12,8 +12,10 @@ export default function About() {
   return (
     <>
       {/* Header */}
-      <section className="px-6 pt-20 pb-16">
-        <div className="max-w-6xl mx-auto">
+      <section className="relative overflow-hidden px-6 pt-20 pb-16">
+        <div className="absolute inset-0 aurora drift pointer-events-none" />
+        <div className="absolute inset-0 gridlight pointer-events-none" />
+        <div className="relative max-w-6xl mx-auto">
           <div className="flex items-center justify-between border-b border-rule pb-4 mb-12">
             <p className="label">About</p>
             <p className="label hidden sm:block">A small studio, on purpose</p>

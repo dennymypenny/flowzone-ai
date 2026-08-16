@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Wordmark from "@/components/Wordmark";
 import { SITE } from "@/lib/site";
 
@@ -15,6 +16,7 @@ const LINKS = [
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <nav className="fixed top-[3px] w-full glassbar z-50">
@@ -25,15 +27,28 @@ export default function Nav() {
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
-          {LINKS.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className="text-sm text-ink-soft hover:text-ink transition-colors"
-            >
-              {l.label}
-            </Link>
-          ))}
+          {LINKS.map((l) => {
+            const here = pathname === l.href;
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                aria-current={here ? "page" : undefined}
+                className={`relative text-sm transition-colors ${
+                  here ? "text-ink" : "text-ink-soft hover:text-ink"
+                }`}
+              >
+                {l.label}
+                {here && (
+                  <span
+                    className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-accent"
+                    style={{ boxShadow: "0 0 8px rgba(91,140,255,0.9)" }}
+                    aria-hidden
+                  />
+                )}
+              </Link>
+            );
+          })}
           <a href={SITE.mailto} className="btn-primary !px-5 !py-2.5">
             Start an email
           </a>

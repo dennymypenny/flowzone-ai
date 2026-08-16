@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Icon from "@/components/Icon";
 import type { Metadata } from "next";
 import MessageUs from "@/components/MessageUs";
 import ContactForm from "@/components/ContactForm";
@@ -15,8 +16,10 @@ export default function Talk() {
 
   return (
     <>
-      <section className="px-6 pt-20 pb-14">
-        <div className="max-w-6xl mx-auto">
+      <section className="relative overflow-hidden px-6 pt-20 pb-14">
+        <div className="absolute inset-0 aurora drift pointer-events-none" />
+        <div className="absolute inset-0 gridlight pointer-events-none" />
+        <div className="relative max-w-6xl mx-auto">
           <div className="flex items-center justify-between border-b border-rule pb-4 mb-12">
             <p className="label">Talk to us</p>
             <p className="label hidden sm:block">One person · usually same day</p>
@@ -37,7 +40,7 @@ export default function Talk() {
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-4">
           <div className="panel p-8 flex flex-col relative overflow-hidden">
             <span className="absolute top-0 left-0 h-[3px] w-full bg-[#34D399]" />
-            <span className="block text-2xl mb-5 mt-1 leading-none">💬</span>
+            <span className="block mb-5 mt-1"><Icon name="chat" size={22} color="#2DD4BF" /></span>
             <h2 className="font-display text-2xl mb-2">Text us</h2>
             <p className="text-sm text-[#34D399] mb-5">Fastest. Lands on a phone.</p>
             <p className="text-sm text-ink-soft font-light leading-relaxed mb-7">
@@ -60,7 +63,7 @@ export default function Talk() {
 
           <div className="panel p-8 flex flex-col relative overflow-hidden">
             <span className="absolute top-0 left-0 h-[3px] w-full bg-[#5B9BF9]" />
-            <span className="block text-2xl mb-5 mt-1 leading-none">✉️</span>
+            <span className="block mb-5 mt-1"><Icon name="pencil" size={22} color="#5B9BF9" /></span>
             <h2 className="font-display text-2xl mb-2">Email us</h2>
             <p className="text-sm text-[#5B9BF9] mb-5">Best for detail.</p>
             <p className="text-sm text-ink-soft font-light leading-relaxed mb-7">
@@ -76,7 +79,7 @@ export default function Talk() {
 
           <div className="panel p-8 flex flex-col relative overflow-hidden">
             <span className="absolute top-0 left-0 h-[3px] w-full bg-[#A78BFA]" />
-            <span className="block text-2xl mb-5 mt-1 leading-none">🧭</span>
+            <span className="block mb-5 mt-1"><Icon name="compass" size={22} color="#A78BFA" /></span>
             <h2 className="font-display text-2xl mb-2">Work it out first</h2>
             <p className="text-sm text-[#A78BFA] mb-5">Best if it is still fuzzy.</p>
             <p className="text-sm text-ink-soft font-light leading-relaxed mb-7">
