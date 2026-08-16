@@ -50,10 +50,17 @@ export async function POST(req: NextRequest) {
       )}</pre>`
     : "";
 
+  // A signup that reports success while the mail goes nowhere is worse than a
+  // visible failure, so this probe exists to prove the difference. Sending with
+  // source "probe" echoes back exactly what the mail provider said. Harmless,
+  // and the only way to tell "rejected" apart from "accepted then dropped".
+  const probe = source === "probe";
+
   // The one that matters. Denny's list lives in his inbox.
   let studioError: string | null = null;
+  let studioId: string | null = null;
   try {
-    const { error } = await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: FROM,
       to: SITE.leadInbox,
       reply_to: email,
@@ -75,6 +82,7 @@ export async function POST(req: NextRequest) {
       </div>`,
     });
     if (error) studioError = `${error.name || "send failed"}: ${error.message || ""}`.trim();
+    studioId = data?.id ?? null;
   } catch (e) {
     studioError = e instanceof Error ? e.message : "send threw";
   }
@@ -84,6 +92,19 @@ export async function POST(req: NextRequest) {
     // could not be mailed is at least recoverable from there.
     console.error("[FlowZone] LEAD LOST:", studioError, "|", email, "|", source, "|", brief);
     return NextResponse.json({ ok: false, reason: studioError }, { status: 502 });
+  }
+
+  if (probe) {
+    return NextResponse.json({
+      ok: true,
+      probe: {
+        from: FROM,
+        to: SITE.leadInbox,
+        acceptedId: studioId,
+        keySet: Boolean(process.env.RESEND_API_KEY),
+        keyTail: (process.env.RESEND_API_KEY || "").slice(-4),
+      },
+    });
   }
 
   // Their copy. Nice to have, never load-bearing, and never allowed to turn a
