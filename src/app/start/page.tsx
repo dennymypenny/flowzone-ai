@@ -47,6 +47,8 @@ export default function Start() {
   return (
     <>
       <Arrival />
+      {/* Light through the whole flow */}
+      <div className="fixed inset-0 -z-10 lightshaft pointer-events-none" aria-hidden />
       <section className="relative overflow-hidden px-6 pt-24 pb-6">
         <div className="absolute inset-0 aurora drift pointer-events-none" />
         <div className="absolute inset-0 gridlight pointer-events-none" />

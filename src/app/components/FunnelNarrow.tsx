@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { SITE } from "@/lib/site";
 
 /**
  * The narrowing funnel.
@@ -160,13 +161,46 @@ export default function FunnelNarrow({ topic }: { topic: string }) {
             {topic}, for {answers.who}, starting from {answers.have}, and the first
             thing to exist is <span className="text-accent">{answers.first}</span>.
           </p>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-3 mb-6">
             <button onClick={act} className="btn-primary shine !px-5 !py-2.5 text-sm">
               Make {answers.first} <span className="arrow">→</span>
             </button>
             <button onClick={reset} className="btn-ghost !px-4 !py-2.5 text-xs">
               Start the narrowing over
             </button>
+          </div>
+
+          {/* The sell, made of their own answers */}
+          <div className="border-t border-rule pt-5">
+            <p className="text-sm text-ink-soft font-light leading-relaxed mb-4">
+              Or skip the homework entirely. This exact thing, {answers.first} and
+              the rest of it, built for you and live in days.{" "}
+              <span className="text-ink">Flat, from $600.</span>
+            </p>
+            <div className="flex flex-wrap items-center gap-3">
+              <a
+                href={
+                  SITE.phone
+                    ? `sms:${SITE.phone}?&body=${encodeURIComponent(
+                        `Hi FlowZone, I want to get ${topic} moving. It is for ${answers.who}, I have ${answers.have}, and the first thing I need is ${answers.first}.`
+                      )}`
+                    : `mailto:${SITE.email}?subject=${encodeURIComponent(
+                        `Get ${topic} moving`
+                      )}&body=${encodeURIComponent(
+                        `Hi FlowZone, I want to get ${topic} moving. It is for ${answers.who}, I have ${answers.have}, and the first thing I need is ${answers.first}.`
+                      )}`
+                }
+                className="btn-primary shine !px-5 !py-2.5 text-sm"
+              >
+                Have us build it <span className="arrow">→</span>
+              </a>
+              <a href="/pricing" className="text-xs text-ink-mute hover:text-ink transition-colors">
+                See the three prices first
+              </a>
+            </div>
+            <p className="text-[11px] text-ink-mute mt-3">
+              Your answers ride along in the message, so the reply you get is already specific.
+            </p>
           </div>
         </div>
       )}
