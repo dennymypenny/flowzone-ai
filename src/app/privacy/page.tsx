@@ -86,7 +86,7 @@ export default function PrivacyPolicy() {
             </p>
             <ul className="list-disc pl-6 space-y-2 mt-3">
               <li><strong>Essential cookies:</strong> Required for the website to function properly.</li>
-              <li><strong>Analytics cookies:</strong> Help us understand how visitors interact with our site (e.g., Vercel Analytics).</li>
+              <li><strong>Analytics:</strong> We use Vercel Analytics to count page views and see which pages people find useful. It does not use cookies and does not track you across other websites.</li>
             </ul>
             <p className="mt-4">
               You can control cookie settings through your browser. Disabling cookies may affect some website functionality.

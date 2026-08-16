@@ -235,8 +235,8 @@ export default function Home() {
               </p>
             </div>
             <div className="md:col-span-4 md:text-right">
-              <Link href="/blog" className="btn-ghost">
-                Read the journal <span className="arrow">→</span>
+              <Link href="/work" className="btn-ghost">
+                See it applied <span className="arrow">→</span>
               </Link>
             </div>
           </div>
