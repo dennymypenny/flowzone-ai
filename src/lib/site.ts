@@ -10,12 +10,13 @@ export const SITE = {
 
   // The one descriptor. Used in nav, footer, metadata and the chat.
   descriptor:
-    "A creative studio led by brand identity. The mark, the words, the feel, and the site and systems that carry it.",
+    "You bring the intention. We jumpstart it into a real thing: brand, site and the systems that run it, done for you.",
 
-  // Displayed publicly. Must have a working mailbox before this ships.
-  email: "hello@flowzone.dev",
+  // Displayed publicly. Swap to hello@flowzone.dev the day that mailbox exists.
+  // This is the ONLY place it is written down, so it is a one line change.
+  email: "flowzoneautomation@gmail.com",
 
-  // Where lead notifications are actually delivered. Server side only.
+  // Where lead notifications are delivered. Server side only.
   leadInbox: "flowzoneautomation@gmail.com",
 
   // LinkedIn is the only social the studio actually works. Keep it visible.
@@ -29,6 +30,8 @@ export const PILLARS = [
   {
     num: "01",
     name: "Brand",
+    // Colors come straight off the three dots in the mark. Left to right.
+    color: "#4C7BE8",
     line: "What people recognize you by.",
     lead: true,
     body:
@@ -38,6 +41,7 @@ export const PILLARS = [
   {
     num: "02",
     name: "Site",
+    color: "#5B9BF9",
     line: "Where people decide.",
     body:
       "A marketing site or a full storefront, designed against your brand rather than a theme. Fast, mobile first and deployed on your own domain.",
@@ -46,6 +50,7 @@ export const PILLARS = [
   {
     num: "03",
     name: "System",
+    color: "#C6E4F8",
     line: "What keeps running after launch.",
     body:
       "The unglamorous part that decides whether the brand survives contact with real customers. Lead intake, booking, invoicing, reporting, built in and tested.",

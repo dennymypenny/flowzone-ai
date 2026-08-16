@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | FlowZone AI",
@@ -113,8 +114,8 @@ export default function PrivacyPolicy() {
             </ul>
             <p className="mt-4">
               To exercise any of these rights, email us at{" "}
-              <a href="mailto:hello@flowzone.dev" className="text-accent hover:underline">
-                hello@flowzone.dev
+              <a href={`mailto:${SITE.email}`} className="text-accent hover:underline">
+                {SITE.email}
               </a>.
               We will respond within 30 days.
             </p>
@@ -145,7 +146,7 @@ export default function PrivacyPolicy() {
             </p>
             <div className="mt-4 bg-paper-deep border border-rule rounded-xl p-6">
               <p className="font-semibold text-ink">FlowZone AI</p>
-              <p className="text-ink-soft mt-1">Email: <a href="mailto:hello@flowzone.dev" className="text-accent hover:underline">hello@flowzone.dev</a></p>
+              <p className="text-ink-soft mt-1">Email: <a href={`mailto:${SITE.email}`} className="text-accent hover:underline">{SITE.email}</a></p>
               <p className="text-ink-soft">Website: <a href="https://flowzone.dev" className="text-accent hover:underline">flowzone.dev</a></p>
             </div>
           </section>

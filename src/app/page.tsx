@@ -12,8 +12,7 @@ export default function Home() {
     <>
       {/* ---------- Hero ---------- */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 glow pointer-events-none" />
-        <div className="absolute inset-0 grid-bg fade-b pointer-events-none" />
+        <div className="absolute inset-0 aurora pointer-events-none" />
 
         <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-20 md:pt-32 md:pb-28">
           <div className="inline-flex items-center gap-2.5 border border-rule bg-raised/60 rounded-full pl-2 pr-3.5 py-1.5 mb-10">
@@ -31,9 +30,9 @@ export default function Home() {
           </h1>
 
           <p className="text-xl md:text-2xl text-ink leading-snug max-w-3xl mt-8 font-light">
-            One studio takes your company from a blank page to a live brand, a live
-            site and the systems that run them. Flat price, agreed up front. Live in
-            days, not months.
+            You bring the intention. We jumpstart it into a real thing: the brand, the
+            site and the systems that run it, done for you and live in days. That is
+            what we mean by FlowZone.
           </p>
 
           <p className="text-base text-ink-soft leading-relaxed max-w-reading mt-5 font-light">
@@ -52,9 +51,10 @@ export default function Home() {
           </div>
 
           {/* Value at a glance */}
-          <div className="mt-16 grid grid-cols-2 lg:grid-cols-4 border-t border-l border-rule">
+          <div className="mt-16 grid grid-cols-2 lg:grid-cols-5 border-t border-l border-rule">
             {[
               ["What you get", "Brand, site and system"],
+              ["How much you do", "Almost nothing. 100% done for you"],
               ["How long", "Most builds live in 7 days"],
               ["What it costs", "Flat, from $997, paid once"],
               ["What you own", "All of it. Code, domain, accounts"],
@@ -83,6 +83,40 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ---------- The name as a verb ---------- */}
+      <section className="border-t border-rule px-6 py-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="panel p-8 md:p-12 grid md:grid-cols-12 gap-10">
+            <div className="md:col-span-5">
+              <p className="label mb-6">What the name means</p>
+              <p className="font-display text-5xl md:text-6xl leading-none">
+                flow<span className="text-accent">zone</span>
+              </p>
+              <p className="font-mono text-[13px] text-ink-mute mt-4">
+                verb · flowzoned, flowzoning
+              </p>
+            </div>
+            <div className="md:col-span-7">
+              <p className="text-xl md:text-2xl text-ink font-light leading-snug">
+                To take an intention and get it moving. To go from a thing you keep
+                meaning to start, to a thing that is live, branded and running on its
+                own.
+              </p>
+              <p className="text-ink-soft font-light leading-relaxed mt-6 max-w-reading">
+                Everybody has the intention. A shop they want to open, a service they
+                want to sell, a company that exists but does not look like it yet. The
+                gap is never the idea. It is the design, the words, the build and the
+                plumbing, all needed at once, by someone who has none of them lying
+                around. That gap is the whole job.
+              </p>
+              <p className="text-ink font-light leading-relaxed mt-5 max-w-reading">
+                You hand us the intention. We hand you back the running thing.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ---------- Three pillars ---------- */}
       <section className="border-t border-rule px-6 py-24">
         <div className="max-w-6xl mx-auto">
@@ -103,26 +137,38 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-4">
             {PILLARS.map((p) => (
-              <div key={p.name} className="panel p-7 flex flex-col">
-                <div className="flex items-baseline justify-between mb-8">
-                  <p className="label">{p.num}</p>
-                  {"lead" in p && p.lead ? (
-                    <p className="font-mono text-[11px] uppercase tracking-label text-accent">
+              <div key={p.name} className="panel p-7 flex flex-col relative overflow-hidden">
+                <span
+                  className="absolute top-0 left-0 h-[3px] w-full"
+                  style={{ background: p.color }}
+                />
+                <div className="flex items-center justify-between mb-8 mt-1">
+                  <div className="flex items-center gap-3">
+                    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden>
+                      <circle cx="7" cy="7" r="7" fill={p.color} />
+                    </svg>
+                    <p className="label">{p.num}</p>
+                  </div>
+                  {"lead" in p && p.lead && (
+                    <p
+                      className="font-mono text-[11px] uppercase tracking-label"
+                      style={{ color: p.color }}
+                    >
                       Our strength
                     </p>
-                  ) : (
-                    <span className="w-6 h-px bg-rule" />
                   )}
                 </div>
                 <h3 className="font-display text-3xl mb-1.5">{p.name}</h3>
-                <p className="text-sm text-accent mb-5">{p.line}</p>
+                <p className="text-sm mb-5" style={{ color: p.color }}>
+                  {p.line}
+                </p>
                 <p className="text-sm text-ink-soft leading-relaxed font-light mb-7">
                   {p.body}
                 </p>
                 <ul className="mt-auto space-y-2.5 border-t border-rule pt-5">
                   {p.items.map((i) => (
                     <li key={i} className="text-sm text-ink-soft font-light flex gap-3">
-                      <span className="text-accent">/</span>
+                      <span style={{ color: p.color }}>/</span>
                       {i}
                     </li>
                   ))}
@@ -131,10 +177,32 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="mt-10">
-            <Link href="/services" className="btn-ghost">
-              What that looks like in detail
-            </Link>
+          <div className="mt-12 panel p-8 md:p-10 grid md:grid-cols-12 gap-8 items-center">
+            <div className="md:col-span-7">
+              <p className="label mb-4">Why three</p>
+              <h3 className="font-display text-2xl md:text-3xl leading-snug mb-4">
+                Three dots in the logo, three parts to the work. That was on purpose.
+              </h3>
+              <p className="text-sm text-ink-soft leading-relaxed font-light max-w-reading">
+                Each dot is a stage, and each one hands off to the next. It is also the
+                order we build in, because a site designed before the brand exists is a
+                guess and a system built before the site exists has nothing to plug
+                into. Every colour on this site comes from one of the three.
+              </p>
+            </div>
+            <div className="md:col-span-5">
+              <div className="border border-rule p-6">
+                <p className="label mb-4">All of it, done for you</p>
+                <p className="text-sm text-ink-soft leading-relaxed font-light">
+                  You are not briefing a team, reviewing tickets or chasing a
+                  freelancer. You send the idea, answer a couple of questions, and it
+                  comes back finished. Written, designed, built, tested and live.
+                </p>
+              </div>
+              <Link href="/services" className="btn-ghost w-full mt-4">
+                What that looks like in detail
+              </Link>
+            </div>
           </div>
         </div>
       </section>

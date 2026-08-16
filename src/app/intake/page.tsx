@@ -1,6 +1,7 @@
 "use client";
 import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { SITE } from "@/lib/site";
 
 const services = [
   "Starter — $997",
@@ -85,7 +86,7 @@ function IntakeForm() {
                 Expect an email within 24 hours. Nothing to pay until you have the quote.
               </p>
               <a
-                href="mailto:hello@flowzone.dev"
+                href={`mailto:${SITE.email}`}
                 className="block w-full bg-accent text-white font-medium py-4 rounded-xl hover:bg-accent-deep transition-colors text-lg"
               >
                 Email Us Directly →

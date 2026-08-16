@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Book a Free Call",
@@ -37,12 +38,12 @@ export default function Book() {
                   To activate live booking, replace this section with your Calendly embed code. Paste your Calendly URL below to get started.
                 </p>
                 <a
-                  href="mailto:hello@flowzone.dev?subject=Book%20a%20Free%20Call%20-%20FlowZone%20AI&body=Hi%2C%20I%27d%20like%20to%20book%20a%20free%2020-minute%20discovery%20call."
+                  href={`mailto:${SITE.email}?subject=Book%20a%20Free%20Call%20-%20FlowZone%20AI&body=Hi%2C%20I%27d%20like%20to%20book%20a%20free%2020-minute%20discovery%20call.`}
                   className="bg-accent text-white font-bold px-8 py-4 rounded-xl hover:bg-accent-deep transition-colors"
                 >
                   Book via Email Instead →
                 </a>
-                <p className="text-xs text-ink-mute mt-4">Or email us directly: hello@flowzone.dev</p>
+                <p className="text-xs text-ink-mute mt-4">Or email us directly: {SITE.email}</p>
               </div>
             </div>
           </div>

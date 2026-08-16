@@ -12,6 +12,7 @@ const PARTS = [
   {
     num: "01",
     name: "Brand",
+    color: "#4C7BE8",
     line: "What people recognize you by.",
     intro:
       "Before anything gets designed, there has to be something to design against. We build the identity first so the site is an expression of it rather than a guess.",
@@ -26,6 +27,7 @@ const PARTS = [
   {
     num: "02",
     name: "Site",
+    color: "#5B9BF9",
     line: "Where people decide.",
     intro:
       "A marketing site or a full storefront, designed against your brand rather than a theme with your logo dropped in the corner. Written, built and deployed on your own domain.",
@@ -41,6 +43,7 @@ const PARTS = [
   {
     num: "03",
     name: "System",
+    color: "#C6E4F8",
     line: "What keeps running after launch.",
     intro:
       "The unglamorous half. A beautiful site that drops leads on the floor is an expensive brochure. We build the part that catches them and keeps the business moving.",
@@ -90,11 +93,16 @@ export default function Services() {
       <section className="px-6 pb-8">
         <div className="max-w-6xl mx-auto">
           {PARTS.map((p) => (
-            <div key={p.name} className="border-t border-rule py-16 grid md:grid-cols-12 gap-10">
+            <div key={p.name} className="border-t-2 py-16 grid md:grid-cols-12 gap-10" style={{ borderTopColor: p.color }}>
               <div className="md:col-span-4">
-                <p className="label mb-6">{p.num}</p>
+                <div className="flex items-center gap-3 mb-6">
+                  <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden>
+                    <circle cx="7" cy="7" r="7" fill={p.color} />
+                  </svg>
+                  <p className="label">{p.num}</p>
+                </div>
                 <h2 className="font-display text-6xl leading-none mb-3">{p.name}</h2>
-                <p className="text-accent">{p.line}</p>
+                <p style={{ color: p.color }}>{p.line}</p>
               </div>
 
               <div className="md:col-span-4">
@@ -110,7 +118,7 @@ export default function Services() {
                 <ul className="space-y-3">
                   {p.get.map((g) => (
                     <li key={g} className="text-sm text-ink-soft flex gap-3 leading-relaxed">
-                      <span className="text-accent shrink-0">/</span>
+                      <span className="shrink-0" style={{ color: p.color }}>/</span>
                       {g}
                     </li>
                   ))}

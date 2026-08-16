@@ -1,3 +1,4 @@
+import { SITE } from "@/lib/site";
 export default function TermsPage() {
   return (
     <main className="bg-paper min-h-screen">
@@ -169,7 +170,7 @@ export default function TermsPage() {
           </p>
           <div className="bg-paper-deep rounded-xl p-6 text-ink-soft space-y-1">
             <p className="font-semibold text-ink">FlowZone AI</p>
-            <p>Email: <a href="mailto:hello@flowzone.dev" className="text-accent hover:underline">hello@flowzone.dev</a></p>
+            <p>Email: <a href={`mailto:${SITE.email}`} className="text-accent hover:underline">{SITE.email}</a></p>
             <p>Website: <a href="https://flowzoneai.com" className="text-accent hover:underline">flowzoneai.com</a></p>
           </div>
         </section>
