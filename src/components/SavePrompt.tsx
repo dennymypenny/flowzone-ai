@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { SITE } from "@/lib/site";
 
 /**
  * A small slide-in that offers to email someone their work session so it is not
@@ -179,7 +180,11 @@ export default function SavePrompt() {
 
             {state === "error" && (
               <p className="text-[12px] text-[#FBBF24] mt-2.5">
-                That did not go through. Check the address, or just email us directly.
+                That did not go through. Check the address, or{" "}
+                <a href={SITE.mailto} className="underline hover:text-ink">
+                  email us directly
+                </a>{" "}
+                and it reaches the same person.
               </p>
             )}
 
