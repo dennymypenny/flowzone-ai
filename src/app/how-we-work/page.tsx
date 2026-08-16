@@ -108,7 +108,7 @@ export default function HowWeWork() {
       </section>
 
       {/* Timeline */}
-      <section className="px-6 pb-16">
+      <section data-flow className="px-6 pb-16">
         <div className="max-w-6xl mx-auto">
           {days.map((d) => (
             <div key={d.tag} className="border-t border-rule py-12 grid md:grid-cols-12 gap-8">
@@ -129,7 +129,7 @@ export default function HowWeWork() {
       </section>
 
       {/* Principles */}
-      <section className="bg-paper-deep px-6 py-24">
+      <section data-flow className="bg-paper-deep px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <div className="border-b border-rule pb-4 mb-14">
             <p className="label">How We Operate</p>
@@ -146,7 +146,7 @@ export default function HowWeWork() {
       </section>
 
       {/* FAQ */}
-      <section className="px-6 py-24">
+      <section data-flow className="px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <div className="border-b border-rule pb-4 mb-14 flex items-baseline justify-between">
             <p className="label">Straight Answers</p>
@@ -164,7 +164,7 @@ export default function HowWeWork() {
       </section>
 
       {/* CTA */}
-      <section className="bg-paper-deep glow border-t border-rule px-6 py-28">
+      <section data-flow className="bg-paper-deep glow border-t border-rule px-6 py-28">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="font-display text-5xl md:text-7xl leading-[0.95] mb-8">
             Still reading?

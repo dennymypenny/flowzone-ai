@@ -16,7 +16,7 @@ export default function Nav() {
   const [mobileBlogOpen, setMobileBlogOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 w-full bg-paper/90 backdrop-blur-sm border-b border-rule z-50">
+    <nav className="fixed top-[3px] w-full bg-paper/90 backdrop-blur-sm border-b border-rule z-50">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link href="/" aria-label="FlowZone AI, home">
           <Wordmark />

@@ -10,7 +10,7 @@ export const SITE = {
 
   // The one descriptor. Used in nav, footer, metadata and the chat.
   descriptor:
-    "You bring the intention. We jumpstart it into a real thing: brand, site and the systems that run it, done for you.",
+    "You imagine it. We get it moving. Arrive with an intention, leave with the running thing: brand, site and system, built for you.",
 
   // Displayed publicly. Swap to hello@flowzone.dev the day that mailbox exists.
   // This is the ONLY place it is written down, so it is a one line change.

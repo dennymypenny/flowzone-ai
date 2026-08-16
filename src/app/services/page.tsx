@@ -90,7 +90,7 @@ export default function Services() {
       </section>
 
       {/* Parts */}
-      <section className="px-6 pb-8">
+      <section data-flow className="px-6 pb-8">
         <div className="max-w-6xl mx-auto">
           {PARTS.map((p) => (
             <div key={p.name} className="border-t-2 py-16 grid md:grid-cols-12 gap-10" style={{ borderTopColor: p.color }}>
@@ -130,7 +130,7 @@ export default function Services() {
       </section>
 
       {/* Scope honesty */}
-      <section className="bg-paper-deep px-6 py-24 mt-8">
+      <section data-flow className="bg-paper-deep px-6 py-24 mt-8">
         <div className="max-w-6xl mx-auto grid md:grid-cols-12 gap-10">
           <div className="md:col-span-5">
             <p className="label mb-6">Scope</p>
@@ -163,7 +163,7 @@ export default function Services() {
       </section>
 
       {/* CTA */}
-      <section className="bg-paper-deep glow border-t border-rule px-6 py-28">
+      <section data-flow className="bg-paper-deep glow border-t border-rule px-6 py-28">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="font-display text-5xl md:text-7xl leading-[0.95] mb-8">
             {SITE.line}

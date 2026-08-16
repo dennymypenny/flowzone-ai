@@ -31,7 +31,7 @@ export default function Work() {
       </section>
 
       {/* CardsRG */}
-      <section className="px-6 pb-24">
+      <section data-flow className="px-6 pb-24">
         <div className="max-w-6xl mx-auto">
           <div className="border-t border-rule pt-10 grid md:grid-cols-12 gap-10 mb-10">
             <div className="md:col-span-4">
@@ -94,7 +94,7 @@ export default function Work() {
       </section>
 
       {/* Honest note */}
-      <section className="bg-paper-deep px-6 py-24">
+      <section data-flow className="bg-paper-deep px-6 py-24">
         <div className="max-w-6xl mx-auto grid md:grid-cols-12 gap-10">
           <div className="md:col-span-5">
             <p className="label mb-6">Straight Answer</p>
@@ -125,7 +125,7 @@ export default function Work() {
       </section>
 
       {/* CTA */}
-      <section className="bg-paper-deep glow border-t border-rule px-6 py-24">
+      <section data-flow className="bg-paper-deep glow border-t border-rule px-6 py-24">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="font-display text-4xl md:text-6xl leading-[0.95] mb-6">
             Want to be the next one on this page?

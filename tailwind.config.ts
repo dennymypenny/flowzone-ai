@@ -9,9 +9,10 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Geist", "system-ui", "sans-serif"],
-        display: ["Geist", "system-ui", "sans-serif"],
-        mono: ["'Geist Mono'", "ui-monospace", "monospace"],
+        // Poppins, matching the type Denny uses in Canva
+        sans: ["Poppins", "system-ui", "sans-serif"],
+        display: ["Poppins", "system-ui", "sans-serif"],
+        mono: ["Poppins", "system-ui", "sans-serif"],
       },
       colors: {
         // Dark canvas

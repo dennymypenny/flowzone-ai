@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -18,7 +18,7 @@ html {
 body {
   color: var(--ink);
   background: var(--paper);
-  font-family: 'Geist', system-ui, sans-serif;
+  font-family: 'Poppins', system-ui, sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -39,12 +39,12 @@ body {
 
 @layer components {
   .font-display {
-    font-weight: 500;
-    letter-spacing: -0.032em;
+    font-weight: 600;
+    letter-spacing: -0.022em;
   }
 
   .label {
-    @apply font-mono text-[11px] font-normal uppercase tracking-label text-ink-mute;
+    @apply text-[11px] font-medium uppercase tracking-label text-ink-mute;
   }
 
   .display {
@@ -52,7 +52,7 @@ body {
   }
 
   .lede {
-    @apply text-lg md:text-xl text-ink-soft leading-relaxed font-light;
+    @apply text-lg md:text-xl text-ink-soft leading-[1.65] font-light;
   }
 
   .btn {
@@ -93,5 +93,94 @@ body {
 
   .fade-b {
     mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Motion. The site should feel like the idea has been jumpstarted and
+   is moving in a direction, so everything travels left to right and
+   settles forward. All of it is disabled for reduced motion.
+   ------------------------------------------------------------------ */
+
+@layer utilities {
+  /* Sections settle into place as you reach them */
+  [data-flow] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  [data-flow].flowed {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Hero pieces arrive in sequence, left to right down the page */
+  .start {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: start 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .start-1 { animation-delay: 0.05s; }
+  .start-2 { animation-delay: 0.16s; }
+  .start-3 { animation-delay: 0.27s; }
+  .start-4 { animation-delay: 0.38s; }
+  .start-5 { animation-delay: 0.5s; }
+
+  @keyframes start {
+    to { opacity: 1; transform: none; }
+  }
+
+  /* The connector between the three parts, charging left to right */
+  .flowline {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(90deg, #1E3A8A, #5B9BF9, #C6E4F8);
+    opacity: 0.5;
+  }
+  .flowline::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -35%;
+    width: 35%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, #FFFFFF, transparent);
+    animation: charge 3.6s linear infinite;
+  }
+  @keyframes charge {
+    to { left: 105%; }
+  }
+
+  /* Logo dots pulse in order so the mark itself reads as flow */
+  .pulse-1 { animation: pulse 3.6s ease-in-out infinite; }
+  .pulse-2 { animation: pulse 3.6s ease-in-out 0.4s infinite; }
+  .pulse-3 { animation: pulse 3.6s ease-in-out 0.8s infinite; }
+  @keyframes pulse {
+    0%, 62%, 100% { opacity: 1; transform: scale(1); }
+    18% { opacity: 1; transform: scale(1.16); }
+  }
+
+  /* Arrows lean forward on hover */
+  .btn .arrow {
+    transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .btn:hover .arrow {
+    transform: translateX(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .start,
+  [data-flow] {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .flowline::after,
+  .pulse-1,
+  .pulse-2,
+  .pulse-3 {
+    animation: none !important;
   }
 }

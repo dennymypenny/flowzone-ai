@@ -86,7 +86,7 @@ export default function Pricing() {
       </section>
 
       {/* Tiers */}
-      <section className="px-6 pb-24">
+      <section data-flow className="px-6 pb-24">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-3 gap-4 items-start">
           {tiers.map((t) => (
             <div
@@ -95,7 +95,7 @@ export default function Pricing() {
             >
               <div className="flex items-baseline justify-between mb-6">
                 <p className="label">{t.name}</p>
-                {t.best && <p className="font-mono text-[11px] uppercase tracking-label text-accent">Most taken</p>}
+                {t.best && <p className="text-[11px] font-medium uppercase tracking-label text-accent">Most taken</p>}
               </div>
 
               <p className="font-display text-5xl leading-none mb-3 text-ink">{t.price}</p>
@@ -124,7 +124,7 @@ export default function Pricing() {
       </section>
 
       {/* Every project */}
-      <section className="bg-paper-deep px-6 py-24">
+      <section data-flow className="bg-paper-deep px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <div className="border-b border-rule pb-4 mb-14">
             <p className="label">In Every Package</p>
@@ -166,7 +166,7 @@ export default function Pricing() {
       </section>
 
       {/* CTA */}
-      <section className="bg-paper-deep glow border-t border-rule px-6 py-28">
+      <section data-flow className="bg-paper-deep glow border-t border-rule px-6 py-28">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="font-display text-5xl md:text-7xl leading-[0.95] mb-8">
             Not sure which one?

@@ -42,9 +42,9 @@ export default function Wordmark({
         <g filter="url(#fzGlow)">
           <line x1="10.5" y1="9" x2="23.5" y2="9" stroke={MARK.link} strokeWidth="1.2" />
           <line x1="34.5" y1="9" x2="46.5" y2="9" stroke={MARK.link} strokeWidth="1.2" />
-          <circle cx="6" cy="9" r="5.6" fill={MARK.deep} />
-          <circle cx="29" cy="9" r="5.6" fill={MARK.mid} />
-          <circle cx="52" cy="9" r="5.6" fill={MARK.pale} />
+          <circle className="pulse-1" cx="6" cy="9" r="5.6" fill={MARK.deep} style={{ transformOrigin: "6px 9px" }} />
+          <circle className="pulse-2" cx="29" cy="9" r="5.6" fill={MARK.mid} style={{ transformOrigin: "29px 9px" }} />
+          <circle className="pulse-3" cx="52" cy="9" r="5.6" fill={MARK.pale} style={{ transformOrigin: "52px 9px" }} />
         </g>
       </svg>
       {showName && (

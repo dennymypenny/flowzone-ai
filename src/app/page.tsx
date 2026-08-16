@@ -15,43 +15,42 @@ export default function Home() {
         <div className="absolute inset-0 aurora pointer-events-none" />
 
         <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-20 md:pt-32 md:pb-28">
-          <div className="inline-flex items-center gap-2.5 border border-rule bg-raised/60 rounded-full pl-2 pr-3.5 py-1.5 mb-10">
+          <div className="start start-1 inline-flex items-center gap-2.5 border border-rule bg-raised/60 pl-2 pr-3.5 py-1.5 mb-10">
             <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-            <span className="font-mono text-[11px] uppercase tracking-label text-ink-soft">
+            <span className="text-[11px] font-medium uppercase tracking-label text-ink-soft">
               Creative studio · Brand, site, system
             </span>
           </div>
 
-          <h1 className="display text-[2.85rem] sm:text-6xl md:text-[5rem] max-w-5xl">
-            AI gives us the speed.
+          <h1 className="start start-2 display text-[3rem] sm:text-6xl md:text-[5.25rem] max-w-4xl">
+            You imagine it.
             <br />
-            Humans give it the{" "}
-            <span className="text-accent">taste</span>.
+            We get it <span className="text-accent">moving</span>.
           </h1>
 
-          <p className="text-xl md:text-2xl text-ink leading-snug max-w-3xl mt-8 font-light">
-            You bring the intention. We jumpstart it into a real thing: the brand, the
-            site and the systems that run it, done for you and live in days. That is
-            what we mean by FlowZone.
+          <p className="start start-3 text-xl md:text-2xl text-ink leading-snug max-w-3xl mt-8 font-light">
+            FlowZone is the jumpstart. Arrive with an intention, leave with the
+            running thing. Brand, site and system, built for you start to finish and
+            live in days.
           </p>
 
-          <p className="text-base text-ink-soft leading-relaxed max-w-reading mt-5 font-light">
+          <p className="start start-4 text-base text-ink-soft leading-relaxed max-w-reading mt-5 font-light">
             Brand identity is what we are best at, the mark and the words and the feel,
-            and we carry it straight through everything we build. A model does the fast
-            part. A person decides what is good.
+            and we carry it straight through everything we build. AI gives us the
+            speed. Humans give it the taste.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-3 mt-10">
+          <div className="start start-5 flex flex-col sm:flex-row gap-3 mt-10">
             <Link href="/intake" className="btn-primary">
-              Start a project
+              Start a project <span className="arrow">→</span>
             </Link>
             <Link href="/work" className="btn-ghost">
-              See the work
+              See the work <span className="arrow">→</span>
             </Link>
           </div>
 
           {/* Value at a glance */}
-          <div className="mt-16 grid grid-cols-2 lg:grid-cols-5 border-t border-l border-rule">
+          <div className="start start-5 mt-16 grid grid-cols-2 lg:grid-cols-5 border-t border-l border-rule">
             {[
               { i: "📦", k: "What you get", v: "Brand, site and system", c: "#5B9BF9" },
               { i: "🙌", k: "How much you do", v: "Almost nothing. 100% done for you", c: "#2DD4BF" },
@@ -62,7 +61,7 @@ export default function Home() {
               <div key={x.k} className="border-b border-r border-rule px-5 py-6">
                 <span className="block text-lg mb-3 leading-none">{x.i}</span>
                 <p
-                  className="font-mono text-[11px] uppercase tracking-label mb-2"
+                  className="text-[11px] font-medium uppercase tracking-label mb-2"
                   style={{ color: x.c }}
                 >
                   {x.k}
@@ -78,7 +77,7 @@ export default function Home() {
               <span className="w-2.5 h-2.5 rounded-full bg-rule" />
               <span className="w-2.5 h-2.5 rounded-full bg-rule" />
               <span className="w-2.5 h-2.5 rounded-full bg-rule" />
-              <span className="ml-3 font-mono text-[11px] text-ink-mute">cardsrg.com</span>
+              <span className="ml-3 text-[11px] font-medium text-ink-mute">cardsrg.com</span>
             </div>
             <img
               src="/assets/crg-hero.jpg"
@@ -90,7 +89,7 @@ export default function Home() {
       </section>
 
       {/* ---------- The name as a verb ---------- */}
-      <section className="border-t border-rule px-6 py-20">
+      <section data-flow className="border-t border-rule px-6 py-20">
         <div className="max-w-6xl mx-auto">
           <div className="panel p-8 md:p-12 grid md:grid-cols-12 gap-10">
             <div className="md:col-span-5">
@@ -98,7 +97,7 @@ export default function Home() {
               <p className="font-display text-5xl md:text-6xl leading-none">
                 flow<span className="text-accent">zone</span>
               </p>
-              <p className="font-mono text-[13px] text-ink-mute mt-4">
+              <p className="text-[13px] text-ink-mute mt-4">
                 verb · flowzoned, flowzoning
               </p>
             </div>
@@ -124,7 +123,7 @@ export default function Home() {
       </section>
 
       {/* ---------- Three pillars ---------- */}
-      <section className="border-t border-rule px-6 py-24">
+      <section data-flow className="border-t border-rule px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <p className="label mb-10">What we build</p>
 
@@ -139,6 +138,10 @@ export default function Home() {
               But a brand with no site is a logo and a site with no system is a
               brochure, so we build all three and you never hand off between vendors.
             </p>
+          </div>
+
+          <div className="hidden md:block relative h-px mb-4 mx-[16.6%]">
+            <span className="flowline absolute inset-0 block" />
           </div>
 
           <div className="grid md:grid-cols-3 gap-4">
@@ -158,7 +161,7 @@ export default function Home() {
                   </div>
                   {"lead" in p && p.lead && (
                     <p
-                      className="font-mono text-[11px] uppercase tracking-label"
+                      className="text-[11px] font-medium uppercase tracking-label"
                       style={{ color: p.color }}
                     >
                       Our strength
@@ -215,12 +218,16 @@ export default function Home() {
       </section>
 
       {/* ---------- How it works, in four steps ---------- */}
-      <section className="border-t border-rule px-6 py-24">
+      <section data-flow className="border-t border-rule px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <p className="label mb-6">How it works</p>
           <h2 className="display text-4xl md:text-5xl max-w-3xl mb-14">
             Four steps. One week. You are busy for about twenty minutes of it.
           </h2>
+
+          <div className="hidden lg:block relative h-px mb-4 mx-[12.5%]">
+            <span className="flowline absolute inset-0 block" />
+          </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
@@ -265,7 +272,7 @@ export default function Home() {
                 <span className="block text-2xl mb-4 leading-none">{x.i}</span>
                 <div className="flex items-baseline gap-2 mb-3">
                   <p
-                    className="font-mono text-[11px] uppercase tracking-label"
+                    className="text-[11px] font-medium uppercase tracking-label"
                     style={{ color: x.c }}
                   >
                     {x.step}
@@ -295,7 +302,7 @@ export default function Home() {
       </section>
 
       {/* ---------- Work ---------- */}
-      <section className="border-t border-rule px-6 py-24">
+      <section data-flow className="border-t border-rule px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-baseline justify-between mb-10">
             <p className="label">Selected work</p>
@@ -322,7 +329,7 @@ export default function Home() {
               </div>
               <div className="md:col-span-5 md:text-right">
                 <p className="label mb-2">Brand · Storefront · Checkout</p>
-                <p className="font-mono text-[11px] text-ink-mute">cardsrg.com</p>
+                <p className="text-[11px] font-medium text-ink-mute">cardsrg.com</p>
               </div>
             </div>
           </Link>
@@ -330,7 +337,7 @@ export default function Home() {
       </section>
 
       {/* ---------- Proof points ---------- */}
-      <section className="border-t border-rule px-6 py-24">
+      <section data-flow className="border-t border-rule px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <div className="mb-14">
             <p className="label mb-6">Why a company hires us</p>
@@ -375,8 +382,26 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ---------- The philosophy line ---------- */}
+      <section data-flow className="border-t border-rule px-6 py-24">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="label mb-8">Why it can be this fast</p>
+          <p className="display text-3xl md:text-5xl leading-[1.15]">
+            AI gives us the speed.
+            <br />
+            Humans give it the <span className="text-accent">taste</span>.
+          </p>
+          <p className="text-ink-soft font-light leading-relaxed mt-8 max-w-reading mx-auto">
+            A model can produce a hundred layouts in a minute. Knowing which one is
+            right is the part you are actually paying for, and it is the part that does
+            not get delegated. That is the whole trade: a week instead of two months,
+            without it looking like everyone else's AI site.
+          </p>
+        </div>
+      </section>
+
       {/* ---------- Chat ---------- */}
-      <section className="border-t border-rule px-6 py-24">
+      <section data-flow className="border-t border-rule px-6 py-24">
         <div className="max-w-4xl mx-auto">
           <p className="label mb-8">Ask first</p>
           <h2 className="display text-4xl md:text-5xl mb-4 max-w-2xl">
@@ -391,15 +416,15 @@ export default function Home() {
       </section>
 
       {/* ---------- CTA ---------- */}
-      <section className="bg-paper-deep glow border-t border-rule px-6 py-28">
+      <section data-flow className="bg-paper-deep glow border-t border-rule px-6 py-28">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="font-mono text-[11px] uppercase tracking-label text-ink-mute mb-8">
+          <p className="text-[11px] font-medium uppercase tracking-label text-ink-mute mb-8">
             Start here
           </p>
-          <h2 className="font-display text-4xl md:text-6xl leading-[1.02] mb-8">
-            Tell us the idea.
+          <h2 className="font-display text-4xl md:text-6xl leading-[1.05] mb-8">
+            Bring the imagination.
             <br />
-            We will tell you what it takes.
+            We bring the running thing.
           </h2>
           <p className="text-ink-soft max-w-md mx-auto mb-10 leading-relaxed font-light">
             A few sentences is enough. You get a real reply with scope, price and a

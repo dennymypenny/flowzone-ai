@@ -34,7 +34,7 @@ export default function About() {
       </section>
 
       {/* Story */}
-      <section className="px-6 pb-24">
+      <section data-flow className="px-6 pb-24">
         <div className="max-w-6xl mx-auto border-t border-rule pt-14 grid md:grid-cols-12 gap-12">
           <div className="md:col-span-4">
             <p className="label mb-6">The Story</p>
@@ -67,7 +67,7 @@ export default function About() {
       </section>
 
       {/* Where we are, plainly */}
-      <section className="bg-paper-deep px-6 py-24">
+      <section data-flow className="bg-paper-deep px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <div className="border-b border-rule pb-4 mb-14 flex items-baseline justify-between">
             <p className="label">Where The Studio Is</p>
@@ -119,7 +119,7 @@ export default function About() {
       </section>
 
       {/* Stand for */}
-      <section className="px-6 py-24">
+      <section data-flow className="px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <div className="border-b border-rule pb-4 mb-14">
             <p className="label">What We Stand For</p>
@@ -153,7 +153,7 @@ export default function About() {
       </section>
 
       {/* CTA */}
-      <section className="bg-paper-deep glow border-t border-rule px-6 py-28">
+      <section data-flow className="bg-paper-deep glow border-t border-rule px-6 py-28">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="font-display text-5xl md:text-7xl leading-[0.95] mb-8">
             {SITE.line}
