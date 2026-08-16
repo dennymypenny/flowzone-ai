@@ -2,6 +2,7 @@ import Link from "next/link";
 import ChatWidget from "@/app/components/ChatWidget";
 import WorkSession from "@/app/components/WorkSession";
 import MessageUs from "@/components/MessageUs";
+import NodeFilm from "@/app/components/NodeFilm";
 import { SITE, PILLARS } from "@/lib/site";
 
 export const metadata = {
@@ -15,6 +16,8 @@ export default function Home() {
       {/* ---------- Hero ---------- */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 aurora pointer-events-none" />
+        {/* The mark, explained: points scatter, connect, resolve, then flow on. */}
+        <NodeFilm />
 
         <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-20 md:pt-32 md:pb-28">
 
