@@ -63,17 +63,9 @@ export default function Home() {
             We get it <span className="text-gradient">moving</span>.
           </h1>
 
-          <p className="text-xl md:text-2xl text-ink leading-snug max-w-3xl mt-8 font-light">
-            FlowZone is the jumpstart. Arrive with an intention, leave with the
-            running thing. Brand, site and system, built for you start to finish,
-            and sparked into action because we want to see it exist as much as you
-            do.
-          </p>
-
-          <p className="text-base text-ink-soft leading-relaxed max-w-reading mt-5 font-light">
-            Brand identity is what we are best at, the mark and the words and the feel,
-            and we carry it straight through everything we build. AI gives us the
-            speed. Humans give it the taste.
+          <p className="text-xl md:text-2xl text-ink leading-snug max-w-2xl mt-8 font-light">
+            Arrive with an intention. Leave with the running thing.
+            Brand, site and system, built for you.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 mt-10">
@@ -125,9 +117,7 @@ export default function Home() {
               One piece of work.
             </h2>
             <p className="md:col-span-6 text-ink-soft leading-relaxed font-light self-end max-w-reading">
-              Brand is where we are strongest, and it is where every project starts.
-              But a brand with no site is a logo and a site with no system is a
-              brochure, so we build all three and you never hand off between vendors.
+              Brand first, then the site, then the system. One studio, no handoffs.
             </p>
           </div>
 
@@ -185,19 +175,16 @@ export default function Home() {
                 Three dots in the logo, three parts to the work. That was on purpose.
               </h3>
               <p className="text-sm text-ink-soft leading-relaxed font-light max-w-reading">
-                Each dot is a stage, and each one hands off to the next. It is also the
-                order we build in, because a site designed before the brand exists is a
-                guess and a system built before the site exists has nothing to plug
-                into. Every colour on this site comes from one of the three.
+                Each dot is a stage, and it is the order we build in. Every colour on
+                this site comes from one of the three.
               </p>
             </div>
             <div className="md:col-span-5">
               <div className="rounded-2xl border border-rule p-6">
                 <p className="label mb-4">All of it, done for you</p>
                 <p className="text-sm text-ink-soft leading-relaxed font-light">
-                  You are not briefing a team, reviewing tickets or chasing a
-                  freelancer. You send the idea, answer a couple of questions, and it
-                  comes back finished. Written, designed, built, tested and live.
+                  You send the idea. It comes back finished: written, designed,
+                  built, tested and live.
                 </p>
               </div>
               <Link href="/services" className="btn-ghost w-full mt-4">
@@ -221,10 +208,8 @@ export default function Home() {
               are the home discipline here.
             </h2>
             <p className="md:col-span-5 text-[#49566E] font-light leading-relaxed self-end max-w-reading">
-              Not a service line we added. It is the thing the studio is built
-              around, and it is why the sites and systems hold together instead of
-              looking assembled. Here is what we actually think, so you can decide
-              whether we are the right people before you spend anything.
+              It is the thing the studio is built around. Here is what we actually
+              think.
             </p>
           </div>
 
@@ -234,25 +219,25 @@ export default function Home() {
                 n: "01",
                 c: "#4C7BE8",
                 t: "A logo is not a brand",
-                b: "It is one asset inside a system. The system is the palette, the type scale, the voice, the way you write a subject line and the rules that keep all of it consistent when somebody else has to use it. Buy a logo on its own and in six months you will have five versions of yourself.",
+                b: "It is one asset inside a system. Buy a logo on its own and in six months you will have five versions of yourself.",
               },
               {
                 n: "02",
                 c: "#5B9BF9",
                 t: "Most rebrands fail at the sentence, not the symbol",
-                b: "People agonize over the mark and leave the words to whoever is free. But the first thing a customer processes is a sentence, and if it could describe any of your competitors it has done nothing. Verbal identity is the harder half and it is where we start.",
+                b: "The first thing a customer processes is a sentence. If it could describe any of your competitors, it has done nothing.",
               },
               {
                 n: "03",
                 c: "#A78BFA",
                 t: "Consistency beats cleverness",
-                b: "One line repeated everywhere outperforms three good lines competing. That applies to your site, your LinkedIn, your invoices and your email signature. Most identity work is really the discipline of not changing your mind in public.",
+                b: "One line repeated everywhere outperforms three good lines competing.",
               },
               {
                 n: "04",
                 c: "#34D399",
                 t: "Taste is a decision, not a vibe",
-                b: "Every choice we make is defensible: why that weight, why that spacing, why this colour means one thing everywhere on the page and never gets used to decorate. If we cannot explain a decision to you, it was not a decision.",
+                b: "Every choice is defensible. If we cannot explain a decision to you, it was not a decision.",
               },
             ].map((x) => (
               <div key={x.n} className="border-t-2 pt-6" style={{ borderTopColor: x.c }}>
@@ -490,25 +475,25 @@ export default function Home() {
                 i: "🤝",
                 c: "#2DD4BF",
                 k: "You stop managing vendors",
-                v: "A designer, a copywriter, a developer and someone to wire the tools together is four contracts and four handoffs. Here it is one studio and one thread of email.",
+                v: "One studio, one thread of email. No handoffs.",
               },
               {
                 i: "💵",
                 c: "#A78BFA",
                 k: "You know the number first",
-                v: "Flat price agreed before work starts. No hourly billing, no scope creep invoice at the end, no retainer you forget to cancel.",
+                v: "Flat price agreed before work starts. No hourly billing, no retainers.",
               },
               {
                 i: "⚡",
                 c: "#FBBF24",
                 k: "We are as excited as you are",
-                v: "That is the whole reason this moves. Nobody has to chase us for an update, because we want to see the thing exist too. You will feel it in the first reply, and again on the day it goes live.",
+                v: "Nobody chases us for updates. We want to see the thing exist too.",
               },
               {
                 i: "🔑",
                 c: "#34D399",
                 k: "You own the asset",
-                v: "The code, the domain, the accounts, the content. Nothing is held hostage and there is no platform you have to keep paying us for.",
+                v: "The code, the domain, the accounts. Nothing is held hostage.",
               },
             ].map((s) => (
               <div key={s.k} className="border-t-2 pt-5" style={{ borderTopColor: s.c }}>
@@ -541,11 +526,7 @@ export default function Home() {
                 own.
               </p>
               <p className="text-ink-soft font-light leading-relaxed mt-6 max-w-reading">
-                Everybody has the intention. A shop they want to open, a service they
-                want to sell, a company that exists but does not look like it yet. The
-                gap is never the idea. It is the design, the words, the build and the
-                plumbing, all needed at once, by someone who has none of them lying
-                around. That gap is the whole job.
+                The gap is never the idea. It is the design, the words, the build and the plumbing, all needed at once. That gap is the whole job.
               </p>
               <p className="text-ink font-light leading-relaxed mt-5 max-w-reading">
                 You hand us the intention. We hand you back the running thing.
@@ -566,9 +547,7 @@ export default function Home() {
               to do all this?
             </h2>
             <p className="md:col-span-5 text-ink-soft font-light leading-relaxed self-end max-w-reading">
-              Fair. You have the same models we do, and they are extraordinary. Here is
-              the honest answer about where they stop, and where you genuinely do not
-              need us.
+              Fair. Here is the honest answer about where they stop.
             </p>
           </div>
 
@@ -578,25 +557,25 @@ export default function Home() {
                 n: "01",
                 c: "#4C7BE8",
                 t: "You have to know what to ask for",
-                b: "AI gives you exactly what you describe. Most people arrive knowing they want something and unable to say what, which is not a prompting problem, it is the actual work. Getting from a vague intention to a specific brief happens before anything gets typed into a model.",
+                b: "AI gives you exactly what you describe. Most people cannot describe it yet, and that is the actual work.",
               },
               {
                 n: "02",
                 c: "#5B9BF9",
                 t: "One logo is easy, fifty agreeing decisions are not",
-                b: "A mark, a palette, a type scale, a voice, a homepage, product pages, checkout, an intake flow. Each one takes ten minutes. Making all of them look and sound like the same company is the whole job, and it is where doing it yourself falls apart.",
+                b: "Each piece takes ten minutes. Making them all look and sound like the same company is the whole job.",
               },
               {
                 n: "03",
                 c: "#FBBF24",
                 t: "The last ten percent is where projects die",
-                b: "You will get to something impressive in an afternoon. Then comes the domain, the payment webhook firing twice, the layout breaking on a phone, the form quietly going nowhere. Projects do not die at the start, they die at ninety percent, six weeks in, at one in the morning.",
+                b: "Projects do not die at the start. They die at ninety percent, six weeks in, at one in the morning.",
               },
               {
                 n: "04",
                 c: "#34D399",
                 t: "Nobody is accountable to a chat window",
-                b: "A model will not notice it got something wrong, will not fix it for free, and will not answer when checkout breaks on a Friday night. You are hiring a person who is on the hook for the result, and who you can reply to.",
+                b: "You are hiring a person who is on the hook for the result, and who you can reply to.",
               },
             ].map((x) => (
               <div key={x.n} className="border-t-2 pt-6" style={{ borderTopColor: x.c }}>
@@ -616,10 +595,7 @@ export default function Home() {
             <div className="md:col-span-7">
               <p className="label mb-4">And when you should not hire us</p>
               <p className="text-ink-soft font-light leading-relaxed max-w-reading">
-                If you have taste, some technical confidence and free evenings, build it
-                yourself. You will do a decent job, you will learn a lot and you will
-                keep the money. We would rather say that than take it from someone who
-                did not need to spend it.
+                If you have taste, technical confidence and free evenings, build it yourself and keep the money.
               </p>
               <p className="text-ink font-light leading-relaxed max-w-reading mt-4">
                 We are not selling you access to AI. You already have that. We are the
