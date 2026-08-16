@@ -272,6 +272,11 @@ export default function WorkSession() {
     } catch {
       /* storage must never break the page */
     }
+    try {
+      if (window.localStorage.getItem("flowzone.briefunlock.v1")) setUnlocked(true);
+    } catch {
+      /* ignore */
+    }
     setLoaded(true);
   }, []);
 
@@ -348,6 +353,41 @@ export default function WorkSession() {
   )}&body=${encodeURIComponent(
     `Hi FlowZone,\n\nI worked through the session on your site. Here is where I landed.\n\n${brief()}\n\nThanks,\n`
   )}`;
+
+  const unlock = async () => {
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(gateEmail)) {
+      setGateErr("That does not look like an email address.");
+      return;
+    }
+    setGateErr("");
+    setUnlocked(true);
+    try {
+      window.localStorage.setItem("flowzone.briefunlock.v1", "1");
+    } catch {
+      /* ignore */
+    }
+    // Best effort. A failed send must never block someone from their own work.
+    try {
+      await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: gateEmail,
+          brief: brief(),
+          name: projectName,
+          path: path ? path.name : "",
+          build: path ? path.build : "",
+          source: "brief download",
+        }),
+      });
+    } catch {
+      /* ignore */
+    }
+    const go = pending;
+    setPending(null);
+    if (go === "image") window.setTimeout(() => downloadImage(), 60);
+    if (go === "text") window.setTimeout(() => downloadText(), 60);
+  };
 
   const downloadText = () => {
     const blob = new Blob(
@@ -478,6 +518,13 @@ export default function WorkSession() {
   };
 
   const [saveEmail, setSaveEmail] = useState("");
+  // Downloads are gated on an address. The session itself stays free and
+  // nothing is sent anywhere until this point, but taking the finished brief
+  // away is the moment the exchange is fair on both sides.
+  const [unlocked, setUnlocked] = useState(false);
+  const [gateEmail, setGateEmail] = useState("");
+  const [gateErr, setGateErr] = useState("");
+  const [pending, setPending] = useState<null | "image" | "text">(null);
   const [saveState, setSaveState] = useState<"idle" | "sending" | "done" | "error">("idle");
 
   const saveByEmail = async () => {
@@ -1080,13 +1127,13 @@ export default function WorkSession() {
                 Send this brief <span className="arrow">→</span>
               </a>
               <button
-                onClick={downloadImage}
+                onClick={() => (unlocked ? downloadImage() : setPending("image"))}
                 className="btn border border-rule text-ink-soft hover:text-ink hover:bg-raised"
               >
                 Save as image
               </button>
               <button
-                onClick={downloadText}
+                onClick={() => (unlocked ? downloadText() : setPending("text"))}
                 className="btn border border-rule text-ink-soft hover:text-ink hover:bg-raised"
               >
                 Save as text
@@ -1101,6 +1148,44 @@ export default function WorkSession() {
                 Start over
               </button>
             </div>
+
+            {pending && !unlocked && (
+              <div className="mt-5 border border-accent p-6 bg-paper-deep">
+                <p className="font-display text-xl mb-2">Where should it go?</p>
+                <p className="text-sm text-ink-soft font-light leading-relaxed mb-4 max-w-reading">
+                  The brief is yours either way, and the session never left your browser.
+                  Leave an address and the download starts straight away, plus a copy lands
+                  in your inbox so it is not trapped in one tab.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <input
+                    type="email"
+                    value={gateEmail}
+                    onChange={(e) => {
+                      setGateEmail(e.target.value);
+                      if (gateErr) setGateErr("");
+                    }}
+                    onKeyDown={(e) => e.key === "Enter" && unlock()}
+                    placeholder="you@example.com"
+                    className="flex-1 min-w-[220px] bg-paper text-ink placeholder-ink-mute border border-rule px-4 py-3 text-sm font-light outline-none focus:border-accent transition-colors"
+                  />
+                  <button onClick={unlock} className="btn-primary !px-5 !py-3 text-xs">
+                    Get the brief <span className="arrow">→</span>
+                  </button>
+                  <button
+                    onClick={() => setPending(null)}
+                    className="btn text-ink-mute hover:text-ink-soft !px-3 text-xs"
+                  >
+                    Not now
+                  </button>
+                </div>
+                {gateErr && <p className="text-[12px] text-[#FBBF24] mt-2.5">{gateErr}</p>}
+                <p className="text-[11px] text-ink-mute font-light mt-3">
+                  One email with your brief in it. You can still send it straight to us
+                  with the button above and skip this entirely.
+                </p>
+              </div>
+            )}
           </div>
         )}
       </div>
