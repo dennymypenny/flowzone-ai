@@ -171,7 +171,7 @@ export default function VideoSpark({ topic }: { topic: string }) {
           }
 
           // Paint
-          c.fillStyle = "#080D18";
+          c.fillStyle = "#0C1424";
           c.fillRect(0, 0, W, H);
 
           if (sc.kind === "photo" && sc.img) {
@@ -187,22 +187,22 @@ export default function VideoSpark({ topic }: { topic: string }) {
             c.drawImage(im, dx, dy, dw, dh);
             // navy wash top and bottom so the words always read
             const g = c.createLinearGradient(0, 0, 0, H);
-            g.addColorStop(0, "rgba(8,13,24,0.55)");
-            g.addColorStop(0.35, "rgba(8,13,24,0)");
-            g.addColorStop(0.68, "rgba(8,13,24,0)");
-            g.addColorStop(1, "rgba(8,13,24,0.82)");
+            g.addColorStop(0, "rgba(12,20,36,0.55)");
+            g.addColorStop(0.35, "rgba(12,20,36,0)");
+            g.addColorStop(0.68, "rgba(12,20,36,0)");
+            g.addColorStop(1, "rgba(12,20,36,0.82)");
             c.fillStyle = g;
             c.fillRect(0, 0, W, H);
           } else {
             // brand card: aurora glow
             const g1 = c.createRadialGradient(W * 0.2, -100, 60, W * 0.2, -100, 900);
             g1.addColorStop(0, "rgba(91,155,249,0.5)");
-            g1.addColorStop(1, "rgba(8,13,24,0)");
+            g1.addColorStop(1, "rgba(12,20,36,0)");
             c.fillStyle = g1;
             c.fillRect(0, 0, W, H);
             const g2 = c.createRadialGradient(W * 0.9, H + 80, 60, W * 0.9, H + 80, 800);
             g2.addColorStop(0, "rgba(30,58,138,0.6)");
-            g2.addColorStop(1, "rgba(8,13,24,0)");
+            g2.addColorStop(1, "rgba(12,20,36,0)");
             c.fillStyle = g2;
             c.fillRect(0, 0, W, H);
           }

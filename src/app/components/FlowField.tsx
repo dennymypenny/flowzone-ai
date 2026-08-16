@@ -81,7 +81,7 @@ export default function FlowField() {
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
       c.setTransform(dpr, 0, 0, dpr, 0, 0);
-      c.fillStyle = "rgba(8, 13, 24, 1)";
+      c.fillStyle = "rgba(12, 20, 36, 1)";
       c.fillRect(0, 0, w, h);
       const n = Math.min(340, Math.round((w * h) / 4200));
       ps = Array.from({ length: n }, () => spawn());
@@ -90,7 +90,7 @@ export default function FlowField() {
     const step = (t: number) => {
       if (!running) return;
       // The fade that turns motion into ribbons.
-      c.fillStyle = "rgba(8, 13, 24, 0.075)";
+      c.fillStyle = "rgba(12, 20, 36, 0.075)";
       c.fillRect(0, 0, w, h);
       c.lineCap = "round";
 

@@ -422,7 +422,7 @@ export default function Home() {
                       key={seg}
                       className="h-[3px] flex-1 rounded-full"
                       style={{
-                        background: seg <= gi ? x.c : "#1D2942",
+                        background: seg <= gi ? x.c : "#26355A",
                         opacity: seg <= gi ? 0.9 : 1,
                       }}
                     />

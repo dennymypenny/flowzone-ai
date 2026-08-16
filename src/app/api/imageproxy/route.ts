@@ -12,7 +12,12 @@ import { NextRequest, NextResponse } from "next/server";
  * feature, not an open proxy.
  */
 
-const ALLOWED_HOSTS = new Set(["api.openverse.org", "upload.wikimedia.org", "commons.wikimedia.org"]);
+const ALLOWED_HOSTS = new Set([
+  "api.openverse.org",
+  "upload.wikimedia.org",
+  "commons.wikimedia.org",
+  "images.pexels.com",
+]);
 
 export const revalidate = 3600;
 

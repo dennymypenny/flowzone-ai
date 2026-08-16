@@ -34,6 +34,38 @@ type Shot = {
 
 const UA = { accept: "application/json", "user-agent": "FlowZone/1.0 (+https://flowzone.dev)" };
 
+/**
+ * Pexels first, when a key is configured. Editorial-grade photography,
+ * free API, generous limits. Without the key the free keyless sources
+ * still answer, so nothing breaks either way.
+ */
+async function fromPexels(q: string): Promise<Shot[]> {
+  const key = process.env.PEXELS_API_KEY;
+  if (!key) return [];
+  const res = await fetch(
+    `https://api.pexels.com/v1/search?query=${encodeURIComponent(q)}&per_page=12&orientation=landscape`,
+    {
+      headers: { ...UA, Authorization: key },
+      next: { revalidate: 3600 },
+      signal: AbortSignal.timeout(6000),
+    }
+  );
+  if (!res.ok) throw new Error(`pexels ${res.status}`);
+  const data = await res.json();
+  return (data.photos || [])
+    .filter((p: any) => p?.src?.large)
+    .slice(0, 12)
+    .map((p: any) => ({
+      id: `pexels-${p.id}`,
+      url: String(p.src.large2x || p.src.large),
+      thumb: String(p.src.large),
+      title: String(p.alt || "Untitled").slice(0, 90),
+      creator: String(p.photographer || "Pexels").slice(0, 60),
+      license: "Pexels License",
+      source: String(p.url || ""),
+    }));
+}
+
 async function fromOpenverse(q: string, kind: "photo" | "gif"): Promise<Shot[]> {
   const params: Record<string, string> = {
     q,
@@ -114,10 +146,19 @@ export async function GET(req: NextRequest) {
   }
 
   let shots: Shot[] = [];
-  try {
-    shots = await fromOpenverse(q, kind);
-  } catch (e) {
-    console.error("[FlowZone] openverse failed:", e);
+  if (kind === "photo") {
+    try {
+      shots = await fromPexels(q);
+    } catch (e) {
+      console.error("[FlowZone] pexels failed:", e);
+    }
+  }
+  if (!shots.length) {
+    try {
+      shots = await fromOpenverse(q, kind);
+    } catch (e) {
+      console.error("[FlowZone] openverse failed:", e);
+    }
   }
   if (!shots.length && kind === "photo") {
     try {

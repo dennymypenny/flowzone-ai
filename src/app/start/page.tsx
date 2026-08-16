@@ -31,7 +31,7 @@ function DotHeading({
   return (
     <div className="flex items-center gap-3 mb-6">
       <svg width="30" height="14" viewBox="0 0 30 14" aria-hidden>
-        <line x1="0" y1="7" x2="30" y2="7" stroke="#1D2942" strokeWidth="1.5" />
+        <line x1="0" y1="7" x2="30" y2="7" stroke="#26355A" strokeWidth="1.5" />
         <circle cx={n === 1 ? 5 : n === 2 ? 15 : 25} cy="7" r="5" fill={color} />
       </svg>
       <p className="text-[11px] font-medium uppercase tracking-label" style={{ color }}>

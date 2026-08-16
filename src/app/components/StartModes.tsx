@@ -99,7 +99,7 @@ export default function StartModes() {
                     ["--ga" as string]: t.rgb,
                     borderColor: active ? `${t.accent}66` : "rgba(255,255,255,0.09)",
                     background: active
-                      ? `linear-gradient(180deg, ${t.accent}1f 0%, rgba(255,255,255,0.02) 100%), linear-gradient(to bottom, #131F35, #0E1728)`
+                      ? `linear-gradient(180deg, ${t.accent}1f 0%, rgba(255,255,255,0.02) 100%), linear-gradient(to bottom, #1A2946, #131F36)`
                       : "linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))",
                     boxShadow: active ? undefined : "inset 0 1px 0 rgba(255,255,255,0.05)",
                   }}

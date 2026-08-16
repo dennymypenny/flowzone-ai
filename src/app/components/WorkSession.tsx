@@ -444,7 +444,7 @@ export default function WorkSession() {
     const ctx = c.getContext("2d");
     if (!ctx) return;
 
-    ctx.fillStyle = "#080D18";
+    ctx.fillStyle = "#0C1424";
     ctx.fillRect(0, 0, c.width, c.height);
 
     // The same field their session grew, rendered still, across the top. This
@@ -458,8 +458,8 @@ export default function WorkSession() {
       answered / STEPS.length
     );
     const fade = ctx.createLinearGradient(0, 120, 0, 240);
-    fade.addColorStop(0, "rgba(8,13,24,0)");
-    fade.addColorStop(1, "#080D18");
+    fade.addColorStop(0, "rgba(12,20,36,0)");
+    fade.addColorStop(1, "#0C1424");
     ctx.fillStyle = fade;
     ctx.fillRect(0, 120, W, 120);
 
@@ -784,7 +784,7 @@ export default function WorkSession() {
                 key={s.id}
                 className="w-5 h-[3px] block transition-colors duration-300"
                 style={{
-                  background: (answers[s.id] || "").trim() ? s.color : "#1D2942",
+                  background: (answers[s.id] || "").trim() ? s.color : "#26355A",
                 }}
               />
             ))}
@@ -929,14 +929,14 @@ export default function WorkSession() {
                       }}
                       className="border p-3 text-left transition-colors"
                       style={{
-                        borderColor: answers.palette === p.id ? p.a : "#1D2942",
+                        borderColor: answers.palette === p.id ? p.a : "#26355A",
                         background: answers.palette === p.id ? "rgba(255,255,255,0.03)" : "transparent",
                       }}
                     >
                       <span className="flex gap-1 mb-2.5">
                         <span className="w-4 h-4 block" style={{ background: p.a }} />
                         <span className="w-4 h-4 block" style={{ background: p.b }} />
-                        <span className="w-4 h-4 block" style={{ background: p.bg, border: "1px solid #1D2942" }} />
+                        <span className="w-4 h-4 block" style={{ background: p.bg, border: "1px solid #26355A" }} />
                       </span>
                       <span className="block text-[11px] text-ink-soft leading-snug">
                         {p.name}

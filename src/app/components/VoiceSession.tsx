@@ -191,7 +191,7 @@ export default function VoiceSession({
             aria-pressed={listening}
             className="inline-flex items-center gap-2 text-xs border px-3.5 py-2 transition-colors"
             style={{
-              borderColor: listening ? accent : "#1D2942",
+              borderColor: listening ? accent : "#26355A",
               color: listening ? accent : "#9AA7BE",
               background: listening ? `${accent}14` : "transparent",
             }}

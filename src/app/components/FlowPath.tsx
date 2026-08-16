@@ -72,7 +72,7 @@ export default function FlowPath() {
                 <span
                   className="block w-3.5 h-3.5 rounded-full transition-all duration-500"
                   style={{
-                    background: lit ? s.color : "#1D2942",
+                    background: lit ? s.color : "#26355A",
                     boxShadow: lit ? `0 0 12px ${s.color}88` : "none",
                     transform: lit ? "scale(1.15)" : "scale(1)",
                   }}

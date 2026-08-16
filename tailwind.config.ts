@@ -16,14 +16,14 @@ const config: Config = {
       },
       colors: {
         // Dark canvas
-        paper: "#080D18",
-        "paper-deep": "#0B1322",
-        raised: "#101A2C",
-        rule: "#1D2942",
+        paper: "#0C1424",
+        "paper-deep": "#101A2E",
+        raised: "#172440",
+        rule: "#26355A",
         // Type
         ink: "#F1F3F7",
-        "ink-soft": "#9AA7BE",
-        "ink-mute": "#647089",
+        "ink-soft": "#ABB8CF",
+        "ink-mute": "#7A89A5",
         // Brand blue, light end of the family
         accent: "#5B8CFF",
         "accent-deep": "#3D6FE8",

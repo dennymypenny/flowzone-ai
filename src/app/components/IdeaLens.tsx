@@ -186,7 +186,7 @@ export default function IdeaLens() {
           <Tilt3D max={8}>
             <button
               onClick={pick}
-              className="group relative block w-full rounded-2xl overflow-hidden bg-[#101A2C] border border-white/15 shadow-[0_40px_80px_-28px_rgba(0,0,0,0.85)] text-left"
+              className="group relative block w-full rounded-2xl overflow-hidden bg-[#172440] border border-white/15 shadow-[0_40px_80px_-28px_rgba(0,0,0,0.85)] text-left"
               aria-label={`Use this photograph of ${shown}`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -245,8 +245,8 @@ export default function ContentTrack({ accent }: { accent: string }) {
               onClick={() => setStep(s.id)}
               className="text-left border px-4 py-3 transition-colors"
               style={{
-                borderColor: on ? accent : "#1D2942",
-                background: on ? "#101A2C" : "transparent",
+                borderColor: on ? accent : "#26355A",
+                background: on ? "#172440" : "transparent",
               }}
             >
               <span
@@ -480,7 +480,7 @@ export default function ContentTrack({ accent }: { accent: string }) {
                     onClick={() => setPicked(s.url)}
                     title={s.title}
                     className="border overflow-hidden transition-colors"
-                    style={{ borderColor: picked === s.url ? accent : "#1D2942", borderWidth: picked === s.url ? 2 : 1 }}
+                    style={{ borderColor: picked === s.url ? accent : "#26355A", borderWidth: picked === s.url ? 2 : 1 }}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={s.thumb} alt={s.title} loading="lazy" className="w-full h-16 object-cover" />

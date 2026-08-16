@@ -414,7 +414,7 @@ export default function Playground() {
               title={q.goal}
               className="inline-flex items-center gap-2 border px-3 py-1.5 text-[11px]"
               style={{
-                borderColor: has[q.id] ? q.color : "#1D2942",
+                borderColor: has[q.id] ? q.color : "#26355A",
                 color: has[q.id] ? q.color : "#647089",
                 background: has[q.id] ? `${q.color}0F` : "transparent",
               }}
@@ -539,7 +539,7 @@ export default function Playground() {
                     className="block w-full h-14 border transition-all"
                     style={{
                       background: palette[r.id],
-                      borderColor: openRole === r.id ? "#5B8CFF" : locks[r.id] ? "#5B8CFF" : "#1D2942",
+                      borderColor: openRole === r.id ? "#5B8CFF" : locks[r.id] ? "#5B8CFF" : "#26355A",
                       borderWidth: openRole === r.id || locks[r.id] ? 2 : 1,
                     }}
                   />
@@ -558,7 +558,7 @@ export default function Playground() {
               <div
                 ref={popRef}
                 className="absolute left-4 right-4 bottom-4 z-40 panel shadow-panel p-5"
-                style={{ background: "#101A2C" }}
+                style={{ background: "#172440" }}
               >
                 <div className="flex items-center justify-between mb-3">
                   <p className="text-[11px] font-medium uppercase tracking-label text-ink-soft">
@@ -660,7 +660,7 @@ export default function Playground() {
                       complete("mark");
                     }}
                     className="aspect-square border flex items-center justify-center transition-colors"
-                    style={{ borderColor: on ? "#5B8CFF" : "#1D2942", background: on ? "#101A2C" : "transparent" }}
+                    style={{ borderColor: on ? "#5B8CFF" : "#26355A", background: on ? "#172440" : "transparent" }}
                   >
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke={on ? "#F1F3F7" : "#9AA7BE"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: ic.d }} />
                   </button>
@@ -676,7 +676,7 @@ export default function Playground() {
                     complete("mark");
                   }}
                   className="text-xs border px-3 py-2 transition-colors"
-                  style={{ borderColor: c.id === containerId ? "#5B8CFF" : "#1D2942", color: c.id === containerId ? "#F1F3F7" : "#9AA7BE" }}
+                  style={{ borderColor: c.id === containerId ? "#5B8CFF" : "#26355A", color: c.id === containerId ? "#F1F3F7" : "#9AA7BE" }}
                 >
                   {c.name}
                 </button>
@@ -704,7 +704,7 @@ export default function Playground() {
                   key={t.id}
                   onClick={() => setTypeId(t.id)}
                   className="w-full text-left border px-4 py-3 transition-colors"
-                  style={{ borderColor: t.id === typeId ? "#5B8CFF" : "#1D2942" }}
+                  style={{ borderColor: t.id === typeId ? "#5B8CFF" : "#26355A" }}
                 >
                   <span className="block text-sm" style={{ fontWeight: Number(t.display) }}>{t.name}</span>
                   <span className="block text-[11px] text-ink-mute font-light mt-0.5">{t.note}</span>
@@ -739,7 +739,7 @@ export default function Playground() {
                     key={lk.id}
                     onClick={() => setLockupId(lk.id)}
                     className="w-full border overflow-hidden transition-colors text-left"
-                    style={{ borderColor: on ? "#5B8CFF" : "#1D2942", borderWidth: on ? 2 : 1 }}
+                    style={{ borderColor: on ? "#5B8CFF" : "#26355A", borderWidth: on ? 2 : 1 }}
                   >
                     <div
                       className="w-full flex items-center justify-center py-4"
@@ -830,9 +830,9 @@ export default function Playground() {
                       }}
                       className="text-[11px] px-3 py-1.5 border-t border-b border-r first:border-l transition-colors"
                       style={{
-                        borderColor: on ? "#5B8CFF" : "#1D2942",
+                        borderColor: on ? "#5B8CFF" : "#26355A",
                         color: on ? "#F1F3F7" : "#9AA7BE",
-                        background: on ? "#101A2C" : "transparent",
+                        background: on ? "#172440" : "transparent",
                       }}
                     >
                       {label}
@@ -900,7 +900,7 @@ export default function Playground() {
                             onClick={() => setPicked(on ? null : s.url)}
                             title={`${s.title} — ${s.creator} (${s.license})`}
                             className="block overflow-hidden border transition-colors relative"
-                            style={{ borderColor: on ? "#5B8CFF" : "#1D2942", borderWidth: on ? 2 : 1 }}
+                            style={{ borderColor: on ? "#5B8CFF" : "#26355A", borderWidth: on ? 2 : 1 }}
                           >
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img src={s.thumb} alt={s.title} loading="lazy" className="w-full h-24 object-cover" />

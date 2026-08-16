@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 :root {
-  --paper: #080D18;
+  --paper: #0C1424;
   --ink: #F1F3F7;
   --radius-panel: 18px;
   --radius-control: 11px;
@@ -28,7 +28,7 @@ body {
 
 ::selection {
   background: #5B8CFF;
-  color: #080D18;
+  color: #0C1424;
 }
 
 /* Soft geometry. Controls and media default to gently rounded corners,
@@ -127,7 +127,7 @@ button {
     border-radius: var(--radius-panel);
     background:
       linear-gradient(to bottom, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0.018) 42%, rgba(255, 255, 255, 0.008) 100%),
-      linear-gradient(to bottom, #131F35 0%, #0E1728 62%);
+      linear-gradient(to bottom, #1A2946 0%, #131F36 62%);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.07),
       0 24px 60px -28px rgba(0, 0, 0, 0.8);
@@ -149,7 +149,7 @@ button {
 
   /* Dark glass bar for the nav */
   .glassbar {
-    background: rgba(8, 13, 24, 0.72);
+    background: rgba(12, 20, 36, 0.72);
     backdrop-filter: blur(18px) saturate(1.4);
     -webkit-backdrop-filter: blur(18px) saturate(1.4);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
