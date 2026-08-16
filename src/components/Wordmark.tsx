@@ -37,16 +37,7 @@ export default function Wordmark({
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden
       >
-        <defs>
-          <filter id="fzGlow" x="-60%" y="-60%" width="220%" height="220%">
-            <feGaussianBlur stdDeviation="1.6" result="b" />
-            <feMerge>
-              <feMergeNode in="b" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-        <g filter="url(#fzGlow)">
+        <g>
           <line x1="10.5" y1="9" x2="23.5" y2="9" stroke={MARK.link} strokeWidth="1.2" />
           <line x1="34.5" y1="9" x2="46.5" y2="9" stroke={MARK.link} strokeWidth="1.2" />
           <circle className="pulse-1" cx="6" cy="9" r="5.6" fill={MARK.deep} style={{ transformOrigin: "6px 9px" }} />
@@ -55,9 +46,7 @@ export default function Wordmark({
         </g>
       </svg>
       {showName && (
-        <span className="font-display text-[19px] leading-none">
-          FlowZone <span className="text-accent">AI</span>
-        </span>
+        <span className="font-display text-[19px] leading-none">FlowZone</span>
       )}
     </span>
   );

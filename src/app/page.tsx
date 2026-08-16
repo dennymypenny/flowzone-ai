@@ -65,56 +65,9 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Hero product panel */}
-          <div className="mt-20 panel overflow-hidden shadow-panel">
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-rule bg-paper-deep">
-              <span className="w-2.5 h-2.5 rounded-full bg-rule" />
-              <span className="w-2.5 h-2.5 rounded-full bg-rule" />
-              <span className="w-2.5 h-2.5 rounded-full bg-rule" />
-              <span className="ml-3 text-[11px] font-medium text-ink-mute">cardsrg.com</span>
-            </div>
-            <img
-              src="/assets/crg-hero.jpg"
-              alt="CardsRG storefront homepage, a dark collector card shop with the Rip. Pull. Collect. headline"
-              className="w-full h-auto block"
-            />
-          </div>
         </div>
       </section>
 
-      {/* ---------- The name as a verb ---------- */}
-      <section data-flow className="border-t border-rule px-6 py-20">
-        <div className="max-w-6xl mx-auto">
-          <div className="panel p-8 md:p-12 grid md:grid-cols-12 gap-10">
-            <div className="md:col-span-5">
-              <p className="label mb-6">What the name means</p>
-              <p className="font-display text-5xl md:text-6xl leading-none">
-                flow<span className="text-accent">zone</span>
-              </p>
-              <p className="text-[13px] text-ink-mute mt-4">
-                verb · flowzoned, flowzoning
-              </p>
-            </div>
-            <div className="md:col-span-7">
-              <p className="text-xl md:text-2xl text-ink font-light leading-snug">
-                To take an intention and get it moving. To go from a thing you keep
-                meaning to start, to a thing that is live, branded and running on its
-                own.
-              </p>
-              <p className="text-ink-soft font-light leading-relaxed mt-6 max-w-reading">
-                Everybody has the intention. A shop they want to open, a service they
-                want to sell, a company that exists but does not look like it yet. The
-                gap is never the idea. It is the design, the words, the build and the
-                plumbing, all needed at once, by someone who has none of them lying
-                around. That gap is the whole job.
-              </p>
-              <p className="text-ink font-light leading-relaxed mt-5 max-w-reading">
-                You hand us the intention. We hand you back the running thing.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ---------- Three pillars ---------- */}
       <section data-flow className="border-t border-rule px-6 py-24">
@@ -211,6 +164,159 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ---------- Point of view ---------- */}
+      <section data-flow className="border-t border-rule px-6 py-24">
+        <div className="max-w-6xl mx-auto">
+          <p className="label mb-6">Where we have a point of view</p>
+          <div className="grid md:grid-cols-12 gap-10 mb-16">
+            <h2 className="md:col-span-7 display text-4xl md:text-5xl">
+              Brand identity and communications
+              <br />
+              are the home discipline here.
+            </h2>
+            <p className="md:col-span-5 text-ink-soft font-light leading-relaxed self-end max-w-reading">
+              Not a service line we added. It is the thing the studio is built
+              around, and it is why the sites and systems hold together instead of
+              looking assembled. Here is what we actually think, so you can decide
+              whether we are the right people before you spend anything.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-x-14 gap-y-12">
+            {[
+              {
+                n: "01",
+                c: "#4C7BE8",
+                t: "A logo is not a brand",
+                b: "It is one asset inside a system. The system is the palette, the type scale, the voice, the way you write a subject line and the rules that keep all of it consistent when somebody else has to use it. Buy a logo on its own and in six months you will have five versions of yourself.",
+              },
+              {
+                n: "02",
+                c: "#5B9BF9",
+                t: "Most rebrands fail at the sentence, not the symbol",
+                b: "People agonize over the mark and leave the words to whoever is free. But the first thing a customer processes is a sentence, and if it could describe any of your competitors it has done nothing. Verbal identity is the harder half and it is where we start.",
+              },
+              {
+                n: "03",
+                c: "#A78BFA",
+                t: "Consistency beats cleverness",
+                b: "One line repeated everywhere outperforms three good lines competing. That applies to your site, your LinkedIn, your invoices and your email signature. Most identity work is really the discipline of not changing your mind in public.",
+              },
+              {
+                n: "04",
+                c: "#34D399",
+                t: "Taste is a decision, not a vibe",
+                b: "Every choice we make is defensible: why that weight, why that spacing, why this colour means one thing everywhere on the page and never gets used to decorate. If we cannot explain a decision to you, it was not a decision.",
+              },
+            ].map((x) => (
+              <div key={x.n} className="border-t-2 pt-6" style={{ borderTopColor: x.c }}>
+                <p
+                  className="text-[11px] font-medium uppercase tracking-label mb-3"
+                  style={{ color: x.c }}
+                >
+                  {x.n}
+                </p>
+                <h3 className="font-display text-2xl leading-snug mb-3">{x.t}</h3>
+                <p className="text-sm text-ink-soft font-light leading-relaxed">{x.b}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-14 panel p-8 grid md:grid-cols-12 gap-8 items-center">
+            <div className="md:col-span-8">
+              <p className="label mb-3">What that covers</p>
+              <p className="text-ink-soft font-light leading-relaxed">
+                Naming and name treatment, logo and wordmark, colour and type systems,
+                verbal identity and tone, positioning and messaging hierarchy, launch
+                copy, and the usage guide that keeps it all intact after we hand it
+                over.
+              </p>
+            </div>
+            <div className="md:col-span-4 md:text-right">
+              <Link href="/blog" className="btn-ghost">
+                Read the journal <span className="arrow">→</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- Work ---------- */}
+      <section data-flow className="bg-white text-[#0B1322] px-6 py-28">
+        <div className="max-w-6xl mx-auto">
+          {/* Dots and a caption, the same mark the whole studio runs on */}
+          <div className="flex flex-col items-center text-center mb-14">
+            <svg width="74" height="22" viewBox="0 0 58 18" fill="none" aria-hidden>
+              <line x1="10.5" y1="9" x2="23.5" y2="9" stroke="#9FC4E8" strokeWidth="1.2" />
+              <line x1="34.5" y1="9" x2="46.5" y2="9" stroke="#9FC4E8" strokeWidth="1.2" />
+              <circle className="pulse-1" cx="6" cy="9" r="5.6" fill="#1E3A8A" style={{ transformOrigin: "6px 9px" }} />
+              <circle className="pulse-2" cx="29" cy="9" r="5.6" fill="#5B9BF9" style={{ transformOrigin: "29px 9px" }} />
+              <circle className="pulse-3" cx="52" cy="9" r="5.6" fill="#9FC4E8" style={{ transformOrigin: "52px 9px" }} />
+            </svg>
+            <p className="text-[11px] font-medium uppercase tracking-label text-[#3D6FE8] mt-6">
+              Brand · Site · System, on one project
+            </p>
+            <h2 className="font-display text-4xl md:text-6xl text-[#0B1322] mt-5 max-w-3xl">
+              An Instagram DM business,
+              <br />
+              turned into a real shop.
+            </h2>
+            <p className="text-[#647089] font-light leading-relaxed max-w-reading mt-6">
+              CardsRG sells PSA graded cards, rare inserts and pack rips. It had an
+              audience and no storefront. We built the mark, the whole shop, product
+              pages with grade and set detail, cart and checkout. It went live and it
+              sells.
+            </p>
+          </div>
+
+          <Link href="/work" className="group block">
+            <div className="overflow-hidden border border-[#DCE5F2] shadow-[0_30px_70px_-30px_rgba(11,19,34,0.45)]">
+              <img
+                src="/assets/crg-hero.jpg"
+                alt="CardsRG storefront homepage, dark with the headline Rip. Pull. Collect."
+                className="w-full h-auto block transition-transform duration-700 group-hover:scale-[1.015]"
+              />
+            </div>
+
+            <div className="grid md:grid-cols-12 gap-6 mt-8 items-start">
+              <div className="md:col-span-5">
+                <p className="font-display text-3xl text-[#0B1322] group-hover:text-accent transition-colors">
+                  CardsRG
+                </p>
+                <p className="text-sm text-[#3D6FE8] mt-1.5">cardsrg.com</p>
+              </div>
+              <div className="md:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-6 border-t border-[#E8EEF7] pt-5">
+                {[
+                  ["Brand", "Mark and palette"],
+                  ["Site", "Full storefront"],
+                  ["Commerce", "Cart and checkout"],
+                  ["Built in", "Under two weeks"],
+                ].map(([k, v]) => (
+                  <div key={k}>
+                    <p className="text-[11px] font-medium uppercase tracking-label text-[#647089] mb-1.5">
+                      {k}
+                    </p>
+                    <p className="text-sm text-[#0B1322] font-light leading-snug">{v}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Link>
+
+          <div className="mt-12 flex flex-col sm:flex-row gap-3 justify-center">
+            <Link
+              href="/work"
+              className="btn border border-[#C9D6EA] text-[#0B1322] hover:bg-[#F4F7FC]"
+            >
+              See the full build <span className="arrow">→</span>
+            </Link>
+            <a href={SITE.mailto} className="btn-primary">
+              Start yours <span className="arrow">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* ---------- How it works, in four steps ---------- */}
       <section data-flow className="border-t border-rule px-6 py-24">
         <div className="max-w-6xl mx-auto">
@@ -295,40 +401,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------- Work ---------- */}
-      <section data-flow className="bg-white text-[#0B1322] px-6 py-24">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex items-baseline justify-between mb-10">
-            <p className="text-[11px] font-medium uppercase tracking-label text-[#3D6FE8]">Selected work</p>
-            <Link href="/work" className="text-[11px] font-medium uppercase tracking-label text-[#647089] hover:text-[#3D6FE8] transition-colors">
-              All work →
-            </Link>
-          </div>
-
-          <Link href="/work" className="group block border border-[#E8EEF7] bg-white overflow-hidden">
-            <img
-              src="/assets/crg-cards.jpg"
-              alt="CardsRG product grid showing graded Lionel Messi and Stan Lee cards with prices and cart buttons"
-              className="w-full h-auto block transition-transform duration-700 group-hover:scale-[1.015]"
-            />
-            <div className="grid md:grid-cols-12 gap-6 p-7 border-t border-[#E8EEF7]">
-              <div className="md:col-span-7">
-                <h3 className="font-display text-2xl text-[#0B1322] group-hover:text-accent transition-colors">
-                  CardsRG
-                </h3>
-                <p className="text-sm text-[#647089] mt-2 font-light leading-relaxed max-w-reading">
-                  A collector trading card storefront taken from an idea to a live shop.
-                  Brand mark, full storefront, product pages, cart and checkout.
-                </p>
-              </div>
-              <div className="md:col-span-5 md:text-right">
-                <p className="text-[11px] font-medium uppercase tracking-label text-[#647089] mb-2">Brand · Storefront · Checkout</p>
-                <p className="text-[11px] font-medium text-[#3D6FE8]">cardsrg.com</p>
-              </div>
-            </div>
-          </Link>
-        </div>
-      </section>
 
       {/* ---------- Proof points ---------- */}
       <section data-flow className="border-t border-rule px-6 py-24">
@@ -372,6 +444,40 @@ export default function Home() {
                 <p className="text-sm text-ink-soft leading-relaxed font-light">{s.v}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- The name as a verb ---------- */}
+      <section data-flow className="border-t border-rule px-6 py-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="panel p-8 md:p-12 grid md:grid-cols-12 gap-10">
+            <div className="md:col-span-5">
+              <p className="label mb-6">What the name means</p>
+              <p className="font-display text-5xl md:text-6xl leading-none">
+                flow<span className="text-accent">zone</span>
+              </p>
+              <p className="text-[13px] text-ink-mute mt-4">
+                verb · flowzoned, flowzoning
+              </p>
+            </div>
+            <div className="md:col-span-7">
+              <p className="text-xl md:text-2xl text-ink font-light leading-snug">
+                To take an intention and get it moving. To go from a thing you keep
+                meaning to start, to a thing that is live, branded and running on its
+                own.
+              </p>
+              <p className="text-ink-soft font-light leading-relaxed mt-6 max-w-reading">
+                Everybody has the intention. A shop they want to open, a service they
+                want to sell, a company that exists but does not look like it yet. The
+                gap is never the idea. It is the design, the words, the build and the
+                plumbing, all needed at once, by someone who has none of them lying
+                around. That gap is the whole job.
+              </p>
+              <p className="text-ink font-light leading-relaxed mt-5 max-w-reading">
+                You hand us the intention. We hand you back the running thing.
+              </p>
+            </div>
           </div>
         </div>
       </section>
