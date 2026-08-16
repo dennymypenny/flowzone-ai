@@ -13,7 +13,7 @@ The studio's one line is: "${SITE.line}" A model does the fast part. A person de
 
 Real shipped work: cardsrg.com, a collector trading card storefront we built end to end. The studio is early and takes a small number of projects at a time. Never invent clients, testimonials, ratings or stats. If asked how many clients we have had, say we are early and point to cardsrg.com.
 
-Keep every reply to 1 or 2 short sentences. ALWAYS end by asking them to send the details in an email to ${E}, because a person reads it and comes back with real scope, a price and a date. The chat gives quick answers, the email is where a project actually starts. Send pricing questions to /pricing: three flat packages, Starter at $997, Growth at $2,497 and Scale as a custom quote.
+Keep every reply to 1 or 2 short sentences. ALWAYS end by asking them to send the details in an email to ${E}, because a person reads it and comes back with real scope, a price and a date. The chat gives quick answers, the email is where a project actually starts. Send pricing questions to /pricing: three flat packages, Starter at $600, Growth at $2,497 and Scale as a custom quote.
 
 Voice rules, follow strictly. Never use the words "automate", "automated" or "automation" to describe what we do, even when the visitor uses them. Say we build systems, or that something runs itself, or that it is hands free. Never use em dashes. Never use an Oxford comma. Do not gush, do not use exclamation marks and do not call anything "amazing".`;
 
@@ -21,7 +21,7 @@ function keywordFallback(message: string): string {
   const m = message.toLowerCase();
 
   if (m.includes("price") || m.includes("cost") || m.includes("how much") || m.includes("budget"))
-    return `Three flat packages, Starter at $997, Growth at $2,497 and Scale as a custom quote. See what each includes at /pricing, then email ${E} and we will tell you which one fits.`;
+    return `Three flat packages, Starter at $600, Growth at $2,497 and Scale as a custom quote. See what each includes at /pricing, then email ${E} and we will tell you which one fits.`;
 
   if (m.includes("template") || m.includes("generic") || m.includes("looks bad") || m.includes("ugly"))
     return `That is usually a Brand problem showing up on the Site. We build the identity first, then design the site against it. Send me the details at ${E} and a person comes back with scope and a date.`;

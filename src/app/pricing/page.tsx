@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 const tiers = [
   {
     name: "Starter",
-    price: "$997",
+    price: "$600",
     tagline: "One thing, built properly.",
     best: false,
     blurb:

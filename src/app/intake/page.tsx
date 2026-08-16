@@ -4,14 +4,14 @@ import { useSearchParams } from "next/navigation";
 import { SITE } from "@/lib/site";
 
 const services = [
-  "Starter — $997",
+  "Starter — $600",
   "Growth — $2,497",
   "Scale — custom quote",
   "Not sure yet",
 ];
 
 const venmoAmounts: Record<string, number> = {
-  "Starter — $997": 997,
+  "Starter — $600": 600,
   "Growth — $2,497": 2497,
 };
 

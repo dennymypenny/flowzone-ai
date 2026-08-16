@@ -49,7 +49,7 @@ export default function Home() {
               { i: "📦", k: "What you get", v: "Brand, site and system", c: "#5B9BF9" },
               { i: "🙌", k: "How much you do", v: "Almost nothing. 100% done for you", c: "#2DD4BF" },
               { i: "⏱️", k: "How long", v: "Most builds live in 7 days", c: "#FBBF24" },
-              { i: "💵", k: "What it costs", v: "Flat, from $997, paid once", c: "#A78BFA" },
+              { i: "💵", k: "What it costs", v: "Flat, from $600, paid once", c: "#A78BFA" },
               { i: "🔑", k: "What you own", v: "All of it. Code, domain, accounts", c: "#34D399" },
             ].map((x) => (
               <div key={x.k} className="border-b border-r border-rule px-5 py-6">
