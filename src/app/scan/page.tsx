@@ -64,7 +64,7 @@ export default function ScanPage() {
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
             {deliverables.map((item) => (
-              <div key={item.title} className="border border-rule rounded-xl p-6">
+              <div key={item.title} className="rounded-2xl border border-rule rounded-xl p-6">
                 <div className="inline-block bg-paper-deep text-accent text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-wide">
                   {item.icon}
                 </div>

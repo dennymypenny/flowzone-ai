@@ -17,10 +17,10 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="fixed top-[3px] w-full bg-white border-b border-[#E8EEF7] z-50">
+    <nav className="fixed top-[3px] w-full glassbar z-50">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link href="/" aria-label="FlowZone AI, home">
-          <Wordmark />
+          <Wordmark tone="dark" />
         </Link>
 
         {/* Desktop */}
@@ -29,7 +29,7 @@ export default function Nav() {
             <Link
               key={l.href}
               href={l.href}
-              className="text-sm text-[#3F4A5C] hover:text-accent transition-colors"
+              className="text-sm text-ink-soft hover:text-ink transition-colors"
             >
               {l.label}
             </Link>
@@ -40,7 +40,7 @@ export default function Nav() {
         </div>
 
         <button
-          className="md:hidden p-2 text-[#0B1322]"
+          className="md:hidden p-2 text-ink"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
@@ -55,9 +55,9 @@ export default function Nav() {
       </div>
 
       {open && (
-        <div className="md:hidden border-t border-[#E8EEF7] bg-white px-6 py-5 flex flex-col gap-4">
+        <div className="md:hidden glassbar border-t border-rule px-6 py-5 flex flex-col gap-4">
           {LINKS.map((l) => (
-            <Link key={l.href} href={l.href} className="text-sm text-[#3F4A5C]" onClick={() => setOpen(false)}>
+            <Link key={l.href} href={l.href} className="text-sm text-ink-soft" onClick={() => setOpen(false)}>
               {l.label}
             </Link>
           ))}

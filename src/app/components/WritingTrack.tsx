@@ -271,7 +271,7 @@ export default function WritingTrack({ accent }: { accent: string }) {
               ["Spoken", `${readMins.toFixed(1)}m`],
               ["Parts", `${filled}/${piece.parts.length}`],
             ].map(([k, v]) => (
-              <div key={k} className="border border-rule p-3">
+              <div key={k} className="rounded-2xl border border-rule p-3">
                 <p className="text-[10px] uppercase tracking-label text-ink-mute mb-1">{k}</p>
                 <p className="font-display text-xl">{v}</p>
               </div>

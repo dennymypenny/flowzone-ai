@@ -160,7 +160,7 @@ export default function MemeMaker({
             />
           </div>
 
-          <div className="border border-rule overflow-hidden mb-3">
+          <div className="rounded-2xl border border-rule overflow-hidden mb-3">
             <canvas ref={canvasRef} className="w-full h-auto block" />
           </div>
 

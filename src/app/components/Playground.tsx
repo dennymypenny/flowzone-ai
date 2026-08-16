@@ -772,7 +772,7 @@ export default function Playground() {
           </div>
 
           {/* Applied preview */}
-          <div className="border border-rule overflow-hidden transition-colors duration-500" style={{ background: palette.bg }}>
+          <div className="rounded-2xl border border-rule overflow-hidden transition-colors duration-500" style={{ background: palette.bg }}>
             <div className="p-8">
               <div className="flex items-center gap-4 mb-8">
                 <svg viewBox="0 0 100 100" width="56" height="56" aria-label="Generated mark">

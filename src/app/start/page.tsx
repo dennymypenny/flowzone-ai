@@ -12,14 +12,24 @@ export const metadata: Metadata = {
 export default function Start() {
   return (
     <>
-      <section className="px-6 pt-20 pb-14">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex items-center justify-between border-b border-rule pb-4 mb-12">
-            <p className="label">Flow Mode</p>
-            <p className="label hidden sm:block">Free · No signup · Saves as you go</p>
+      <section className="relative overflow-hidden px-6 pt-24 pb-14">
+        <div className="absolute inset-0 aurora drift pointer-events-none" />
+        <div className="absolute inset-0 gridlight pointer-events-none" />
+        <div className="relative max-w-6xl mx-auto">
+          <div className="flex flex-wrap items-center gap-3 mb-10">
+            <p className="chip">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-60" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
+              </span>
+              Flow Mode
+            </p>
+            <p className="chip hidden sm:inline-flex">Free · No signup · Saves as you go</p>
           </div>
           <h1 className="display text-5xl md:text-8xl max-w-4xl">
-            Enter Flow Mode.
+            <span className="text-gradient-white">Enter</span>{" "}
+            <span className="text-gradient">Flow Mode</span>
+            <span className="text-gradient-white">.</span>
           </h1>
           <p className="lede max-w-reading mt-10">
             Most people know they want something and cannot describe it yet. That is
@@ -72,7 +82,7 @@ export default function Start() {
                 b: "Download it as an image or a text file at the end. It is your document about your idea.",
               },
             ].map((x) => (
-              <div key={x.t} className="panel p-7">
+              <div key={x.t} className="panel panel-lift p-7">
                 <span className="block text-2xl mb-4 leading-none">{x.i}</span>
                 <p
                   className="text-[11px] font-medium uppercase tracking-label mb-3"

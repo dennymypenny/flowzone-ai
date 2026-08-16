@@ -15,16 +15,28 @@ export default function Home() {
     <>
       {/* ---------- Hero ---------- */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 aurora pointer-events-none" />
+        <div className="absolute inset-0 aurora drift pointer-events-none" />
+        <div className="absolute inset-0 gridlight pointer-events-none" />
         {/* The mark, explained: points scatter, connect, resolve, then flow on. */}
         <NodeFilm />
 
         <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-20 md:pt-32 md:pb-28">
 
+          <p className="chip mb-8">
+            <svg width="26" height="10" viewBox="0 0 58 18" fill="none" aria-hidden>
+              <line x1="10.5" y1="9" x2="23.5" y2="9" stroke="#DDEEFB" strokeWidth="1.6" />
+              <line x1="34.5" y1="9" x2="46.5" y2="9" stroke="#DDEEFB" strokeWidth="1.6" />
+              <circle cx="6" cy="9" r="5.6" fill="#4C7BE8" />
+              <circle cx="29" cy="9" r="5.6" fill="#5B9BF9" />
+              <circle cx="52" cy="9" r="5.6" fill="#C6E4F8" />
+            </svg>
+            Brand · Site · System, one studio
+          </p>
+
           <h1 className="display text-[3rem] sm:text-6xl md:text-[5.25rem] max-w-4xl">
-            You imagine it.
+            <span className="text-gradient-white">You imagine it.</span>
             <br />
-            We get it <span className="text-accent">moving</span>.
+            We get it <span className="text-gradient">moving</span>.
           </h1>
 
           <p className="text-xl md:text-2xl text-ink leading-snug max-w-3xl mt-8 font-light">
@@ -48,7 +60,7 @@ export default function Home() {
           </div>
 
           {/* Value at a glance */}
-          <div className="mt-16 grid grid-cols-2 lg:grid-cols-5 border-t border-l border-rule">
+          <div className="mt-16 grid grid-cols-2 lg:grid-cols-5 gap-3">
             {[
               { i: "📦", k: "What you get", v: "Brand, site and system", c: "#5B9BF9" },
               { i: "🙌", k: "How much you do", v: "Almost nothing. 100% done for you", c: "#2DD4BF" },
@@ -56,7 +68,11 @@ export default function Home() {
               { i: "💵", k: "What it costs", v: "Flat, from $600, paid once", c: "#A78BFA" },
               { i: "🔑", k: "What you own", v: "All of it. Code, domain, accounts", c: "#34D399" },
             ].map((x) => (
-              <div key={x.k} className="border-b border-r border-rule px-5 py-6">
+              <div key={x.k} className="panel panel-lift relative overflow-hidden px-5 py-6">
+                <span
+                  className="absolute -top-8 left-1/2 -translate-x-1/2 w-24 h-16 rounded-full blur-2xl opacity-25 pointer-events-none"
+                  style={{ background: x.c }}
+                />
                 <span className="block text-lg mb-3 leading-none">{x.i}</span>
                 <p
                   className="text-[11px] font-medium uppercase tracking-label mb-2"
@@ -97,7 +113,7 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-4">
             {PILLARS.map((p) => (
-              <div key={p.name} className="panel p-7 flex flex-col relative overflow-hidden">
+              <div key={p.name} className="panel panel-lift p-7 flex flex-col relative overflow-hidden">
                 <span
                   className="absolute top-0 left-0 h-[3px] w-full"
                   style={{ background: p.color }}
@@ -152,7 +168,7 @@ export default function Home() {
               </p>
             </div>
             <div className="md:col-span-5">
-              <div className="border border-rule p-6">
+              <div className="rounded-2xl border border-rule p-6">
                 <p className="label mb-4">All of it, done for you</p>
                 <p className="text-sm text-ink-soft leading-relaxed font-light">
                   You are not briefing a team, reviewing tickets or chasing a
@@ -274,7 +290,7 @@ export default function Home() {
           </div>
 
           <Link href="/work" className="group block">
-            <div className="overflow-hidden border border-[#DCE5F2] shadow-[0_30px_70px_-30px_rgba(11,19,34,0.45)]">
+            <div className="overflow-hidden rounded-2xl border border-[#DCE5F2] shadow-[0_30px_70px_-30px_rgba(11,19,34,0.45)]">
               <img
                 src="/assets/crg-hero.jpg"
                 alt="CardsRG storefront homepage, dark with the headline Rip. Pull. Collect."
@@ -372,7 +388,7 @@ export default function Home() {
                 you: "Approve it",
               },
             ].map((x) => (
-              <div key={x.step} className="panel p-6 flex flex-col">
+              <div key={x.step} className="panel panel-lift p-6 flex flex-col">
                 <span className="block text-2xl mb-4 leading-none">{x.i}</span>
                 <div className="flex items-baseline gap-2 mb-3">
                   <p

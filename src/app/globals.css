@@ -7,6 +7,8 @@
 :root {
   --paper: #080D18;
   --ink: #F1F3F7;
+  --radius-panel: 18px;
+  --radius-control: 11px;
   color-scheme: dark;
 }
 
@@ -29,12 +31,13 @@ body {
   color: #080D18;
 }
 
-/* Square edges everywhere. No pills, no rounded corners.
-   SVG shapes are untouched, so the logo dots stay round. */
-*,
-*::before,
-*::after {
-  border-radius: 0 !important;
+/* Soft geometry. Controls and media default to gently rounded corners,
+   panels get their radius from the component classes below. */
+select,
+input,
+textarea,
+button {
+  border-radius: var(--radius-control);
 }
 
 @layer components {
@@ -51,6 +54,7 @@ body {
     display: inline-block;
     width: 16px;
     height: 2px;
+    border-radius: 2px;
     margin-right: 10px;
     vertical-align: middle;
     background: linear-gradient(90deg, #1E3A8A, #5B9BF9, #C6E4F8);
@@ -64,40 +68,133 @@ body {
     @apply text-lg md:text-xl text-ink-soft leading-[1.65] font-light;
   }
 
-  .btn {
-    @apply inline-flex items-center justify-center gap-2 text-sm font-medium px-6 py-3 transition-colors duration-200;
-  }
-  .btn-primary {
-    @apply btn bg-accent text-[#08111F] hover:bg-accent-light;
-  }
-  .btn-ghost {
-    @apply btn border border-rule text-ink hover:bg-raised hover:border-ink/25;
-  }
-  .btn-onink {
-    @apply btn bg-paper text-ink hover:bg-accent hover:text-[#08111F];
+  /* Small pill chip, the quiet badge language funded products use */
+  .chip {
+    @apply inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-label text-ink-soft;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+    backdrop-filter: blur(8px);
   }
 
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 text-sm font-medium px-6 py-3;
+    border-radius: var(--radius-control);
+    transition:
+      background-color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .btn-primary {
+    @apply btn text-white;
+    background: linear-gradient(180deg, #6EA0FF 0%, #4478F2 100%);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      0 10px 30px -10px rgba(91, 140, 255, 0.65);
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      0 16px 40px -12px rgba(91, 140, 255, 0.85);
+  }
+  .btn-ghost {
+    @apply btn text-ink;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+  }
+  .btn-ghost:hover {
+    border-color: rgba(168, 196, 255, 0.45);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+    transform: translateY(-1px);
+  }
+  .btn-onink {
+    @apply btn bg-paper text-ink;
+  }
+  .btn-onink:hover {
+    background: #4478F2;
+    color: #ffffff;
+  }
+
+  /* Glass panel. Layered light instead of flat fill. */
   .panel {
-    @apply border border-rule;
-    background-image: linear-gradient(to bottom, #16223A 0%, #101A2C 58%);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: var(--radius-panel);
+    background:
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0.018) 42%, rgba(255, 255, 255, 0.008) 100%),
+      linear-gradient(to bottom, #131F35 0%, #0E1728 62%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.07),
+      0 24px 60px -28px rgba(0, 0, 0, 0.8);
+    transition:
+      border-color 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .panel:hover {
+    border-color: rgba(139, 173, 255, 0.28);
+  }
+  .panel-lift:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.09),
+      0 34px 70px -28px rgba(0, 0, 0, 0.85),
+      0 0 50px -18px rgba(91, 140, 255, 0.35);
+  }
+
+  /* Dark glass bar for the nav */
+  .glassbar {
+    background: rgba(8, 13, 24, 0.72);
+    backdrop-filter: blur(18px) saturate(1.4);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 }
 
 @layer utilities {
-  /* Wide, soft ambient light. Open and warm rather than technical.
-     No grid, no boxes, no texture in the background. */
+  /* Gradient headline text */
+  .text-gradient {
+    background: linear-gradient(115deg, #A8C4FF 0%, #5B8CFF 48%, #C6E4F8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gradient-white {
+    background: linear-gradient(180deg, #FFFFFF 20%, rgba(214, 226, 248, 0.72) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Wide, soft ambient light. Open and warm rather than technical. */
   .aurora {
     background-image:
-      radial-gradient(80rem 46rem at 8% -20%, rgba(91, 155, 249, 0.26), transparent 66%),
-      radial-gradient(64rem 40rem at 92% -14%, rgba(30, 58, 138, 0.42), transparent 66%),
+      radial-gradient(80rem 46rem at 8% -20%, rgba(91, 155, 249, 0.28), transparent 66%),
+      radial-gradient(64rem 40rem at 92% -14%, rgba(76, 55, 205, 0.30), transparent 66%),
+      radial-gradient(52rem 30rem at 55% 8%, rgba(45, 122, 249, 0.12), transparent 62%),
       radial-gradient(70rem 34rem at 50% 118%, rgba(91, 155, 249, 0.11), transparent 68%);
   }
 
   /* Gentler version for section bands */
   .glow {
     background-image:
-      radial-gradient(70rem 34rem at 20% -30%, rgba(91, 155, 249, 0.16), transparent 66%),
-      radial-gradient(56rem 30rem at 84% -18%, rgba(30, 58, 138, 0.30), transparent 66%);
+      radial-gradient(70rem 34rem at 20% -30%, rgba(91, 155, 249, 0.18), transparent 66%),
+      radial-gradient(56rem 30rem at 84% -18%, rgba(76, 55, 205, 0.22), transparent 66%);
+  }
+
+  /* Hairline grid, faded out fast. Barely there, pure depth. */
+  .gridlight {
+    background-image:
+      linear-gradient(rgba(148, 178, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 178, 255, 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(70rem 34rem at 50% 0%, black 20%, transparent 78%);
+    -webkit-mask-image: radial-gradient(70rem 34rem at 50% 0%, black 20%, transparent 78%);
   }
 
   .fade-b {
@@ -113,11 +210,11 @@ body {
 
 @layer utilities {
 
-
   /* The connector between the three parts, charging left to right */
   .flowline {
     position: relative;
     overflow: hidden;
+    border-radius: 2px;
     background: linear-gradient(90deg, #1E3A8A, #5B9BF9, #C6E4F8);
     opacity: 0.5;
   }
@@ -144,6 +241,15 @@ body {
     18% { opacity: 1; transform: scale(1.16); }
   }
 
+  /* A slow drifting glow for hero backdrops */
+  .drift {
+    animation: drift 14s ease-in-out infinite alternate;
+  }
+  @keyframes drift {
+    from { transform: translate3d(-2%, 0, 0) scale(1); opacity: 0.85; }
+    to { transform: translate3d(2%, 3%, 0) scale(1.06); opacity: 1; }
+  }
+
   /* Arrows lean forward on hover */
   .btn .arrow {
     transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
@@ -154,12 +260,11 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .flowline::after,
+  .flowline::after,
   .pulse-1,
   .pulse-2,
-  .pulse-3 {
+  .pulse-3,
+  .drift {
     animation: none !important;
   }
 }
-
-

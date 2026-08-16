@@ -591,7 +591,7 @@ export default function WorkSession() {
 
         <Tilt3D>
         <div
-          className="border border-rule overflow-hidden transition-colors duration-700"
+          className="rounded-2xl border border-rule overflow-hidden transition-colors duration-700"
           style={{
             background: palette.bg,
             transformStyle: "preserve-3d",
@@ -739,7 +739,7 @@ export default function WorkSession() {
         </Tilt3D>
 
         {/* the palette strip */}
-        <div className="border border-rule border-t-0 px-4 py-3 flex items-center justify-between gap-3">
+        <div className="rounded-2xl border border-rule border-t-0 px-4 py-3 flex items-center justify-between gap-3">
           <p className="text-[11px] font-medium uppercase tracking-label text-ink-mute">
             {palette.name}
           </p>
@@ -1070,7 +1070,7 @@ export default function WorkSession() {
               ))}
             </div>
 
-            <div className="border border-rule p-6 mb-8">
+            <div className="rounded-2xl border border-rule p-6 mb-8">
               <div className="flex items-center gap-2.5 mb-3">
                 <span className="w-1.5 h-1.5 bg-accent block" />
                 <p className="text-[11px] font-medium uppercase tracking-label text-ink-mute">

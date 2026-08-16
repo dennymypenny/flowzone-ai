@@ -76,30 +76,47 @@ export default function StartModes() {
 
   return (
     <div>
-      <div className="panel p-5 mb-6 relative overflow-hidden">
-        <span
-          className="absolute top-0 left-0 h-[3px] w-full transition-colors duration-500"
-          style={{ background: current.accent }}
-        />
-        <div className="grid sm:grid-cols-12 gap-4 items-center">
-          <div className="sm:col-span-5">
-            <p className="label mb-2">Working on</p>
-            <select
-              value={track}
-              onChange={(e) => pick(e.target.value)}
-              className="w-full bg-paper-deep text-ink border border-rule px-4 py-3 text-sm outline-none focus:border-accent transition-colors"
-            >
-              {TRACKS.map((t) => (
-                <option key={t.id} value={t.id}>
-                  {t.icon}  {t.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="sm:col-span-7">
-            <p className="font-display text-lg leading-tight mb-1">{current.name}</p>
-            <p className="text-sm text-ink-soft font-light leading-relaxed">{current.blurb}</p>
-          </div>
+      <div className="mb-8">
+        <p className="label mb-4">Pick your flow</p>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3" role="tablist" aria-label="Flow Mode tracks">
+          {TRACKS.map((t) => {
+            const active = t.id === track;
+            return (
+              <button
+                key={t.id}
+                role="tab"
+                aria-selected={active}
+                onClick={() => pick(t.id)}
+                className="relative overflow-hidden text-left p-5 rounded-2xl border transition-all duration-300"
+                style={{
+                  borderColor: active ? `${t.accent}66` : "rgba(255,255,255,0.09)",
+                  background: active
+                    ? `linear-gradient(180deg, ${t.accent}1f 0%, rgba(255,255,255,0.02) 100%), linear-gradient(to bottom, #131F35, #0E1728)`
+                    : "linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))",
+                  boxShadow: active
+                    ? `inset 0 1px 0 rgba(255,255,255,0.12), 0 18px 44px -18px ${t.accent}59`
+                    : "inset 0 1px 0 rgba(255,255,255,0.05)",
+                }}
+              >
+                {active && (
+                  <span
+                    className="absolute -top-10 left-1/2 -translate-x-1/2 w-32 h-20 rounded-full blur-2xl opacity-30 pointer-events-none"
+                    style={{ background: t.accent }}
+                  />
+                )}
+                <span className="block text-2xl mb-3 leading-none">{t.icon}</span>
+                <span
+                  className="block font-display text-base leading-tight mb-1.5 transition-colors"
+                  style={{ color: active ? "#F1F3F7" : "#9AA7BE" }}
+                >
+                  {t.name}
+                </span>
+                <span className="block text-xs text-ink-mute font-light leading-relaxed">
+                  {t.blurb}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
