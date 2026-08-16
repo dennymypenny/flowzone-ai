@@ -5,6 +5,7 @@ import Wordmark from "@/components/Wordmark";
 import { SITE } from "@/lib/site";
 
 const LINKS = [
+  { href: "/start", label: "Work Session" },
   { href: "/work", label: "Work" },
   { href: "/services", label: "What We Build" },
   { href: "/how-we-work", label: "How We Work" },

@@ -4,6 +4,7 @@ import { SITE } from "@/lib/site";
 // Static routes, most important first. Blog slugs are appended below.
 const ROUTES: Array<[string, number, MetadataRoute.Sitemap[number]["changeFrequency"]]> = [
   ["", 1.0, "weekly"],
+  ["/start", 0.9, "monthly"],
   ["/work", 0.9, "monthly"],
   ["/services", 0.9, "monthly"],
   ["/pricing", 0.9, "monthly"],

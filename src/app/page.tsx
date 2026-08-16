@@ -1,6 +1,6 @@
 import Link from "next/link";
 import ChatWidget from "@/app/components/ChatWidget";
-import IdeaPad from "@/app/components/IdeaPad";
+import WorkSession from "@/app/components/WorkSession";
 import { SITE, PILLARS } from "@/lib/site";
 
 export const metadata = {
@@ -516,7 +516,7 @@ export default function Home() {
           <ChatWidget />
 
           <div className="mt-4">
-            <IdeaPad />
+            <WorkSession />
           </div>
         </div>
       </section>
