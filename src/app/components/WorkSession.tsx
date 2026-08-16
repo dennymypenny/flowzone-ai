@@ -1,6 +1,10 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { SITE } from "@/lib/site";
+import { hashSeed, renderStill } from "@/lib/generative";
+import GenerativeField from "@/app/components/GenerativeField";
+import VoiceSession from "@/app/components/VoiceSession";
+import Tilt3D from "@/app/components/Tilt3D";
 
 /**
  * A guided session that turns a vague intention into a real brief.
@@ -188,6 +192,48 @@ const STEPS: Step[] = [
   },
 ];
 
+/**
+ * A floor of suggestions, so no question is ever a blank box.
+ *
+ * The path supplies sharper prompts where it has them, and these fill the gaps.
+ * Someone should be able to finish this entire session by tapping, never typing
+ * a word, and still walk out with a brief that says something true. Minimum
+ * effort has to be a real option, not a worse one.
+ */
+const FALLBACK_CHIPS: Record<string, string[]> = {
+  what: [
+    "I know the feeling I want, not the words",
+    "It is a business I already run",
+    "It is an idea I have not started",
+    "Something I keep explaining badly",
+  ],
+  now: [
+    "Nothing yet, honestly",
+    "A logo I do not love",
+    "Social accounts only",
+    "An old site I have outgrown",
+  ],
+  who: [
+    "People like me",
+    "Local customers",
+    "Other businesses",
+    "Not sure yet, that is the problem",
+  ],
+  feel: [
+    "Premium and quiet",
+    "Loud and fun",
+    "Warm and human",
+    "Serious and technical",
+    "Nostalgic",
+  ],
+  win: [
+    "It exists and looks real",
+    "People take me seriously",
+    "First paying customer",
+    "I stop doing this by hand",
+  ],
+};
+
 const RANKS = [
   { label: "Not started", color: "#647089" },
   { label: "A sketch", color: "#4C7BE8" },
@@ -258,6 +304,12 @@ export default function WorkSession() {
   const onPathPick = step === 1;
   const onSummary = step > STEPS.length + 1;
   const current = step >= 2 && step <= STEPS.length + 1 ? STEPS[step - 2] : null;
+
+  // The artwork's fingerprint. Built from what they have actually said, so it
+  // is theirs, it is reproducible, and it visibly changes as they go.
+  const fieldSeed = `${pathId || "none"}|${palette.id}|${projectName}|${STEPS.map(
+    (s) => (answers[s.id] || "").length
+  ).join(",")}`;
 
   const stamp = () =>
     new Date().toLocaleString(undefined, {
@@ -342,7 +394,7 @@ export default function WorkSession() {
       ).forEach((l) => blocks.push({ t: l, kind: "body", color: "#C7CFDD" }));
     });
 
-    const headH = 268;
+    const headH = 452;
     const footH = 132;
     const bodyH = blocks.reduce((h, b) => h + (b.kind === "eyebrow" ? 58 : 40), 0);
 
@@ -354,6 +406,23 @@ export default function WorkSession() {
 
     ctx.fillStyle = "#080D18";
     ctx.fillRect(0, 0, c.width, c.height);
+
+    // The same field their session grew, rendered still, across the top. This
+    // is the part that makes the download theirs rather than a form printout.
+    renderStill(
+      ctx,
+      W,
+      240,
+      hashSeed(fieldSeed),
+      { bg: palette.bg, a: palette.a, b: palette.b, ink: palette.ink },
+      answered / STEPS.length
+    );
+    const fade = ctx.createLinearGradient(0, 120, 0, 240);
+    fade.addColorStop(0, "rgba(8,13,24,0)");
+    fade.addColorStop(1, "#080D18");
+    ctx.fillStyle = fade;
+    ctx.fillRect(0, 120, W, 120);
+
     const g = ctx.createLinearGradient(0, 0, W, 0);
     g.addColorStop(0, "#1E3A8A");
     g.addColorStop(0.5, "#5B9BF9");
@@ -364,7 +433,7 @@ export default function WorkSession() {
     ([["#1E3A8A", pad + 12], ["#5B9BF9", pad + 52], ["#C6E4F8", pad + 92]] as const).forEach(
       ([col, x]) => {
         ctx.beginPath();
-        ctx.arc(x, 84, 12, 0, Math.PI * 2);
+        ctx.arc(x, 292, 12, 0, Math.PI * 2);
         ctx.fillStyle = col;
         ctx.fill();
       }
@@ -372,10 +441,10 @@ export default function WorkSession() {
 
     ctx.fillStyle = "#F1F3F7";
     ctx.font = "600 52px Poppins, sans-serif";
-    ctx.fillText("Your brief", pad, 172);
+    ctx.fillText("Your brief", pad, 356);
     ctx.font = "300 24px Poppins, sans-serif";
     ctx.fillStyle = "#8B94A3";
-    ctx.fillText(path ? path.name : "Work session", pad, 212);
+    ctx.fillText(path ? path.name : "Work session", pad, 396);
 
     let y = headH;
     blocks.forEach((b) => {
@@ -449,7 +518,12 @@ export default function WorkSession() {
     }
   };
 
-  const chipsFor = (id: string) => (path && path.chips[id]) || [];
+  // Path prompts first, generic ones behind them, deduped. Never an empty list.
+  const chipsFor = (id: string) => {
+    const fromPath = (path && path.chips[id]) || [];
+    const merged = [...fromPath, ...(FALLBACK_CHIPS[id] || [])];
+    return Array.from(new Set(merged)).slice(0, 6);
+  };
   const hintFor = (s: Step) => (path && path.focus[s.id]) || s.hint;
 
 
@@ -468,9 +542,14 @@ export default function WorkSession() {
           </p>
         </div>
 
+        <Tilt3D>
         <div
           className="border border-rule overflow-hidden transition-colors duration-700"
-          style={{ background: palette.bg }}
+          style={{
+            background: palette.bg,
+            transformStyle: "preserve-3d",
+            boxShadow: "0 30px 60px -25px rgba(0,0,0,.75)",
+          }}
         >
           {/* browser chrome */}
           <div
@@ -490,7 +569,17 @@ export default function WorkSession() {
             </span>
           </div>
 
-          <div className="p-6" style={{ minHeight: 300 }}>
+          {/* The hero image, generated from this session and nobody else's */}
+          <div style={{ transform: "translateZ(14px)" }}>
+            <GenerativeField
+              seed={fieldSeed}
+              colors={{ bg: palette.bg, a: palette.a, b: palette.b, ink: palette.ink }}
+              warp={answered / STEPS.length}
+              height={132}
+            />
+          </div>
+
+          <div className="p-6" style={{ minHeight: 240, transform: "translateZ(26px)" }}>
             {/* the mark, drawn from the palette */}
             <div className="flex items-center gap-2.5 mb-6">
               <span className="w-3.5 h-3.5 block" style={{ background: palette.a }} />
@@ -600,6 +689,7 @@ export default function WorkSession() {
             )}
           </div>
         </div>
+        </Tilt3D>
 
         {/* the palette strip */}
         <div className="border border-rule border-t-0 px-4 py-3 flex items-center justify-between gap-3">
@@ -618,8 +708,9 @@ export default function WorkSession() {
         </div>
 
         <p className="text-[11px] text-ink-mute font-light mt-3 leading-relaxed">
-          A sketch, not a promise. It moves as you answer, so you can see the idea
-          take a shape instead of only describing it.
+          A sketch, not a promise. The artwork at the top is generated from your
+          own answers, so nobody else has this one, and the currents reorganise
+          every time you answer another question.
         </p>
       </div>
     );
@@ -810,6 +901,10 @@ export default function WorkSession() {
             )}
 
             {chipsFor(current.id).length > 0 && (
+              <>
+              <p className="text-[11px] text-ink-mute font-light mb-2.5">
+                Tap what fits. You never have to type a word here.
+              </p>
               <div className="flex flex-wrap gap-2 mb-5">
                 {chipsFor(current.id).map((c) => (
                   <button
@@ -821,13 +916,22 @@ export default function WorkSession() {
                   </button>
                 ))}
               </div>
+              </>
             )}
+
+            <VoiceSession
+              question={current.q}
+              hint={hintFor(current)}
+              value={answers[current.id] || ""}
+              onTranscript={(next) => setAnswers({ ...answers, [current.id]: next })}
+              accent={current.color}
+            />
 
             <textarea
               rows={current.rows}
               value={answers[current.id] || ""}
               onChange={(e) => setAnswers({ ...answers, [current.id]: e.target.value })}
-              placeholder="In your own words..."
+              placeholder="In your own words, or press the mic and just say it..."
               className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule px-4 py-3 text-sm font-light leading-relaxed outline-none focus:border-accent transition-colors resize-none"
             />
 

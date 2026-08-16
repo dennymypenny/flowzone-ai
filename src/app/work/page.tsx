@@ -94,6 +94,141 @@ This is where the studio starts, and it started from something we
         </div>
       </section>
 
+      {/* ---------- Walkthrough: the thinking behind the mark ---------- */}
+      <section data-flow className="border-t border-rule px-6 py-24">
+        <div className="max-w-6xl mx-auto">
+          <p className="label mb-6">Walk through one decision at a time</p>
+          <div className="grid md:grid-cols-12 gap-10 mb-16">
+            <h2 className="md:col-span-7 display text-4xl md:text-5xl">
+              Anyone can show you
+              <br />
+              a finished logo.
+            </h2>
+            <p className="md:col-span-5 text-ink-soft font-light leading-relaxed self-end max-w-reading">
+              The finished thing tells you almost nothing. What decided it is the part
+              worth reading, so here is the CRG mark taken apart, one choice at a time,
+              including the ones we got wrong first.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-12 gap-10 items-start">
+            <div className="lg:col-span-5 lg:sticky lg:top-24">
+              <div className="panel overflow-hidden">
+                <img
+                  src="/assets/crg-hero.jpg"
+                  alt="The CRG shield mark in place on the CardsRG storefront"
+                  className="w-full h-auto"
+                />
+              </div>
+              <p className="text-[11px] text-ink-mute font-light mt-3 leading-relaxed">
+                The mark in the place it actually has to work: small, in a corner, next
+                to a menu, on top of a photograph. That is the real test, not a
+                presentation slide.
+              </p>
+            </div>
+
+            <div className="lg:col-span-7 space-y-10">
+              {[
+                {
+                  n: "01",
+                  c: "#4C7BE8",
+                  t: "A shield, because the category already speaks it",
+                  b: "Trading cards live inside sports crests, team badges and holo foil. A shield is not a clever idea, it is the shape the audience already reads as authority, and using the language your buyer already speaks beats being original at them.",
+                },
+                {
+                  n: "02",
+                  c: "#FF3D9A",
+                  t: "Two accents, not five",
+                  b: "Teal and magenta, and nothing else fighting them. Card culture is visually loud, so the mark had to hold its own against a photo of forty foil packs without joining the noise. Two colours far apart on the wheel do that. Five would have turned into mush at the size it actually gets used.",
+                },
+                {
+                  n: "03",
+                  c: "#38E1FF",
+                  t: "The crown earns its place",
+                  b: "It is not decoration. The business is built on grails, the one card everyone is chasing, so the crown is the promise restated at the top of the mark. Every element should be answering a question about the business. If it is only there because it looked good, it comes out.",
+                },
+                {
+                  n: "04",
+                  c: "#FBBF24",
+                  t: "Chrome that survives being shrunk",
+                  b: "The bevel and the inner glow read as premium at full size, but the mark spends its life at forty pixels in a browser tab. So the silhouette had to work in one flat colour first, and the shine got added on top. Build it the other way around and you get a logo that dies the moment it is small.",
+                },
+                {
+                  n: "05",
+                  c: "#34D399",
+                  t: "The subline does the explaining",
+                  b: "RIPS and GRAILS sits under the shield so the mark never has to explain itself. Three letters cannot tell a first-time visitor what the business does. Two words can, and they can be dropped when the audience knows you.",
+                },
+              ].map((x) => (
+                <div key={x.n} className="border-l-2 pl-6" style={{ borderLeftColor: x.c }}>
+                  <p
+                    className="text-[11px] font-medium uppercase tracking-label mb-2.5"
+                    style={{ color: x.c }}
+                  >
+                    {x.n}
+                  </p>
+                  <h3 className="font-display text-2xl leading-snug mb-3">{x.t}</h3>
+                  <p className="text-sm text-ink-soft font-light leading-relaxed">{x.b}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* The one that was wrong first */}
+          <div className="mt-20 panel p-8 md:p-10">
+            <div className="grid md:grid-cols-12 gap-10">
+              <div className="md:col-span-5">
+                <p className="label mb-4">And the one we got wrong first</p>
+                <h3 className="font-display text-3xl leading-snug mb-4">
+                  The thumbnail that did not work.
+                </h3>
+                <p className="text-sm text-ink-soft font-light leading-relaxed">
+                  Version one: two people behind a pile of packs against a bright sky.
+                  It looked fine and it performed badly, which is the most useful kind
+                  of failure because it is specific.
+                </p>
+              </div>
+              <div className="md:col-span-7 space-y-6">
+                {[
+                  {
+                    k: "What was wrong",
+                    c: "#FBBF24",
+                    v: "Half the frame was empty sky. On a phone, at the size a thumbnail is actually seen, the faces were smaller than a fingernail and the product was an unreadable smear along the bottom.",
+                  },
+                  {
+                    k: "What changed",
+                    c: "#34D399",
+                    v: "Faces scaled up until they carry the frame, product pushed into every remaining gap so the density itself is the message, sky deleted entirely. Same two people, same packs, same shoot. Only the decisions changed.",
+                  },
+                  {
+                    k: "The rule underneath it",
+                    c: "#5B9BF9",
+                    v: "Design for the size it gets viewed at, not the size you are working at. Almost every weak thumbnail, logo and hero image is a thing that was judged on a big screen and lives on a small one.",
+                  },
+                ].map((r) => (
+                  <div key={r.k} className="border-t border-rule pt-5">
+                    <p
+                      className="text-[11px] font-medium uppercase tracking-label mb-2"
+                      style={{ color: r.c }}
+                    >
+                      {r.k}
+                    </p>
+                    <p className="text-sm text-ink-soft font-light leading-relaxed max-w-reading">
+                      {r.v}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <p className="text-ink-soft font-light leading-relaxed max-w-reading mt-14">
+            This is the level every decision gets, on every build, whether or not
+            anybody ever asks. You are welcome to ask.
+          </p>
+        </div>
+      </section>
+
       {/* Honest note */}
       <section data-flow className="bg-paper-deep px-6 py-24">
         <div className="max-w-6xl mx-auto grid md:grid-cols-12 gap-10">
