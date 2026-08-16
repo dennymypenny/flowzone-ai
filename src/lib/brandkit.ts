@@ -64,6 +64,56 @@ export function contrast(a: string, b: string): number {
   return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
 }
 
+/** Hex back to HSL, so a colour someone picked by hand can still be varied. */
+export function hexToHsl(hex: string): { h: number; s: number; l: number } {
+  const v = hex.replace("#", "");
+  const r = parseInt(v.slice(0, 2), 16) / 255;
+  const g = parseInt(v.slice(2, 4), 16) / 255;
+  const b = parseInt(v.slice(4, 6), 16) / 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  let h = 0;
+  let sat = 0;
+  if (max !== min) {
+    const d = max - min;
+    sat = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) * 60;
+    else if (max === g) h = ((b - r) / d + 2) * 60;
+    else h = ((r - g) / d + 4) * 60;
+  }
+  return { h, s: sat, l };
+}
+
+/**
+ * Neighbours of a colour worth clicking.
+ *
+ * Rerolling is fun but blunt: it throws away the thing you were nearly happy
+ * with. These are the small moves someone actually wants next, a bit lighter, a
+ * bit richer, a step around the wheel, so a colour can be nudged instead of
+ * gambled on.
+ */
+export function variants(hex: string, count = 12): string[] {
+  const { h, s, l } = hexToHsl(hex);
+  const moves: Array<[number, number, number]> = [
+    [0, 0, 0.16], [0, 0, 0.08], [0, 0, -0.08], [0, 0, -0.16],
+    [0, 0.18, 0], [0, -0.18, 0], [0, 0.32, 0.04], [0, -0.3, -0.02],
+    [16, 0.04, 0], [-16, 0.04, 0], [34, 0, 0.03], [-34, 0, 0.03],
+    [180, 0.05, 0], [120, 0.05, 0],
+  ];
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const [dh, ds, dl] of moves) {
+    const c = hsl(h + dh, Math.max(0, Math.min(1, s + ds)), Math.max(0.03, Math.min(0.97, l + dl)));
+    if (c !== hex.toUpperCase() && !seen.has(c)) {
+      seen.add(c);
+      out.push(c);
+    }
+    if (out.length >= count) break;
+  }
+  return out;
+}
+
 /**
  * Build a palette from the sliders. The sliders genuinely drive it: pushing
  * energy up saturates and separates the accents, pushing era up moves from
@@ -407,3 +457,223 @@ export function completeness(state: {
 }
 
 export { hashSeed };
+
+/* --------------------------------------------------------------- lockups -- */
+
+/**
+ * Logo templates, in the sense a designer means it: a composed lockup, not an
+ * icon on its own.
+ *
+ * An icon is about a fifth of a logo. What people actually need is the mark,
+ * the name and the line arranged with real spacing, real alignment and a real
+ * type hierarchy, in the handful of layouts a brand genuinely uses: horizontal
+ * for a site header, stacked for an avatar, a badge for a stamp, a wordmark for
+ * when the icon is too small to survive.
+ *
+ * Each one returns a complete standalone SVG at its own proportions.
+ */
+
+export type Lockup = {
+  id: string;
+  name: string;
+  note: string;
+  w: number;
+  h: number;
+  build: (a: {
+    mark: Mark;
+    p: Palette;
+    name: string;
+    line: string;
+    initials: string;
+    display: string;
+    body: string;
+  }) => string;
+};
+
+const esc = (t: string) =>
+  t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+const FONT = "Poppins, Helvetica Neue, Helvetica, Arial, sans-serif";
+
+/** Drops the 100x100 mark into a lockup at an arbitrary place and size. */
+const place = (mark: Mark, p: Palette, initials: string, x: number, y: number, size: number) =>
+  `<g transform="translate(${x} ${y}) scale(${size / 100})">${mark.render(p, initials).body}</g>`;
+
+export const LOCKUPS: Lockup[] = [
+  {
+    id: "horizontal",
+    name: "Horizontal",
+    note: "The one your site header wants.",
+    w: 520,
+    h: 150,
+    build: ({ mark, p, name, line, initials, display, body }) => `
+      ${place(mark, p, initials, 24, 25, 100)}
+      <text x="146" y="72" font-family="${FONT}" font-size="40" font-weight="${display}" fill="${p.ink}" letter-spacing="-0.8">${esc(name)}</text>
+      ${line ? `<text x="148" y="99" font-family="${FONT}" font-size="15" font-weight="${body}" fill="${p.ink}" opacity="0.6">${esc(line)}</text>` : ""}`,
+  },
+  {
+    id: "stacked",
+    name: "Stacked",
+    note: "Avatars, app icons, anything square.",
+    w: 380,
+    h: 380,
+    build: ({ mark, p, name, line, initials, display, body }) => `
+      ${place(mark, p, initials, 130, 58, 120)}
+      <text x="190" y="238" text-anchor="middle" font-family="${FONT}" font-size="40" font-weight="${display}" fill="${p.ink}" letter-spacing="-0.8">${esc(name)}</text>
+      ${line ? `<text x="190" y="270" text-anchor="middle" font-family="${FONT}" font-size="15" font-weight="${body}" fill="${p.ink}" opacity="0.6">${esc(line)}</text>` : ""}
+      <rect x="150" y="292" width="80" height="2" fill="${p.a}"/>`,
+  },
+  {
+    id: "badge",
+    name: "Badge",
+    note: "A stamp. Good on packaging and merch.",
+    w: 380,
+    h: 380,
+    build: ({ mark, p, name, initials, display }) => `
+      <circle cx="190" cy="190" r="168" fill="none" stroke="${p.a}" stroke-width="3"/>
+      <circle cx="190" cy="190" r="152" fill="none" stroke="${p.muted}" stroke-width="1"/>
+      ${place(mark, p, initials, 135, 108, 110)}
+      <text x="190" y="262" text-anchor="middle" font-family="${FONT}" font-size="30" font-weight="${display}" fill="${p.ink}" letter-spacing="1">${esc(name.toUpperCase())}</text>
+      <rect x="160" y="278" width="60" height="2" fill="${p.b}"/>
+      <text x="190" y="306" text-anchor="middle" font-family="${FONT}" font-size="13" font-weight="500" fill="${p.ink}" opacity="0.55" letter-spacing="4">EST. ${new Date().getFullYear()}</text>`,
+  },
+  {
+    id: "wordmark",
+    name: "Wordmark",
+    note: "No icon. For when it has to survive being tiny.",
+    w: 560,
+    h: 150,
+    build: ({ p, name, line, display, body }) => `
+      <rect x="30" y="40" width="4" height="66" fill="${p.a}"/>
+      <text x="54" y="80" font-family="${FONT}" font-size="46" font-weight="${display}" fill="${p.ink}" letter-spacing="-1">${esc(name)}</text>
+      ${line ? `<text x="56" y="106" font-family="${FONT}" font-size="15" font-weight="${body}" fill="${p.ink}" opacity="0.6" letter-spacing="1">${esc(line)}</text>` : ""}`,
+  },
+  {
+    id: "block",
+    name: "Colour block",
+    note: "Loud. Works on a shirt or a sticker.",
+    w: 520,
+    h: 190,
+    build: ({ mark, p, name, line, initials, display, body }) => `
+      <rect x="0" y="0" width="150" height="190" fill="${p.a}"/>
+      ${place(mark, p, initials, 30, 45, 92)}
+      <text x="182" y="86" font-family="${FONT}" font-size="40" font-weight="${display}" fill="${p.ink}" letter-spacing="-0.8">${esc(name)}</text>
+      ${line ? `<text x="184" y="116" font-family="${FONT}" font-size="15" font-weight="${body}" fill="${p.ink}" opacity="0.6">${esc(line)}</text>` : ""}
+      <rect x="182" y="134" width="46" height="3" fill="${p.b}"/>`,
+  },
+  {
+    id: "framed",
+    name: "Framed",
+    note: "Formal. Certificates, letterheads, footers.",
+    w: 480,
+    h: 260,
+    build: ({ mark, p, name, line, initials, display, body }) => `
+      <rect x="16" y="16" width="448" height="228" fill="none" stroke="${p.muted}" stroke-width="2"/>
+      <rect x="26" y="26" width="428" height="208" fill="none" stroke="${p.a}" stroke-width="1"/>
+      ${place(mark, p, initials, 205, 52, 70)}
+      <text x="240" y="164" text-anchor="middle" font-family="${FONT}" font-size="34" font-weight="${display}" fill="${p.ink}" letter-spacing="-0.5">${esc(name)}</text>
+      ${line ? `<text x="240" y="192" text-anchor="middle" font-family="${FONT}" font-size="14" font-weight="${body}" fill="${p.ink}" opacity="0.6" letter-spacing="2">${esc(line.toUpperCase())}</text>` : ""}`,
+  },
+];
+
+/** A finished, downloadable lockup file. */
+export function lockupSVG(
+  lockup: Lockup,
+  mark: Mark,
+  p: Palette,
+  name: string,
+  line: string,
+  initials: string,
+  display: string,
+  body: string,
+  bg = true
+): string {
+  const inner = lockup.build({
+    mark,
+    p,
+    name: name.trim() || "Your Thing",
+    line: line.trim(),
+    initials: initials || "YT",
+    display,
+    body,
+  });
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${lockup.w} ${lockup.h}" width="${lockup.w}" height="${lockup.h}">
+  <defs>${mark.render(p, initials || "YT").defs}</defs>
+${bg ? `  <rect width="${lockup.w}" height="${lockup.h}" fill="${p.bg}"/>` : ""}
+${inner}
+</svg>`;
+}
+
+/* ------------------------------------------------------------ icon marks -- */
+
+import { ICONS, type Icon } from "@/lib/icons";
+
+export { ICONS };
+export type { Icon };
+
+export type Container = { id: string; name: string };
+
+export const CONTAINERS: Container[] = [
+  { id: "bare", name: "Bare" },
+  { id: "circle", name: "Circle" },
+  { id: "block", name: "Block" },
+  { id: "shield", name: "Shield" },
+  { id: "ring", name: "Ring" },
+  { id: "hex", name: "Hex" },
+];
+
+/**
+ * Wraps a drawn icon in a container and lights it like an object.
+ *
+ * The container decides whether the icon is knocked out of a solid metal face
+ * or drawn in metal on open ground, and the stroke colour follows from that, so
+ * the mark stays legible instead of gradient-on-gradient mush.
+ */
+export function iconMark(icon: Icon, containerId: string): Mark {
+  const uid = `i${icon.id.replace(/[^a-z0-9]/gi, "")}${containerId}`;
+  const solid = containerId === "circle" || containerId === "block" || containerId === "hex";
+
+  return {
+    id: `${icon.id}:${containerId}`,
+    name: icon.id.replace(/-/g, " "),
+    render: (p: Palette) => {
+      const strokeCol = solid ? p.bg : `url(#met${uid})`;
+      const glyph = `<g transform="translate(29 29) scale(1.75)" fill="none" stroke="${strokeCol}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${icon.d}</g>`;
+
+      let shell = "";
+      let gloss = "";
+      if (containerId === "circle") {
+        shell = `<circle cx="50" cy="50" r="40" fill="url(#met${uid})"/>`;
+        gloss = `<path d="M10 50 A40 40 0 0 1 90 50 Z" fill="url(#gloss${uid})"/>`;
+      } else if (containerId === "block") {
+        shell = `<rect x="10" y="10" width="80" height="80" fill="url(#met${uid})"/>`;
+        gloss = `<rect x="10" y="10" width="80" height="36" fill="url(#gloss${uid})"/>`;
+      } else if (containerId === "hex") {
+        shell = `<polygon points="50,7 87,28 87,72 50,93 13,72 13,28" fill="url(#met${uid})"/>`;
+        gloss = `<polygon points="50,7 87,28 87,44 50,30 13,44 13,28" fill="url(#gloss${uid})"/>`;
+      } else if (containerId === "shield") {
+        shell = `<path d="M50 6 L90 22 V52 C90 75 69 89 50 95 C31 89 10 75 10 52 V22 Z" fill="url(#met${uid})"/>
+                 <path d="M50 14 L82 27 V52 C82 70 65 82 50 87 C35 82 18 70 18 52 V27 Z" fill="${p.bg}" opacity="0.95"/>`;
+        gloss = `<path d="M50 6 L90 22 V38 C70 28 30 28 10 38 V22 Z" fill="url(#gloss${uid})"/>`;
+      } else if (containerId === "ring") {
+        shell = `<circle cx="50" cy="50" r="41" fill="none" stroke="url(#met${uid})" stroke-width="6"/>`;
+      }
+
+      return {
+        defs: surface(p, uid),
+        body: `${halo(uid)}
+          <g filter="url(#lift${uid})">${shell}${glyph}</g>
+          ${gloss}
+          ${grain(uid)}`,
+      };
+    },
+  };
+}
+
+/** Search the library by name. Nobody scrolls two hundred icons. */
+export function findIcons(q: string, limit = 60): Icon[] {
+  const term = q.trim().toLowerCase();
+  if (!term) return ICONS.slice(0, limit);
+  const hits = ICONS.filter((i) => i.id.includes(term));
+  return (hits.length ? hits : ICONS).slice(0, limit);
+}

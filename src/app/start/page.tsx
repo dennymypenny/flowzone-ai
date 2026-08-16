@@ -4,7 +4,7 @@ import StartModes from "@/app/components/StartModes";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Work session",
+  title: "Flow Mode",
   description:
     "Flow through the zone with your thoughts. Six moves, and you walk away holding a real brief for your idea, yours to keep whether you hire us or not.",
 };
@@ -15,13 +15,11 @@ export default function Start() {
       <section className="px-6 pt-20 pb-14">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between border-b border-rule pb-4 mb-12">
-            <p className="label">Work session</p>
+            <p className="label">Flow Mode</p>
             <p className="label hidden sm:block">Free · No signup · Saves as you go</p>
           </div>
           <h1 className="display text-5xl md:text-8xl max-w-4xl">
-            Flow through the zone
-            <br />
-            with your thoughts.
+            Enter Flow Mode.
           </h1>
           <p className="lede max-w-reading mt-10">
             Most people know they want something and cannot describe it yet. That is

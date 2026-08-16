@@ -31,18 +31,21 @@ type Shot = {
 
 export async function GET(req: NextRequest) {
   const q = (req.nextUrl.searchParams.get("q") || "").trim().slice(0, 120);
+  const kind = req.nextUrl.searchParams.get("kind") === "gif" ? "gif" : "photo";
   if (!q) {
     return NextResponse.json({ ok: false, error: "no query" }, { status: 400 });
   }
 
-  const url =
-    "https://api.openverse.org/v1/images/?" +
-    new URLSearchParams({
-      q,
-      page_size: "12",
-      license_type: "commercial,modification",
-      mature: "false",
-    }).toString();
+  const params: Record<string, string> = {
+    q,
+    page_size: "12",
+    license_type: "commercial,modification",
+    mature: "false",
+  };
+  // Same index, filtered to animated files. Keeps one code path for both tabs.
+  if (kind === "gif") params.extension = "gif";
+
+  const url = "https://api.openverse.org/v1/images/?" + new URLSearchParams(params).toString();
 
   try {
     const res = await fetch(url, {
@@ -72,7 +75,7 @@ export async function GET(req: NextRequest) {
         source: String(r.foreign_landing_url || r.source || ""),
       }));
 
-    return NextResponse.json({ ok: true, q, count: shots.length, shots });
+    return NextResponse.json({ ok: true, q, kind, count: shots.length, shots });
   } catch (e) {
     console.error("[FlowZone] moodboard failed:", e);
     return NextResponse.json(

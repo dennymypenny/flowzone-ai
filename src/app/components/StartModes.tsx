@@ -11,7 +11,7 @@ import WorkSession from "@/app/components/WorkSession";
  * them on question one, and forcing the second group to play with sliders wastes
  * their time.
  *
- * Playground leads, because it is the one that gives somebody an idea when they
+ * Flow Mode leads, because it is the one that gives somebody an idea when they
  * did not arrive with one, and both save separately so neither run is ever lost
  * by switching.
  */
@@ -21,14 +21,14 @@ const KEY = "flowzone.mode.v1";
 const MODES = [
   {
     id: "play",
-    icon: "🎮",
-    name: "Playground",
-    blurb: "Roll it until something clicks. Leave with real files.",
+    icon: "🌊",
+    name: "Flow Mode",
+    blurb: "Pick a flow and build. Leave holding real files.",
   },
   {
     id: "brief",
     icon: "🧭",
-    name: "Guided session",
+    name: "Brief Mode",
     blurb: "Six questions. Leave with a brief you can hand to anyone.",
   },
 ];
