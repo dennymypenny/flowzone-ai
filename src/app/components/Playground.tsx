@@ -77,14 +77,14 @@ type Shot = { id: string; url: string; thumb: string; title: string; creator: st
 type Quest = { id: string; icon: string; name: string; goal: string; xp: number; color: string };
 
 const QUESTS: Quest[] = [
-  { id: "name", icon: "✍️", name: "Name it", goal: "Give it a name and a line", xp: 20, color: "#5B9BF9" },
-  { id: "color", icon: "🎨", name: "Colour it", goal: "Pick or lock a colour on purpose", xp: 20, color: "#A78BFA" },
-  { id: "mark", icon: "🛡️", name: "Draw the mark", goal: "Choose a symbol and a shape", xp: 20, color: "#FBBF24" },
-  { id: "logo", icon: "📐", name: "Build the logo", goal: "Download a finished lockup", xp: 25, color: "#2DD4BF" },
-  { id: "refs", icon: "🔭", name: "Go looking", goal: "Pull real references off the web", xp: 15, color: "#34D399" },
+  { id: "name", icon: "✍️", name: "A name", goal: "What the thing is called", xp: 20, color: "#5B9BF9" },
+  { id: "purpose", icon: "🎯", name: "A purpose", goal: "The line that says what it is", xp: 20, color: "#A78BFA" },
+  { id: "color", icon: "🎨", name: "Colours", goal: "A palette you chose on purpose", xp: 20, color: "#FBBF24" },
+  { id: "mark", icon: "🛡️", name: "A symbol", goal: "The mark and the shape it sits in", xp: 20, color: "#2DD4BF" },
+  { id: "logo", icon: "📐", name: "A logo", goal: "The finished lockup, downloaded", xp: 20, color: "#34D399" },
 ];
 
-const LEVELS = ["Curious", "Sketching", "Deciding", "Designing", "Ready to build"];
+const LEVELS = ["Nothing yet", "A sketch", "Taking shape", "Nearly there", "Ready to hand over"];
 
 /**
  * Reference topics as a list to choose from rather than a blank search box.
@@ -214,7 +214,19 @@ export default function Playground() {
     (name.trim() || "Your Thing").split(/\s+/).map((w) => w[0]).join("").toUpperCase().slice(0, 3) || "YT";
   const rendered = mark.render(palette, initials);
 
-  const xp = QUESTS.reduce((n, q) => n + (done[q.id] ? q.xp : 0), 0);
+  /**
+   * Progress is measured from the kit itself, not from clicks. A bar that fills
+   * because you pressed things is a lie; this one only moves when the brand
+   * genuinely has another piece of itself.
+   */
+  const has: Record<string, boolean> = {
+    name: Boolean(name.trim()),
+    purpose: Boolean(line.trim()),
+    color: Object.keys(locks).length > 0 || Boolean(done.color),
+    mark: Boolean(done.mark) || iconId !== "sparkles",
+    logo: Boolean(done.logo),
+  };
+  const xp = QUESTS.reduce((n, q) => n + (has[q.id] ? q.xp : 0), 0);
   const levelIdx = Math.min(LEVELS.length - 1, Math.floor(xp / 25));
   const complete = (id: string) => setDone((d) => (d[id] ? d : { ...d, [id]: true }));
   const music = useAmbient(seed, vibe.energy, vibe.era, vibe.temp);
@@ -354,9 +366,11 @@ export default function Playground() {
             <span className="text-2xl leading-none">{flow.icon}</span>
             <div>
               <p className="text-[11px] font-medium uppercase tracking-label text-ink-mute">
-                {flow.name} · Level {levelIdx + 1} · {LEVELS[levelIdx]}
+                {flow.name} · {LEVELS[levelIdx]}
               </p>
-              <p className="font-display text-xl leading-tight">{xp} / 100 XP</p>
+              <p className="font-display text-xl leading-tight">
+                Your brand kit is {xp}% built
+              </p>
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -400,14 +414,14 @@ export default function Playground() {
               title={q.goal}
               className="inline-flex items-center gap-2 border px-3 py-1.5 text-[11px]"
               style={{
-                borderColor: done[q.id] ? q.color : "#1D2942",
-                color: done[q.id] ? q.color : "#647089",
-                background: done[q.id] ? `${q.color}0F` : "transparent",
+                borderColor: has[q.id] ? q.color : "#1D2942",
+                color: has[q.id] ? q.color : "#647089",
+                background: has[q.id] ? `${q.color}0F` : "transparent",
               }}
             >
               <span className="leading-none">{q.icon}</span>
               {q.name}
-              {done[q.id] && <span>✓</span>}
+              <span>{has[q.id] ? "✓" : "—"}</span>
             </span>
           ))}
         </div>
@@ -454,7 +468,7 @@ export default function Playground() {
             <input
               value={line}
               onChange={(e) => setLine(e.target.value)}
-              placeholder="One line that says what it is"
+              placeholder="What it is, in one line. This is the purpose."
               className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule px-4 py-3 text-sm font-light outline-none focus:border-accent transition-colors mb-3"
             />
             <div className="flex flex-wrap gap-2">
@@ -940,9 +954,9 @@ export default function Playground() {
             </div>
             {xp >= 100 && (
               <p className="text-sm mt-4 leading-relaxed" style={{ color: "#34D399" }}>
-                🏆 Every quest done. A name, colours chosen on purpose, a real vector
-                logo and references to argue from. That is further than most projects
-                get before anyone starts building.
+                🏆 That is a complete brand kit. A name, a purpose, colours you chose on
+                purpose and a real vector logo. Further than most projects get before
+                anybody starts building.
               </p>
             )}
           </div>

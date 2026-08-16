@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import MessageUs from "@/components/MessageUs";
+import ContactForm from "@/components/ContactForm";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -88,6 +89,12 @@ export default function Talk() {
               </Link>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section data-flow className="border-t border-rule px-6 py-20">
+        <div className="max-w-3xl mx-auto">
+          <ContactForm accent="#5B9BF9" />
         </div>
       </section>
 
