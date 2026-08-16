@@ -66,6 +66,7 @@ const src = (thumb: string) =>
 
 export default function IdeaLens() {
   const [q, setQ] = useState("");
+  const [clip, setClip] = useState<string>("");
   const [shots, setShots] = useState<Shot[]>([]);
   const [idx, setIdx] = useState(0);
   const [busy, setBusy] = useState(false);
@@ -88,11 +89,25 @@ export default function IdeaLens() {
     }
   }, []);
 
+  /** Immersion: real footage of the idea fills the room behind the page. */
+  const fetchClip = async (term: string) => {
+    try {
+      const res = await fetch(`/api/clips?q=${encodeURIComponent(term)}`);
+      const data = await res.json();
+      if (data.ok && data.clips?.length) {
+        setClip(data.clips[(Math.random() * data.clips.length) | 0].url);
+      }
+    } catch {
+      /* stillness is fine */
+    }
+  };
+
   const fetchShots = async (query: string) => {
     const term = query.trim();
     if (!term) return;
     setBusy(true);
     setFailed(false);
+    fetchClip(term);
     try {
       const res = await fetch(`/api/moodboard?q=${encodeURIComponent(term)}`);
       const data = await res.json();
@@ -188,10 +203,32 @@ export default function IdeaLens() {
     ? "outline outline-2 outline-accent outline-offset-8 rounded-2xl"
     : "";
 
+  /* The room fills with the idea. Sits behind everything, never blocks. */
+  const ambient = clip ? (
+    <div className="fixed inset-0 -z-10 pointer-events-none" aria-hidden>
+      <video
+        src={clip}
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full h-full object-cover opacity-[0.18]"
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(12,20,36,0.55) 0%, rgba(12,20,36,0.35) 40%, rgba(12,20,36,0.9) 100%)",
+        }}
+      />
+    </div>
+  ) : null;
+
   // Already picked: one quiet line, then the next move. Still a drop target.
   if (chosen && !shots.length) {
     return (
       <div {...dropProps} className={`relative transition-all ${dropRing}`}>
+        {ambient}
         {dragOver && (
           <p className="absolute -top-8 left-0 label text-accent">Drop them in</p>
         )}
@@ -239,6 +276,7 @@ export default function IdeaLens() {
 
   return (
     <div {...dropProps} className={`relative transition-all ${dropRing}`}>
+      {ambient}
       {dragOver && (
         <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-paper/80 pointer-events-none">
           <p className="font-display text-2xl text-accent">Drop your photos in 📥</p>
