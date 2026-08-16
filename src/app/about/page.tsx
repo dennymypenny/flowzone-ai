@@ -56,8 +56,8 @@ export default function About() {
             </p>
             <p>
               So that is what the studio is. The brand, the site, the storefront and the
-              systems behind it, designed, built, tested and live in days. Not three
-              vendors, three invoices and a lot of translation between them.
+              systems behind it, designed, built, tested and handed over working.
+              Not three vendors, three invoices and a lot of translation between them.
             </p>
             <p className="text-ink font-display text-2xl leading-snug pt-2">
               You bring the idea. We build the whole thing. You run the business.

@@ -143,8 +143,9 @@ export default function Services() {
               <p className="text-ink-soft font-light leading-relaxed max-w-reading">
                 A build is a fixed piece of work with a name, a price and a date. We
                 scope it before you pay, we do all of it, and we hand it over finished
-                and live. There is no discovery phase, no hourly meter and no invoice
-                at the end that is bigger than the number you agreed to.
+                and live. No discovery phase, no hourly meter, no invoice at the end
+                bigger than the number you agreed to. The date comes with your scope,
+                and it is the date we work to.
               </p>
             </div>
           </div>
@@ -163,7 +164,7 @@ export default function Services() {
                   "Social avatars, banners and email signature set up",
                   "A usage guide you can hand to a printer, a contractor or a new hire",
                 ],
-                takes: "About a week",
+                takes: "Starts the day you say go",
                 from: "From $600",
                 right: "You are launching, or your business has outgrown a logo you made in a hurry.",
               },
@@ -179,7 +180,7 @@ export default function Services() {
                   "Fast on a phone, tested before it ships",
                   "Live on your own domain, and you own the code",
                 ],
-                takes: "About a week",
+                takes: "Starts the day you say go",
                 from: "From $600",
                 right: "People are already finding you and the site is doing nothing to help.",
               },
@@ -195,7 +196,7 @@ export default function Services() {
                   "Inventory, categories and search set up",
                   "Order notifications and the admin you need to run it",
                 ],
-                takes: "One to two weeks",
+                takes: "Starts the day you say go",
                 from: "From $2,497",
                 right: "You are selling through DMs, a marketplace, or nothing at all yet.",
               },
@@ -211,7 +212,7 @@ export default function Services() {
                   "Weekly reporting that arrives without you asking",
                   "Connected to the tools you already use, not replacing them",
                 ],
-                takes: "About a week",
+                takes: "Starts the day you say go",
                 from: "From $600",
                 right: "Launch went fine and now you do the same three jobs by hand every day.",
               },
@@ -239,7 +240,7 @@ export default function Services() {
 
                 <div className="mt-auto border-t border-rule pt-5 grid grid-cols-2 gap-4">
                   <div>
-                    <p className="label mb-1.5">How long</p>
+                    <p className="label mb-1.5">Pace</p>
                     <p className="text-sm text-ink font-light">{b.takes}</p>
                   </div>
                   <div>

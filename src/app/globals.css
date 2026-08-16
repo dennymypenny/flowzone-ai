@@ -46,6 +46,15 @@ body {
   .label {
     @apply text-[11px] font-medium uppercase tracking-label text-ink-mute;
   }
+  .label::before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 2px;
+    margin-right: 10px;
+    vertical-align: middle;
+    background: linear-gradient(90deg, #1E3A8A, #5B9BF9, #C6E4F8);
+  }
 
   .display {
     @apply font-display leading-[1] text-ink;

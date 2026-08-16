@@ -5,33 +5,33 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "How We Work",
   description:
-    "What actually happens between your idea and a finished brand, site or storefront. Seven days, four steps, one person on it the whole way.",
+    "What actually happens between your idea and a finished brand, site or storefront. Four steps, one person on it the whole way, and a date agreed before you pay.",
 };
 
 const days = [
   {
-    tag: "Day 0",
+    tag: "The spark",
     title: "You tell us the idea",
     body:
       "One form, a few sentences. No discovery call, no 40 question brief, no proposal deck. If we need something clarified we email you the same day, and if we think you need a smaller package than the one you picked we say so before you pay.",
     you: "15 minutes",
   },
   {
-    tag: "Days 1 to 2",
+    tag: "First look",
     title: "We come back with a direction",
     body:
       "Not a mood board. An actual first pass you can look at, in a browser, with your words and your colors in it. This is the fastest part because AI does the heavy lifting on structure and first drafts. It is also where a human matters most, because taste is the part a model still gets wrong.",
     you: "One reply. Thumbs up or tell us what is off",
   },
   {
-    tag: "Days 3 to 5",
+    tag: "The build",
     title: "We build the real thing",
     body:
       "Real pages, real copy, real payments, real forms that land in your inbox. Everything is built on Next.js and deployed to Vercel, which means it loads fast and does not fall over. If your package includes a system, this is when it gets wired in and tested with live data.",
     you: "Nothing. Go run your business",
   },
   {
-    tag: "Days 6 to 7",
+    tag: "Live",
     title: "It goes live and it is yours",
     body:
       "Connected to your domain, tested on a phone, handed over with documentation that explains what everything does and how to change it. You own the code and the accounts. There is no platform to stay subscribed to and nothing gets held hostage.",
@@ -80,8 +80,8 @@ const faqs = [
     a: "Then it is a Scale project and we quote it flat after we understand it. Send it over either way. If it is smaller than you think, we will tell you and point you at the cheaper package.",
   },
   {
-    q: "Do you actually deliver in 7 days?",
-    a: "Most builds, yes. Larger storefronts and multi system projects take longer and we tell you the real date before you pay, not after. A missed date you were warned about is a schedule. A missed date you were not is a lie.",
+    q: "How fast is this, really?",
+    a: "Fast, but we do not sell you a number before we know what you are asking for. You get a real date with your scope and your price, before you pay, and that is the date we work to. What we will promise is that it starts the day you say go and it does not sit in a queue. Things move here because we are as excited to see the thing exist as you are.",
   },
 ];
 
@@ -93,7 +93,7 @@ export default function HowWeWork() {
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between border-b border-rule pb-4 mb-12">
             <p className="label">How We Work</p>
-            <p className="label hidden sm:block">Seven days · Four steps</p>
+            <p className="label hidden sm:block">Four steps · One studio</p>
           </div>
           <h1 className="display text-5xl md:text-8xl max-w-4xl">
             From an idea
@@ -102,7 +102,8 @@ export default function HowWeWork() {
           </h1>
           <p className="lede max-w-reading mt-10">
             No agency theatre. Here is exactly what happens, what we need from you and
-            when, so you can decide before you spend anything.
+            when, so you can decide before you spend anything. Your date is agreed with
+            your scope, before any money moves.
           </p>
         </div>
       </section>

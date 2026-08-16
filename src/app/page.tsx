@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ChatWidget from "@/app/components/ChatWidget";
+import IdeaPad from "@/app/components/IdeaPad";
 import { SITE, PILLARS } from "@/lib/site";
 
 export const metadata = {
@@ -24,8 +25,9 @@ export default function Home() {
 
           <p className="text-xl md:text-2xl text-ink leading-snug max-w-3xl mt-8 font-light">
             FlowZone is the jumpstart. Arrive with an intention, leave with the
-            running thing. Brand, site and system, built for you start to finish and
-            live in days.
+            running thing. Brand, site and system, built for you start to finish,
+            and sparked into action because we want to see it exist as much as you
+            do.
           </p>
 
           <p className="text-base text-ink-soft leading-relaxed max-w-reading mt-5 font-light">
@@ -48,7 +50,7 @@ export default function Home() {
             {[
               { i: "📦", k: "What you get", v: "Brand, site and system", c: "#5B9BF9" },
               { i: "🙌", k: "How much you do", v: "Almost nothing. 100% done for you", c: "#2DD4BF" },
-              { i: "⏱️", k: "How long", v: "Most builds live in 7 days", c: "#FBBF24" },
+              { i: "⚡", k: "How fast it moves", v: "Started the day you say go", c: "#FBBF24" },
               { i: "💵", k: "What it costs", v: "Flat, from $600, paid once", c: "#A78BFA" },
               { i: "🔑", k: "What you own", v: "All of it. Code, domain, accounts", c: "#34D399" },
             ].map((x) => (
@@ -322,7 +324,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <p className="label mb-6">How it works</p>
           <h2 className="display text-4xl md:text-5xl max-w-3xl mb-14">
-            Four steps. One week. You are busy for about twenty minutes of it.
+            Four steps, and you are busy for about twenty minutes of it.
           </h2>
 
           <div className="hidden lg:block relative h-px mb-4 mx-[12.5%]">
@@ -335,25 +337,25 @@ export default function Home() {
                 i: "✍️",
                 c: "#5B9BF9",
                 step: "Step 1",
-                day: "Day 0",
+                day: "The spark",
                 t: "Send the intention",
-                b: "One short form. A few sentences about what you want to exist. No discovery call, no brief, no deck.",
+                b: "One short form. A few sentences about what you want to exist. No discovery call, no brief, no deck. You get back a scope, a price and a date, and that date is the one we work to.",
                 you: "15 minutes",
               },
               {
                 i: "👀",
                 c: "#A78BFA",
                 step: "Step 2",
-                day: "Days 1 to 2",
+                day: "First look",
                 t: "See a real direction",
-                b: "Not a mood board. An actual first pass in a browser, with your words and your colors in it.",
+                b: "Not a mood board. An actual first pass in a browser, with your words and your colors in it, while the idea still has heat on it.",
                 you: "One reply",
               },
               {
                 i: "🔨",
                 c: "#FBBF24",
                 step: "Step 3",
-                day: "Days 3 to 5",
+                day: "The build",
                 t: "We build it all",
                 b: "Real pages, real copy, real payments, real forms. The system gets wired in and tested with live data.",
                 you: "Nothing",
@@ -362,7 +364,7 @@ export default function Home() {
                 i: "🚀",
                 c: "#34D399",
                 step: "Step 4",
-                day: "Days 6 to 7",
+                day: "Live",
                 t: "It goes live and it is yours",
                 b: "On your domain, tested on a phone, handed over with docs. You own the code and the accounts.",
                 you: "Approve it",
@@ -426,10 +428,10 @@ export default function Home() {
                 v: "Flat price agreed before work starts. No hourly billing, no scope creep invoice at the end, no retainer you forget to cancel.",
               },
               {
-                i: "⏱️",
+                i: "⚡",
                 c: "#FBBF24",
-                k: "You launch in a week",
-                v: "Most builds are live in seven days. That is the difference between testing an idea this month and testing it next quarter.",
+                k: "We are as excited as you are",
+                v: "That is the whole reason this moves. Nobody has to chase us for an update, because we want to see the thing exist too. You will feel it in the first reply, and again on the day it goes live.",
               },
               {
                 i: "🔑",
@@ -512,6 +514,10 @@ export default function Home() {
             answer about which of the three parts it needs.
           </p>
           <ChatWidget />
+
+          <div className="mt-4">
+            <IdeaPad />
+          </div>
         </div>
       </section>
 

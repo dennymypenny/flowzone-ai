@@ -50,7 +50,7 @@ export default function StructuredData() {
             name: "Growth",
             price: "2497",
             priceCurrency: "USD",
-            description: "Brand, site and one system wired together, live in days.",
+            description: "Brand, site and one system wired together and handed over working.",
           },
           {
             "@type": "Offer",

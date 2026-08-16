@@ -5,7 +5,7 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Three flat packages for brand, site and the system that runs it. One payment, no retainers, delivered in days.",
+    "Three flat packages for brand, site and the system that runs it. One payment, no retainers, and a date agreed before you pay.",
 };
 
 const tiers = [
@@ -78,9 +78,9 @@ export default function Pricing() {
             to work together.
           </h1>
           <p className="lede max-w-reading mt-10">
-            You know the number before we start. No hourly billing, no scope creep
-            invoice at the end and no retainer you forget to cancel. If a cheaper tier
-            fits your idea, we will tell you that before you pay.
+            You know the number and the date before we start. No hourly billing, no
+            scope creep invoice at the end and no retainer you forget to cancel. If a
+            cheaper tier fits your idea, we will tell you that before you pay.
           </p>
         </div>
       </section>

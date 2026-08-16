@@ -104,7 +104,7 @@ function IntakeForm() {
         <div className="text-center mb-10">
           <p className="text-accent font-semibold text-sm uppercase tracking-wider mb-3">Get Started</p>
           <h1 className="text-4xl font-display font-normal text-ink mb-3">Start Your Project</h1>
-          <p className="text-ink-mute">Tell us what you want built. Most projects are delivered in 7 days or less.</p>
+          <p className="text-ink-mute">Tell us what you want built. You get a scope, a price and a date back, usually the same day.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-paper rounded-xl border border-rule p-8 space-y-5">
