@@ -310,7 +310,7 @@ export default function VideoSpark({ topic }: { topic: string }) {
   if (!supported) return null;
 
   return (
-    <div className="mt-6 max-w-xl">
+    <div id="make-video" className="mt-6 max-w-xl scroll-mt-28">
       <p className="label mb-3">Now make it move</p>
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">

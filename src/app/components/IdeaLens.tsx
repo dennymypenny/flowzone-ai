@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Tilt3D from "@/app/components/Tilt3D";
 import VideoSpark from "@/app/components/VideoSpark";
 import Icon from "@/components/Icon";
+import FunnelNarrow from "@/app/components/FunnelNarrow";
 
 /**
  * Type a thing, see the thing, pick it, move on.
@@ -280,6 +281,7 @@ export default function IdeaLens() {
           className="hidden"
           onChange={(e) => e.target.files && addFiles(e.target.files)}
         />
+        <FunnelNarrow topic={chosen.q} />
         <VideoSpark topic={chosen.q} />
       </div>
     );

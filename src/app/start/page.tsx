@@ -59,7 +59,6 @@ export default function Start() {
               </span>
               Flow Mode
             </p>
-            <p className="chip hidden sm:inline-flex">Free · No signup · Saves as you go</p>
           </div>
           <h1 className="display text-5xl md:text-8xl max-w-4xl">
             <span className="text-gradient-white">Enter</span>{" "}
