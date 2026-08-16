@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import StartModes from "@/app/components/StartModes";
 import IdeaLens from "@/app/components/IdeaLens";
+import FlowPath from "@/app/components/FlowPath";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -10,10 +11,40 @@ export const metadata: Metadata = {
     "Flow through the zone with your thoughts. Six moves, and you walk away holding a real brief for your idea, yours to keep whether you hire us or not.",
 };
 
+/**
+ * Flow Mode follows the mark: three dots, three moves.
+ * Dot 1 the idea, dot 2 the shape, dot 3 the files you keep.
+ * The FlowPath strip charges left to right as the visitor moves through,
+ * so the page itself does what the company does: it takes an idea and
+ * gets it moving along the line.
+ */
+
+function DotHeading({
+  n,
+  color,
+  label,
+}: {
+  n: number;
+  color: string;
+  label: string;
+}) {
+  return (
+    <div className="flex items-center gap-3 mb-6">
+      <svg width="30" height="14" viewBox="0 0 30 14" aria-hidden>
+        <line x1="0" y1="7" x2="30" y2="7" stroke="#1D2942" strokeWidth="1.5" />
+        <circle cx={n === 1 ? 5 : n === 2 ? 15 : 25} cy="7" r="5" fill={color} />
+      </svg>
+      <p className="text-[11px] font-medium uppercase tracking-label" style={{ color }}>
+        {n} · {label}
+      </p>
+    </div>
+  );
+}
+
 export default function Start() {
   return (
     <>
-      <section className="relative overflow-hidden px-6 pt-24 pb-14">
+      <section className="relative overflow-hidden px-6 pt-24 pb-6">
         <div className="absolute inset-0 aurora drift pointer-events-none" />
         <div className="absolute inset-0 gridlight pointer-events-none" />
         <div className="relative max-w-6xl mx-auto">
@@ -33,30 +64,53 @@ export default function Start() {
             <span className="text-gradient-white">.</span>
           </h1>
           <p className="lede max-w-reading mt-10">
-            Most people know they want something and cannot describe it yet. That is
-            normal, and it is the actual reason projects stall. So play with it here.
-            Roll colours, make a real logo, pull references off the open web, and
-            leave holding files you own.
+            Three dots in the logo, three moves in here. Your idea enters on the
+            left, takes shape in the middle, and leaves the other end as files you
+            own. Same line, same direction, always forward.
           </p>
-
-          <div className="mt-12">
-            <IdeaLens />
-          </div>
         </div>
       </section>
 
-      <section className="px-6 pb-24">
+      {/* The idea travels this line as you scroll */}
+      <FlowPath />
+
+      {/* ---------- Dot 1: the idea ---------- */}
+      <section id="flow-idea" className="relative overflow-hidden px-6 pt-16 pb-20 scroll-mt-28">
         <div className="max-w-6xl mx-auto">
+          <DotHeading n={1} color="#1E3A8A" label="The idea" />
+          <h2 className="display text-3xl md:text-5xl max-w-2xl mb-4">
+            Say the thing out loud.
+          </h2>
+          <p className="text-ink-soft font-light leading-relaxed max-w-reading mb-10">
+            Type it and see the real thing in front of you. Keep the picture that
+            feels right, and it rides the line with you.
+          </p>
+          <IdeaLens />
+        </div>
+      </section>
+
+      {/* ---------- Dot 2: the shape ---------- */}
+      <section id="flow-shape" className="border-t border-rule px-6 pt-16 pb-24 scroll-mt-28">
+        <div className="max-w-6xl mx-auto">
+          <DotHeading n={2} color="#5B9BF9" label="The shape" />
+          <h2 className="display text-3xl md:text-5xl max-w-2xl mb-4">
+            Now give it a shape.
+          </h2>
+          <p className="text-ink-soft font-light leading-relaxed max-w-reading mb-10">
+            A name, colours, a real logo, words, a reel. Pick the flow that fits
+            where your head is at, and everything saves as you go.
+          </p>
           <StartModes />
         </div>
       </section>
 
-      <section data-flow className="border-t border-rule px-6 py-24">
+      {/* ---------- Dot 3: yours to keep ---------- */}
+      <section id="flow-keep" data-flow className="border-t border-rule px-6 pt-16 pb-24 scroll-mt-28">
         <div className="max-w-6xl mx-auto">
-          <p className="label mb-6">Why bother</p>
+          <DotHeading n={3} color="#C6E4F8" label="Yours to keep" />
           <div className="grid md:grid-cols-12 gap-10 mb-14">
             <h2 className="md:col-span-6 display text-4xl md:text-5xl">
-              You keep the brief either way.
+              Leave holding real files.
             </h2>
             <p className="md:col-span-6 text-ink-soft font-light leading-relaxed self-end max-w-reading">
               A brief is the thing every designer, developer and agency asks you for,
@@ -84,7 +138,7 @@ export default function Start() {
                 i: "📥",
                 c: "#34D399",
                 t: "It comes with you",
-                b: "Download it as an image or a text file at the end. It is your document about your idea.",
+                b: "Logos as SVG, palettes as CSS, the video, the brief. Real files, downloaded, yours.",
               },
             ].map((x) => (
               <div key={x.t} className="panel panel-lift p-7">
