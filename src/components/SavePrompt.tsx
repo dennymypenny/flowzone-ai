@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { SITE } from "@/lib/site";
 
 /**
@@ -16,6 +17,8 @@ const KEY = "flowzone.saveprompt.v1";
 const SESSION_KEY = "flowzone.session.v2";
 
 export default function SavePrompt() {
+  // Flow Mode is a working surface. Nothing pops over it.
+  const pathname = usePathname();
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
@@ -112,7 +115,7 @@ export default function SavePrompt() {
     }
   };
 
-  if (!show) return null;
+  if (pathname === "/start" || !show) return null;
 
   return (
     <div className="fixed bottom-5 left-5 right-5 sm:right-auto sm:w-[380px] z-[70]">

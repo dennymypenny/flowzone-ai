@@ -64,9 +64,8 @@ export default function Start() {
             <span className="text-gradient-white">.</span>
           </h1>
           <p className="lede max-w-reading mt-10">
-            Three dots in the logo, three moves in here. Your idea enters on the
-            left, takes shape in the middle, and leaves the other end as files you
-            own. Same line, same direction, always forward.
+            Three dots, three moves. Your idea goes in one end and comes out the
+            other as files you own.
           </p>
         </div>
       </section>
@@ -78,13 +77,9 @@ export default function Start() {
       <section id="flow-idea" className="relative overflow-hidden px-6 pt-16 pb-20 scroll-mt-28">
         <div className="max-w-6xl mx-auto">
           <DotHeading n={1} color="#1E3A8A" label="The idea" />
-          <h2 className="display text-3xl md:text-5xl max-w-2xl mb-4">
+          <h2 className="display text-3xl md:text-5xl max-w-2xl mb-8">
             Say the thing out loud.
           </h2>
-          <p className="text-ink-soft font-light leading-relaxed max-w-reading mb-10">
-            Type it and see the real thing in front of you. Keep the picture that
-            feels right, and it rides the line with you.
-          </p>
           <IdeaLens />
         </div>
       </section>
@@ -93,13 +88,9 @@ export default function Start() {
       <section id="flow-shape" className="border-t border-rule px-6 pt-16 pb-24 scroll-mt-28">
         <div className="max-w-6xl mx-auto">
           <DotHeading n={2} color="#5B9BF9" label="The shape" />
-          <h2 className="display text-3xl md:text-5xl max-w-2xl mb-4">
+          <h2 className="display text-3xl md:text-5xl max-w-2xl mb-8">
             Now give it a shape.
           </h2>
-          <p className="text-ink-soft font-light leading-relaxed max-w-reading mb-10">
-            A name, colours, a real logo, words, a reel. Pick the flow that fits
-            where your head is at, and everything saves as you go.
-          </p>
           <StartModes />
         </div>
       </section>
