@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import WorkSession from "@/app/components/WorkSession";
+import StartModes from "@/app/components/StartModes";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -25,15 +25,16 @@ export default function Start() {
           </h1>
           <p className="lede max-w-reading mt-10">
             Most people know they want something and cannot describe it yet. That is
-            normal, and it is the actual reason projects stall. So work it out here,
-            one question at a time, and leave with the thing that unblocks it.
+            normal, and it is the actual reason projects stall. So play with it here.
+            Roll colours, make a real logo, pull references off the open web, and
+            leave holding files you own.
           </p>
         </div>
       </section>
 
       <section className="px-6 pb-24">
-        <div className="max-w-4xl mx-auto">
-          <WorkSession />
+        <div className="max-w-6xl mx-auto">
+          <StartModes />
         </div>
       </section>
 
