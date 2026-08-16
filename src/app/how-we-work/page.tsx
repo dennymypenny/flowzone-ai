@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "How We Work",
@@ -12,25 +13,25 @@ const days = [
     tag: "Day 0",
     title: "You tell us the idea",
     body:
-      "One form, a few sentences. No discovery call, no 40-question brief, no proposal deck. If we need something clarified we email you the same day, and if we think you need a smaller package than the one you picked we say so before you pay.",
+      "One form, a few sentences. No discovery call, no 40 question brief, no proposal deck. If we need something clarified we email you the same day, and if we think you need a smaller package than the one you picked we say so before you pay.",
     you: "15 minutes",
   },
   {
-    tag: "Days 1–2",
+    tag: "Days 1 to 2",
     title: "We come back with a direction",
     body:
       "Not a mood board. An actual first pass you can look at, in a browser, with your words and your colors in it. This is the fastest part because AI does the heavy lifting on structure and first drafts. It is also where a human matters most, because taste is the part a model still gets wrong.",
-    you: "One reply, thumbs up or tell us what is off",
+    you: "One reply. Thumbs up or tell us what is off",
   },
   {
-    tag: "Days 3–5",
+    tag: "Days 3 to 5",
     title: "We build the real thing",
     body:
       "Real pages, real copy, real payments, real forms that land in your inbox. Everything is built on Next.js and deployed to Vercel, which means it loads fast and does not fall over. If your package includes a system, this is when it gets wired in and tested with live data.",
-    you: "Nothing. Go run your business.",
+    you: "Nothing. Go run your business",
   },
   {
-    tag: "Days 6–7",
+    tag: "Days 6 to 7",
     title: "It goes live and it is yours",
     body:
       "Connected to your domain, tested on a phone, handed over with documentation that explains what everything does and how to change it. You own the code and the accounts. There is no platform to stay subscribed to and nothing gets held hostage.",
@@ -40,25 +41,21 @@ const days = [
 
 const principles = [
   {
-    icon: "🎛️",
     title: "AI for speed, a person for taste",
     body:
       "AI is why a build takes a week instead of two months. A person is why it does not look like everyone else's AI site. Every layout, headline and color decision gets looked at by a human before it ships.",
   },
   {
-    icon: "📦",
     title: "Flat price, agreed up front",
     body:
       "You know the number before we start. No hourly billing, no scope creep invoice at the end, no retainer you forget to cancel. If the scope genuinely changes we talk about it before doing the work.",
   },
   {
-    icon: "🔑",
     title: "You own everything",
     body:
-      "The code, the domain, the accounts, the content. We hand over the keys at the end. Plenty of studios keep clients locked in on purpose, and it is a bad way to run a business.",
+      "The code, the domain, the accounts, the content. We hand over the keys at the end. Plenty of studios keep clients locked in on purpose and it is a bad way to run a business.",
   },
   {
-    icon: "💬",
     title: "You talk to the person building it",
     body:
       "No account manager relaying messages to a contractor. The person who replies to your email is the person writing the code.",
@@ -68,11 +65,11 @@ const principles = [
 const faqs = [
   {
     q: "How many clients have you worked with?",
-    a: "We are early. The studio has shipped real work, including cardsrg.com, a full collector trading card storefront, and we are taking on a small number of projects at a time on purpose. You get a lot more attention than you would from a shop juggling thirty accounts, and the pricing reflects where we are rather than where we want to be.",
+    a: "We are early. The studio has shipped real work, including cardsrg.com, a full collector trading card storefront, and we take on a small number of projects at a time on purpose. You get a lot more attention than you would from a shop juggling thirty accounts, and the pricing reflects where we are rather than where we want to be.",
   },
   {
-    q: "Why is there no portfolio page?",
-    a: "Because we would rather show you the process than pad a page with work that is not ours. Ask us for a walkthrough of what we have built and we will show you the real thing, live, including the parts that were hard.",
+    q: "Why is the work page so short?",
+    a: "Because it is honest. Everything on it is live and was built here. We could pad it with concepts and stock mockups and most people would never check, but you would find out eventually and that is a bad way to start.",
   },
   {
     q: "What if I do not like the first direction?",
@@ -84,118 +81,106 @@ const faqs = [
   },
   {
     q: "Do you actually deliver in 7 days?",
-    a: "Most builds, yes. Larger storefronts and multi-system projects take longer and we tell you the real date before you pay, not after. A missed date you were warned about is a schedule. A missed date you were not is a lie.",
+    a: "Most builds, yes. Larger storefronts and multi system projects take longer and we tell you the real date before you pay, not after. A missed date you were warned about is a schedule. A missed date you were not is a lie.",
   },
 ];
 
 export default function HowWeWork() {
   return (
     <>
-      {/* Hero */}
-      <section className="bg-white pt-20 pb-16 px-6 border-b border-gray-100">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="text-blue-600 font-semibold text-sm uppercase tracking-wider mb-4">How We Work</p>
-          <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6">
-            You Bring the Idea. We Build the Whole Thing.
+      {/* Header */}
+      <section className="px-6 pt-20 pb-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center justify-between border-b border-rule pb-4 mb-12">
+            <p className="label">How We Work</p>
+            <p className="label hidden sm:block">Seven days · Four steps</p>
+          </div>
+          <h1 className="display text-5xl md:text-8xl max-w-4xl">
+            From an idea
+            <br />
+            to a live thing.
           </h1>
-          <p className="text-xl text-gray-500 leading-relaxed">
-            Here is exactly what happens between the form you fill out and the thing you launch. No mystery, no
-            discovery phase, no six-week runway before anything exists.
+          <p className="lede max-w-reading mt-10">
+            No agency theatre. Here is exactly what happens, what we need from you and
+            when, so you can decide before you spend anything.
           </p>
         </div>
       </section>
 
       {/* Timeline */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <div className="space-y-4">
-            {days.map((d, i) => (
-              <div
-                key={d.tag}
-                className="relative border border-gray-200 rounded-2xl p-8 hover:border-blue-400 hover:shadow-md transition-all"
-              >
-                <div className="flex flex-col md:flex-row md:items-start gap-6">
-                  <div className="shrink-0 md:w-32">
-                    <span className="inline-block bg-blue-600 text-white text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-full">
-                      {d.tag}
-                    </span>
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-black text-gray-900 text-xl mb-3">
-                      <span className="text-blue-200 mr-2">{String(i + 1).padStart(2, "0")}</span>
-                      {d.title}
-                    </p>
-                    <p className="text-gray-500 leading-relaxed mb-4">{d.body}</p>
-                    <p className="text-sm">
-                      <span className="font-bold text-gray-900">What you do: </span>
-                      <span className="text-gray-500">{d.you}</span>
-                    </p>
-                  </div>
-                </div>
+      <section className="px-6 pb-16">
+        <div className="max-w-6xl mx-auto">
+          {days.map((d) => (
+            <div key={d.tag} className="border-t border-rule py-12 grid md:grid-cols-12 gap-8">
+              <div className="md:col-span-3">
+                <p className="label mb-3">{d.tag}</p>
+                <p className="font-display text-3xl leading-none">{d.title}</p>
               </div>
-            ))}
-          </div>
+              <div className="md:col-span-6">
+                <p className="text-ink-soft leading-relaxed">{d.body}</p>
+              </div>
+              <div className="md:col-span-3 md:text-right">
+                <p className="label mb-2">Your time</p>
+                <p className="text-sm text-ink-soft">{d.you}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* Principles */}
-      <section className="py-20 px-6 bg-gray-50 border-t border-gray-100">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-black text-gray-900 mb-4">How We Run It</h2>
-            <p className="text-gray-500 text-lg">Four things we do not compromise on.</p>
+      <section className="bg-paper-deep px-6 py-24">
+        <div className="max-w-6xl mx-auto">
+          <div className="border-b border-rule pb-4 mb-14">
+            <p className="label">How We Operate</p>
           </div>
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-x-14 gap-y-12">
             {principles.map((p) => (
-              <div key={p.title} className="bg-white rounded-2xl p-7 border border-gray-100">
-                <div className="text-3xl mb-3">{p.icon}</div>
-                <p className="font-black text-gray-900 text-lg mb-2">{p.title}</p>
-                <p className="text-sm text-gray-500 leading-relaxed">{p.body}</p>
+              <div key={p.title}>
+                <h2 className="font-display text-3xl leading-tight mb-3">{p.title}</h2>
+                <p className="text-ink-soft leading-relaxed">{p.body}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Straight answers */}
-      <section className="py-20 px-6 bg-white border-t border-gray-100">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-black text-gray-900 mb-4">Straight Answers</h2>
-            <p className="text-gray-500 text-lg">Including the ones most studios dodge.</p>
+      {/* FAQ */}
+      <section className="px-6 py-24">
+        <div className="max-w-6xl mx-auto">
+          <div className="border-b border-rule pb-4 mb-14 flex items-baseline justify-between">
+            <p className="label">Straight Answers</p>
+            <p className="label hidden sm:block">Including the awkward ones</p>
           </div>
-          <div className="space-y-4">
-            {faqs.map((f) => (
-              <div key={f.q} className="border border-gray-200 rounded-2xl p-7">
-                <p className="font-black text-gray-900 mb-3">{f.q}</p>
-                <p className="text-gray-500 leading-relaxed text-sm">{f.a}</p>
-              </div>
-            ))}
-          </div>
+          {faqs.map((f) => (
+            <div key={f.q} className="border-t border-rule py-10 grid md:grid-cols-12 gap-8">
+              <h3 className="md:col-span-5 font-display text-2xl md:text-3xl leading-tight">
+                {f.q}
+              </h3>
+              <p className="md:col-span-7 text-ink-soft leading-relaxed">{f.a}</p>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-20 px-6 bg-blue-600">
+      <section className="bg-paper-deep glow border-t border-rule px-6 py-28">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-black text-white mb-4">Ready to Start the Clock?</h2>
-          <p className="text-blue-200 text-lg mb-8">
-            Day 0 takes fifteen minutes. Tell us the idea and we will come back with a direction, a scope and a real
-            delivery date.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/intake"
-              className="inline-block bg-white text-blue-600 font-bold px-8 py-4 rounded-xl hover:bg-blue-50 transition-colors text-lg"
-            >
-              Start Your Project →
+          <h2 className="font-display text-5xl md:text-7xl leading-[0.95] mb-8">
+            Still reading?
+            <br />
+            Send us the idea.
+          </h2>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link href="/intake" className="btn-primary">
+              Start a project
             </Link>
-            <Link
-              href="/pricing"
-              className="inline-block border-2 border-blue-400 text-white font-bold px-8 py-4 rounded-xl hover:border-white transition-colors text-lg"
+            <a
+              href={`mailto:${SITE.email}`}
+              className="btn border border-rule text-ink hover:bg-raised hover:border-ink/25"
             >
-              See Pricing
-            </Link>
+              {SITE.email}
+            </a>
           </div>
         </div>
       </section>

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { SITE } from "@/lib/site";
 
 export async function POST(req: NextRequest) {
   try {
@@ -24,7 +25,7 @@ export async function POST(req: NextRequest) {
       },
       body: JSON.stringify({
         from: "FlowZone Intake <onboarding@resend.dev>",
-        to: "flowzoneautomation@gmail.com",
+        to: SITE.leadInbox,
         reply_to: email,
         subject: `New inquiry from ${name} — ${service}`,
         html,

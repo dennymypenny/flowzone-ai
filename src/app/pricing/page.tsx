@@ -1,10 +1,11 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Three flat-rate packages for brands, sites, storefronts and the systems that run them. One-time payment, no retainers, delivered in days.",
+    "Three flat packages for brand, site and the system that runs it. One payment, no retainers, delivered in days.",
 };
 
 const tiers = [
@@ -14,136 +15,150 @@ const tiers = [
     tagline: "One thing, built properly.",
     best: false,
     blurb:
-      "You know exactly what you need. A site, a storefront, a dashboard, one system. We build it and hand it over finished.",
+      "You know exactly what you need. A brand, a site, or one system. We build that one thing and hand it over finished.",
     includes: [
-      "One complete build (site, storefront, or system)",
-      "Brand-matched design, not a template",
-      "Mobile-first and fast, deployed live on your domain",
+      "One part: Brand, Site or System",
+      "Designed against your brand, never a template",
+      "Fast on mobile, live on your own domain",
       "One full round of revisions",
-      "30 days of post-launch support",
+      "30 days of post launch support",
     ],
     cta: "Start with Starter",
   },
   {
     name: "Growth",
     price: "$2,497",
-    tagline: "The whole thing, running on its own.",
+    tagline: "All three, working together.",
     best: true,
     blurb:
-      "The one most people want. Brand, site or storefront, and one business system wired into it so the thing actually runs after launch.",
+      "The one most people should take. Brand, site and one system wired into it, so the thing runs after launch instead of sitting there.",
     includes: [
       "Everything in Starter",
-      "Brand identity: logo, palette, type, and usage rules",
+      "Brand identity: logo, palette, type and usage rules",
       "Full site or storefront, up to 6 pages",
-      "One business system built in (lead intake, booking, invoicing, or reporting)",
+      "One system built in (intake, booking, invoicing or reporting)",
       "Payments, forms and email wired end to end",
       "Two rounds of revisions",
-      "60 days of post-launch support",
+      "60 days of post launch support",
     ],
     cta: "Start with Growth",
   },
   {
     name: "Scale",
     price: "Custom",
-    tagline: "You have more moving parts.",
+    tagline: "More moving parts.",
     best: false,
     blurb:
       "Multiple brands, a bigger catalog, or systems that have to talk to tools you already run. We scope it together and quote it flat.",
     includes: [
       "Everything in Growth",
-      "Multi-brand or large-catalog storefronts",
+      "Multi brand or large catalog storefronts",
       "Custom API and tool integrations",
       "Ongoing build partnership if you want it",
-      "Direct line to me, not a support queue",
-      "Flat quote before any work starts",
+      "A direct line to me, not a support queue",
+      "Flat quote agreed before any work starts",
     ],
-    cta: "Get a Quote",
+    cta: "Get a quote",
   },
 ];
 
 export default function Pricing() {
   return (
     <>
-      {/* Hero */}
-      <section className="bg-white pt-20 pb-16 px-6 border-b border-gray-100">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="text-blue-600 font-semibold text-sm uppercase tracking-wider mb-4">Pricing</p>
-          <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6">Three Ways to Work Together</h1>
-          <p className="text-xl text-gray-500 leading-relaxed mb-6">
-            Flat rate, paid once, delivered in days. No retainers, no hourly billing, no surprises at the end.
-          </p>
-          <div className="bg-blue-50 border border-blue-100 rounded-2xl px-6 py-4 inline-block">
-            <p className="text-blue-700 font-semibold text-sm">
-              💡 Not sure which one fits? Tell us the idea and we will point you at the right tier, even if it is the cheaper one.
-            </p>
+      {/* Header */}
+      <section className="px-6 pt-20 pb-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center justify-between border-b border-rule pb-4 mb-12">
+            <p className="label">Pricing</p>
+            <p className="label hidden sm:block">Flat · Paid once · No retainers</p>
           </div>
+          <h1 className="display text-5xl md:text-8xl max-w-4xl">
+            Three ways
+            <br />
+            to work together.
+          </h1>
+          <p className="lede max-w-reading mt-10">
+            You know the number before we start. No hourly billing, no scope creep
+            invoice at the end and no retainer you forget to cancel. If a cheaper tier
+            fits your idea, we will tell you that before you pay.
+          </p>
         </div>
       </section>
 
       {/* Tiers */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-3 gap-6 items-start">
+      <section className="px-6 pb-24">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-3 gap-4 items-start">
           {tiers.map((t) => (
             <div
               key={t.name}
-              className={`rounded-2xl p-8 flex flex-col h-full transition-all ${
-                t.best
-                  ? "border-2 border-blue-600 shadow-xl lg:-mt-4 lg:pb-12 bg-white"
-                  : "border border-gray-200 hover:border-blue-400 hover:shadow-md bg-white"
-              }`}
+              className={`panel p-8 flex flex-col relative ${t.best ? "border-accent/45 bg-raised glow" : ""}`}
             >
-              {t.best && (
-                <span className="self-start bg-blue-600 text-white text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full mb-4">
-                  Most Popular
-                </span>
-              )}
-              <p className="font-black text-gray-900 text-2xl">{t.name}</p>
-              <p className="text-sm font-semibold text-blue-600 mb-4">{t.tagline}</p>
-              <div className="flex items-end gap-2 mb-4">
-                <span className="text-4xl font-black text-gray-900">{t.price}</span>
-                {t.price !== "Custom" && <span className="text-sm text-gray-400 mb-1.5">one time</span>}
+              <div className="flex items-baseline justify-between mb-6">
+                <p className="label">{t.name}</p>
+                {t.best && <p className="font-mono text-[11px] uppercase tracking-label text-accent">Most taken</p>}
               </div>
-              <p className="text-sm text-gray-500 leading-relaxed mb-6">{t.blurb}</p>
-              <ul className="space-y-2.5 mb-8 flex-1">
+
+              <p className="font-display text-5xl leading-none mb-3 text-ink">{t.price}</p>
+              <p className="text-sm mb-6 text-accent">{t.tagline}</p>
+
+              <p className="text-sm leading-relaxed mb-8 text-ink-soft font-light">{t.blurb}</p>
+
+              <ul className="space-y-3 mb-10 flex-1 border-t border-rule pt-6">
                 {t.includes.map((line) => (
-                  <li key={line} className="flex gap-2.5 text-sm text-gray-600 leading-relaxed">
-                    <span className="text-blue-600 font-bold shrink-0">✓</span>
+                  <li key={line} className="flex gap-3 text-sm leading-relaxed text-ink-soft font-light">
+                    <span className="text-accent shrink-0">/</span>
                     <span>{line}</span>
                   </li>
                 ))}
               </ul>
+
               <Link
                 href={`/intake?service=${encodeURIComponent(t.name)}`}
-                className={`block text-center font-bold px-5 py-3.5 rounded-xl transition-colors mt-auto ${
-                  t.best
-                    ? "bg-blue-600 text-white hover:bg-blue-700"
-                    : "border-2 border-gray-200 text-gray-900 hover:border-blue-600 hover:text-blue-600"
-                }`}
+                className={`${t.best ? "btn-primary" : "btn-ghost"} mt-auto w-full`}
               >
-                {t.cta} →
+                {t.cta}
               </Link>
             </div>
           ))}
         </div>
       </section>
 
-      {/* What's included */}
-      <section className="py-20 px-6 bg-gray-50">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-black text-gray-900 text-center mb-12">Every Project Includes</h2>
-          <div className="grid md:grid-cols-3 gap-6">
+      {/* Every project */}
+      <section className="bg-paper-deep px-6 py-24">
+        <div className="max-w-6xl mx-auto">
+          <div className="border-b border-rule pb-4 mb-14">
+            <p className="label">In Every Package</p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12">
             {[
-              { icon: "🚀", title: "Fast Delivery", body: "Most builds ship in 3–7 business days. You get a working, tested product, not a rough draft." },
-              { icon: "🎨", title: "A Human on It", body: "AI gives us the speed. A person makes the calls on taste, layout and what actually reads well." },
-              { icon: "📖", title: "Full Documentation", body: "Every build comes with clear docs explaining what it does, how to use it, and how to request changes." },
-              { icon: "🤝", title: "Post-Launch Support", body: "Support after delivery is built into every tier. Something breaks, we fix it free." },
-              { icon: "🔒", title: "Secure and Reliable", body: "Industry-standard security on every build. Your data and your customers' data stay protected." },
-              { icon: "⚙️", title: "Tool Agnostic", body: "We work with 200+ tools. If it has an API or a webhook, we can build with it." },
-            ].map((item) => (
-              <div key={item.title} className="bg-white rounded-2xl p-6 border border-gray-100">
-                <div className="text-3xl mb-3">{item.icon}</div>
-                <p className="font-bold text-gray-900 mb-2">{item.title}</p>
-                <p className="text-sm text-gray-500 leading-relaxed">{item.body}</p>
+              {
+                t: "A person on it",
+                b: "AI gives us the speed. A human makes the calls on taste, layout and what actually reads well before anything ships.",
+              },
+              {
+                t: "You own everything",
+                b: "The code, the domain, the accounts, the content. Nothing is held hostage and there is no platform to stay subscribed to.",
+              },
+              {
+                t: "Documentation",
+                b: "Every build is handed over with clear docs on what it does, how to use it and how to ask for changes.",
+              },
+              {
+                t: "Post launch support",
+                b: "Support is built into every tier. If something breaks in that window we fix it free.",
+              },
+              {
+                t: "Secure by default",
+                b: "Standard security practice on every build. Your data and your customers' data stay protected.",
+              },
+              {
+                t: "Your existing tools",
+                b: "We build with what you already run. If it has an API or a webhook we can work with it.",
+              },
+            ].map((i) => (
+              <div key={i.t}>
+                <p className="font-display text-3xl leading-tight mb-3">{i.t}</p>
+                <p className="text-sm text-ink-soft leading-relaxed">{i.b}</p>
               </div>
             ))}
           </div>
@@ -151,18 +166,26 @@ export default function Pricing() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 px-6 bg-blue-600">
+      <section className="bg-paper-deep glow border-t border-rule px-6 py-28">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-black text-white mb-4">Not Sure Where to Start?</h2>
-          <p className="text-blue-200 text-lg mb-8">
-            Tell us the idea in a few sentences. We will come back with the right tier, a scope, and a delivery date.
+          <h2 className="font-display text-5xl md:text-7xl leading-[0.95] mb-8">
+            Not sure which one?
+          </h2>
+          <p className="text-ink-soft mb-10 max-w-md mx-auto leading-relaxed">
+            Tell us the idea in a few sentences. We come back with the right tier, a
+            scope and a delivery date, even when the right tier is the cheap one.
           </p>
-          <Link
-            href="/intake"
-            className="inline-block bg-white text-blue-600 font-bold px-8 py-4 rounded-xl hover:bg-blue-50 transition-colors text-lg"
-          >
-            Start Your Project →
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link href="/intake" className="btn-primary">
+              Start a project
+            </Link>
+            <a
+              href={`mailto:${SITE.email}`}
+              className="btn border border-rule text-ink hover:bg-raised"
+            >
+              {SITE.email}
+            </a>
+          </div>
         </div>
       </section>
     </>

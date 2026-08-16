@@ -1,27 +1,21 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import { SITE } from "@/lib/site";
 
 type Role = "user" | "assistant";
 type ApiMsg = { role: Role; content: string };
 type DisplayMsg = { role: "user" | "bot"; text: string };
 
 const CHIPS = [
-  "I need a KPI dashboard",
-  "Build me a system that runs itself",
-  "Build my portfolio site",
-  "I need a business website",
+  "I need a brand and a site",
+  "I'm launching a storefront",
+  "My site looks like a template",
+  "I have a site, I need the system behind it",
   "Something else",
 ];
 
-function FlowZoneLogo() {
-  return (
-    <svg viewBox="0 0 90 32" xmlns="http://www.w3.org/2000/svg" className="w-9 h-8">
-      <line x1="16" y1="16" x2="74" y2="16" stroke="#93c5fd" strokeWidth="1.5"/>
-      <circle cx="16" cy="16" r="14" fill="#1e3a8a" />
-      <circle cx="45" cy="16" r="14" fill="#5b8dd9" />
-      <circle cx="74" cy="16" r="14" fill="#bfdbfe" />
-    </svg>
-  );
+function Mark() {
+  return <span className="block w-1.5 h-1.5 rounded-full bg-accent" aria-hidden />;
 }
 
 export default function ChatWidget() {
@@ -34,7 +28,7 @@ export default function ChatWidget() {
   const isEmpty = display.length === 0;
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, [display, loading]);
 
   const send = async (text: string) => {
@@ -54,52 +48,44 @@ export default function ChatWidget() {
         body: JSON.stringify({ messages: newHistory }),
       });
       const data = await res.json();
-      const reply = data.text ?? "Sorry, something went wrong. Email us at flowzoneautomation@gmail.com.";
+      const reply = data.text ?? `Something went wrong on our end. Email us at ${SITE.email}.`;
       setHistory((h) => [...h, { role: "assistant", content: reply }]);
       setDisplay((d) => [...d, { role: "bot", text: reply }]);
     } catch {
-      setDisplay((d) => [...d, { role: "bot", text: "Connection error. Email us at flowzoneautomation@gmail.com." }]);
+      setDisplay((d) => [
+        ...d,
+        { role: "bot", text: `Connection error. Email us at ${SITE.email}.` },
+      ]);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div
-      className="flex flex-col bg-white rounded-2xl border border-gray-200 shadow-xl overflow-hidden"
-      style={{ minHeight: "420px" }}
-    >
+    <div className="flex flex-col panel overflow-hidden" style={{ minHeight: "440px" }}>
       {/* Header */}
-      <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100 bg-white">
-        <div className="w-9 h-9 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0">
-          <FlowZoneLogo />
+      <div className="flex items-center justify-between px-6 py-4 border-b border-rule">
+        <div className="flex items-center gap-3">
+          <Mark />
+          <p className="font-display text-xl leading-none">FlowZone</p>
         </div>
-        <div>
-          <p className="text-sm font-bold text-gray-900">FlowZone AI</p>
-          <p className="text-xs text-blue-500 font-medium">Systems assistant</p>
-        </div>
+        <p className="label">Studio assistant</p>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-5 py-4 space-y-3">
+      <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
         {isEmpty && (
-          <div className="flex flex-col items-start gap-3">
-            <div className="flex items-start gap-2">
-              <div className="w-7 h-7 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0 mt-0.5">
-                <FlowZoneLogo />
-              </div>
-              <div className="bg-gray-100 rounded-2xl rounded-tl-sm px-4 py-3 max-w-sm">
-                <p className="text-sm text-gray-800">
-                  Hi! I&apos;m the FlowZone assistant. What are we building for you today?
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2 ml-9">
+          <div className="flex flex-col items-start gap-5">
+            <p className="text-ink-soft leading-relaxed max-w-md">
+              Tell me what you are trying to launch and I will tell you which of the
+              three parts you actually need. No sales pitch.
+            </p>
+            <div className="flex flex-wrap gap-2">
               {CHIPS.map((chip) => (
                 <button
                   key={chip}
                   onClick={() => send(chip)}
-                  className="text-xs bg-white border border-gray-200 text-gray-700 px-3 py-1.5 rounded-full hover:border-blue-400 hover:text-blue-600 transition-colors"
+                  className="text-xs border border-rule text-ink-soft px-3.5 py-2 rounded-md hover:border-accent/50 hover:text-ink hover:bg-accent/10 transition-colors"
                 >
                   {chip}
                 </button>
@@ -109,17 +95,12 @@ export default function ChatWidget() {
         )}
 
         {display.map((msg, i) => (
-          <div key={i} className={`flex items-start gap-2 ${msg.role === "user" ? "flex-row-reverse" : ""}`}>
-            {msg.role === "bot" && (
-              <div className="w-7 h-7 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0 mt-0.5">
-                <FlowZoneLogo />
-              </div>
-            )}
+          <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
             <div
-              className={`px-4 py-3 rounded-2xl max-w-xs sm:max-w-sm text-sm leading-relaxed ${
+              className={`px-4 py-3 rounded-lg max-w-xs sm:max-w-md text-sm leading-relaxed ${
                 msg.role === "user"
-                  ? "bg-blue-600 text-white rounded-tr-sm"
-                  : "bg-gray-100 text-gray-800 rounded-tl-sm"
+                  ? "bg-accent text-white"
+                  : "bg-paper-deep text-ink-soft border border-rule"
               }`}
             >
               {msg.text}
@@ -128,15 +109,12 @@ export default function ChatWidget() {
         ))}
 
         {loading && (
-          <div className="flex items-start gap-2">
-            <div className="w-7 h-7 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0 mt-0.5">
-              <FlowZoneLogo />
-            </div>
-            <div className="bg-gray-100 rounded-2xl rounded-tl-sm px-4 py-3 flex items-center gap-1">
+          <div className="flex justify-start">
+            <div className="bg-paper-deep border border-rule rounded-lg px-4 py-3.5 flex items-center gap-1.5">
               {[0, 1, 2].map((i) => (
                 <span
                   key={i}
-                  className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                  className="w-1.5 h-1.5 rounded-full bg-ink-mute animate-bounce"
                   style={{ animationDelay: `${i * 0.15}s` }}
                 />
               ))}
@@ -148,23 +126,24 @@ export default function ChatWidget() {
       </div>
 
       {/* Input */}
-      <div className="px-4 pb-4 pt-2 border-t border-gray-100">
-        <div className="flex items-center gap-2 bg-gray-50 rounded-2xl border border-gray-200 px-4 py-2">
+      <div className="border-t border-rule">
+        <div className="flex items-center gap-3 px-6 py-3">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && send(input)}
-            placeholder="Ask me anything about systems..."
-            className="flex-1 bg-transparent text-sm text-gray-800 placeholder-gray-400 outline-none"
+            placeholder="Describe what you are building..."
+            className="flex-1 bg-transparent text-sm text-ink placeholder-ink-mute outline-none py-2"
           />
           <button
             onClick={() => send(input)}
             disabled={!input.trim() || loading}
-            className="w-8 h-8 bg-blue-600 rounded-xl flex items-center justify-center text-white disabled:opacity-40 hover:bg-blue-700 transition-colors shrink-0"
+            aria-label="Send"
+            className="w-9 h-9 rounded-md bg-accent text-white flex items-center justify-center disabled:opacity-30 hover:bg-accent-deep transition-colors shrink-0"
           >
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path d="M12 19V5M5 12l7-7 7 7" strokeLinecap="round" strokeLinejoin="round" />
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
+              <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
         </div>

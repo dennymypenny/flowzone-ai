@@ -27,7 +27,7 @@ const tools = [
   { name: "Zapier", url: "https://zapier.com", description: "The original no-code workflow tool." },
   { name: "Relevance AI", url: "https://relevanceai.com", description: "Build and deploy AI agents for business workflows." },
   { name: "Lindy AI", url: "https://www.lindy.ai", description: "AI employee platform for automating business tasks." },
-  { name: "Clay", url: "https://www.clay.com", description: "AI-powered prospecting and outreach enrichment." },
+  { name: "Clay", url: "https://www.accent.com", description: "AI-powered prospecting and outreach enrichment." },
   { name: "Instantly", url: "https://instantly.ai", description: "Cold email outreach and deliverability platform." },
   { name: "Beehiiv", url: "https://www.beehiiv.com", description: "Newsletter platform built for growth." },
   ];
@@ -36,7 +36,7 @@ const tagColors: Record<string, string> = {
     Newsletter: "bg-purple-50 text-purple-700",
     News: "bg-orange-50 text-orange-700",
     Research: "bg-green-50 text-green-700",
-    Official: "bg-gray-100 text-gray-700",
+    Official: "bg-paper-deep text-ink-soft",
     Tools: "bg-yellow-50 text-yellow-800",
 };
 
@@ -44,25 +44,25 @@ export default function AiNews() {
     return (
           <>
             {/* Hero */}
-                <section className="bg-white pt-20 pb-16 px-6 border-b border-gray-100">
+                <section className="bg-paper pt-20 pb-16 px-6 border-b border-rule">
                         <div className="max-w-4xl mx-auto text-center">
-                                  <p className="text-sky-600 font-semibold text-sm uppercase tracking-wider mb-4">Stay Ahead</p>
-                                  <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6 leading-tight">
+                                  <p className="text-accent font-semibold text-sm uppercase tracking-wider mb-4">Stay Ahead</p>
+                                  <h1 className="text-5xl md:text-6xl font-display font-normal text-ink mb-6 leading-tight">
                                               AI News &amp; Resources
                                   </h1>
-                                  <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
+                                  <p className="text-xl text-ink-mute max-w-2xl mx-auto leading-relaxed">
                                               The best newsletters, news outlets and tools to keep you current on AI and the systems it powers. We follow all of it so we can bring it straight into the work we build for you.
                                   </p>
                         </div>
                 </section>
           
             {/* News Outlets */}
-                <section className="py-20 px-6 bg-white">
+                <section className="py-20 px-6 bg-paper">
                         <div className="max-w-6xl mx-auto">
                                   <div className="mb-12">
-                                              <p className="text-sky-600 font-semibold text-sm uppercase tracking-wider mb-3">What We Read</p>
-                                              <h2 className="text-3xl font-black text-gray-900 mb-2">Top News Sources &amp; Newsletters</h2>
-                                              <p className="text-gray-500">These are the sources we follow to stay sharp, and that knowledge goes into every brand, site and system we build.</p>
+                                              <p className="text-accent font-semibold text-sm uppercase tracking-wider mb-3">What We Read</p>
+                                              <h2 className="text-3xl font-display font-normal text-ink mb-2">Top News Sources &amp; Newsletters</h2>
+                                              <p className="text-ink-mute">These are the sources we follow to stay sharp, and that knowledge goes into every brand, site and system we build.</p>
                                   </div>
                                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                                     {newsOutlets.map((outlet) => (
@@ -71,16 +71,16 @@ export default function AiNews() {
                                             href={outlet.url}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="group block border border-gray-200 rounded-2xl p-6 hover:border-sky-300 hover:shadow-md transition-all"
+                                            className="group block border border-rule rounded-xl p-6 hover:border-rule hover:shadow-md transition-all"
                                           >
                                           <div className="flex items-start justify-between mb-3">
-                                                            <h3 className="font-bold text-gray-900 group-hover:text-sky-600 transition-colors">{outlet.name}</h3>
-                                                            <span className={`text-xs font-semibold px-2.5 py-1 rounded-full shrink-0 ml-2 ${tagColors[outlet.tag] ?? "bg-gray-100 text-gray-600"}`}>
+                                                            <h3 className="font-bold text-ink group-hover:text-accent transition-colors">{outlet.name}</h3>
+                                                            <span className={`text-xs font-semibold px-2.5 py-1 rounded-full shrink-0 ml-2 ${tagColors[outlet.tag] ?? "bg-paper-deep text-ink-soft"}`}>
                                                               {outlet.tag}
                                                             </span>
                                           </div>
-                                          <p className="text-sm text-gray-500 leading-relaxed">{outlet.description}</p>
-                                          <p className="text-xs text-sky-500 mt-3 font-medium">Visit &#8594;</p>
+                                          <p className="text-sm text-ink-mute leading-relaxed">{outlet.description}</p>
+                                          <p className="text-xs text-accent mt-3 font-medium">Visit &#8594;</p>
                           </a>
                         ))}
                                   </div>
@@ -88,12 +88,12 @@ export default function AiNews() {
                 </section>
           
             {/* Tools */}
-                <section className="py-20 px-6 bg-gray-50">
+                <section className="py-20 px-6 bg-paper-deep">
                         <div className="max-w-6xl mx-auto">
                                   <div className="mb-12">
-                                              <p className="text-sky-600 font-semibold text-sm uppercase tracking-wider mb-3">The Stack</p>
-                                              <h2 className="text-3xl font-black text-gray-900 mb-2">AI Tools We Use</h2>
-                                              <p className="text-gray-500">The platforms behind the brands, sites and systems we build for clients every day.</p>
+                                              <p className="text-accent font-semibold text-sm uppercase tracking-wider mb-3">The Stack</p>
+                                              <h2 className="text-3xl font-display font-normal text-ink mb-2">AI Tools We Use</h2>
+                                              <p className="text-ink-mute">The platforms behind the brands, sites and systems we build for clients every day.</p>
                                   </div>
                                   <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                                     {tools.map((tool) => (
@@ -102,10 +102,10 @@ export default function AiNews() {
                                             href={tool.url}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="group block bg-white border border-gray-200 rounded-xl p-5 hover:border-sky-300 hover:shadow-sm transition-all"
+                                            className="group block bg-paper border border-rule rounded-xl p-5 hover:border-rule hover:shadow-sm transition-all"
                                           >
-                                          <h3 className="font-bold text-gray-900 group-hover:text-sky-600 transition-colors mb-2">{tool.name}</h3>
-                                          <p className="text-sm text-gray-500">{tool.description}</p>
+                                          <h3 className="font-bold text-ink group-hover:text-accent transition-colors mb-2">{tool.name}</h3>
+                                          <p className="text-sm text-ink-mute">{tool.description}</p>
                           </a>
                         ))}
                                   </div>
@@ -113,13 +113,13 @@ export default function AiNews() {
                 </section>
           
             {/* CTA */}
-                <section className="py-20 px-6 bg-sky-600">
+                <section className="py-20 px-6 bg-accent">
                         <div className="max-w-3xl mx-auto text-center">
-                                  <h2 className="text-4xl font-black text-white mb-4">Want Us to Build These Into Your Business?</h2>
-                                  <p className="text-sky-100 text-lg mb-8">
+                                  <h2 className="text-4xl font-display font-normal text-white mb-4">Want Us to Build These Into Your Business?</h2>
+                                  <p className="text-paper/60 text-lg mb-8">
                                               We follow every tool and trend on this page and put it to work for our clients. You bring the idea. We build the whole thing.
                                   </p>
-                                  <Link href="/intake" className="inline-block bg-white text-sky-600 font-bold px-8 py-4 rounded-xl hover:bg-sky-50 transition-colors">
+                                  <Link href="/intake" className="inline-block bg-paper text-accent font-bold px-8 py-4 rounded-xl hover:bg-paper-deep transition-colors">
                                               Get Your Free AI Audit &#8594;
                                   </Link>
                         </div>

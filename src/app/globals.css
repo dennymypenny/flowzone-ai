@@ -1,20 +1,101 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 17, 24, 39;
-  --background-rgb: 255, 255, 255;
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-rgb));
-  font-family: 'Inter', sans-serif;
+  --paper: #0A0B0E;
+  --ink: #F1F3F7;
+  color-scheme: dark;
 }
 
 html {
   scroll-behavior: smooth;
+  background: var(--paper);
+}
+
+body {
+  color: var(--ink);
+  background: var(--paper);
+  font-family: 'Geist', system-ui, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: #5B8CFF;
+  color: #0A0B0E;
+}
+
+@layer components {
+  /* Tight, modern display type wherever font-display is used */
+  .font-display {
+    font-weight: 500;
+    letter-spacing: -0.032em;
+  }
+
+  .label {
+    @apply font-mono text-[11px] font-normal uppercase tracking-label text-ink-mute;
+  }
+
+  .display {
+    @apply font-display leading-[1] text-ink;
+  }
+
+  .lede {
+    @apply text-lg md:text-xl text-ink-soft leading-relaxed font-light;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 text-sm font-medium px-6 py-3 rounded-lg transition-all duration-200;
+  }
+  .btn-primary {
+    @apply btn bg-accent text-white hover:bg-accent-deep shadow-glowbtn;
+  }
+  .btn-ghost {
+    @apply btn border border-rule text-ink hover:bg-raised hover:border-ink/25;
+  }
+  .btn-onink {
+    @apply btn bg-paper text-ink hover:bg-accent hover:text-white;
+  }
+
+  .panel {
+    @apply bg-raised border border-rule rounded-xl;
+  }
+}
+
+@layer utilities {
+  /* Blue wash behind the hero */
+  .glow {
+    background-image:
+      radial-gradient(58rem 30rem at 14% -12%, rgba(91, 140, 255, 0.20), transparent 62%),
+      radial-gradient(44rem 26rem at 86% -4%, rgba(91, 140, 255, 0.10), transparent 60%);
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+
+  .fade-b {
+    mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  }
+
+  /* Hairline top highlight for panels */
+  .hairline::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(255, 255, 255, 0.14),
+      transparent
+    );
+  }
 }

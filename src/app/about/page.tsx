@@ -1,123 +1,134 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Learn about FlowZone AI — the creative and business studio that turns ideas into brands, sites and systems.",
+  description:
+    "FlowZone is a small creative studio. AI gives us the speed, humans give it the taste.",
 };
 
 export default function About() {
   return (
     <>
-      {/* Hero */}
-      <section className="bg-white pt-20 pb-20 px-6">
-        <div className="max-w-4xl mx-auto">
-          <p className="text-indigo-600 font-semibold text-sm uppercase tracking-wider mb-4">About Us</p>
-          <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-8 leading-tight">
-            Great Ideas Deserve<br />More Than a Template.
+      {/* Header */}
+      <section className="px-6 pt-20 pb-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center justify-between border-b border-rule pb-4 mb-12">
+            <p className="label">About</p>
+            <p className="label hidden sm:block">A small studio, on purpose</p>
+          </div>
+          <h1 className="display text-5xl md:text-8xl max-w-4xl">
+            Good ideas deserve
+            <br />
+            more than a template.
           </h1>
-          <p className="text-xl text-gray-500 leading-relaxed max-w-2xl">
-            FlowZone AI is a creative and business studio built on a simple belief: every good idea deserves a real brand, a real site and real systems behind it. AI gives us the speed. A human in the loop gives it the taste, the judgment and the finish.
+          <p className="lede max-w-reading mt-10">
+            FlowZone is a creative studio built on one belief. Every idea worth
+            starting deserves a real brand, a real site and real systems behind it. AI
+            gives us the speed. A person gives it the taste, the judgment and the
+            finish.
           </p>
         </div>
       </section>
 
       {/* Story */}
-      <section className="py-20 px-6 bg-gray-50">
-        <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-          <div>
-            <h2 className="text-3xl font-black text-gray-900 mb-6">The Story</h2>
-            <div className="space-y-4 text-gray-500 leading-relaxed">
-              <p>
-                Most great ideas die between the napkin and the launch. The brand never gets made, the site never goes live and the day-to-day busywork eats whatever energy was left.
-              </p>
-              <p>
-                The problem isn't a lack of tools. The problem is that turning an idea into a working business takes design, copy, code and systems all at once, and most people don't have a team for that.
-              </p>
-              <p>
-                That's where we come in. We handle everything: the brand, the site, the storefront and the systems behind it — designed, built, tested and live in days.
-              </p>
-              <p>
-                You bring the idea. We build the whole thing. You run the business.
-              </p>
-            </div>
+      <section className="px-6 pb-24">
+        <div className="max-w-6xl mx-auto border-t border-rule pt-14 grid md:grid-cols-12 gap-12">
+          <div className="md:col-span-4">
+            <p className="label mb-6">The Story</p>
+            <h2 className="display text-4xl md:text-5xl">
+              Most ideas die between the napkin and the launch.
+            </h2>
           </div>
-          <div className="bg-indigo-600 rounded-3xl p-10 text-white">
-            <p className="text-5xl font-black mb-2">500+</p>
-            <p className="text-indigo-200 mb-8">Builds delivered</p>
-            <p className="text-5xl font-black mb-2">10,000+</p>
-            <p className="text-indigo-200 mb-8">Hours saved for clients</p>
-            <p className="text-5xl font-black mb-2">7 days</p>
-            <p className="text-indigo-200">Average delivery time</p>
+          <div className="md:col-span-8 space-y-5 text-ink-soft leading-relaxed max-w-reading">
+            <p>
+              The brand never gets made. The site never goes live. The day to day
+              busywork eats whatever energy was left over, and eighteen months later
+              the idea is a note on somebody's phone.
+            </p>
+            <p>
+              The problem is not a lack of tools. There have never been more tools. The
+              problem is that turning an idea into a working business takes design,
+              copy, code and systems at the same time, and almost nobody starting out
+              has a team for all four.
+            </p>
+            <p>
+              So that is what the studio is. The brand, the site, the storefront and the
+              systems behind it, designed, built, tested and live in days. Not three
+              vendors, three invoices and a lot of translation between them.
+            </p>
+            <p className="text-ink font-display text-2xl leading-snug pt-2">
+              You bring the idea. We build the whole thing. You run the business.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Mission & Values */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-black text-gray-900">What We Stand For</h2>
+      {/* Where we are, plainly */}
+      <section className="bg-paper-deep px-6 py-24">
+        <div className="max-w-6xl mx-auto">
+          <div className="border-b border-rule pb-4 mb-14 flex items-baseline justify-between">
+            <p className="label">Where The Studio Is</p>
+            <p className="label hidden sm:block">No inflated numbers</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-10">
             {[
               {
-                icon: "⚡",
-                title: "Speed Without Shortcuts",
-                body: "7 days is our standard, not our ceiling. We move fast because we've shipped builds like yours dozens of times — but we never ship something untested.",
+                t: "Founded in 2026",
+                b: "New, and we say so rather than implying a decade of history that does not exist.",
               },
               {
-                icon: "🎯",
-                title: "Outcomes, Not Outputs",
-                body: "We don't just build what you ask for. We ask what problem you're trying to solve and make sure the build actually solves it — even if that means pushing back on the original brief.",
+                t: "A small number of projects at a time",
+                b: "Deliberately. It is why you get answers the same day instead of joining a queue.",
               },
               {
-                icon: "🔓",
-                title: "You Own Everything",
-                body: "Everything we build belongs to you. No lock in, no proprietary platforms. You get the full system, documentation, and credentials — use it however you want.",
+                t: "Real work only",
+                b: "Everything on the work page is live and was built here. No concepts dressed up as clients.",
               },
-              {
-                icon: "🤝",
-                title: "True Done-For-You",
-                body: "We don't send you a Zapier template and call it a day. We set it up, test it, deploy it, and walk you through it. Done-for-you means we handle everything.",
-              },
-              {
-                icon: "📈",
-                title: "Built to Scale",
-                body: "The systems we build are designed to handle 10x your current volume without breaking. We architect for growth, not just for today.",
-              },
-              {
-                icon: "💬",
-                title: "Honest Communication",
-                body: "If something isn't worth building, we'll tell you. If there's a better approach than what you asked for, we'll suggest it. You'll always know exactly what's happening.",
-              },
-            ].map((v) => (
-              <div key={v.title} className="bg-gray-50 rounded-2xl p-7">
-                <div className="text-3xl mb-4">{v.icon}</div>
-                <h3 className="font-bold text-gray-900 text-lg mb-3">{v.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{v.body}</p>
+            ].map((i) => (
+              <div key={i.t}>
+                <p className="font-display text-3xl leading-tight mb-3">{i.t}</p>
+                <p className="text-sm text-ink-soft leading-relaxed">{i.b}</p>
               </div>
             ))}
           </div>
+          <div className="mt-12">
+            <Link href="/work" className="btn-ghost">
+              See the work
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* How we work */}
-      <section className="py-20 px-6 bg-gray-950">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-black text-white mb-4">How We Work</h2>
-          <p className="text-gray-400 text-lg mb-16 max-w-2xl mx-auto">We're not an agency with 50 people and a project management system you have to learn. We're a lean, focused team that moves fast.</p>
-          <div className="grid md:grid-cols-4 gap-6 text-left">
+      {/* Stand for */}
+      <section className="px-6 py-24">
+        <div className="max-w-6xl mx-auto">
+          <div className="border-b border-rule pb-4 mb-14">
+            <p className="label">What We Stand For</p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-x-14 gap-y-12">
             {[
-              { step: "1", title: "Discovery Call", body: "30 minutes to understand your business, your current workflow pain, and what success looks like." },
-              { step: "2", title: "Build Plan", body: "We map out the full build — brand, pages, systems, tools, logic. You approve before we build anything." },
-              { step: "3", title: "Build & Test", body: "We build it, test every edge case, and document everything. No surprises on delivery." },
-              { step: "4", title: "Handoff", body: "Live walkthrough, full documentation, and support to make sure you're fully up and running." },
-            ].map((s) => (
-              <div key={s.step} className="bg-gray-900 rounded-2xl p-6 border border-gray-800">
-                <p className="text-3xl font-black text-indigo-400 mb-3">0{s.step}</p>
-                <p className="font-bold text-white mb-2">{s.title}</p>
-                <p className="text-gray-400 text-sm leading-relaxed">{s.body}</p>
+              {
+                t: "Taste is the job",
+                b: "A model can produce a hundred layouts in a minute. Knowing which one is right is the part you are actually paying for, and it does not get delegated.",
+              },
+              {
+                t: "Say the true thing",
+                b: "No invented case studies, no borrowed testimonials, no five star average from clients who do not exist. If we are early, we tell you we are early.",
+              },
+              {
+                t: "Finish what we start",
+                b: "A project is done when it is live, documented and in your hands. Not when the design file is approved.",
+              },
+              {
+                t: "No lock in",
+                b: "You own the code, the domain and the accounts. If you want to take it somewhere else next year, take it.",
+              },
+            ].map((v) => (
+              <div key={v.t}>
+                <h3 className="font-display text-3xl leading-tight mb-3">{v.t}</h3>
+                <p className="text-ink-soft leading-relaxed">{v.b}</p>
               </div>
             ))}
           </div>
@@ -125,13 +136,22 @@ export default function About() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 px-6 bg-indigo-600">
+      <section className="bg-paper-deep glow border-t border-rule px-6 py-28">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-black text-white mb-4">Let's Work Together</h2>
-          <p className="text-indigo-200 text-lg mb-8">Book a free 20-minute call. No pressure, no pitch — just an honest conversation about what we can build for you.</p>
-          <Link href="/intake" className="inline-block bg-white text-indigo-600 font-bold px-8 py-4 rounded-xl hover:bg-indigo-50 transition-colors text-lg">
-            Get Your Free AI Audit →
-          </Link>
+          <h2 className="font-display text-5xl md:text-7xl leading-[0.95] mb-8">
+            {SITE.line}
+          </h2>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link href="/intake" className="btn-primary">
+              Start a project
+            </Link>
+            <a
+              href={`mailto:${SITE.email}`}
+              className="btn border border-rule text-ink hover:bg-raised hover:border-ink/25"
+            >
+              {SITE.email}
+            </a>
+          </div>
         </div>
       </section>
     </>

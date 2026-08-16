@@ -31,45 +31,45 @@ const deliverables = [
 
 export default function ScanPage() {
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-paper min-h-screen">
       {/* Hero */}
       <section className="pt-24 pb-16 px-6 bg-gradient-to-b from-sky-50 to-white">
         <div className="max-w-3xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-sky-100 text-sky-700 text-xs font-bold px-4 py-1.5 rounded-full mb-6 uppercase tracking-wide">
+          <div className="inline-flex items-center gap-2 bg-paper-deep text-accent text-xs font-bold px-4 py-1.5 rounded-full mb-6 uppercase tracking-wide">
             One-Time Offer
           </div>
-          <h1 className="text-5xl font-black text-gray-900 leading-tight mb-6">
+          <h1 className="text-5xl font-display font-normal text-ink leading-tight mb-6">
             AI Scan &amp; Diagnosis
           </h1>
-          <p className="text-xl text-gray-500 mb-4 leading-relaxed">
+          <p className="text-xl text-ink-mute mb-4 leading-relaxed">
             We audit your business, identify your top 3 system opportunities ranked by ROI,
             and deliver a prioritized roadmap, all in 48 hours.
           </p>
-          <div className="text-4xl font-black text-sky-600 mb-8">$97</div>
+          <div className="text-4xl font-display font-normal text-accent mb-8">$97</div>
           <Link
             href="/intake"
-            className="inline-block bg-sky-600 text-white font-bold px-10 py-4 rounded-xl hover:bg-sky-700 transition-colors text-lg"
+            className="inline-block bg-accent text-white font-bold px-10 py-4 rounded-xl hover:bg-accent-deep transition-colors text-lg"
           >
             Get My AI Scan
           </Link>
-          <p className="text-sm text-gray-400 mt-4">One-time payment. No subscription. Delivered in 48 hours.</p>
+          <p className="text-sm text-ink-mute mt-4">One-time payment. No subscription. Delivered in 48 hours.</p>
         </div>
       </section>
 
       {/* Deliverables */}
       <section className="py-16 px-6">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-black text-gray-900 text-center mb-12">
+          <h2 className="text-3xl font-display font-normal text-ink text-center mb-12">
             What You Get
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
             {deliverables.map((item) => (
-              <div key={item.title} className="border border-gray-100 rounded-2xl p-6">
-                <div className="inline-block bg-sky-50 text-sky-700 text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-wide">
+              <div key={item.title} className="border border-rule rounded-xl p-6">
+                <div className="inline-block bg-paper-deep text-accent text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-wide">
                   {item.icon}
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">{item.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+                <h3 className="text-lg font-bold text-ink mb-2">{item.title}</h3>
+                <p className="text-ink-mute text-sm leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -77,13 +77,13 @@ export default function ScanPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 px-6 bg-sky-600">
+      <section className="py-16 px-6 bg-accent">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl font-black text-white mb-4">Ready to see what we&apos;d build for you?</h2>
-          <p className="text-sky-200 mb-8">Get your full AI Scan delivered in 48 hours for just $97.</p>
+          <h2 className="text-3xl font-display font-normal text-white mb-4">Ready to see what we&apos;d build for you?</h2>
+          <p className="text-paper/60 mb-8">Get your full AI Scan delivered in 48 hours for just $97.</p>
           <Link
             href="/intake"
-            className="inline-block bg-white text-sky-600 font-bold px-10 py-4 rounded-xl hover:bg-sky-50 transition-colors text-lg"
+            className="inline-block bg-paper text-accent font-bold px-10 py-4 rounded-xl hover:bg-paper-deep transition-colors text-lg"
           >
             Get My AI Scan — $97
           </Link>

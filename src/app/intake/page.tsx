@@ -54,39 +54,39 @@ function IntakeForm() {
     const note = encodeURIComponent(`FlowZone AI – ${form.service}`);
     const venmoUrl = `https://venmo.com/u/flowzoneautomation?txn=pay&amount=${amount}&note=${note}`;
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-6">
-        <div className="max-w-md w-full bg-white rounded-2xl border border-gray-200 p-10 text-center">
+      <div className="min-h-screen bg-paper-deep flex items-center justify-center px-6">
+        <div className="max-w-md w-full bg-paper rounded-xl border border-rule p-10 text-center">
           <div className="text-5xl mb-4">✅</div>
-          <h2 className="text-2xl font-black text-gray-900 mb-3">You&apos;re all set!</h2>
+          <h2 className="text-2xl font-display font-normal text-ink mb-3">You&apos;re all set!</h2>
           {amount ? (
             <>
-              <p className="text-gray-500 mb-8 leading-relaxed">
+              <p className="text-ink-mute mb-8 leading-relaxed">
                 We got your project details. Lock in your spot below and we will start on it right away.
               </p>
               <a
                 href={venmoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition-colors text-lg mb-4"
+                className="block w-full bg-accent text-white font-medium py-4 rounded-xl hover:bg-accent-deep transition-colors text-lg mb-4"
               >
                 Pay with Venmo →
               </a>
-              <p className="text-xs text-gray-400">
+              <p className="text-xs text-ink-mute">
                 You&apos;ll receive a confirmation email within 24 hours of payment.
               </p>
             </>
           ) : (
             <>
-              <p className="text-gray-500 mb-6 leading-relaxed">
+              <p className="text-ink-mute mb-6 leading-relaxed">
                 We got your project details. Since this one needs a custom scope, we will read it properly and come
                 back with a flat quote and a delivery date.
               </p>
-              <p className="text-sm text-gray-500 mb-8">
+              <p className="text-sm text-ink-mute mb-8">
                 Expect an email within 24 hours. Nothing to pay until you have the quote.
               </p>
               <a
-                href="mailto:flowzoneautomation@gmail.com"
-                className="block w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition-colors text-lg"
+                href="mailto:hello@flowzone.dev"
+                className="block w-full bg-accent text-white font-medium py-4 rounded-xl hover:bg-accent-deep transition-colors text-lg"
               >
                 Email Us Directly →
               </a>
@@ -98,58 +98,58 @@ function IntakeForm() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-20 px-6">
+    <div className="min-h-screen bg-paper-deep py-20 px-6">
       <div className="max-w-xl mx-auto">
         <div className="text-center mb-10">
-          <p className="text-blue-600 font-semibold text-sm uppercase tracking-wider mb-3">Get Started</p>
-          <h1 className="text-4xl font-black text-gray-900 mb-3">Start Your Project</h1>
-          <p className="text-gray-500">Tell us what you want built. Most projects are delivered in 7 days or less.</p>
+          <p className="text-accent font-semibold text-sm uppercase tracking-wider mb-3">Get Started</p>
+          <h1 className="text-4xl font-display font-normal text-ink mb-3">Start Your Project</h1>
+          <p className="text-ink-mute">Tell us what you want built. Most projects are delivered in 7 days or less.</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-200 p-8 space-y-5">
+        <form onSubmit={handleSubmit} className="bg-paper rounded-xl border border-rule p-8 space-y-5">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Full Name</label>
+            <label className="block text-sm font-semibold text-ink-soft mb-1.5">Full Name</label>
             <input
               type="text"
               required
               value={form.name}
               onChange={(e) => set("name", e.target.value)}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent"
               placeholder="Jane Smith"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email Address</label>
+            <label className="block text-sm font-semibold text-ink-soft mb-1.5">Email Address</label>
             <input
               type="email"
               required
               value={form.email}
               onChange={(e) => set("email", e.target.value)}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent"
               placeholder="jane@company.com"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Business Name</label>
+            <label className="block text-sm font-semibold text-ink-soft mb-1.5">Business Name</label>
             <input
               type="text"
               required
               value={form.business}
               onChange={(e) => set("business", e.target.value)}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent"
               placeholder="Acme Co."
             />
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Package</label>
+            <label className="block text-sm font-semibold text-ink-soft mb-1.5">Package</label>
             <select
               required
               value={form.service}
               onChange={(e) => set("service", e.target.value)}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+              className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent bg-paper"
             >
               <option value="">Select a package...</option>
               {services.map((s) => (
@@ -159,13 +159,13 @@ function IntakeForm() {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Tell us about the idea</label>
+            <label className="block text-sm font-semibold text-ink-soft mb-1.5">Tell us about the idea</label>
             <textarea
               required
               rows={4}
               value={form.description}
               onChange={(e) => set("description", e.target.value)}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+              className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent resize-none"
               placeholder="Describe what you want built and any tools you already use..."
             />
           </div>
@@ -173,7 +173,7 @@ function IntakeForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition-colors disabled:opacity-50"
+            className="w-full bg-accent text-white font-medium py-4 rounded-xl hover:bg-accent-deep transition-colors disabled:opacity-50"
           >
             {loading ? "Submitting..." : "Submit Project →"}
           </button>
@@ -185,7 +185,7 @@ function IntakeForm() {
 
 export default function IntakePage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-gray-50" />}>
+    <Suspense fallback={<div className="min-h-screen bg-paper-deep" />}>
       <IntakeForm />
     </Suspense>
   );

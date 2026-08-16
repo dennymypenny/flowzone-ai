@@ -55,46 +55,46 @@ const posts = [
 ];
 
 const TAG_COLORS: Record<string, string> = {
-  Tutorial: "bg-sky-100 text-sky-700",
+  Tutorial: "bg-paper-deep text-accent",
   Strategy: "bg-green-100 text-green-700",
-  Tools: "bg-blue-100 text-blue-700",
+  Tools: "bg-paper-deep text-accent",
   Finance: "bg-yellow-100 text-yellow-700",
 };
 
 export default function Blog() {
   return (
     <>
-      <section className="bg-white pt-20 pb-16 px-6 border-b border-gray-100">
+      <section className="bg-paper pt-20 pb-16 px-6 border-b border-rule">
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-sky-600 font-semibold text-sm uppercase tracking-wider mb-4">Blog</p>
-          <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6">Systems Insights</h1>
-          <p className="text-xl text-gray-500 leading-relaxed">
+          <p className="text-accent font-semibold text-sm uppercase tracking-wider mb-4">Blog</p>
+          <h1 className="text-5xl md:text-6xl font-display font-normal text-ink mb-6">Systems Insights</h1>
+          <p className="text-xl text-ink-mute leading-relaxed">
             Guides, case studies, and tutorials from the FlowZone AI team.
           </p>
         </div>
       </section>
 
-      <section className="py-20 px-6 bg-white">
+      <section className="py-20 px-6 bg-paper">
         <div className="max-w-3xl mx-auto space-y-8">
           {posts.map((post) => (
-            <article key={post.slug} className="border border-gray-100 rounded-2xl p-8 hover:border-sky-200 hover:shadow-md transition-all">
+            <article key={post.slug} className="border border-rule rounded-xl p-8 hover:border-rule hover:shadow-md transition-all">
               <div className="flex items-center gap-3 mb-4">
-                <span className={`text-xs font-bold px-3 py-1 rounded-full ${TAG_COLORS[post.tag] || "bg-gray-100 text-gray-600"}`}>
+                <span className={`text-xs font-bold px-3 py-1 rounded-full ${TAG_COLORS[post.tag] || "bg-paper-deep text-ink-soft"}`}>
                   {post.tag}
                 </span>
-                <span className="text-gray-400 text-sm">{post.date}</span>
+                <span className="text-ink-mute text-sm">{post.date}</span>
                 <span className="text-gray-300 text-sm">&middot;</span>
-                <span className="text-gray-400 text-sm">{post.readTime}</span>
+                <span className="text-ink-mute text-sm">{post.readTime}</span>
               </div>
-              <h2 className="text-2xl font-black text-gray-900 mb-3 leading-tight">
-                <Link href={`/blog/${post.slug}`} className="hover:text-sky-600 transition-colors">
+              <h2 className="text-2xl font-display font-normal text-ink mb-3 leading-tight">
+                <Link href={`/blog/${post.slug}`} className="hover:text-accent transition-colors">
                   {post.title}
                 </Link>
               </h2>
-              <p className="text-gray-500 leading-relaxed mb-4">{post.excerpt}</p>
+              <p className="text-ink-mute leading-relaxed mb-4">{post.excerpt}</p>
               <Link
                 href={`/blog/${post.slug}`}
-                className="text-sky-600 font-semibold text-sm hover:text-sky-800 transition-colors"
+                className="text-accent font-semibold text-sm hover:text-sky-800 transition-colors"
               >
                 Read more &rarr;
               </Link>
@@ -103,13 +103,13 @@ export default function Blog() {
         </div>
       </section>
 
-      <section className="py-16 px-6 bg-sky-50 border-t border-sky-100">
+      <section className="py-16 px-6 bg-paper-deep border-t border-rule">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-2xl font-black text-gray-900 mb-4">Ready to build the whole thing?</h2>
-          <p className="text-gray-500 mb-6">Tell us the idea. We will come back with a plan in 24 hours.</p>
+          <h2 className="text-2xl font-display font-normal text-ink mb-4">Ready to build the whole thing?</h2>
+          <p className="text-ink-mute mb-6">Tell us the idea. We will come back with a plan in 24 hours.</p>
           <Link
             href="/intake"
-            className="inline-block bg-sky-600 text-white font-bold px-8 py-4 rounded-xl hover:bg-sky-700 transition-colors"
+            className="inline-block bg-accent text-white font-bold px-8 py-4 rounded-xl hover:bg-accent-deep transition-colors"
           >
             Get Your Free Build Plan &rarr;
           </Link>

@@ -201,9 +201,9 @@ const posts: Post[] = [
 ];
 
 const TAG_COLORS: Record<string, string> = {
-  Tutorial: "bg-sky-100 text-sky-700",
+  Tutorial: "bg-paper-deep text-accent",
   Strategy: "bg-green-100 text-green-700",
-  Tools: "bg-blue-100 text-blue-700",
+  Tools: "bg-paper-deep text-accent",
   Finance: "bg-yellow-100 text-yellow-700",
 };
 
@@ -225,17 +225,17 @@ export async function generateMetadata({
 function renderBlock(block: Block, i: number) {
   switch (block.type) {
     case "h2":
-      return <h2 key={i} className="text-2xl font-black text-gray-900 mt-10 mb-4">{block.text}</h2>;
+      return <h2 key={i} className="text-2xl font-display font-normal text-ink mt-10 mb-4">{block.text}</h2>;
     case "h3":
-      return <h3 key={i} className="text-lg font-bold text-gray-800 mt-6 mb-2">{block.text}</h3>;
+      return <h3 key={i} className="text-lg font-bold text-ink-soft mt-6 mb-2">{block.text}</h3>;
     case "p":
-      return <p key={i} className="text-gray-600 leading-relaxed mb-4">{block.text}</p>;
+      return <p key={i} className="text-ink-soft leading-relaxed mb-4">{block.text}</p>;
     case "ul":
       return (
         <ul key={i} className="list-none space-y-2 mb-6">
           {block.items.map((item, j) => (
-            <li key={j} className="flex items-start gap-2 text-gray-600">
-              <span className="text-sky-500 font-bold mt-0.5">&#10003;</span>
+            <li key={j} className="flex items-start gap-2 text-ink-soft">
+              <span className="text-accent font-bold mt-0.5">&#10003;</span>
               <span>{item}</span>
             </li>
           ))}
@@ -243,7 +243,7 @@ function renderBlock(block: Block, i: number) {
       );
     case "callout":
       return (
-        <div key={i} className="bg-sky-50 border-l-4 border-sky-500 rounded-xl p-5 my-6">
+        <div key={i} className="bg-paper-deep border-l-4 border-sky-500 rounded-xl p-5 my-6">
           <p className="text-sky-800 font-medium leading-relaxed">{block.text}</p>
         </div>
       );
@@ -263,39 +263,39 @@ export default async function BlogPost({
 
   return (
     <>
-      <section className="bg-white pt-20 pb-10 px-6 border-b border-gray-100">
+      <section className="bg-paper pt-20 pb-10 px-6 border-b border-rule">
         <div className="max-w-2xl mx-auto">
-          <Link href="/blog" className="text-sky-600 text-sm font-semibold hover:text-sky-800 transition-colors mb-6 inline-block">
+          <Link href="/blog" className="text-accent text-sm font-semibold hover:text-sky-800 transition-colors mb-6 inline-block">
             &larr; Back to Blog
           </Link>
           <div className="flex items-center gap-3 mb-5">
-            <span className={`text-xs font-bold px-3 py-1 rounded-full ${TAG_COLORS[post.tag] || "bg-gray-100 text-gray-600"}`}>
+            <span className={`text-xs font-bold px-3 py-1 rounded-full ${TAG_COLORS[post.tag] || "bg-paper-deep text-ink-soft"}`}>
               {post.tag}
             </span>
-            <span className="text-gray-400 text-sm">{post.date}</span>
+            <span className="text-ink-mute text-sm">{post.date}</span>
             <span className="text-gray-300 text-sm">&middot;</span>
-            <span className="text-gray-400 text-sm">{post.readTime}</span>
+            <span className="text-ink-mute text-sm">{post.readTime}</span>
           </div>
-          <h1 className="text-3xl md:text-4xl font-black text-gray-900 leading-tight mb-4">
+          <h1 className="text-3xl md:text-4xl font-display font-normal text-ink leading-tight mb-4">
             {post.title}
           </h1>
-          <p className="text-lg text-gray-500 leading-relaxed">{post.excerpt}</p>
+          <p className="text-lg text-ink-mute leading-relaxed">{post.excerpt}</p>
         </div>
       </section>
 
-      <section className="py-12 px-6 bg-white">
+      <section className="py-12 px-6 bg-paper">
         <div className="max-w-2xl mx-auto">
           {post.content.map((block, i) => renderBlock(block, i))}
         </div>
       </section>
 
-      <section className="py-16 px-6 bg-sky-50 border-t border-sky-100">
+      <section className="py-16 px-6 bg-paper-deep border-t border-rule">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-2xl font-black text-gray-900 mb-4">Ready to build the whole thing?</h2>
-          <p className="text-gray-500 mb-6">Tell us the idea. We will come back with a plan in 24 hours.</p>
+          <h2 className="text-2xl font-display font-normal text-ink mb-4">Ready to build the whole thing?</h2>
+          <p className="text-ink-mute mb-6">Tell us the idea. We will come back with a plan in 24 hours.</p>
           <Link
             href="/intake"
-            className="inline-block bg-sky-600 text-white font-bold px-8 py-4 rounded-xl hover:bg-sky-700 transition-colors"
+            className="inline-block bg-accent text-white font-bold px-8 py-4 rounded-xl hover:bg-accent-deep transition-colors"
           >
             Get Your Free Build Plan &rarr;
           </Link>

@@ -7,19 +7,19 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicy() {
   return (
-    <main className="bg-white min-h-screen">
+    <main className="bg-paper min-h-screen">
       <div className="max-w-3xl mx-auto px-6 py-20">
-        <p className="text-sm text-sky-600 font-semibold uppercase tracking-wide mb-3">Legal</p>
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Privacy Policy</h1>
-        <p className="text-gray-500 text-sm mb-12">Effective date: March 1, 2025 &nbsp;&middot;&nbsp; Last updated: March 22, 2026</p>
+        <p className="text-sm text-accent font-semibold uppercase tracking-wide mb-3">Legal</p>
+        <h1 className="text-4xl font-bold text-ink mb-4">Privacy Policy</h1>
+        <p className="text-ink-mute text-sm mb-12">Effective date: March 1, 2025 &nbsp;&middot;&nbsp; Last updated: March 22, 2026</p>
 
-        <div className="prose prose-gray max-w-none space-y-10 text-gray-700 leading-relaxed">
+        <div className="prose prose-gray max-w-none space-y-10 text-ink-soft leading-relaxed">
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">1. Who We Are</h2>
+            <h2 className="text-xl font-bold text-ink mb-3">1. Who We Are</h2>
             <p>
               FlowZone AI (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) is a done-for-you AI systems
-              agency operating at <a href="https://flowzone.dev" className="text-sky-600 hover:underline">flowzone.dev</a>.
+              agency operating at <a href="https://flowzone.dev" className="text-accent hover:underline">flowzone.dev</a>.
               We build custom workflow systems for small and mid-size businesses using tools such as Make.com,
               Zapier, Airtable, and other no-code/low-code platforms. This Privacy Policy explains how we collect,
               use, disclose, and protect information when you visit our website or engage our services.
@@ -27,7 +27,7 @@ export default function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">2. Information We Collect</h2>
+            <h2 className="text-xl font-bold text-ink mb-3">2. Information We Collect</h2>
             <p className="mb-3"><strong>Information you provide directly:</strong></p>
             <ul className="list-disc pl-6 space-y-2 mb-4">
               <li>Name and email address when you submit our contact or intake form, or book a free AI Audit.</li>
@@ -44,7 +44,7 @@ export default function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">3. How We Use Your Information</h2>
+            <h2 className="text-xl font-bold text-ink mb-3">3. How We Use Your Information</h2>
             <p className="mb-3">We use the information we collect to:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Deliver, manage, and improve our systems services.</li>
@@ -58,7 +58,7 @@ export default function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">4. Information Sharing</h2>
+            <h2 className="text-xl font-bold text-ink mb-3">4. Information Sharing</h2>
             <p className="mb-3">We may share your information with trusted third parties solely to operate our business:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li><strong>Service providers:</strong> Stripe (payments), Google Workspace (email), Vercel (website hosting), Airtable, Make.com, Zapier, and similar platforms used to deliver your system project.</li>
@@ -69,7 +69,7 @@ export default function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">5. Data Retention</h2>
+            <h2 className="text-xl font-bold text-ink mb-3">5. Data Retention</h2>
             <p>
               We retain your personal information for as long as necessary to fulfill the purposes described in this
               policy, maintain business records, and comply with legal obligations. Project-related records are typically
@@ -79,7 +79,7 @@ export default function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">6. Cookies</h2>
+            <h2 className="text-xl font-bold text-ink mb-3">6. Cookies</h2>
             <p>
               Our website uses cookies and similar technologies to analyze traffic and improve your experience. These include:
             </p>
@@ -93,7 +93,7 @@ export default function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">7. Data Security</h2>
+            <h2 className="text-xl font-bold text-ink mb-3">7. Data Security</h2>
             <p>
               We implement industry-standard technical and organizational measures to protect your information against
               unauthorized access, loss, or disclosure. However, no method of transmission over the internet is 100%
@@ -102,7 +102,7 @@ export default function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">8. Your Rights</h2>
+            <h2 className="text-xl font-bold text-ink mb-3">8. Your Rights</h2>
             <p className="mb-3">Depending on your location, you may have the right to:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Access the personal information we hold about you.</li>
@@ -113,15 +113,15 @@ export default function PrivacyPolicy() {
             </ul>
             <p className="mt-4">
               To exercise any of these rights, email us at{" "}
-              <a href="mailto:flowzoneautomation@gmail.com" className="text-sky-600 hover:underline">
-                flowzoneautomation@gmail.com
+              <a href="mailto:hello@flowzone.dev" className="text-accent hover:underline">
+                hello@flowzone.dev
               </a>.
               We will respond within 30 days.
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">9. Children&rsquo;s Privacy</h2>
+            <h2 className="text-xl font-bold text-ink mb-3">9. Children&rsquo;s Privacy</h2>
             <p>
               Our services are intended for business use by individuals 18 years of age or older. We do not
               knowingly collect personal information from children. If you believe a child has submitted information
@@ -130,7 +130,7 @@ export default function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">10. Changes to This Policy</h2>
+            <h2 className="text-xl font-bold text-ink mb-3">10. Changes to This Policy</h2>
             <p>
               We may update this Privacy Policy from time to time. When we do, we will revise the &ldquo;Last updated&rdquo;
               date at the top of this page. We encourage you to review this page periodically. Continued use of our
@@ -139,14 +139,14 @@ export default function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">11. Contact Us</h2>
+            <h2 className="text-xl font-bold text-ink mb-3">11. Contact Us</h2>
             <p>
               If you have any questions about this Privacy Policy, please contact us:
             </p>
-            <div className="mt-4 bg-sky-50 border border-sky-100 rounded-xl p-6">
-              <p className="font-semibold text-gray-900">FlowZone AI</p>
-              <p className="text-gray-600 mt-1">Email: <a href="mailto:flowzoneautomation@gmail.com" className="text-sky-600 hover:underline">flowzoneautomation@gmail.com</a></p>
-              <p className="text-gray-600">Website: <a href="https://flowzone.dev" className="text-sky-600 hover:underline">flowzone.dev</a></p>
+            <div className="mt-4 bg-paper-deep border border-rule rounded-xl p-6">
+              <p className="font-semibold text-ink">FlowZone AI</p>
+              <p className="text-ink-soft mt-1">Email: <a href="mailto:hello@flowzone.dev" className="text-accent hover:underline">hello@flowzone.dev</a></p>
+              <p className="text-ink-soft">Website: <a href="https://flowzone.dev" className="text-accent hover:underline">flowzone.dev</a></p>
             </div>
           </section>
 

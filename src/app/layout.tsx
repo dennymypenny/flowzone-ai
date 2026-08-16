@@ -2,36 +2,33 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: {
-    default: "FlowZone AI | Creative and Business Studio",
+    default: "FlowZone AI | Creative Studio",
     template: "%s | FlowZone AI",
   },
-  description:
-    "FlowZone AI is a creative and business studio. We turn ideas into brands, sites and systems that make money. Free audit and custom build plan delivered in 24 hours.",
-  metadataBase: new URL("https://flowzone.dev"),
+  description: `${SITE.line} ${SITE.descriptor}`,
+  metadataBase: new URL(SITE.url),
   openGraph: {
     siteName: "FlowZone AI",
     type: "website",
-    title: "FlowZone AI — Creative and Business Studio",
-    description:
-      "We turn ideas into brands, sites and systems that make money. Designed, built and delivered in days, not months.",
+    title: "FlowZone AI, a creative studio",
+    description: `${SITE.line} ${SITE.descriptor}`,
   },
-    twitter: {
-        card: "summary_large_image",
-            title: "FlowZone AI — Creative and Business Studio",
-                description: "We turn ideas into brands, sites and systems that make money. Designed, built and delivered in days, not months.",
-                  },
+  twitter: {
+    card: "summary_large_image",
+    title: "FlowZone AI, a creative studio",
+    description: `${SITE.line} ${SITE.descriptor}`,
+  },
   keywords: [
     "creative studio",
-    "business studio",
-    "business systems",
-    "done-for-you systems",
+    "brand identity studio",
     "website design and build",
-    "brand launch",
-    "ecommerce storefront",
-    "AI systems",
+    "ecommerce storefront design",
+    "brand and site studio",
+    "small studio",
   ],
 };
 
@@ -41,9 +38,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&display=swap"
+          rel="stylesheet"
+        />
       </head>
-      <body className="antialiased">
+      <body className="antialiased bg-paper text-ink">
         <Nav />
         <main className="pt-16">{children}</main>
         <Footer />
