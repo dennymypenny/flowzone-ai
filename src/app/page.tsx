@@ -16,25 +16,25 @@ export default function Home() {
 
         <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-20 md:pt-32 md:pb-28">
 
-          <h1 className="start start-2 display text-[3rem] sm:text-6xl md:text-[5.25rem] max-w-4xl">
+          <h1 className="display text-[3rem] sm:text-6xl md:text-[5.25rem] max-w-4xl">
             You imagine it.
             <br />
             We get it <span className="text-accent">moving</span>.
           </h1>
 
-          <p className="start start-3 text-xl md:text-2xl text-ink leading-snug max-w-3xl mt-8 font-light">
+          <p className="text-xl md:text-2xl text-ink leading-snug max-w-3xl mt-8 font-light">
             FlowZone is the jumpstart. Arrive with an intention, leave with the
             running thing. Brand, site and system, built for you start to finish and
             live in days.
           </p>
 
-          <p className="start start-4 text-base text-ink-soft leading-relaxed max-w-reading mt-5 font-light">
+          <p className="text-base text-ink-soft leading-relaxed max-w-reading mt-5 font-light">
             Brand identity is what we are best at, the mark and the words and the feel,
             and we carry it straight through everything we build. AI gives us the
             speed. Humans give it the taste.
           </p>
 
-          <div className="start start-5 flex flex-col sm:flex-row gap-3 mt-10">
+          <div className="flex flex-col sm:flex-row gap-3 mt-10">
             <a href={SITE.mailto} className="btn-primary">
               Start an email <span className="arrow">→</span>
             </a>
@@ -44,7 +44,7 @@ export default function Home() {
           </div>
 
           {/* Value at a glance */}
-          <div className="start start-5 mt-16 grid grid-cols-2 lg:grid-cols-5 border-t border-l border-rule">
+          <div className="mt-16 grid grid-cols-2 lg:grid-cols-5 border-t border-l border-rule">
             {[
               { i: "📦", k: "What you get", v: "Brand, site and system", c: "#5B9BF9" },
               { i: "🙌", k: "How much you do", v: "Almost nothing. 100% done for you", c: "#2DD4BF" },

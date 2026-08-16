@@ -103,20 +103,7 @@ body {
    ------------------------------------------------------------------ */
 
 @layer utilities {
-  /* Hero pieces arrive in sequence, left to right down the page */
-  .start {
-    animation: start 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-  .start-1 { animation-delay: 0.05s; }
-  .start-2 { animation-delay: 0.16s; }
-  .start-3 { animation-delay: 0.27s; }
-  .start-4 { animation-delay: 0.38s; }
-  .start-5 { animation-delay: 0.5s; }
 
-  @keyframes start {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: none; }
-  }
 
   /* The connector between the three parts, charging left to right */
   .flowline {
@@ -158,7 +145,6 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .start,
     .flowline::after,
   .pulse-1,
   .pulse-2,
