@@ -45,6 +45,7 @@ export default function VideoSpark({ topic }: { topic: string }) {
   const [phase, setPhase] = useState<"idle" | "loading" | "rendering" | "done" | "failed">("idle");
   const [progress, setProgress] = useState(0);
   const [videoUrl, setVideoUrl] = useState("");
+  const [ext, setExt] = useState("webm");
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const abort = useRef(false);
 
@@ -115,23 +116,38 @@ export default function VideoSpark({ topic }: { topic: string }) {
       ];
       const total = scenes.reduce((n, s) => n + s.ms, 0);
 
-      // 3. Record the canvas as an actual file.
+      // 3. Record the canvas as an actual file. Browsers disagree about
+      // formats, so try progressively simpler options until one takes.
       const stream = canvas.captureStream(30);
-      const mime =
-        MediaRecorder.isTypeSupported("video/webm;codecs=vp9")
-          ? "video/webm;codecs=vp9"
-          : MediaRecorder.isTypeSupported("video/webm")
-            ? "video/webm"
-            : "video/mp4";
-      const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 5_000_000 });
+      const attempts: MediaRecorderOptions[] = [
+        { mimeType: "video/webm;codecs=vp9", videoBitsPerSecond: 5_000_000 },
+        { mimeType: "video/webm", videoBitsPerSecond: 5_000_000 },
+        { mimeType: "video/mp4" },
+        {},
+      ];
+      let rec: MediaRecorder | null = null;
+      for (const opt of attempts) {
+        try {
+          rec = new MediaRecorder(stream, opt);
+          break;
+        } catch {
+          /* try the next shape */
+        }
+      }
+      if (!rec) throw new Error("recorder unavailable");
+      const outType = rec.mimeType || "video/webm";
       const chunks: BlobPart[] = [];
       rec.ondataavailable = (e) => e.data.size && chunks.push(e.data);
       const finished = new Promise<Blob>((resolve) => {
-        rec.onstop = () => resolve(new Blob(chunks, { type: mime.split(";")[0] }));
+        rec!.onstop = () => resolve(new Blob(chunks, { type: outType.split(";")[0] }));
       });
 
       setPhase("rendering");
-      rec.start(250);
+      try {
+        rec.start(250);
+      } catch {
+        rec.start();
+      }
       const t0 = performance.now();
 
       await new Promise<void>((resolve) => {
@@ -233,6 +249,7 @@ export default function VideoSpark({ topic }: { topic: string }) {
       rec.stop();
       const blob = await finished;
       if (abort.current) return;
+      setExt(blob.type.includes("mp4") ? "mp4" : "webm");
       setVideoUrl(URL.createObjectURL(blob));
       setProgress(100);
       setPhase("done");
@@ -300,7 +317,7 @@ export default function VideoSpark({ topic }: { topic: string }) {
           <div className="flex gap-3 mt-4">
             <a
               href={videoUrl}
-              download={`${topic.replace(/\s+/g, "-")}-reel.webm`}
+              download={`${topic.replace(/\s+/g, "-")}-reel.${ext}`}
               className="btn-primary !px-5 !py-2.5 text-sm"
             >
               ⬇️ Keep the video

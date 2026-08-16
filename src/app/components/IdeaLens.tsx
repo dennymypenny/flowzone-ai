@@ -46,10 +46,13 @@ export default function IdeaLens() {
     }
   }, []);
 
+  const [failed, setFailed] = useState(false);
+
   const fetchShots = async (query: string) => {
     const term = query.trim();
     if (!term) return;
     setBusy(true);
+    setFailed(false);
     try {
       const res = await fetch(`/api/moodboard?q=${encodeURIComponent(term)}`);
       const data = await res.json();
@@ -57,9 +60,13 @@ export default function IdeaLens() {
         setShots(data.shots);
         setIdx(0);
         setShown(term);
+      } else {
+        setShots([]);
+        setFailed(true);
       }
     } catch {
-      /* the frame just stays as it was */
+      setShots([]);
+      setFailed(true);
     } finally {
       setBusy(false);
     }
@@ -104,7 +111,7 @@ export default function IdeaLens() {
         <div className="flex items-center gap-4 rounded-2xl border border-rule bg-paper-deep/70 p-3 pr-5 max-w-xl">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={chosen.thumb}
+            src={`/api/imageproxy?src=${encodeURIComponent(chosen.thumb)}`}
             alt={chosen.q}
             className="w-16 h-16 object-cover rounded-xl border border-white/15"
           />
@@ -159,6 +166,20 @@ export default function IdeaLens() {
         </div>
       </div>
 
+      {failed && !busy && (
+        <div className="mt-6 flex items-center gap-4">
+          <p className="text-sm text-ink-soft font-light">
+            Could not pull photos just now. It happens.
+          </p>
+          <button
+            onClick={() => fetchShots(q || shown)}
+            className="text-xs border border-rule text-ink px-3 py-2 hover:border-accent transition-colors"
+          >
+            Try again
+          </button>
+        </div>
+      )}
+
       {shot && (
         <div className="mt-8 max-w-2xl">
           <p className="label mb-4">This is {shown} · like it or roll another</p>
@@ -171,8 +192,9 @@ export default function IdeaLens() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 key={shot.id}
-                src={shot.thumb}
+                src={`/api/imageproxy?src=${encodeURIComponent(shot.thumb)}`}
                 alt={shown}
+                onError={() => setIdx((i) => (i + 1) % Math.max(1, shots.length))}
                 className="w-full h-[300px] sm:h-[380px] object-cover block"
                 style={{ animation: "ideain 0.5s cubic-bezier(0.22, 1, 0.36, 1) both" }}
               />
