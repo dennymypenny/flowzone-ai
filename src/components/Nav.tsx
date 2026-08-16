@@ -14,8 +14,6 @@ const LINKS = [
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
-  const [blogOpen, setBlogOpen] = useState(false);
-  const [mobileBlogOpen, setMobileBlogOpen] = useState(false);
 
   return (
     <nav className="fixed top-[3px] w-full bg-white border-b border-[#E8EEF7] z-50">
@@ -35,38 +33,6 @@ export default function Nav() {
               {l.label}
             </Link>
           ))}
-          <div
-            className="relative"
-            onMouseEnter={() => {
-              clearTimeout((window as any)._blogTimer);
-              setBlogOpen(true);
-            }}
-            onMouseLeave={() => {
-              (window as any)._blogTimer = setTimeout(() => setBlogOpen(false), 150);
-            }}
-          >
-            <button className="flex items-center gap-1 text-sm text-[#3F4A5C] hover:text-accent transition-colors">
-              Journal
-              <svg
-                className={`w-3 h-3 transition-transform ${blogOpen ? "rotate-180" : ""}`}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            {blogOpen && (
-              <div className="absolute top-full pt-2 left-0 mt-2 w-44 bg-white border border-[#E8EEF7] shadow-sm py-1 z-50">
-                <Link href="/blog" className="block px-4 py-2.5 text-sm text-[#3F4A5C] hover:text-accent hover:bg-[#F4F7FC] transition-colors">
-                  Writing
-                </Link>
-                <Link href="/ai-news" className="block px-4 py-2.5 text-sm text-[#3F4A5C] hover:text-accent hover:bg-[#F4F7FC] transition-colors">
-                  AI News
-                </Link>
-              </div>
-            )}
-          </div>
           <a href={SITE.mailto} className="btn-primary !px-5 !py-2.5">
             Start an email
           </a>
@@ -94,26 +60,6 @@ export default function Nav() {
               {l.label}
             </Link>
           ))}
-          <button
-            className="flex items-center justify-between text-sm text-[#3F4A5C] text-left w-full"
-            onClick={() => setMobileBlogOpen(!mobileBlogOpen)}
-          >
-            Journal
-            <svg
-              className={`w-3 h-3 transition-transform ${mobileBlogOpen ? "rotate-180" : ""}`}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-          {mobileBlogOpen && (
-            <div className="pl-4 flex flex-col gap-3 -mt-1">
-              <Link href="/blog" className="text-sm text-[#647089]" onClick={() => setOpen(false)}>Writing</Link>
-              <Link href="/ai-news" className="text-sm text-[#647089]" onClick={() => setOpen(false)}>AI News</Link>
-            </div>
-          )}
           <a href={SITE.mailto} className="btn-primary w-full" onClick={() => setOpen(false)}>
             Start an email
           </a>

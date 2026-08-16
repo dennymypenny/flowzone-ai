@@ -24,6 +24,7 @@ type Path = {
   name: string;
   blurb: string;
   build: string;
+  previewLine: string;
   buildWhy: string;
   // Path-specific prompts, keyed by step id
   chips: Record<string, string[]>;
@@ -38,6 +39,7 @@ const PATHS: Path[] = [
     name: "Starting from nothing",
     blurb: "There is an idea and not much else yet. It needs a name, a look and a voice before anything can be built.",
     build: "The Identity Build",
+    previewLine: "Something worth naming.",
     buildWhy:
       "You are at the beginning, so the mark, the palette, the type and the voice come first. Everything after it gets built against those decisions instead of guessing.",
     chips: {
@@ -58,6 +60,7 @@ const PATHS: Path[] = [
     name: "I want to sell things",
     blurb: "Products, real ones, and a place to sell them properly instead of through DMs and screenshots.",
     build: "The Storefront Build",
+    previewLine: "Shop the drop.",
     buildWhy:
       "You need a real shop: product pages built for how your buyers decide, a cart, and checkout that takes money without you touching it.",
     chips: {
@@ -78,6 +81,7 @@ const PATHS: Path[] = [
     name: "I need a proper site",
     blurb: "The business is real. The site is not doing it justice, or does not exist at all.",
     build: "The Site Build",
+    previewLine: "Work with us.",
     buildWhy:
       "The business exists, so this is about the place people land. Custom design against your brand, words written for you, and forms that reach your inbox.",
     chips: {
@@ -98,6 +102,7 @@ const PATHS: Path[] = [
     name: "The manual work is eating me",
     blurb: "The launch went fine. Now you are doing the same jobs by hand every day and it does not scale.",
     build: "The Engine Build",
+    previewLine: "It runs itself now.",
     buildWhy:
       "The front is working, so the fix is behind it. Intake, booking, invoicing and reporting wired up so the day to day runs without you.",
     chips: {
@@ -111,6 +116,18 @@ const PATHS: Path[] = [
       win: "What would you do with the time it gives back?",
     },
   },
+];
+
+
+type Palette = { id: string; name: string; ink: string; bg: string; a: string; b: string };
+
+const PALETTES: Palette[] = [
+  { id: "quiet", name: "Premium and quiet", bg: "#0E0F12", ink: "#F4F1EA", a: "#C8A96A", b: "#6E7076" },
+  { id: "loud", name: "Loud and fun", bg: "#140A1E", ink: "#FFFFFF", a: "#FF3D9A", b: "#38E1FF" },
+  { id: "clean", name: "Clean and trusted", bg: "#0B1220", ink: "#F1F5FB", a: "#3B82F6", b: "#93C5FD" },
+  { id: "warm", name: "Warm and human", bg: "#17110C", ink: "#FBF3E8", a: "#E2703A", b: "#C9A227" },
+  { id: "sharp", name: "Sharp and technical", bg: "#08110E", ink: "#E9FFF6", a: "#22C55E", b: "#0EA5E9" },
+  { id: "nostalgic", name: "Nostalgic", bg: "#141019", ink: "#FDF6E3", a: "#B45309", b: "#7C3AED" },
 ];
 
 type Step = {
@@ -233,6 +250,9 @@ export default function WorkSession() {
   }, [answers, pathId, step, started, loaded]);
 
   const path = PATHS.find((p) => p.id === pathId) || null;
+  const palette =
+    PALETTES.find((p) => p.id === (answers.palette || "")) || PALETTES[2];
+  const projectName = (answers.name || "").trim();
   const answered = STEPS.filter((s) => (answers[s.id] || "").trim()).length;
   const rank = RANKS[answered] || RANKS[0];
   const onPathPick = step === 1;
@@ -260,7 +280,9 @@ export default function WorkSession() {
 
   const brief = () =>
     [
+      `NAME — ${projectName || "Not named yet"}`,
       `PATH — ${path ? path.name : "Not chosen"}`,
+      `DIRECTION — ${palette.name}`,
       ...STEPS.map(
         (s) => `${s.eyebrow.toUpperCase()} — ${s.q}\n${(answers[s.id] || "").trim() || "—"}`
       ),
@@ -401,8 +423,182 @@ export default function WorkSession() {
   const chipsFor = (id: string) => (path && path.chips[id]) || [];
   const hintFor = (s: Step) => (path && path.focus[s.id]) || s.hint;
 
+
+  // Everything the visitor has decided so far, drawn as the thing itself.
+  const VisionPanel = () => {
+    const shownName = projectName || "Your thing";
+    const dim = !projectName;
+    return (
+      <div className="lg:sticky lg:top-24">
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-[11px] font-medium uppercase tracking-label text-ink-mute">
+            Taking shape
+          </p>
+          <p className="text-[11px] font-medium uppercase tracking-label text-ink-mute">
+            Live
+          </p>
+        </div>
+
+        <div
+          className="border border-rule overflow-hidden transition-colors duration-700"
+          style={{ background: palette.bg }}
+        >
+          {/* browser chrome */}
+          <div
+            className="flex items-center gap-2 px-4 py-3 border-b"
+            style={{ borderColor: "rgba(255,255,255,0.08)" }}
+          >
+            <span className="w-2 h-2" style={{ background: palette.a }} />
+            <span className="w-2 h-2" style={{ background: palette.b }} />
+            <span className="w-2 h-2" style={{ background: "rgba(255,255,255,0.18)" }} />
+            <span
+              className="ml-2 text-[10px] tracking-wide truncate"
+              style={{ color: "rgba(255,255,255,0.35)" }}
+            >
+              {projectName
+                ? projectName.toLowerCase().replace(/[^a-z0-9]+/g, "") + ".com"
+                : "yourthing.com"}
+            </span>
+          </div>
+
+          <div className="p-6" style={{ minHeight: 300 }}>
+            {/* the mark, drawn from the palette */}
+            <div className="flex items-center gap-2.5 mb-6">
+              <span className="w-3.5 h-3.5 block" style={{ background: palette.a }} />
+              <span className="w-3.5 h-3.5 block" style={{ background: palette.b }} />
+              <span
+                className="text-[15px] font-semibold tracking-tight transition-opacity duration-500"
+                style={{ color: palette.ink, opacity: dim ? 0.35 : 1 }}
+              >
+                {shownName}
+              </span>
+            </div>
+
+            {/* headline area */}
+            <p
+              className="text-[26px] leading-[1.1] font-semibold tracking-tight mb-3 transition-opacity duration-500"
+              style={{ color: palette.ink, opacity: dim ? 0.25 : 1 }}
+            >
+              {path ? path.previewLine : "Your line goes here."}
+            </p>
+            <p
+              className="text-[12px] leading-relaxed mb-6"
+              style={{ color: palette.ink, opacity: 0.5 }}
+            >
+              {(answers.what || "").trim().slice(0, 110) ||
+                "Your idea, in your own words, appears here as you type it."}
+            </p>
+
+            <div className="flex gap-2 mb-7">
+              <span
+                className="text-[11px] px-3 py-2 font-medium"
+                style={{ background: palette.a, color: palette.bg }}
+              >
+                {path && path.id === "shop" ? "Shop now" : "Get in touch"}
+              </span>
+              <span
+                className="text-[11px] px-3 py-2 font-medium"
+                style={{ border: `1px solid ${palette.ink}33`, color: palette.ink }}
+              >
+                Learn more
+              </span>
+            </div>
+
+            {/* the body of the mock changes with the path */}
+            {path && path.id === "shop" && (
+              <div className="grid grid-cols-3 gap-2">
+                {[0, 1, 2].map((i) => (
+                  <div key={i}>
+                    <div
+                      className="w-full mb-1.5"
+                      style={{
+                        height: 62,
+                        background: i === 1 ? palette.a : `${palette.ink}12`,
+                        opacity: i === 1 ? 0.85 : 1,
+                      }}
+                    />
+                    <div className="w-3/4 h-1.5 mb-1" style={{ background: `${palette.ink}26` }} />
+                    <div className="w-1/3 h-1.5" style={{ background: palette.b }} />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {path && path.id === "system" && (
+              <div className="space-y-2">
+                {[
+                  ["New enquiry", palette.a],
+                  ["Booking confirmed", palette.b],
+                  ["Invoice paid", palette.a],
+                ].map(([label, col], i) => (
+                  <div
+                    key={i}
+                    className="flex items-center justify-between px-3 py-2.5"
+                    style={{ background: `${palette.ink}0D` }}
+                  >
+                    <span className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 block" style={{ background: col as string }} />
+                      <span className="text-[11px]" style={{ color: palette.ink, opacity: 0.75 }}>
+                        {label as string}
+                      </span>
+                    </span>
+                    <span className="text-[10px]" style={{ color: palette.ink, opacity: 0.35 }}>
+                      auto
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {path && (path.id === "brand" || path.id === "site") && (
+              <div className="space-y-2.5">
+                <div className="w-full h-1.5" style={{ background: `${palette.ink}1F` }} />
+                <div className="w-5/6 h-1.5" style={{ background: `${palette.ink}1F` }} />
+                <div className="w-2/3 h-1.5" style={{ background: `${palette.ink}1F` }} />
+                <div className="flex gap-2 pt-3">
+                  <span className="w-10 h-10 block" style={{ background: palette.a }} />
+                  <span className="w-10 h-10 block" style={{ background: palette.b }} />
+                  <span className="w-10 h-10 block" style={{ background: `${palette.ink}1A` }} />
+                </div>
+              </div>
+            )}
+
+            {!path && (
+              <div className="space-y-2.5">
+                <div className="w-full h-1.5" style={{ background: `${palette.ink}14` }} />
+                <div className="w-4/6 h-1.5" style={{ background: `${palette.ink}14` }} />
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* the palette strip */}
+        <div className="border border-rule border-t-0 px-4 py-3 flex items-center justify-between gap-3">
+          <p className="text-[11px] font-medium uppercase tracking-label text-ink-mute">
+            {palette.name}
+          </p>
+          <div className="flex gap-1.5">
+            {[palette.a, palette.b, palette.ink, palette.bg].map((c) => (
+              <span
+                key={c}
+                className="w-4 h-4 block border border-rule transition-colors duration-500"
+                style={{ background: c }}
+              />
+            ))}
+          </div>
+        </div>
+
+        <p className="text-[11px] text-ink-mute font-light mt-3 leading-relaxed">
+          A sketch, not a promise. It moves as you answer, so you can see the idea
+          take a shape instead of only describing it.
+        </p>
+      </div>
+    );
+  };
+
   return (
-    <div className="panel overflow-hidden">
+    <div className="grid lg:grid-cols-12 gap-6 items-start">
+      <div className="lg:col-span-7 panel overflow-hidden">
       {/* Session bar */}
       <div className="flex flex-wrap items-center justify-between gap-4 px-6 py-4 border-b border-rule bg-paper-deep">
         <div className="flex items-center gap-3">
@@ -519,10 +715,70 @@ export default function WorkSession() {
               </p>
             </div>
 
+            {step === 2 && (
+              <div className="mb-7 pb-7 border-b border-rule">
+                <label
+                  htmlFor="fz-name"
+                  className="block text-sm mb-2"
+                  style={{ color: "#5B8CFF" }}
+                >
+                  What is it called?
+                </label>
+                <p className="text-[13px] text-ink-mute font-light mb-2.5">
+                  A working name is fine. Watch it appear in the sketch.
+                </p>
+                <input
+                  id="fz-name"
+                  value={answers.name || ""}
+                  onChange={(e) => setAnswers({ ...answers, name: e.target.value })}
+                  placeholder="Working name"
+                  className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule px-4 py-3 text-sm font-light outline-none focus:border-accent transition-colors"
+                />
+              </div>
+            )}
+
             <h3 className="font-display text-2xl md:text-3xl mb-3">{current.q}</h3>
             <p className="text-sm text-ink-soft font-light leading-relaxed max-w-reading mb-6">
               {hintFor(current)}
             </p>
+
+            {current.id === "feel" && (
+              <div className="mb-6">
+                <p className="label mb-3">Pick a direction and watch it change</p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  {PALETTES.map((p) => (
+                    <button
+                      key={p.id}
+                      onClick={() => {
+                        setAnswers({
+                          ...answers,
+                          palette: p.id,
+                          feel: (answers.feel || "").includes(p.name)
+                            ? answers.feel
+                            : ((answers.feel || "").trim()
+                                ? (answers.feel || "").trim() + "\n"
+                                : "") + p.name,
+                        });
+                      }}
+                      className="border p-3 text-left transition-colors"
+                      style={{
+                        borderColor: answers.palette === p.id ? p.a : "#1D2942",
+                        background: answers.palette === p.id ? "rgba(255,255,255,0.03)" : "transparent",
+                      }}
+                    >
+                      <span className="flex gap-1 mb-2.5">
+                        <span className="w-4 h-4 block" style={{ background: p.a }} />
+                        <span className="w-4 h-4 block" style={{ background: p.b }} />
+                        <span className="w-4 h-4 block" style={{ background: p.bg, border: "1px solid #1D2942" }} />
+                      </span>
+                      <span className="block text-[11px] text-ink-soft leading-snug">
+                        {p.name}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {chipsFor(current.id).length > 0 && (
               <div className="flex flex-wrap gap-2 mb-5">
@@ -672,6 +928,11 @@ export default function WorkSession() {
           </p>
         </div>
       )}
+      </div>
+
+      <div className="lg:col-span-5">
+        <VisionPanel />
+      </div>
     </div>
   );
 }
