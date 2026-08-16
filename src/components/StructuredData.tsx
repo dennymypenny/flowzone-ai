@@ -16,6 +16,17 @@ export default function StructuredData() {
         alternateName: ["FlowZone", "FlowZone Studio", "flowzone.dev"],
         url: SITE.url,
         email: SITE.email,
+        telephone: SITE.phone,
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            contactType: "sales",
+            telephone: SITE.phone,
+            email: SITE.email,
+            areaServed: "US",
+            availableLanguage: "English",
+          },
+        ],
         slogan: "You imagine it. We get it moving.",
         description: SITE.descriptor,
         logo: {

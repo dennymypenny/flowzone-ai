@@ -23,10 +23,11 @@ export const SITE = {
   linkedin: "https://www.linkedin.com/company/116623924/",
   linkedinFounder: "https://www.linkedin.com/in/dennisvaldesjr/",
 
-  // Instant contact. Set this to a number in E.164 form (for example
-  // "+16195551234") and every Message us button starts a text to it. Left
-  // empty, those buttons quietly fall back to email so nothing ever breaks.
-  phone: "",
+  // Instant contact. E.164 for the sms: link, readable form for anything a
+  // human looks at. Left empty, every Text us button quietly falls back to
+  // email so nothing ever breaks.
+  phone: "+17863337887",
+  phoneDisplay: "(786) 333-7887",
 
   // Prefilled mailto used by every primary CTA
   mailto:

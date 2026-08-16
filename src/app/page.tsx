@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ChatWidget from "@/app/components/ChatWidget";
 import WorkSession from "@/app/components/WorkSession";
+import MessageUs from "@/components/MessageUs";
 import { SITE, PILLARS } from "@/lib/site";
 
 export const metadata = {
@@ -37,9 +38,7 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 mt-10">
-            <a href={SITE.mailto} className="btn-primary">
-              Start an email <span className="arrow">→</span>
-            </a>
+            <MessageUs className="btn-primary" />
             <Link href="/work" className="btn-ghost">
               See the work <span className="arrow">→</span>
             </Link>
@@ -617,13 +616,14 @@ export default function Home() {
             date. No discovery call required.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href={SITE.mailto} className="btn-primary">
+            <MessageUs className="btn-primary" />
+            <a href={SITE.mailto} className="btn-ghost">
               Start an email <span className="arrow">→</span>
             </a>
-            <Link href="/pricing" className="btn-ghost">
-              See pricing first
-            </Link>
           </div>
+          <p className="text-[12px] text-ink-mute mt-6">
+            Texts land on a phone, not in a queue. {SITE.phoneDisplay}
+          </p>
         </div>
       </section>
     </>

@@ -46,6 +46,14 @@ export default function Talk() {
             </p>
             <div className="mt-auto">
               <MessageUs className="btn-primary w-full" />
+              {hasPhone && (
+                <p className="text-[12px] text-ink-mute mt-3.5">
+                  Or save it:{" "}
+                  <a href={`tel:${SITE.phone}`} className="text-ink-soft hover:text-accent transition-colors">
+                    {SITE.phoneDisplay}
+                  </a>
+                </p>
+              )}
             </div>
           </div>
 
