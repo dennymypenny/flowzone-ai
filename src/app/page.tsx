@@ -672,7 +672,7 @@ export default function Home() {
             </a>
           </div>
           <p className="text-[12px] text-ink-mute mt-6">
-            Texts land on a phone, not in a queue. {SITE.phoneDisplay}
+            Messages land with a person, not in a queue. {SITE.phoneDisplay}
           </p>
         </div>
       </section>

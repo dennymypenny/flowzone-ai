@@ -41,7 +41,7 @@ export default function Talk() {
           <div className="panel p-8 flex flex-col relative overflow-hidden">
             <span className="absolute top-0 left-0 h-[3px] w-full bg-[#34D399]" />
             <span className="block mb-5 mt-1"><Icon name="chat" size={22} color="#2DD4BF" /></span>
-            <h2 className="font-display text-2xl mb-2">Text us</h2>
+            <h2 className="font-display text-2xl mb-2">Message us</h2>
             <p className="text-sm text-[#34D399] mb-5">Fastest. Lands on a phone.</p>
             <p className="text-sm text-ink-soft font-light leading-relaxed mb-7">
               {hasPhone

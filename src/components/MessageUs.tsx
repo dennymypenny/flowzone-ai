@@ -26,7 +26,7 @@ export default function MessageUs({
   const live = Boolean(SITE.phone);
   return (
     <a href={messageHref()} className={className}>
-      {label || (live ? "Text us now" : "Start an email")}{" "}
+      {label || (live ? "Start the conversation" : "Start the conversation")}{" "}
       <span className="arrow">→</span>
     </a>
   );
