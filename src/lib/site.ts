@@ -18,8 +18,9 @@ export const SITE = {
   // Where lead notifications are actually delivered. Server side only.
   leadInbox: "flowzoneautomation@gmail.com",
 
-  // Denny's only real social. Keep it visible.
-  linkedin: "https://www.linkedin.com/in/dennisvaldesjr/",
+  // LinkedIn is the only social the studio actually works. Keep it visible.
+  linkedin: "https://www.linkedin.com/company/116623924/",
+  linkedinFounder: "https://www.linkedin.com/in/dennisvaldesjr/",
 
   url: "https://flowzone.dev",
 } as const;

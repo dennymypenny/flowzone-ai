@@ -30,11 +30,16 @@ export default function Home() {
             <span className="text-accent">taste</span>.
           </h1>
 
-          <p className="lede max-w-reading mt-8">
-            FlowZone is a creative studio. Brand identity is what we are best at, the
-            mark and the words and the feel, and we carry it straight through the site
-            and the systems behind it. One studio, the whole build. A model does the
-            fast part. A person decides what is good.
+          <p className="text-xl md:text-2xl text-ink leading-snug max-w-3xl mt-8 font-light">
+            One studio takes your company from a blank page to a live brand, a live
+            site and the systems that run them. Flat price, agreed up front. Live in
+            days, not months.
+          </p>
+
+          <p className="text-base text-ink-soft leading-relaxed max-w-reading mt-5 font-light">
+            Brand identity is what we are best at, the mark and the words and the feel,
+            and we carry it straight through everything we build. A model does the fast
+            part. A person decides what is good.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 mt-10">
@@ -44,6 +49,21 @@ export default function Home() {
             <Link href="/work" className="btn-ghost">
               See the work
             </Link>
+          </div>
+
+          {/* Value at a glance */}
+          <div className="mt-16 grid grid-cols-2 lg:grid-cols-4 border-t border-l border-rule">
+            {[
+              ["What you get", "Brand, site and system"],
+              ["How long", "Most builds live in 7 days"],
+              ["What it costs", "Flat, from $997, paid once"],
+              ["What you own", "All of it. Code, domain, accounts"],
+            ].map(([k, v]) => (
+              <div key={k} className="border-b border-r border-rule px-5 py-6">
+                <p className="label mb-2.5">{k}</p>
+                <p className="text-sm text-ink font-light leading-snug">{v}</p>
+              </div>
+            ))}
           </div>
 
           {/* Hero product panel */}
@@ -157,24 +177,29 @@ export default function Home() {
       {/* ---------- Proof points ---------- */}
       <section className="border-t border-rule px-6 py-24">
         <div className="max-w-6xl mx-auto">
-          <p className="label mb-14">How it works here</p>
+          <div className="mb-14">
+            <p className="label mb-6">Why a company hires us</p>
+            <h2 className="display text-4xl md:text-5xl max-w-3xl">
+              One vendor, one price, one person accountable.
+            </h2>
+          </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
             {[
               {
-                k: "A person signs off",
-                v: "Every layout, headline and color decision gets looked at by a human before it ships. That is the whole point of the studio.",
+                k: "You stop managing vendors",
+                v: "A designer, a copywriter, a developer and someone to wire the tools together is four contracts and four handoffs. Here it is one studio and one thread of email.",
               },
               {
-                k: "Flat price, paid once",
-                v: "You know the number before we start. No hourly billing, no retainer you forget to cancel.",
+                k: "You know the number first",
+                v: "Flat price agreed before work starts. No hourly billing, no scope creep invoice at the end, no retainer you forget to cancel.",
               },
               {
-                k: "You own everything",
-                v: "The code, the domain, the accounts, the content. We hand over the keys and nothing is held hostage.",
+                k: "You launch in a week",
+                v: "Most builds are live in seven days. That is the difference between testing an idea this month and testing it next quarter.",
               },
               {
-                k: "Live in days",
-                v: "Most builds ship inside a week. It matters, but it is the last reason to hire us, not the first.",
+                k: "You own the asset",
+                v: "The code, the domain, the accounts, the content. Nothing is held hostage and there is no platform you have to keep paying us for.",
               },
             ].map((s) => (
               <div key={s.k}>

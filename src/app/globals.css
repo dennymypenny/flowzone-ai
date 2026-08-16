@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 :root {
-  --paper: #0A0B0E;
+  --paper: #080D18;
   --ink: #F1F3F7;
   color-scheme: dark;
 }
@@ -26,7 +26,7 @@ body {
 
 ::selection {
   background: #5B8CFF;
-  color: #0A0B0E;
+  color: #080D18;
 }
 
 /* Square edges everywhere. No pills, no rounded corners.
@@ -59,13 +59,13 @@ body {
     @apply inline-flex items-center justify-center gap-2 text-sm font-medium px-6 py-3 transition-colors duration-200;
   }
   .btn-primary {
-    @apply btn bg-accent text-[#0A0B0E] hover:bg-accent-light;
+    @apply btn bg-accent text-[#08111F] hover:bg-accent-light;
   }
   .btn-ghost {
     @apply btn border border-rule text-ink hover:bg-raised hover:border-ink/25;
   }
   .btn-onink {
-    @apply btn bg-paper text-ink hover:bg-accent hover:text-[#0A0B0E];
+    @apply btn bg-paper text-ink hover:bg-accent hover:text-[#08111F];
   }
 
   .panel {
@@ -76,14 +76,14 @@ body {
 @layer utilities {
   .glow {
     background-image:
-      radial-gradient(58rem 30rem at 14% -12%, rgba(91, 140, 255, 0.20), transparent 62%),
-      radial-gradient(44rem 26rem at 86% -4%, rgba(91, 140, 255, 0.10), transparent 60%);
+      radial-gradient(58rem 30rem at 14% -12%, rgba(91, 155, 249, 0.22), transparent 62%),
+      radial-gradient(44rem 26rem at 86% -4%, rgba(30, 58, 138, 0.35), transparent 62%);
   }
 
   .grid-bg {
     background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      linear-gradient(to right, rgba(150, 190, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(150, 190, 255, 0.05) 1px, transparent 1px);
     background-size: 72px 72px;
   }
 

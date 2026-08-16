@@ -15,19 +15,20 @@ const config: Config = {
       },
       colors: {
         // Dark canvas
-        paper: "#0A0B0E",
-        "paper-deep": "#0F1116",
-        raised: "#14171E",
-        rule: "#22262E",
+        paper: "#080D18",
+        "paper-deep": "#0B1322",
+        raised: "#101A2C",
+        rule: "#1D2942",
         // Type
         ink: "#F1F3F7",
-        "ink-soft": "#9BA3B0",
-        "ink-mute": "#646C79",
+        "ink-soft": "#9AA7BE",
+        "ink-mute": "#647089",
         // Brand blue, light end of the family
         accent: "#5B8CFF",
         "accent-deep": "#3D6FE8",
         "accent-light": "#A8C4FF",
-        "accent-pale": "#D6E2FF",
+        "accent-pale": "#C6E4F8",
+        "brand-navy": "#1E3A8A",
       },
       letterSpacing: {
         label: "0.16em",

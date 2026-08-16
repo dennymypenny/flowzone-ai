@@ -102,10 +102,18 @@ export default function About() {
               </div>
             ))}
           </div>
-          <div className="mt-12">
+          <div className="mt-12 flex flex-col sm:flex-row gap-3">
             <Link href="/work" className="btn-ghost">
               See the work
             </Link>
+            <a
+              href={SITE.linkedinFounder}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-ghost"
+            >
+              The founder on LinkedIn
+            </a>
           </div>
         </div>
       </section>

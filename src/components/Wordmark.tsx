@@ -1,7 +1,15 @@
 /**
  * FlowZone mark: three connected dots, no container and no background.
- * Sits directly on whatever surface it is placed on.
+ * Colors taken from Denny's brand artwork: deep navy, brand blue, ice blue,
+ * joined by pale connectors, with a soft glow.
  */
+export const MARK = {
+  deep: "#1E3A8A",
+  mid: "#5B9BF9",
+  pale: "#C6E4F8",
+  link: "#DDEEFB",
+} as const;
+
 export default function Wordmark({
   showName = true,
   className = "",
@@ -22,11 +30,22 @@ export default function Wordmark({
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden
       >
-        <line x1="10" y1="9" x2="24" y2="9" stroke="#5B8CFF" strokeOpacity="0.35" strokeWidth="1.5" />
-        <line x1="34" y1="9" x2="48" y2="9" stroke="#5B8CFF" strokeOpacity="0.35" strokeWidth="1.5" />
-        <circle cx="6" cy="9" r="5.5" fill="#5B8CFF" />
-        <circle cx="29" cy="9" r="5.5" fill="#8FB2FF" />
-        <circle cx="52" cy="9" r="5.5" fill="#D6E2FF" />
+        <defs>
+          <filter id="fzGlow" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="1.6" result="b" />
+            <feMerge>
+              <feMergeNode in="b" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        <g filter="url(#fzGlow)">
+          <line x1="10.5" y1="9" x2="23.5" y2="9" stroke={MARK.link} strokeWidth="1.2" />
+          <line x1="34.5" y1="9" x2="46.5" y2="9" stroke={MARK.link} strokeWidth="1.2" />
+          <circle cx="6" cy="9" r="5.6" fill={MARK.deep} />
+          <circle cx="29" cy="9" r="5.6" fill={MARK.mid} />
+          <circle cx="52" cy="9" r="5.6" fill={MARK.pale} />
+        </g>
       </svg>
       {showName && (
         <span className="font-display text-[17px] leading-none">FlowZone</span>
