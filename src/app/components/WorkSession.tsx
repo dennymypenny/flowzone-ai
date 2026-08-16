@@ -408,6 +408,35 @@ export default function WorkSession() {
     a.click();
   };
 
+  const [saveEmail, setSaveEmail] = useState("");
+  const [saveState, setSaveState] = useState<"idle" | "sending" | "done" | "error">("idle");
+
+  const saveByEmail = async () => {
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(saveEmail)) {
+      setSaveState("error");
+      return;
+    }
+    setSaveState("sending");
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: saveEmail,
+          brief: brief(),
+          name: projectName,
+          path: path ? path.name : "",
+          build: path ? path.build : "",
+          source: "work session",
+        }),
+      });
+      if (!res.ok) throw new Error("failed");
+      setSaveState("done");
+    } catch {
+      setSaveState("error");
+    }
+  };
+
   const reset = () => {
     setAnswers({});
     setPathId(null);
@@ -888,6 +917,58 @@ export default function WorkSession() {
                   </p>
                 </div>
               ))}
+            </div>
+
+            <div className="border border-rule p-6 mb-8">
+              <div className="flex items-center gap-2.5 mb-3">
+                <span className="w-1.5 h-1.5 bg-accent block" />
+                <p className="text-[11px] font-medium uppercase tracking-label text-ink-mute">
+                  Save it to your email
+                </p>
+              </div>
+              {saveState === "done" ? (
+                <p className="text-sm text-ink-soft font-light leading-relaxed">
+                  Sent. Your brief is in your inbox, and it is yours to keep. Reply to
+                  it whenever you want us to build it.
+                </p>
+              ) : (
+                <>
+                  <p className="text-sm text-ink-soft font-light leading-relaxed mb-4">
+                    Right now this only exists in this browser. Clear your history and
+                    it is gone. Send yourself a copy you actually own.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <input
+                      type="email"
+                      value={saveEmail}
+                      onChange={(e) => {
+                        setSaveEmail(e.target.value);
+                        if (saveState === "error") setSaveState("idle");
+                      }}
+                      onKeyDown={(e) => e.key === "Enter" && saveByEmail()}
+                      placeholder="you@example.com"
+                      className="flex-1 min-w-0 bg-paper-deep text-ink placeholder-ink-mute border border-rule px-4 py-3 text-sm font-light outline-none focus:border-accent transition-colors"
+                    />
+                    <button
+                      onClick={saveByEmail}
+                      disabled={saveState === "sending"}
+                      className="btn-primary shrink-0 disabled:opacity-50"
+                    >
+                      {saveState === "sending" ? "Sending..." : "Email it to me"}
+                    </button>
+                  </div>
+                  {saveState === "error" && (
+                    <p className="text-[12px] text-[#FBBF24] mt-2.5">
+                      That did not send. Check the address, or use the download buttons
+                      below instead.
+                    </p>
+                  )}
+                  <p className="text-[12px] text-ink-mute font-light mt-3">
+                    One email with your brief in it. You can also just download it below
+                    and give us nothing, which is a completely fine choice.
+                  </p>
+                </>
+              )}
             </div>
 
             <div className="flex flex-wrap items-center gap-3 pt-6 border-t border-rule">

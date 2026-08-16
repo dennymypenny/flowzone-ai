@@ -17,15 +17,15 @@ export async function POST(req: NextRequest) {
     await resend.emails.send({
       from: "FlowZone AI <onboarding@resend.dev>",
       to: SITE.leadInbox,
-      subject: `New Audit Request: ${name} — ${business}`,
-      html: `<div style="font-family:sans-serif;max-width:600px"><h2 style="color:#1E3A8A">New Free AI Audit Request</h2><p><b>Name:</b> ${name}</p><p><b>Email:</b> <a href="mailto:${email}">${email}</a></p><p><b>Business:</b> ${business}</p><p><b>Wants built:</b> ${systemsList}</p>${otherDetails ? `<p><b>Details:</b> ${otherDetails}</p>` : ""}<hr/><p style="color:#888;font-size:12px">Submitted via flowzone.dev/intake</p></div>`,
+      subject: `New project: ${name} — ${business}`,
+      html: `<div style="font-family:sans-serif;max-width:600px"><h2 style="color:#1E3A8A">New project enquiry</h2><p><b>Name:</b> ${name}</p><p><b>Email:</b> <a href="mailto:${email}">${email}</a></p><p><b>Business:</b> ${business}</p><p><b>Wants built:</b> ${systemsList}</p>${otherDetails ? `<p><b>Details:</b> ${otherDetails}</p>` : ""}<hr/><p style="color:#888;font-size:12px">Submitted via flowzone.dev/intake</p></div>`,
     });
 
     await resend.emails.send({
       from: "FlowZone AI <onboarding@resend.dev>",
       to: email,
-      subject: "Your Free AI Audit is Being Prepared",
-      html: `<div style="font-family:sans-serif;max-width:600px"><h2 style="color:#1E3A8A">You're in, ${name}!</h2><p>Thanks for reaching out. We're reviewing your system needs for <b>${business}</b> and will send your custom plan within a few hours.</p><div style="background:#EFF6FF;border-radius:12px;padding:20px;margin:24px 0"><p style="font-weight:bold;color:#1E3A8A;margin:0 0 8px">What happens next:</p><p style="color:#3B82F6;margin:4px 0">✓ We map out your systems</p><p style="color:#3B82F6;margin:4px 0">✓ You get a same-day response</p><p style="color:#3B82F6;margin:4px 0">✓ Live in 48 hours after kickoff</p></div><p style="color:#888;font-size:13px">— The FlowZone AI Team</p></div>`,
+      subject: "Got it. Reading it now.",
+      html: `<div style="font-family:sans-serif;max-width:600px"><h2 style="color:#0B1322">Got it, ${name}.</h2><p style="color:#4A5568;line-height:1.6">A person is reading this, not a queue. You will get back which of the three parts you actually need for <b>${business}</b>, what it costs, and a date.</p><div style="background:#F4F6FA;padding:20px;margin:24px 0;border-left:3px solid #5B8CFF"><p style="font-weight:600;color:#0B1322;margin:0 0 10px">What comes back</p><p style="color:#4A5568;margin:4px 0">Which build fits, and why</p><p style="color:#4A5568;margin:4px 0">A flat price, agreed before anything starts</p><p style="color:#4A5568;margin:4px 0">A date, and it is the one we work to</p></div><p style="color:#888;font-size:13px">FlowZone · You imagine it. We get it moving.</p></div>`,
     });
 
     return NextResponse.json({ success: true });
