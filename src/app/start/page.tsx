@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import StartModes from "@/app/components/StartModes";
 import IdeaLens from "@/app/components/IdeaLens";
 import FlowPath from "@/app/components/FlowPath";
+import Arrival from "@/app/components/Arrival";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -44,6 +45,7 @@ function DotHeading({
 export default function Start() {
   return (
     <>
+      <Arrival />
       <section className="relative overflow-hidden px-6 pt-24 pb-6">
         <div className="absolute inset-0 aurora drift pointer-events-none" />
         <div className="absolute inset-0 gridlight pointer-events-none" />
@@ -60,7 +62,7 @@ export default function Start() {
           </div>
           <h1 className="display text-5xl md:text-8xl max-w-4xl">
             <span className="text-gradient-white">Enter</span>{" "}
-            <span className="text-gradient">Flow Mode</span>
+            <span className="text-gradient">the Flow</span>
             <span className="text-gradient-white">.</span>
           </h1>
           <p className="lede max-w-reading mt-10">

@@ -84,9 +84,19 @@ export default function IdeaLens() {
       if (saved) setChosen(JSON.parse(saved));
       const ups = window.localStorage.getItem(UPLOADS_KEY);
       if (ups) setUploadCount((JSON.parse(ups) as string[]).length);
+      // A thought grabbed mid-ride lands here, already searching.
+      const grabbed = window.sessionStorage.getItem("flowzone.ride.idea");
+      if (grabbed) {
+        window.sessionStorage.removeItem("flowzone.ride.idea");
+        setChosen(null);
+        window.localStorage.removeItem(KEY);
+        setQ(grabbed);
+        fetchShots(grabbed);
+      }
     } catch {
       /* ignore */
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /** Immersion: real footage of the idea fills the room behind the page. */

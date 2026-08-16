@@ -1,30 +1,50 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 /**
- * The ride into Flow Mode, first person.
+ * The ride into Flow Mode, first person, with stops.
  *
- * Click, and you become the ball. The screen goes full warp: you fly
- * forward through a field of thoughts, loose words and sparks of the
- * kind Flow Mode is made of, streaking past as you accelerate, until
- * the light washes over and you arrive at /start. About a second and
- * a half. Reduced motion skips straight there.
+ * Click and you become the ball. Phase one: launch, the field starts
+ * streaming. Phase two: cruise, and options float toward you out of the
+ * dark, real starting points you can grab mid-flight. Grab one and you
+ * boost: the field floors it, the light swallows the screen, and you
+ * land in Flow Mode with that idea already loaded and searching. Ignore
+ * them and after a while the ride boosts on its own, empty handed but
+ * still moving. Reduced motion skips straight to /start.
  */
 
 const COLORS = ["#1E3A8A", "#5B9BF9", "#C6E4F8", "#FFFFFF", "#5B8CFF"];
-const THOUGHTS = [
+const DRIFT_WORDS = [
   "an idea",
   "a name",
   "a logo",
   "colours",
   "the words",
-  "a shop",
   "a video",
   "the brief",
   "a vibe",
-  "the feeling",
   "go",
+];
+
+/** The options you can grab on the way in. */
+const GATES = [
+  { icon: "🍞", label: "a bakery" },
+  { icon: "💈", label: "a barbershop" },
+  { icon: "👟", label: "a sneaker shop" },
+  { icon: "🏋️", label: "a gym" },
+  { icon: "🌮", label: "a taco truck" },
+  { icon: "✨", label: "my own thing" },
+];
+
+/** Scattered seats so the gates feel spatial, not like a menu. */
+const SEATS = [
+  { x: 22, y: 30, d: 0 },
+  { x: 74, y: 26, d: 400 },
+  { x: 16, y: 66, d: 800 },
+  { x: 80, y: 64, d: 1200 },
+  { x: 34, y: 82, d: 1600 },
+  { x: 60, y: 45, d: 2000 },
 ];
 
 type Star = { a: number; r: number; s: number; c: string };
@@ -34,6 +54,28 @@ export default function FlowRide({ className = "" }: { className?: string }) {
   const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [riding, setRiding] = useState(false);
+  const [cruise, setCruise] = useState(false);
+  // speed lives in a ref so the render loop feels it instantly
+  const boost = useRef(0); // 0 = cruising, ramps to 1 when boosting
+  const boosting = useRef(false);
+  const alive = useRef(false);
+
+  useEffect(() => {
+    return () => {
+      alive.current = false;
+    };
+  }, []);
+
+  const land = (idea?: string) => {
+    if (idea && idea !== "my own thing") {
+      try {
+        window.sessionStorage.setItem("flowzone.ride.idea", idea);
+      } catch {
+        /* ignore */
+      }
+    }
+    boosting.current = true;
+  };
 
   const go = () => {
     const reduced =
@@ -45,11 +87,15 @@ export default function FlowRide({ className = "" }: { className?: string }) {
     }
     router.prefetch("/start");
     setRiding(true);
+    setCruise(false);
+    boost.current = 0;
+    boosting.current = false;
+    alive.current = true;
 
-    // Let the overlay mount, then fly.
     window.requestAnimationFrame(() => {
       const canvas = canvasRef.current;
-      if (!canvas) {
+      const c = canvas?.getContext("2d");
+      if (!canvas || !c) {
         router.push("/start");
         return;
       }
@@ -58,11 +104,6 @@ export default function FlowRide({ className = "" }: { className?: string }) {
       const h = window.innerHeight;
       canvas.width = w * dpr;
       canvas.height = h * dpr;
-      const c = canvas.getContext("2d");
-      if (!c) {
-        router.push("/start");
-        return;
-      }
       c.setTransform(dpr, 0, 0, dpr, 0, 0);
       const cx = w / 2;
       const cy = h / 2;
@@ -74,37 +115,52 @@ export default function FlowRide({ className = "" }: { className?: string }) {
         s: 0.5 + Math.random() * 1.4,
         c: COLORS[(Math.random() * COLORS.length) | 0],
       }));
-      const thoughts: Thought[] = THOUGHTS.map((wd, i) => ({
-        a: (i / THOUGHTS.length) * Math.PI * 2 + Math.random() * 0.5,
+      const thoughts: Thought[] = DRIFT_WORDS.map((wd, i) => ({
+        a: (i / DRIFT_WORDS.length) * Math.PI * 2 + Math.random() * 0.5,
         r: 40 + Math.random() * (maxR * 0.5),
         s: 0.7 + Math.random() * 0.6,
         w: wd,
       }));
 
-      const D = 1500;
+      const LAUNCH = 1100;
+      const CRUISE_MAX = 7000; // auto-boost if nothing grabbed
+      const BOOST = 1300;
       const t0 = performance.now();
+      let boostT0 = 0;
       c.fillStyle = "#0C1424";
       c.fillRect(0, 0, w, h);
+      window.setTimeout(() => setCruise(true), LAUNCH);
 
       const tick = (now: number) => {
-        const p = Math.min(1, (now - t0) / D);
-        // accelerate: gentle, then flooring it
-        const v = 1.012 + p * p * 0.11;
+        if (!alive.current) return;
+        const t = now - t0;
 
-        c.fillStyle = "rgba(12, 20, 36, 0.32)";
+        // ramp into boost when grabbed, or when patience runs out
+        if (!boostT0 && (boosting.current || t > LAUNCH + CRUISE_MAX)) {
+          boostT0 = now;
+          setCruise(false);
+        }
+        const bp = boostT0 ? Math.min(1, (now - boostT0) / BOOST) : 0;
+        boost.current = bp;
+
+        // launch ramps up, cruise floats, boost floors it
+        const launch = Math.min(1, t / LAUNCH);
+        const v = 1.004 + launch * 0.014 + bp * bp * 0.13;
+
+        c.fillStyle = `rgba(12, 20, 36, ${0.34 - bp * 0.08})`;
         c.fillRect(0, 0, w, h);
         c.lineCap = "round";
 
         for (const st of stars) {
           const r0 = st.r;
-          st.r = st.r * v + st.s * (0.4 + p * 3);
+          st.r = st.r * v + st.s * (0.25 + launch * 0.9 + bp * 3.4);
           const x0 = cx + Math.cos(st.a) * r0;
           const y0 = cy + Math.sin(st.a) * r0;
           const x1 = cx + Math.cos(st.a) * st.r;
           const y1 = cy + Math.sin(st.a) * st.r;
           c.strokeStyle = st.c;
-          c.globalAlpha = Math.min(0.9, 0.25 + (st.r / maxR) * 0.75);
-          c.lineWidth = 0.8 + (st.r / maxR) * 2.6;
+          c.globalAlpha = Math.min(0.9, 0.22 + (st.r / maxR) * 0.75);
+          c.lineWidth = 0.8 + (st.r / maxR) * (1.6 + bp * 1.6);
           c.beginPath();
           c.moveTo(x0, y0);
           c.lineTo(x1, y1);
@@ -115,39 +171,43 @@ export default function FlowRide({ className = "" }: { className?: string }) {
           }
         }
 
-        // thoughts drift past you
         c.textAlign = "center";
         for (const th of thoughts) {
-          th.r = th.r * (v + 0.004);
+          th.r = th.r * (v + 0.003);
           const x = cx + Math.cos(th.a) * th.r;
           const y = cy + Math.sin(th.a) * th.r;
           const near = Math.min(1, th.r / (maxR * 0.75));
-          c.globalAlpha = Math.max(0, Math.min(0.85, near * 1.1 - 0.1)) * (1 - p * 0.4);
+          c.globalAlpha = Math.max(0, Math.min(0.7, near * 0.9 - 0.05)) * (1 - bp * 0.5);
           c.fillStyle = "#DCE8FA";
-          c.font = `300 ${Math.round(13 + near * 30 * th.s)}px Poppins, system-ui, sans-serif`;
+          c.font = `300 ${Math.round(12 + near * 26 * th.s)}px Poppins, system-ui, sans-serif`;
           c.fillText(th.w, x, y);
           if (th.r > maxR + 80) {
             th.r = 30 + Math.random() * 80;
             th.a = Math.random() * Math.PI * 2;
-            th.w = THOUGHTS[(Math.random() * THOUGHTS.length) | 0];
+            th.w = DRIFT_WORDS[(Math.random() * DRIFT_WORDS.length) | 0];
           }
         }
         c.globalAlpha = 1;
 
-        // the light you are flying into
-        const glow = c.createRadialGradient(cx, cy, 0, cx, cy, 90 + p * 260);
-        glow.addColorStop(0, `rgba(198, 228, 248, ${0.15 + p * 0.85})`);
-        glow.addColorStop(0.5, `rgba(91, 155, 249, ${0.08 + p * 0.4})`);
+        const glow = c.createRadialGradient(cx, cy, 0, cx, cy, 70 + launch * 80 + bp * 320);
+        glow.addColorStop(0, `rgba(198, 228, 248, ${0.1 + launch * 0.1 + bp * 0.8})`);
+        glow.addColorStop(0.5, `rgba(91, 155, 249, ${0.05 + bp * 0.4})`);
         glow.addColorStop(1, "rgba(12, 20, 36, 0)");
         c.fillStyle = glow;
         c.fillRect(0, 0, w, h);
 
-        if (p < 1) {
-          window.requestAnimationFrame(tick);
-        } else {
+        if (boostT0 && bp >= 1) {
+          alive.current = false;
+          try {
+            window.sessionStorage.setItem("flowzone.ride.arrived", "1");
+          } catch {
+            /* ignore */
+          }
           router.push("/start");
           window.setTimeout(() => setRiding(false), 900);
+          return;
         }
+        window.requestAnimationFrame(tick);
       };
       window.requestAnimationFrame(tick);
     });
@@ -168,8 +228,43 @@ export default function FlowRide({ className = "" }: { className?: string }) {
       </button>
 
       {riding && (
-        <div className="fixed inset-0 z-[90] pointer-events-none" aria-hidden>
-          <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+        <div className="fixed inset-0 z-[90]" aria-hidden={!cruise}>
+          <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
+
+          {cruise && (
+            <div className="absolute inset-0">
+              <p
+                className="absolute left-1/2 -translate-x-1/2 top-[12%] label !text-ink-soft"
+                style={{ animation: "ideain 0.8s cubic-bezier(0.22,1,0.36,1) both" }}
+              >
+                Grab a thought on the way in
+              </p>
+              {GATES.map((g, i) => {
+                const seat = SEATS[i % SEATS.length];
+                return (
+                  <button
+                    key={g.label}
+                    onClick={() => land(g.label)}
+                    className="absolute -translate-x-1/2 -translate-y-1/2 chip !text-[13px] !normal-case !tracking-normal hover:!border-accent hover:scale-110 transition-all"
+                    style={{
+                      left: `${seat.x}%`,
+                      top: `${seat.y}%`,
+                      animation: `gatein 5.5s cubic-bezier(0.16, 1, 0.3, 1) ${seat.d}ms both`,
+                    }}
+                  >
+                    <span aria-hidden>{g.icon}</span> {g.label}
+                  </button>
+                );
+              })}
+              <button
+                onClick={() => land()}
+                className="absolute left-1/2 -translate-x-1/2 bottom-[10%] text-xs text-ink-mute hover:text-ink transition-colors"
+                style={{ animation: "ideain 1s cubic-bezier(0.22,1,0.36,1) 800ms both" }}
+              >
+                Just fly →
+              </button>
+            </div>
+          )}
         </div>
       )}
     </>

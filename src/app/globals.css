@@ -299,6 +299,30 @@ button {
     }
   }
 
+  /* Decelerating out of the warp on arrival */
+  @keyframes arrive-fade {
+    from { opacity: 1; transform: scale(1.15); }
+    to { opacity: 0; transform: scale(1); }
+  }
+
+  /* Option gates approaching out of the dark during the ride */
+  @keyframes gatein {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.25);
+      filter: blur(6px);
+    }
+    35% {
+      opacity: 1;
+      filter: blur(0);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.15);
+      filter: blur(0);
+    }
+  }
+
   /* Idea photos arriving from depth */
   @keyframes ideain {
     from {
