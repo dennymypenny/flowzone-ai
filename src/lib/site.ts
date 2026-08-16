@@ -32,6 +32,7 @@ export const PILLARS = [
     name: "Brand",
     // Colors come straight off the three dots in the mark. Left to right.
     color: "#4C7BE8",
+    icon: "🎨",
     line: "What people recognize you by.",
     lead: true,
     body:
@@ -42,6 +43,7 @@ export const PILLARS = [
     num: "02",
     name: "Site",
     color: "#5B9BF9",
+    icon: "🌐",
     line: "Where people decide.",
     body:
       "A marketing site or a full storefront, designed against your brand rather than a theme. Fast, mobile first and deployed on your own domain.",
@@ -51,6 +53,7 @@ export const PILLARS = [
     num: "03",
     name: "System",
     color: "#C6E4F8",
+    icon: "⚙️",
     line: "What keeps running after launch.",
     body:
       "The unglamorous part that decides whether the brand survives contact with real customers. Lead intake, booking, invoicing, reporting, built in and tested.",

@@ -53,15 +53,21 @@ export default function Home() {
           {/* Value at a glance */}
           <div className="mt-16 grid grid-cols-2 lg:grid-cols-5 border-t border-l border-rule">
             {[
-              ["What you get", "Brand, site and system"],
-              ["How much you do", "Almost nothing. 100% done for you"],
-              ["How long", "Most builds live in 7 days"],
-              ["What it costs", "Flat, from $997, paid once"],
-              ["What you own", "All of it. Code, domain, accounts"],
-            ].map(([k, v]) => (
-              <div key={k} className="border-b border-r border-rule px-5 py-6">
-                <p className="label mb-2.5">{k}</p>
-                <p className="text-sm text-ink font-light leading-snug">{v}</p>
+              { i: "📦", k: "What you get", v: "Brand, site and system", c: "#5B9BF9" },
+              { i: "🙌", k: "How much you do", v: "Almost nothing. 100% done for you", c: "#2DD4BF" },
+              { i: "⏱️", k: "How long", v: "Most builds live in 7 days", c: "#FBBF24" },
+              { i: "💵", k: "What it costs", v: "Flat, from $997, paid once", c: "#A78BFA" },
+              { i: "🔑", k: "What you own", v: "All of it. Code, domain, accounts", c: "#34D399" },
+            ].map((x) => (
+              <div key={x.k} className="border-b border-r border-rule px-5 py-6">
+                <span className="block text-lg mb-3 leading-none">{x.i}</span>
+                <p
+                  className="font-mono text-[11px] uppercase tracking-label mb-2"
+                  style={{ color: x.c }}
+                >
+                  {x.k}
+                </p>
+                <p className="text-sm text-ink font-light leading-snug">{x.v}</p>
               </div>
             ))}
           </div>
@@ -144,7 +150,8 @@ export default function Home() {
                 />
                 <div className="flex items-center justify-between mb-8 mt-1">
                   <div className="flex items-center gap-3">
-                    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden>
+                    <span className="text-xl leading-none">{p.icon}</span>
+                    <svg width="10" height="10" viewBox="0 0 14 14" aria-hidden>
                       <circle cx="7" cy="7" r="7" fill={p.color} />
                     </svg>
                     <p className="label">{p.num}</p>
@@ -207,6 +214,86 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ---------- How it works, in four steps ---------- */}
+      <section className="border-t border-rule px-6 py-24">
+        <div className="max-w-6xl mx-auto">
+          <p className="label mb-6">How it works</p>
+          <h2 className="display text-4xl md:text-5xl max-w-3xl mb-14">
+            Four steps. One week. You are busy for about twenty minutes of it.
+          </h2>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              {
+                i: "✍️",
+                c: "#5B9BF9",
+                step: "Step 1",
+                day: "Day 0",
+                t: "Send the intention",
+                b: "One short form. A few sentences about what you want to exist. No discovery call, no brief, no deck.",
+                you: "15 minutes",
+              },
+              {
+                i: "👀",
+                c: "#A78BFA",
+                step: "Step 2",
+                day: "Days 1 to 2",
+                t: "See a real direction",
+                b: "Not a mood board. An actual first pass in a browser, with your words and your colors in it.",
+                you: "One reply",
+              },
+              {
+                i: "🔨",
+                c: "#FBBF24",
+                step: "Step 3",
+                day: "Days 3 to 5",
+                t: "We build it all",
+                b: "Real pages, real copy, real payments, real forms. The system gets wired in and tested with live data.",
+                you: "Nothing",
+              },
+              {
+                i: "🚀",
+                c: "#34D399",
+                step: "Step 4",
+                day: "Days 6 to 7",
+                t: "It goes live and it is yours",
+                b: "On your domain, tested on a phone, handed over with docs. You own the code and the accounts.",
+                you: "Approve it",
+              },
+            ].map((x) => (
+              <div key={x.step} className="panel p-6 flex flex-col">
+                <span className="block text-2xl mb-4 leading-none">{x.i}</span>
+                <div className="flex items-baseline gap-2 mb-3">
+                  <p
+                    className="font-mono text-[11px] uppercase tracking-label"
+                    style={{ color: x.c }}
+                  >
+                    {x.step}
+                  </p>
+                  <p className="label">· {x.day}</p>
+                </div>
+                <h3 className="font-display text-xl leading-snug mb-2.5">{x.t}</h3>
+                <p className="text-sm text-ink-soft font-light leading-relaxed mb-5">
+                  {x.b}
+                </p>
+                <div className="mt-auto border-t border-rule pt-4">
+                  <p className="label mb-1">Your time</p>
+                  <p className="text-sm" style={{ color: x.c }}>
+                    {x.you}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8">
+            <Link href="/how-we-work" className="btn-ghost">
+              The long version, including the awkward questions
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ---------- Work ---------- */}
       <section className="border-t border-rule px-6 py-24">
         <div className="max-w-6xl mx-auto">
@@ -254,23 +341,32 @@ export default function Home() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
             {[
               {
+                i: "🤝",
+                c: "#2DD4BF",
                 k: "You stop managing vendors",
                 v: "A designer, a copywriter, a developer and someone to wire the tools together is four contracts and four handoffs. Here it is one studio and one thread of email.",
               },
               {
+                i: "💵",
+                c: "#A78BFA",
                 k: "You know the number first",
                 v: "Flat price agreed before work starts. No hourly billing, no scope creep invoice at the end, no retainer you forget to cancel.",
               },
               {
+                i: "⏱️",
+                c: "#FBBF24",
                 k: "You launch in a week",
                 v: "Most builds are live in seven days. That is the difference between testing an idea this month and testing it next quarter.",
               },
               {
+                i: "🔑",
+                c: "#34D399",
                 k: "You own the asset",
                 v: "The code, the domain, the accounts, the content. Nothing is held hostage and there is no platform you have to keep paying us for.",
               },
             ].map((s) => (
-              <div key={s.k}>
+              <div key={s.k} className="border-t-2 pt-5" style={{ borderTopColor: s.c }}>
+                <span className="block text-2xl mb-4 leading-none">{s.i}</span>
                 <p className="font-display text-xl mb-3">{s.k}</p>
                 <p className="text-sm text-ink-soft leading-relaxed font-light">{s.v}</p>
               </div>

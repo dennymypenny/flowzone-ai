@@ -29,6 +29,12 @@ const config: Config = {
         "accent-light": "#A8C4FF",
         "accent-pale": "#C6E4F8",
         "brand-navy": "#1E3A8A",
+        // Signal colours. Each one always means the same thing:
+        // speed = amber, price = violet, ownership = emerald, effort = teal
+        speed: "#FBBF24",
+        price: "#A78BFA",
+        own: "#34D399",
+        effort: "#2DD4BF",
       },
       letterSpacing: {
         label: "0.16em",
