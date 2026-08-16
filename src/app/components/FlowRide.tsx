@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Icon from "@/components/Icon";
 
 /**
  * The ride into Flow Mode, first person, with stops.
@@ -29,12 +30,22 @@ const DRIFT_WORDS = [
 
 /** The options you can grab on the way in. */
 const GATES = [
-  { icon: "🍞", label: "a bakery" },
-  { icon: "💈", label: "a barbershop" },
-  { icon: "👟", label: "a sneaker shop" },
-  { icon: "🏋️", label: "a gym" },
-  { icon: "🌮", label: "a taco truck" },
-  { icon: "✨", label: "my own thing" },
+  { icon: "bread", label: "a bakery" },
+  { icon: "scissors", label: "a barbershop" },
+  { icon: "shoe", label: "a sneaker shop" },
+  { icon: "dumbbell", label: "a gym" },
+  { icon: "truck", label: "a taco truck" },
+  { icon: "flower", label: "a flower stand" },
+];
+
+/** Act two: how it should feel. Colours the search on landing. */
+const FEELS = [
+  { icon: "flame", label: "warm" },
+  { icon: "droplet", label: "clean" },
+  { icon: "bolt", label: "bold" },
+  { icon: "balloon", label: "playful" },
+  { icon: "gem", label: "luxe" },
+  { icon: "moon", label: "moody" },
 ];
 
 /** Scattered seats so the gates feel spatial, not like a menu. */
@@ -55,6 +66,9 @@ export default function FlowRide({ className = "" }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [riding, setRiding] = useState(false);
   const [cruise, setCruise] = useState(false);
+  const [act, setAct] = useState<"idea" | "feel">("idea");
+  const [typed, setTyped] = useState("");
+  const grabbedIdea = useRef("");
   // speed lives in a ref so the render loop feels it instantly
   const boost = useRef(0); // 0 = cruising, ramps to 1 when boosting
   const boosting = useRef(false);
@@ -66,14 +80,32 @@ export default function FlowRide({ className = "" }: { className?: string }) {
     };
   }, []);
 
-  const land = (idea?: string) => {
-    if (idea && idea !== "my own thing") {
+  /** Act one: a thought is grabbed. It leads on, not out. */
+  const grabIdea = (idea: string) => {
+    const clean = idea.trim();
+    if (!clean) return;
+    grabbedIdea.current = clean;
+    setTyped("");
+    setAct("feel");
+  };
+
+  /** Act two: the feel is grabbed, and now we boost. */
+  const grabFeel = (feel?: string) => {
+    const idea = grabbedIdea.current;
+    if (idea) {
       try {
-        window.sessionStorage.setItem("flowzone.ride.idea", idea);
+        window.sessionStorage.setItem(
+          "flowzone.ride.idea",
+          feel ? `${feel} ${idea.replace(/^(a|an|the|my)\s+/i, "")}` : idea
+        );
       } catch {
         /* ignore */
       }
     }
+    boosting.current = true;
+  };
+
+  const land = () => {
     boosting.current = true;
   };
 
@@ -88,6 +120,9 @@ export default function FlowRide({ className = "" }: { className?: string }) {
     router.prefetch("/start");
     setRiding(true);
     setCruise(false);
+    setAct("idea");
+    setTyped("");
+    grabbedIdea.current = "";
     boost.current = 0;
     boosting.current = false;
     alive.current = true;
@@ -123,7 +158,7 @@ export default function FlowRide({ className = "" }: { className?: string }) {
       }));
 
       const LAUNCH = 1100;
-      const CRUISE_MAX = 7000; // auto-boost if nothing grabbed
+      const CRUISE_MAX = 16000; // generous: two acts of choosing before auto-boost
       const BOOST = 1300;
       const t0 = performance.now();
       let boostT0 = 0;
@@ -232,33 +267,48 @@ export default function FlowRide({ className = "" }: { className?: string }) {
           <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
           {cruise && (
-            <div className="absolute inset-0">
+            <div className="absolute inset-0" key={act}>
               <p
                 className="absolute left-1/2 -translate-x-1/2 top-[12%] label !text-ink-soft"
                 style={{ animation: "ideain 0.8s cubic-bezier(0.22,1,0.36,1) both" }}
               >
-                Grab a thought on the way in
+                {act === "idea" ? "Grab a thought on the way in" : `Okay, ${grabbedIdea.current}. How should it feel?`}
               </p>
-              {GATES.map((g, i) => {
+
+              {(act === "idea" ? GATES : FEELS).map((g, i) => {
                 const seat = SEATS[i % SEATS.length];
                 return (
                   <button
                     key={g.label}
-                    onClick={() => land(g.label)}
+                    onClick={() => (act === "idea" ? grabIdea(g.label) : grabFeel(g.label))}
                     className="absolute -translate-x-1/2 -translate-y-1/2 chip !text-[13px] !normal-case !tracking-normal hover:!border-accent hover:scale-110 transition-all"
                     style={{
                       left: `${seat.x}%`,
                       top: `${seat.y}%`,
-                      animation: `gatein 5.5s cubic-bezier(0.16, 1, 0.3, 1) ${seat.d}ms both`,
+                      animation: `gatein 5s cubic-bezier(0.16, 1, 0.3, 1) ${seat.d}ms both`,
                     }}
                   >
-                    <span aria-hidden>{g.icon}</span> {g.label}
+                    <Icon name={g.icon} size={15} color="#A8C4FF" /> {g.label}
                   </button>
                 );
               })}
+
+              {act === "idea" && (
+                <input
+                  autoFocus
+                  value={typed}
+                  onChange={(e) => setTyped(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && grabIdea(typed)}
+                  placeholder="or type your own and press enter..."
+                  aria-label="Type your own idea mid-flight"
+                  className="absolute left-1/2 -translate-x-1/2 bottom-[18%] w-[82%] max-w-md text-center bg-paper-deep/60 backdrop-blur text-ink placeholder-ink-mute border border-rule px-5 py-3 text-sm font-light outline-none focus:border-accent transition-colors"
+                  style={{ animation: "ideain 1s cubic-bezier(0.22,1,0.36,1) 600ms both" }}
+                />
+              )}
+
               <button
-                onClick={() => land()}
-                className="absolute left-1/2 -translate-x-1/2 bottom-[10%] text-xs text-ink-mute hover:text-ink transition-colors"
+                onClick={() => (act === "idea" ? land() : grabFeel())}
+                className="absolute left-1/2 -translate-x-1/2 bottom-[9%] text-xs text-ink-mute hover:text-ink transition-colors"
                 style={{ animation: "ideain 1s cubic-bezier(0.22,1,0.36,1) 800ms both" }}
               >
                 Just fly →

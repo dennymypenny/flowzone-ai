@@ -4,6 +4,7 @@ import StartModes from "@/app/components/StartModes";
 import IdeaLens from "@/app/components/IdeaLens";
 import FlowPath from "@/app/components/FlowPath";
 import Arrival from "@/app/components/Arrival";
+import Icon from "@/components/Icon";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -117,26 +118,26 @@ export default function Start() {
           <div className="grid sm:grid-cols-3 gap-4">
             {[
               {
-                i: "🧩",
+                i: "puzzle",
                 c: "#5B9BF9",
                 t: "It asks the taste question",
                 b: "How it should feel is the part most briefs skip entirely, and it is the part that decides whether you like the result.",
               },
               {
-                i: "💾",
+                i: "disk",
                 c: "#2DD4BF",
                 t: "It saves as you go",
                 b: "Close the tab, sleep on it, come back. Your session is still here and nothing was sent anywhere.",
               },
               {
-                i: "📥",
+                i: "download",
                 c: "#34D399",
                 t: "It comes with you",
                 b: "Logos as SVG, palettes as CSS, the video, the brief. Real files, downloaded, yours.",
               },
             ].map((x) => (
               <div key={x.t} className="panel panel-lift p-7">
-                <span className="block text-2xl mb-4 leading-none">{x.i}</span>
+                <span className="block mb-4"><Icon name={x.i} size={22} color={x.c} /></span>
                 <p
                   className="text-[11px] font-medium uppercase tracking-label mb-3"
                   style={{ color: x.c }}

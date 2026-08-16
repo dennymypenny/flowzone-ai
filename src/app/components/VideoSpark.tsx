@@ -328,7 +328,7 @@ export default function VideoSpark({ topic }: { topic: string }) {
             title="Let the little writer do it"
             className="absolute right-2 top-1/2 -translate-y-1/2 text-xs border border-rule text-ink-soft px-3 py-1.5 rounded-lg hover:text-ink hover:border-accent transition-colors"
           >
-            ✨ Write it for me
+            Write it for me
           </button>
         </div>
         <button
@@ -336,7 +336,7 @@ export default function VideoSpark({ topic }: { topic: string }) {
           disabled={phase === "rendering" || phase === "loading"}
           className="btn-primary shine !px-5 !py-3 text-sm disabled:opacity-60"
         >
-          {phase === "loading" ? "Gathering..." : phase === "rendering" ? `Filming ${progress}%` : "🎬 Generate the video"}
+          {phase === "loading" ? "Gathering..." : phase === "rendering" ? `Filming ${progress}%` : "Generate the video"}
         </button>
       </div>
 
@@ -379,7 +379,7 @@ export default function VideoSpark({ topic }: { topic: string }) {
               download={`${topic.replace(/\s+/g, "-")}-reel.${ext}`}
               className="btn-primary !px-5 !py-2.5 text-sm"
             >
-              ⬇️ Keep the video
+              Keep the video
             </a>
             <button onClick={make} className="btn-ghost !px-5 !py-2.5 text-sm">
               Roll another take <span className="arrow">→</span>

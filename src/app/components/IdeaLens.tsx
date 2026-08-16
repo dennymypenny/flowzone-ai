@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import Tilt3D from "@/app/components/Tilt3D";
 import VideoSpark from "@/app/components/VideoSpark";
+import Icon from "@/components/Icon";
 
 /**
  * Type a thing, see the thing, pick it, move on.
@@ -289,7 +290,7 @@ export default function IdeaLens() {
       {ambient}
       {dragOver && (
         <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-paper/80 pointer-events-none">
-          <p className="font-display text-2xl text-accent">Drop your photos in 📥</p>
+          <p className="font-display text-2xl text-accent flex items-center gap-3"><Icon name="download" size={24} color="#5B8CFF" /> Drop your photos in</p>
         </div>
       )}
       <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
@@ -329,7 +330,7 @@ export default function IdeaLens() {
         onClick={() => fileRef.current?.click()}
         className="mt-3 text-xs text-ink-mute hover:text-ink transition-colors"
       >
-        📥 Or drag your own photos anywhere here, or click to browse
+        Or drag your own photos anywhere here, or click to browse
       </button>
       <input
         ref={fileRef}

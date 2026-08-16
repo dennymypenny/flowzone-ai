@@ -5,6 +5,7 @@ import WorkSession from "@/app/components/WorkSession";
 import WritingTrack from "@/app/components/WritingTrack";
 import ContentTrack from "@/app/components/ContentTrack";
 import Tilt3D from "@/app/components/Tilt3D";
+import Icon from "@/components/Icon";
 
 /**
  * Four tracks, one dropdown.
@@ -24,7 +25,7 @@ const KEY = "flowzone.track.v2";
 const TRACKS = [
   {
     id: "design",
-    icon: "🎨",
+    icon: "palette",
     name: "Design",
     blurb: "Name, colours, a real vector logo and references. Leave with the files.",
     accent: "#A78BFA",
@@ -32,7 +33,7 @@ const TRACKS = [
   },
   {
     id: "writing",
-    icon: "✍️",
+    icon: "pencil",
     name: "Writing",
     blurb: "Scripts, landing pages and emails, built from the structure that makes them work.",
     accent: "#5B9BF9",
@@ -40,7 +41,7 @@ const TRACKS = [
   },
   {
     id: "content",
-    icon: "🎬",
+    icon: "clapper",
     name: "Content and reels",
     blurb: "Timed shot plans, captions, thumbnails. Editable to the last second.",
     accent: "#2DD4BF",
@@ -48,7 +49,7 @@ const TRACKS = [
   },
   {
     id: "brief",
-    icon: "🧭",
+    icon: "compass",
     name: "The brief",
     blurb: "Six questions that turn a vague idea into something you can hand to anyone.",
     accent: "#34D399",
@@ -111,7 +112,7 @@ export default function StartModes() {
                     />
                   )}
                   <span className="flex items-center justify-between mb-3">
-                    <span className="block text-2xl leading-none">{t.icon}</span>
+                    <Icon name={t.icon} size={22} color={t.accent} />
                     {active && (
                       <span
                         className="text-[10px] font-medium uppercase tracking-label"

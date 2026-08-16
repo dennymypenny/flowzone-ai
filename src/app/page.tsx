@@ -5,6 +5,7 @@ import MessageUs from "@/components/MessageUs";
 import FlowField from "@/app/components/FlowField";
 import FlowRide from "@/app/components/FlowRide";
 import { SITE, PILLARS } from "@/lib/site";
+import Icon from "@/components/Icon";
 
 export const metadata = {
   title: "FlowZone AI | Creative Studio",
@@ -77,18 +78,18 @@ export default function Home() {
           {/* Value at a glance */}
           <div className="mt-16 grid grid-cols-2 lg:grid-cols-5 gap-3">
             {[
-              { i: "📦", k: "What you get", v: "Brand, site and system", c: "#5B9BF9" },
-              { i: "🙌", k: "How much you do", v: "Almost nothing. 100% done for you", c: "#2DD4BF" },
-              { i: "⚡", k: "How fast it moves", v: "Started the day you say go", c: "#FBBF24" },
-              { i: "💵", k: "What it costs", v: "Flat, from $600, paid once", c: "#A78BFA" },
-              { i: "🔑", k: "What you own", v: "All of it. Code, domain, accounts", c: "#34D399" },
+              { i: "box", k: "What you get", v: "Brand, site and system", c: "#5B9BF9" },
+              { i: "hands", k: "How much you do", v: "Almost nothing. 100% done for you", c: "#2DD4BF" },
+              { i: "bolt", k: "How fast it moves", v: "Started the day you say go", c: "#FBBF24" },
+              { i: "banknote", k: "What it costs", v: "Flat, from $600, paid once", c: "#A78BFA" },
+              { i: "key", k: "What you own", v: "All of it. Code, domain, accounts", c: "#34D399" },
             ].map((x) => (
               <div key={x.k} className="panel panel-lift relative overflow-hidden px-5 py-6">
                 <span
                   className="absolute -top-8 left-1/2 -translate-x-1/2 w-24 h-16 rounded-full blur-2xl opacity-25 pointer-events-none"
                   style={{ background: x.c }}
                 />
-                <span className="block text-lg mb-3 leading-none">{x.i}</span>
+                <span className="block mb-3"><Icon name={x.i} size={20} color={x.c} /></span>
                 <p
                   className="text-[11px] font-medium uppercase tracking-label mb-2"
                   style={{ color: x.c }}
@@ -133,7 +134,7 @@ export default function Home() {
                 />
                 <div className="flex items-center justify-between mb-8 mt-1">
                   <div className="flex items-center gap-3">
-                    <span className="text-xl leading-none">{p.icon}</span>
+                    <Icon name={p.icon} size={20} color={p.color} />
                     <svg width="10" height="10" viewBox="0 0 14 14" aria-hidden>
                       <circle cx="7" cy="7" r="7" fill={p.color} />
                     </svg>
@@ -376,7 +377,7 @@ export default function Home() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               {
-                i: "✍️",
+                i: "pencil",
                 c: "#5B9BF9",
                 step: "Level 1",
                 day: "The spark",
@@ -385,7 +386,7 @@ export default function Home() {
                 you: "15 minutes",
               },
               {
-                i: "👀",
+                i: "eye",
                 c: "#A78BFA",
                 step: "Level 2",
                 day: "First look",
@@ -394,7 +395,7 @@ export default function Home() {
                 you: "One reply",
               },
               {
-                i: "🔨",
+                i: "hammer",
                 c: "#FBBF24",
                 step: "Level 3",
                 day: "The build",
@@ -403,7 +404,7 @@ export default function Home() {
                 you: "Nothing",
               },
               {
-                i: "🚀",
+                i: "rocket",
                 c: "#34D399",
                 step: "Level 4",
                 day: "Live",
@@ -413,7 +414,7 @@ export default function Home() {
               },
             ].map((x, gi) => (
               <div key={x.step} className="panel panel-lift p-6 flex flex-col">
-                <span className="block text-2xl mb-4 leading-none">{x.i}</span>
+                <span className="block mb-4"><Icon name={x.i} size={22} color={x.c} /></span>
                 <div className="flex items-baseline gap-2 mb-3">
                   <p
                     className="text-[11px] font-medium uppercase tracking-label"
@@ -471,32 +472,32 @@ export default function Home() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
             {[
               {
-                i: "🤝",
+                i: "handshake",
                 c: "#2DD4BF",
                 k: "You stop managing vendors",
                 v: "One studio, one thread of email. No handoffs.",
               },
               {
-                i: "💵",
+                i: "banknote",
                 c: "#A78BFA",
                 k: "You know the number first",
                 v: "Flat price agreed before work starts. No hourly billing, no retainers.",
               },
               {
-                i: "⚡",
+                i: "bolt",
                 c: "#FBBF24",
                 k: "We are as excited as you are",
                 v: "Nobody chases us for updates. We want to see the thing exist too.",
               },
               {
-                i: "🔑",
+                i: "key",
                 c: "#34D399",
                 k: "You own the asset",
                 v: "The code, the domain, the accounts. Nothing is held hostage.",
               },
             ].map((s) => (
               <div key={s.k} className="border-t-2 pt-5" style={{ borderTopColor: s.c }}>
-                <span className="block text-2xl mb-4 leading-none">{s.i}</span>
+                <span className="block mb-4"><Icon name={s.i} size={22} color={s.c} /></span>
                 <p className="font-display text-xl mb-3">{s.k}</p>
                 <p className="text-sm text-ink-soft leading-relaxed font-light">{s.v}</p>
               </div>

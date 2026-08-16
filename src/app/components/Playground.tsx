@@ -21,6 +21,7 @@ import {
 } from "@/lib/brandkit";
 import { useAmbient } from "@/app/components/useAmbient";
 import MemeMaker from "@/app/components/MemeMaker";
+import Icon from "@/components/Icon";
 
 /**
  * Flow Mode.
@@ -59,29 +60,29 @@ type Flow = {
 
 /** A lot of doors, because "a small business" is fifty different businesses. */
 const FLOWS: Flow[] = [
-  { id: "food", icon: "🍕", name: "Food and drink", blurb: "Cafes, kitchens, bakeries, trucks, bars.", vibe: { energy: 62, temp: 78, era: 45 }, icons: "coffee", refs: "bakery interior", lockup: "badge", container: "circle" },
-  { id: "shop", icon: "🛍️", name: "A shop", blurb: "Products, drops, collectors, merch.", vibe: { energy: 78, temp: 45, era: 78 }, icons: "shopping-bag", refs: "retail store front", lockup: "block", container: "block" },
-  { id: "trade", icon: "🔨", name: "Trades and building", blurb: "Builders, sparkies, plumbers, landscapers.", vibe: { energy: 52, temp: 62, era: 30 }, icons: "hammer", refs: "workshop tools", lockup: "framed", container: "shield" },
-  { id: "studio", icon: "🎨", name: "Creative studio", blurb: "Design, photo, film, music, writing.", vibe: { energy: 45, temp: 30, era: 88 }, icons: "pen-tool", refs: "design studio", lockup: "wordmark", container: "bare" },
-  { id: "health", icon: "🌿", name: "Health and care", blurb: "Clinics, therapists, trainers, wellbeing.", vibe: { energy: 30, temp: 48, era: 60 }, icons: "leaf", refs: "calm clinic interior", lockup: "stacked", container: "circle" },
-  { id: "sport", icon: "🏆", name: "Sport and clubs", blurb: "Teams, gyms, leagues, coaching.", vibe: { energy: 88, temp: 55, era: 70 }, icons: "trophy", refs: "sports team crest", lockup: "badge", container: "shield" },
-  { id: "tech", icon: "⚡", name: "Tech and tools", blurb: "Apps, agencies, SaaS, anything technical.", vibe: { energy: 58, temp: 18, era: 92 }, icons: "zap", refs: "modern office", lockup: "horizontal", container: "hex" },
-  { id: "home", icon: "🏠", name: "Home and property", blurb: "Lettings, interiors, cleaning, moving.", vibe: { energy: 34, temp: 58, era: 40 }, icons: "home", refs: "interior architecture", lockup: "framed", container: "ring" },
-  { id: "pets", icon: "🐾", name: "Pets and animals", blurb: "Grooming, walking, vets, supplies.", vibe: { energy: 66, temp: 70, era: 55 }, icons: "paw-print", refs: "dog grooming", lockup: "stacked", container: "circle" },
-  { id: "events", icon: "🎟️", name: "Events and nights", blurb: "Promoters, venues, weddings, markets.", vibe: { energy: 84, temp: 35, era: 82 }, icons: "ticket", refs: "concert lighting", lockup: "block", container: "block" },
-  { id: "money", icon: "📊", name: "Money and advice", blurb: "Bookkeeping, consulting, legal, insurance.", vibe: { energy: 26, temp: 22, era: 48 }, icons: "landmark", refs: "architecture columns", lockup: "wordmark", container: "ring" },
-  { id: "open", icon: "✨", name: "Something else", blurb: "Start blank and take it wherever.", vibe: { energy: 55, temp: 45, era: 65 }, icons: "sparkles", refs: "abstract texture", lockup: "horizontal", container: "circle" },
+  { id: "food", icon: "bread", name: "Food and drink", blurb: "Cafes, kitchens, bakeries, trucks, bars.", vibe: { energy: 62, temp: 78, era: 45 }, icons: "coffee", refs: "bakery interior", lockup: "badge", container: "circle" },
+  { id: "shop", icon: "box", name: "A shop", blurb: "Products, drops, collectors, merch.", vibe: { energy: 78, temp: 45, era: 78 }, icons: "shopping-bag", refs: "retail store front", lockup: "block", container: "block" },
+  { id: "trade", icon: "hammer", name: "Trades and building", blurb: "Builders, sparkies, plumbers, landscapers.", vibe: { energy: 52, temp: 62, era: 30 }, icons: "hammer", refs: "workshop tools", lockup: "framed", container: "shield" },
+  { id: "studio", icon: "palette", name: "Creative studio", blurb: "Design, photo, film, music, writing.", vibe: { energy: 45, temp: 30, era: 88 }, icons: "pen-tool", refs: "design studio", lockup: "wordmark", container: "bare" },
+  { id: "health", icon: "leaf", name: "Health and care", blurb: "Clinics, therapists, trainers, wellbeing.", vibe: { energy: 30, temp: 48, era: 60 }, icons: "leaf", refs: "calm clinic interior", lockup: "stacked", container: "circle" },
+  { id: "sport", icon: "trophy", name: "Sport and clubs", blurb: "Teams, gyms, leagues, coaching.", vibe: { energy: 88, temp: 55, era: 70 }, icons: "trophy", refs: "sports team crest", lockup: "badge", container: "shield" },
+  { id: "tech", icon: "bolt", name: "Tech and tools", blurb: "Apps, agencies, SaaS, anything technical.", vibe: { energy: 58, temp: 18, era: 92 }, icons: "zap", refs: "modern office", lockup: "horizontal", container: "hex" },
+  { id: "home", icon: "house", name: "Home and property", blurb: "Lettings, interiors, cleaning, moving.", vibe: { energy: 34, temp: 58, era: 40 }, icons: "home", refs: "interior architecture", lockup: "framed", container: "ring" },
+  { id: "pets", icon: "paw", name: "Pets and animals", blurb: "Grooming, walking, vets, supplies.", vibe: { energy: 66, temp: 70, era: 55 }, icons: "paw-print", refs: "dog grooming", lockup: "stacked", container: "circle" },
+  { id: "events", icon: "ticket", name: "Events and nights", blurb: "Promoters, venues, weddings, markets.", vibe: { energy: 84, temp: 35, era: 82 }, icons: "ticket", refs: "concert lighting", lockup: "block", container: "block" },
+  { id: "money", icon: "banknote", name: "Money and advice", blurb: "Bookkeeping, consulting, legal, insurance.", vibe: { energy: 26, temp: 22, era: 48 }, icons: "landmark", refs: "architecture columns", lockup: "wordmark", container: "ring" },
+  { id: "open", icon: "sparkle", name: "Something else", blurb: "Start blank and take it wherever.", vibe: { energy: 55, temp: 45, era: 65 }, icons: "sparkles", refs: "abstract texture", lockup: "horizontal", container: "circle" },
 ];
 
 type Shot = { id: string; url: string; thumb: string; title: string; creator: string; license: string; source: string };
 type Quest = { id: string; icon: string; name: string; goal: string; xp: number; color: string };
 
 const QUESTS: Quest[] = [
-  { id: "name", icon: "✍️", name: "A name", goal: "What the thing is called", xp: 20, color: "#5B9BF9" },
-  { id: "purpose", icon: "🎯", name: "A purpose", goal: "The line that says what it is", xp: 20, color: "#A78BFA" },
-  { id: "color", icon: "🎨", name: "Colours", goal: "A palette you chose on purpose", xp: 20, color: "#FBBF24" },
-  { id: "mark", icon: "🛡️", name: "A symbol", goal: "The mark and the shape it sits in", xp: 20, color: "#2DD4BF" },
-  { id: "logo", icon: "📐", name: "A logo", goal: "The finished lockup, downloaded", xp: 20, color: "#34D399" },
+  { id: "name", icon: "pencil", name: "A name", goal: "What the thing is called", xp: 20, color: "#5B9BF9" },
+  { id: "purpose", icon: "target", name: "A purpose", goal: "The line that says what it is", xp: 20, color: "#A78BFA" },
+  { id: "color", icon: "palette", name: "Colours", goal: "A palette you chose on purpose", xp: 20, color: "#FBBF24" },
+  { id: "mark", icon: "shield", name: "A symbol", goal: "The mark and the shape it sits in", xp: 20, color: "#2DD4BF" },
+  { id: "logo", icon: "ruler", name: "A logo", goal: "The finished lockup, downloaded", xp: 20, color: "#34D399" },
 ];
 
 const LEVELS = ["Nothing yet", "A sketch", "Taking shape", "Nearly there", "Ready to hand over"];
@@ -331,7 +332,7 @@ export default function Playground() {
     return (
       <div>
         <div className="flex items-center gap-3 mb-3">
-          <span className="text-2xl leading-none">🌊</span>
+          <Icon name="wave" size={24} color="#5B9BF9" />
           <h2 className="font-display text-3xl">Pick your flow.</h2>
         </div>
         <p className="text-ink-soft font-light leading-relaxed max-w-reading mb-8">
@@ -346,7 +347,7 @@ export default function Playground() {
               onClick={() => startFlow(f)}
               className="text-left border border-rule p-5 hover:border-accent hover:bg-raised transition-colors"
             >
-              <span className="block text-2xl mb-3 leading-none">{f.icon}</span>
+              <span className="block mb-3"><Icon name={f.icon} size={22} color="#8BADFF" /></span>
               <p className="font-display text-lg mb-1">{f.name}</p>
               <p className="text-[13px] text-ink-soft font-light leading-relaxed">{f.blurb}</p>
             </button>
@@ -363,7 +364,7 @@ export default function Playground() {
       <div className="panel p-6 mb-6">
         <div className="flex flex-wrap items-center justify-between gap-5 mb-5">
           <div className="flex items-center gap-3">
-            <span className="text-2xl leading-none">{flow.icon}</span>
+            <Icon name={flow.icon} size={24} color="#8BADFF" />
             <div>
               <p className="text-[11px] font-medium uppercase tracking-label text-ink-mute">
                 {flow.name} · {LEVELS[levelIdx]}
@@ -419,7 +420,7 @@ export default function Playground() {
                 background: has[q.id] ? `${q.color}0F` : "transparent",
               }}
             >
-              <span className="leading-none">{q.icon}</span>
+              <Icon name={q.icon} size={15} color={q.color} />
               {q.name}
               <span>{has[q.id] ? "✓" : "—"}</span>
             </span>
