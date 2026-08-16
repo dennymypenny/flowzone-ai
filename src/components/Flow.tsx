@@ -15,7 +15,15 @@ import { useEffect } from "react";
 export default function Flow() {
   useEffect(() => {
     const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-flow]"));
-    const revealAll = () => nodes.forEach((n) => n.classList.add("flowed"));
+
+    // Inline styles beat every stylesheet, so a CSS build quirk can never
+    // leave a section stuck invisible.
+    const reveal = (n: HTMLElement) => {
+      n.classList.add("flowed");
+      n.style.opacity = "1";
+      n.style.transform = "none";
+    };
+    const revealAll = () => nodes.forEach(reveal);
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce || typeof IntersectionObserver === "undefined") {
@@ -27,7 +35,7 @@ export default function Flow() {
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            (e.target as HTMLElement).classList.add("flowed");
+            reveal(e.target as HTMLElement);
             io.unobserve(e.target);
           }
         });
@@ -38,7 +46,7 @@ export default function Flow() {
     nodes.forEach((n) => io.observe(n));
 
     // Backstop. Nothing stays hidden past this point, whatever went wrong.
-    const failSafe = window.setTimeout(revealAll, 2500);
+    const failSafe = window.setTimeout(revealAll, 1500);
 
     return () => {
       io.disconnect();
