@@ -1,19 +1,21 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import Tilt3D from "@/app/components/Tilt3D";
 import VideoSpark from "@/app/components/VideoSpark";
 import Icon from "@/components/Icon";
 import FunnelNarrow from "@/app/components/FunnelNarrow";
 
 /**
- * Type a thing, see the thing, pick it, move on.
- * Or skip all of that and drop your own.
+ * Say the thing, and you are in it.
  *
- * One photograph at a time, big, in a card that tilts toward the pointer.
- * Drag photos from your desktop anywhere onto this block and they become
- * the vibe and star in the video. Files never leave the browser: they are
- * downscaled to a data URL on the visitor's own machine and stored
- * locally, which is also what makes them safe to paint into the reel.
+ * No photo browsing, no picking step, no canned suggestion chips. The
+ * input murmurs possibilities to itself, a typewriter cycling through
+ * half-dreamed ideas, until the visitor types their own. The moment they
+ * do, they are inside: imagery becomes faint atmosphere behind the page
+ * while the narrowing questions flow in front, one thought leading to
+ * the next, like moving through your own head.
+ *
+ * Dropped photos are different: those are THEIRS, so they lead the
+ * backdrop and the reel. Files never leave the browser.
  */
 
 type Shot = {
@@ -27,7 +29,20 @@ type Shot = {
 
 const KEY = "flowzone.idealens.v1";
 const UPLOADS_KEY = "flowzone.uploads.v1";
-const STARTERS = ["a bakery", "a barbershop", "a sneaker shop"];
+
+/** The murmur: ideas the input dreams about while it waits. */
+const MURMURS = [
+  "a late night ramen bar",
+  "a sneaker vault",
+  "a flower truck",
+  "a barber studio with a waitlist",
+  "a candle brand",
+  "a card shop that goes live on Fridays",
+  "a supper club",
+  "a vintage store",
+  "my clothing line",
+  "a bakery people cross town for",
+];
 
 /** Shrink a dropped image on-device so storage stays small and paint stays fast. */
 function shrink(file: File): Promise<string | null> {
@@ -68,32 +83,35 @@ const src = (thumb: string) =>
 
 export default function IdeaLens() {
   const [q, setQ] = useState("");
-  const [clip, setClip] = useState<string>("");
-  const [shots, setShots] = useState<Shot[]>([]);
-  const [idx, setIdx] = useState(0);
+  const [clip, setClip] = useState("");
+  const [photo, setPhoto] = useState("");
   const [busy, setBusy] = useState(false);
-  const [shown, setShown] = useState("");
   const [chosen, setChosen] = useState<{ q: string; thumb: string } | null>(null);
-  const [failed, setFailed] = useState(false);
   const [dragOver, setDragOver] = useState(false);
   const [uploadCount, setUploadCount] = useState(0);
+  const [murmur, setMurmur] = useState("");
   const timer = useRef<number | undefined>(undefined);
   const fileRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     try {
       const saved = window.localStorage.getItem(KEY);
-      if (saved) setChosen(JSON.parse(saved));
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setChosen(parsed);
+        if (parsed?.thumb) setPhoto(parsed.thumb);
+        if (parsed?.q) fetchClip(parsed.q);
+      }
       const ups = window.localStorage.getItem(UPLOADS_KEY);
       if (ups) setUploadCount((JSON.parse(ups) as string[]).length);
-      // A thought grabbed mid-ride lands here, already searching.
+      // A thought grabbed mid-ride lands here, already inside it.
       const grabbed = window.sessionStorage.getItem("flowzone.ride.idea");
       if (grabbed) {
         window.sessionStorage.removeItem("flowzone.ride.idea");
-        setChosen(null);
         window.localStorage.removeItem(KEY);
-        setQ(grabbed);
-        fetchShots(grabbed);
+        window.localStorage.removeItem("flowzone.funnel.v1");
+        setChosen(null);
+        enter(grabbed);
       }
     } catch {
       /* ignore */
@@ -101,7 +119,30 @@ export default function IdeaLens() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /** Immersion: real footage of the idea fills the room behind the page. */
+  // The placeholder types itself: a slow stream of half-dreamed ideas.
+  useEffect(() => {
+    if (chosen) return;
+    let word = 0;
+    let ch = 0;
+    let deleting = false;
+    const id = window.setInterval(() => {
+      const target = MURMURS[word % MURMURS.length];
+      if (!deleting) {
+        ch += 1;
+        if (ch >= target.length + 14) deleting = true; // hold, then let go
+      } else {
+        ch -= 3;
+        if (ch <= 0) {
+          deleting = false;
+          word += 1;
+        }
+      }
+      setMurmur(target.slice(0, Math.max(0, Math.min(target.length, ch))));
+    }, 70);
+    return () => window.clearInterval(id);
+  }, [chosen]);
+
+  /** The room fills with the idea: footage first, a photograph as fallback. */
   const fetchClip = async (term: string) => {
     try {
       const res = await fetch(`/api/clips?q=${encodeURIComponent(term)}`);
@@ -114,58 +155,42 @@ export default function IdeaLens() {
     }
   };
 
-  const fetchShots = async (query: string) => {
+  /** Entering the idea IS the action. No picking, no scanning. */
+  const enter = async (query: string) => {
     const term = query.trim();
     if (!term) return;
     setBusy(true);
-    setFailed(false);
     fetchClip(term);
+    let thumb = "";
     try {
       const res = await fetch(`/api/moodboard?q=${encodeURIComponent(term)}`);
       const data = await res.json();
-      if (data.ok && Array.isArray(data.shots) && data.shots.length) {
-        setShots(data.shots);
-        setIdx(0);
-        setShown(term);
-      } else {
-        setShots([]);
-        setFailed(true);
-      }
+      if (data.ok && data.shots?.length) thumb = (data.shots as Shot[])[0].thumb;
     } catch {
-      setShots([]);
-      setFailed(true);
-    } finally {
-      setBusy(false);
+      /* the questions do not need a picture to work */
     }
-  };
-
-  useEffect(() => {
-    if (!q.trim()) return;
-    window.clearTimeout(timer.current);
-    timer.current = window.setTimeout(() => fetchShots(q), 650);
-    return () => window.clearTimeout(timer.current);
-  }, [q]);
-
-  const shot = shots[idx];
-
-  const keep = (sel: { q: string; thumb: string }) => {
+    setBusy(false);
+    const sel = { q: term, thumb };
     setChosen(sel);
-    setShots([]);
+    if (thumb) setPhoto(thumb);
     setQ("");
     try {
       window.localStorage.setItem(KEY, JSON.stringify(sel));
     } catch {
       /* ignore */
     }
-    document.getElementById("pick-your-flow")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const pick = () => {
-    if (!shot) return;
-    keep({ q: shown, thumb: shot.thumb });
-  };
+  // Typing pauses, and you are in. Enter also works.
+  useEffect(() => {
+    if (!q.trim() || chosen) return;
+    window.clearTimeout(timer.current);
+    timer.current = window.setTimeout(() => enter(q), 1000);
+    return () => window.clearTimeout(timer.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [q]);
 
-  /** Dropped or browsed files become the vibe and feed the video. */
+  /** Dropped files are theirs: they lead the backdrop and the reel. */
   const addFiles = async (list: FileList | File[]) => {
     const files = Array.from(list).slice(0, 6);
     if (!files.length) return;
@@ -183,16 +208,27 @@ export default function IdeaLens() {
     try {
       window.localStorage.setItem(UPLOADS_KEY, JSON.stringify(all));
     } catch {
-      /* storage full: carry on with what fits in memory */
+      /* storage full: carry on */
     }
     setUploadCount(all.length);
-    keep({ q: q.trim() || shown || "your own photos", thumb: datas[0] });
+    const term = q.trim() || chosen?.q || "your own thing";
+    const sel = { q: term, thumb: datas[0] };
+    setChosen(sel);
+    setPhoto(datas[0]);
+    try {
+      window.localStorage.setItem(KEY, JSON.stringify(sel));
+    } catch {
+      /* ignore */
+    }
   };
 
   const clear = () => {
     setChosen(null);
+    setClip("");
+    setPhoto("");
     try {
       window.localStorage.removeItem(KEY);
+      window.localStorage.removeItem("flowzone.funnel.v1");
     } catch {
       /* ignore */
     }
@@ -215,48 +251,64 @@ export default function IdeaLens() {
     ? "outline outline-2 outline-accent outline-offset-8 rounded-2xl"
     : "";
 
-  /* The room fills with the idea. Sits behind everything, never blocks. */
-  const ambient = clip ? (
-    <div className="fixed inset-0 -z-10 pointer-events-none" aria-hidden>
-      <video
-        src={clip}
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="w-full h-full object-cover opacity-[0.18]"
-      />
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(12,20,36,0.55) 0%, rgba(12,20,36,0.35) 40%, rgba(12,20,36,0.9) 100%)",
-        }}
-      />
-    </div>
-  ) : null;
+  /* The atmosphere. Footage when it exists, a photograph otherwise. */
+  const ambient =
+    clip || photo ? (
+      <div className="fixed inset-0 -z-10 pointer-events-none" aria-hidden>
+        {clip ? (
+          <video
+            src={clip}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover opacity-[0.22]"
+          />
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={src(photo)}
+            alt=""
+            className="w-full h-full object-cover opacity-[0.15]"
+          />
+        )}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(12,20,36,0.5) 0%, rgba(12,20,36,0.35) 40%, rgba(12,20,36,0.92) 100%)",
+          }}
+        />
+      </div>
+    ) : null;
 
-  // Already picked: one quiet line, then the next move. Still a drop target.
-  if (chosen && !shots.length) {
+  // Inside the idea: the experience continues as questions, not homework.
+  if (chosen) {
     return (
       <div {...dropProps} className={`relative transition-all ${dropRing}`}>
         {ambient}
         {dragOver && (
           <p className="absolute -top-8 left-0 label text-accent">Drop them in</p>
         )}
-        <div className="flex items-center gap-4 rounded-2xl border border-rule bg-paper-deep/70 p-3 pr-5 max-w-xl">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={src(chosen.thumb)}
-            alt={chosen.q}
-            className="w-16 h-16 object-cover rounded-xl border border-white/15"
-          />
+        <div className="flex items-center gap-4 rounded-2xl border border-rule bg-paper-deep/70 backdrop-blur p-3 pr-5 max-w-xl">
+          {chosen.thumb ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={src(chosen.thumb)}
+              alt=""
+              className="w-14 h-14 object-cover rounded-xl border border-white/15"
+            />
+          ) : (
+            <span className="w-14 h-14 rounded-xl border border-white/15 flex items-center justify-center shrink-0">
+              <Icon name="sparkle" size={20} color="#5B8CFF" />
+            </span>
+          )}
           <div className="flex-1 min-w-0">
-            <p className="label mb-1">Your vibe</p>
+            <p className="label mb-1">You are in</p>
             <p className="text-sm text-ink font-light truncate">
               {chosen.q}
               {uploadCount > 0 && (
-                <span className="text-ink-mute"> · {uploadCount} of your photos in</span>
+                <span className="text-ink-mute"> · {uploadCount} of your photos riding along</span>
               )}
             </p>
           </div>
@@ -264,13 +316,13 @@ export default function IdeaLens() {
             onClick={() => fileRef.current?.click()}
             className="text-xs border border-rule text-ink-soft px-3 py-2 hover:text-ink hover:border-accent transition-colors shrink-0"
           >
-            + Add photos
+            + Your photos
           </button>
           <button
             onClick={clear}
             className="text-xs border border-rule text-ink-soft px-3 py-2 hover:text-ink hover:border-accent transition-colors shrink-0"
           >
-            Change it
+            New idea
           </button>
         </div>
         <input
@@ -289,50 +341,34 @@ export default function IdeaLens() {
 
   return (
     <div {...dropProps} className={`relative transition-all ${dropRing}`}>
-      {ambient}
       {dragOver && (
         <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-paper/80 pointer-events-none">
-          <p className="font-display text-2xl text-accent flex items-center gap-3"><Icon name="download" size={24} color="#5B8CFF" /> Drop your photos in</p>
+          <p className="font-display text-2xl text-accent flex items-center gap-3">
+            <Icon name="download" size={24} color="#5B8CFF" /> Drop your photos in
+          </p>
         </div>
       )}
-      <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
-        <div className="relative flex-1 max-w-xl">
-          <input
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && fetchShots(q)}
-            placeholder="Type the thing you dream of. Bread. A barbershop. Anything."
-            aria-label="Type an idea to see a real photograph of it"
-            className="w-full bg-paper-deep/80 text-ink placeholder-ink-mute border border-rule px-5 py-4 text-base font-light outline-none focus:border-accent transition-colors"
-          />
-          {busy && (
-            <span className="absolute right-4 top-1/2 -translate-y-1/2 flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-60" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
-            </span>
-          )}
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {STARTERS.map((s) => (
-            <button
-              key={s}
-              onClick={() => {
-                setQ(s);
-                fetchShots(s);
-              }}
-              className="text-xs border border-rule text-ink-soft px-3 py-2 hover:text-ink hover:border-accent transition-colors"
-            >
-              {s}
-            </button>
-          ))}
-        </div>
+      <div className="relative max-w-xl">
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && enter(q)}
+          placeholder={murmur || " "}
+          aria-label="Type an idea to enter it"
+          className="w-full bg-paper-deep/80 text-ink placeholder-ink-mute border border-rule px-5 py-4 text-base font-light outline-none focus:border-accent transition-colors"
+        />
+        {busy && (
+          <span className="absolute right-4 top-1/2 -translate-y-1/2 flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-60" />
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
+          </span>
+        )}
       </div>
-
       <button
         onClick={() => fileRef.current?.click()}
         className="mt-3 text-xs text-ink-mute hover:text-ink transition-colors"
       >
-        Or drag your own photos anywhere here, or click to browse
+        Or drag your own photos anywhere here
       </button>
       <input
         ref={fileRef}
@@ -342,61 +378,6 @@ export default function IdeaLens() {
         className="hidden"
         onChange={(e) => e.target.files && addFiles(e.target.files)}
       />
-
-      {failed && !busy && (
-        <div className="mt-6 flex items-center gap-4">
-          <p className="text-sm text-ink-soft font-light">
-            Could not pull photos just now. It happens.
-          </p>
-          <button
-            onClick={() => fetchShots(q || shown)}
-            className="text-xs border border-rule text-ink px-3 py-2 hover:border-accent transition-colors"
-          >
-            Try again
-          </button>
-        </div>
-      )}
-
-      {shot && (
-        <div className="mt-8 max-w-2xl">
-          <p className="label mb-4">This is {shown} · like it or roll another</p>
-          <Tilt3D max={8}>
-            <button
-              onClick={pick}
-              className="group relative block w-full rounded-2xl overflow-hidden bg-[#172440] border border-white/15 shadow-[0_40px_80px_-28px_rgba(0,0,0,0.85)] text-left"
-              aria-label={`Use this photograph of ${shown}`}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                key={shot.id}
-                src={src(shot.thumb)}
-                alt={shown}
-                onError={() => setIdx((i) => (i + 1) % Math.max(1, shots.length))}
-                className="w-full h-[300px] sm:h-[380px] object-cover block"
-                style={{ animation: "ideain 0.5s cubic-bezier(0.22, 1, 0.36, 1) both" }}
-              />
-              {/* Credit lives on hover only. No caption bar. */}
-              <span className="absolute bottom-2 right-2 text-[10px] text-white/80 bg-black/50 px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
-                {shot.creator}
-              </span>
-              <span className="absolute inset-0 flex items-end p-4 bg-gradient-to-t from-black/55 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                <span className="text-sm font-medium text-white">✓ Yes, this feeling. Keep it.</span>
-              </span>
-            </button>
-          </Tilt3D>
-          <div className="flex gap-3 mt-4">
-            <button onClick={pick} className="btn-primary !px-5 !py-2.5 text-sm">
-              ✓ Keep it, move on
-            </button>
-            <button
-              onClick={() => setIdx((idx + 1) % shots.length)}
-              className="btn-ghost !px-5 !py-2.5 text-sm"
-            >
-              Show me another <span className="arrow">→</span>
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
