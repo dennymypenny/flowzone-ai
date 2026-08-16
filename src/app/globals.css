@@ -105,9 +105,7 @@ body {
 @layer utilities {
   /* Hero pieces arrive in sequence, left to right down the page */
   .start {
-    opacity: 0;
-    transform: translateY(16px);
-    animation: start 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation: start 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
   .start-1 { animation-delay: 0.05s; }
   .start-2 { animation-delay: 0.16s; }
@@ -116,6 +114,7 @@ body {
   .start-5 { animation-delay: 0.5s; }
 
   @keyframes start {
+    from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: none; }
   }
 
@@ -160,12 +159,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .start,
-  [data-flow] {
-    opacity: 1 !important;
-    transform: none !important;
-    animation: none !important;
-  }
-  .flowline::after,
+    .flowline::after,
   .pulse-1,
   .pulse-2,
   .pulse-3 {
@@ -173,28 +167,4 @@ body {
   }
 }
 
-/* ------------------------------------------------------------------
-   Reveal rules live outside @layer on purpose. Inside @layer utilities
-   Tailwind dropped the .flowed rule in the production build and every
-   section stayed invisible. Plain CSS cannot be purged that way.
-   ------------------------------------------------------------------ */
-[data-flow] {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-[data-flow].flowed,
-html.no-js [data-flow],
-[data-flow][style*="opacity"] {
-  opacity: 1;
-  transform: none;
-}
 
-@media (prefers-reduced-motion: reduce) {
-  [data-flow] {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-}
