@@ -51,7 +51,13 @@ export default function GenerativeField({
       typeof window.matchMedia === "function" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // Phones get a lower buffer, a thinner crowd and half the frames. The
+    // artwork is the same artwork, drawn at a pace a phone can hold.
+    const small =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(hover: none), (max-width: 767px)").matches;
+    const density = small ? 4600 : 2200;
+    const dpr = Math.min(window.devicePixelRatio || 1, small ? 1.35 : 2);
     let w = canvas.clientWidth || 400;
     let h = height;
 
@@ -67,7 +73,7 @@ export default function GenerativeField({
     size();
 
     const rand = mulberry32(hashSeed(seed));
-    parts.current = seedParticles(Math.round((w * h) / 2200), w, h, rand, colors);
+    parts.current = seedParticles(Math.round((w * h) / density), w, h, rand, colors);
 
     let t = 0;
     const draw = () => {
@@ -87,8 +93,12 @@ export default function GenerativeField({
       return;
     }
 
+    let tick = 0;
     const loop = () => {
-      if (visible.current) draw();
+      // Every other frame on a phone: the trails read the same, the scroll
+      // stays smooth because the main thread gets its half back.
+      tick += 1;
+      if (visible.current && (!small || tick % 2 === 0)) draw();
       raf.current = window.requestAnimationFrame(loop);
     };
     raf.current = window.requestAnimationFrame(loop);
@@ -112,7 +122,7 @@ export default function GenerativeField({
     const onResize = () => {
       size();
       parts.current = seedParticles(
-        Math.round((w * h) / 2200),
+        Math.round((w * h) / density),
         w,
         h,
         mulberry32(hashSeed(seed)),

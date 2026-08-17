@@ -109,7 +109,7 @@ export default function IdeaLens() {
       if (grabbed) {
         window.sessionStorage.removeItem("flowzone.ride.idea");
         window.localStorage.removeItem(KEY);
-        window.localStorage.removeItem("flowzone.funnel.v1");
+        window.localStorage.removeItem("flowzone.funnel.v2");
         setChosen(null);
         enter(grabbed);
       }
@@ -228,7 +228,7 @@ export default function IdeaLens() {
     setPhoto("");
     try {
       window.localStorage.removeItem(KEY);
-      window.localStorage.removeItem("flowzone.funnel.v1");
+      window.localStorage.removeItem("flowzone.funnel.v2");
     } catch {
       /* ignore */
     }
@@ -254,7 +254,11 @@ export default function IdeaLens() {
   /* The atmosphere. Footage when it exists, a photograph otherwise. */
   const ambient =
     clip || photo ? (
-      <div className="fixed inset-0 -z-10 pointer-events-none" aria-hidden>
+      <div
+        className="fixed inset-0 -z-10 pointer-events-none"
+        style={{ transform: "translateZ(0)", backfaceVisibility: "hidden" }}
+        aria-hidden
+      >
         {clip ? (
           <video
             src={clip}
@@ -355,7 +359,7 @@ export default function IdeaLens() {
           onKeyDown={(e) => e.key === "Enter" && enter(q)}
           placeholder={murmur || " "}
           aria-label="Type an idea to enter it"
-          className="w-full bg-paper-deep/80 text-ink placeholder-ink-mute border border-rule px-5 py-4 text-base font-light outline-none focus:border-accent transition-colors"
+          className="glowbox w-full bg-paper-deep/80 text-ink placeholder-ink-mute border border-rule px-5 py-4 text-base font-light outline-none focus:border-accent transition-colors"
         />
         {busy && (
           <span className="absolute right-4 top-1/2 -translate-y-1/2 flex h-2.5 w-2.5">

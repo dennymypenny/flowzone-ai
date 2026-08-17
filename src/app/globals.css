@@ -147,6 +147,75 @@ button {
       0 0 50px -18px rgba(91, 140, 255, 0.35);
   }
 
+
+  /* ------------------------------------------------------------------
+     Text boxes are lit.
+     A field you can type into should look like it is waiting for you,
+     so every text input and textarea carries a soft ambient halo and
+     brightens when it takes focus. The .glowbox class turns it up for
+     the fields that are the point of a page.
+     ------------------------------------------------------------------ */
+  input[type="text"],
+  input[type="email"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="number"],
+  input:not([type]),
+  textarea {
+    caret-color: #5B8CFF;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      inset 0 0 22px -16px rgba(139, 173, 255, 0.9),
+      0 0 24px -12px rgba(91, 140, 255, 0.5);
+    transition:
+      box-shadow 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  input[type="text"]:hover,
+  input[type="email"]:hover,
+  input[type="search"]:hover,
+  input[type="tel"]:hover,
+  input[type="url"]:hover,
+  input[type="number"]:hover,
+  input:not([type]):hover,
+  textarea:hover {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.07),
+      inset 0 0 26px -14px rgba(139, 173, 255, 0.9),
+      0 0 32px -10px rgba(91, 140, 255, 0.6);
+  }
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="search"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus,
+  input[type="number"]:focus,
+  input:not([type]):focus,
+  textarea:focus {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 0 30px -12px rgba(139, 173, 255, 1),
+      0 0 0 1px rgba(91, 140, 255, 0.45),
+      0 0 44px -8px rgba(91, 140, 255, 0.8);
+  }
+
+  /* The hero fields: the same light, turned up. */
+  .glowbox {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.07),
+      inset 0 0 34px -18px rgba(139, 173, 255, 1),
+      0 0 0 1px rgba(91, 140, 255, 0.16),
+      0 0 46px -14px rgba(91, 140, 255, 0.7) !important;
+  }
+  .glowbox:focus {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      inset 0 0 40px -14px rgba(139, 173, 255, 1),
+      0 0 0 1px rgba(91, 140, 255, 0.55),
+      0 0 64px -10px rgba(91, 140, 255, 0.95) !important;
+  }
+
   /* Dark glass bar for the nav */
   .glassbar {
     background: rgba(12, 20, 36, 0.72);
@@ -359,6 +428,60 @@ button {
   }
   .btn:hover .arrow {
     transform: translateX(4px);
+  }
+}
+
+
+/* ------------------------------------------------------------------
+   Phones do less work.
+   The laptop render leans on animated box-shadows, a full-viewport
+   moving light shaft and stacked backdrop blurs. All three are repaint
+   costs rather than composite costs, and a phone pays them on every
+   frame while it is also scrolling. On touch and on narrow screens the
+   same design holds still instead: the light stays, the per-frame
+   repainting goes. Nothing is hidden, only calmed.
+   ------------------------------------------------------------------ */
+@media (hover: none), (max-width: 767px) {
+  .lightshaft {
+    animation: none;
+    opacity: 0.7;
+  }
+  .drift {
+    animation: none;
+  }
+  .shine::after {
+    animation: none;
+    display: none;
+  }
+  .game-active {
+    animation: none;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 0 0 1px rgba(var(--ga), 0.55),
+      0 16px 46px -14px rgba(var(--ga), 0.55);
+  }
+  .flowline::after {
+    animation-duration: 6s;
+  }
+  .glassbar {
+    background: rgba(12, 20, 36, 0.94);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .chip {
+    backdrop-filter: none;
+  }
+  /* Keep the grid, drop the mask: masking a full-bleed layer is the
+     expensive half and the fade is barely visible on a phone anyway. */
+  .gridlight {
+    mask-image: none;
+    -webkit-mask-image: none;
+    opacity: 0.5;
+  }
+  /* Hover states stick after a tap on a phone, so panels hold still */
+  .panel:hover,
+  .panel-lift:hover {
+    transform: none;
   }
 }
 

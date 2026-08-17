@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /**
  * Real depth on the preview, rather than a drop shadow pretending to be depth.
@@ -8,8 +8,11 @@ import { useRef, useState, type ReactNode } from "react";
  * that want to sit forward of the surface use the .depth utility, so the mark
  * and the headline physically stand off the page as it turns.
  *
- * Touch devices and reduced motion get a flat card. Nothing here is required
- * for the content to be readable or usable.
+ * Touch devices and reduced motion get a flat card. Not just a card that
+ * never turns: no perspective scene, no preserve-3d, no will-change. Four of
+ * these on a phone used to mean four permanent compositor layers rendering
+ * a tilt that could never happen. Nothing here is required for the content
+ * to be readable or usable.
  */
 export default function Tilt3D({
   children,
@@ -22,6 +25,17 @@ export default function Tilt3D({
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
   const [t, setT] = useState({ x: 0, y: 0, on: false });
+  const [flat, setFlat] = useState(true);
+
+  // Assume flat until the browser tells us it has a real pointer, so the
+  // first paint on a phone never builds the 3D scene.
+  useEffect(() => {
+    try {
+      setFlat(!window.matchMedia("(hover: hover) and (pointer: fine)").matches);
+    } catch {
+      setFlat(false);
+    }
+  }, []);
 
   const reduced = () =>
     typeof window !== "undefined" &&
@@ -39,6 +53,8 @@ export default function Tilt3D({
   };
 
   const leave = () => setT({ x: 0, y: 0, on: false });
+
+  if (flat) return <div className={className}>{children}</div>;
 
   return (
     <div style={{ perspective: 1100 }} className={className}>

@@ -38,7 +38,12 @@ export default function FlowField() {
       typeof window.matchMedia === "function" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // A phone has more device pixels and less to push them with, so it gets
+    // a lower buffer and a thinner crowd. Same weather, less work.
+    const small =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(hover: none), (max-width: 767px)").matches;
+    const dpr = Math.min(window.devicePixelRatio || 1, small ? 1.35 : 2);
     let w = 0;
     let h = 0;
     let ps: P[] = [];
@@ -83,7 +88,9 @@ export default function FlowField() {
       c.setTransform(dpr, 0, 0, dpr, 0, 0);
       c.fillStyle = "rgba(12, 20, 36, 1)";
       c.fillRect(0, 0, w, h);
-      const n = Math.min(340, Math.round((w * h) / 4200));
+      const n = small
+        ? Math.min(120, Math.round((w * h) / 9000))
+        : Math.min(340, Math.round((w * h) / 4200));
       ps = Array.from({ length: n }, () => spawn());
     };
 
