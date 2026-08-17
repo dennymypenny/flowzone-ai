@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import VideoSpark from "@/app/components/VideoSpark";
 import Icon from "@/components/Icon";
 import FunnelNarrow from "@/app/components/FunnelNarrow";
+import { readPhoto, PHOTO_READ_KEY, type PhotoRead } from "@/lib/photoread";
 
 /**
  * Say the thing, and you are in it.
@@ -90,6 +91,7 @@ export default function IdeaLens() {
   const [dragOver, setDragOver] = useState(false);
   const [uploadCount, setUploadCount] = useState(0);
   const [murmur, setMurmur] = useState("");
+  const [read, setRead] = useState<PhotoRead | null>(null);
   const timer = useRef<number | undefined>(undefined);
   const fileRef = useRef<HTMLInputElement | null>(null);
 
@@ -102,6 +104,8 @@ export default function IdeaLens() {
         if (parsed?.thumb) setPhoto(parsed.thumb);
         if (parsed?.q) fetchClip(parsed.q);
       }
+      const savedRead = window.localStorage.getItem(PHOTO_READ_KEY);
+      if (savedRead) setRead(JSON.parse(savedRead));
       const ups = window.localStorage.getItem(UPLOADS_KEY);
       if (ups) setUploadCount((JSON.parse(ups) as string[]).length);
       // A thought grabbed mid-ride lands here, already inside it.
@@ -211,6 +215,19 @@ export default function IdeaLens() {
       /* storage full: carry on */
     }
     setUploadCount(all.length);
+
+    // The picture already knows most of the brief. Read it here, on this
+    // device, and hand the answer to the rest of the page.
+    try {
+      const r = await readPhoto(datas[0]);
+      if (r) {
+        setRead(r);
+        window.localStorage.setItem(PHOTO_READ_KEY, JSON.stringify(r));
+      }
+    } catch {
+      /* a picture that will not read is not a reason to stop */
+    }
+
     const term = q.trim() || chosen?.q || "your own thing";
     const sel = { q: term, thumb: datas[0] };
     setChosen(sel);
@@ -226,8 +243,10 @@ export default function IdeaLens() {
     setChosen(null);
     setClip("");
     setPhoto("");
+    setRead(null);
     try {
       window.localStorage.removeItem(KEY);
+      window.localStorage.removeItem(PHOTO_READ_KEY);
       window.localStorage.removeItem("flowzone.funnel.v2");
     } catch {
       /* ignore */
@@ -337,6 +356,42 @@ export default function IdeaLens() {
           className="hidden"
           onChange={(e) => e.target.files && addFiles(e.target.files)}
         />
+        {read && (
+          <div
+            className="panel p-5 mt-4 max-w-xl"
+            style={{ animation: "ideain 0.5s cubic-bezier(0.22,1,0.36,1) both" }}
+          >
+            <p className="label mb-3">What your photo says</p>
+            <div className="flex gap-1.5 mb-4">
+              {read.palette.map((hexv) => (
+                <span key={hexv} className="flex-1">
+                  <span
+                    className="block h-9 rounded-lg border border-white/25"
+                    style={{ background: hexv }}
+                  />
+                  <span className="block text-[9px] text-ink-mute mt-1.5 text-center tracking-wide">
+                    {hexv}
+                  </span>
+                </span>
+              ))}
+            </div>
+            <div className="flex flex-wrap gap-1.5 mb-3">
+              {read.tags.map((t) => (
+                <span
+                  key={t}
+                  className="surface text-[10px] uppercase tracking-label text-ink-soft px-2.5 py-1"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+            <p className="text-sm text-ink-soft font-light leading-relaxed">{read.line}</p>
+            <p className="text-[11px] text-ink-mute mt-3">
+              Read on your device. The picture never left it, and these colours ride
+              into the Design track with you.
+            </p>
+          </div>
+        )}
         <FunnelNarrow topic={chosen.q} />
         <VideoSpark topic={chosen.q} />
       </div>

@@ -51,7 +51,7 @@ const TRACKS = [
     id: "brief",
     icon: "compass",
     name: "The brief",
-    blurb: "Six questions that turn a vague idea into something you can hand to anyone.",
+    blurb: "Nine questions that turn a vague idea into something you can hand to anyone.",
     accent: "#34D399",
     rgb: "52, 211, 153",
   },
@@ -98,11 +98,11 @@ export default function StartModes() {
                   }`}
                   style={{
                     ["--ga" as string]: t.rgb,
-                    borderColor: active ? `${t.accent}66` : "rgba(255,255,255,0.09)",
+                    borderColor: active ? `${t.accent}88` : "rgba(255,255,255,0.16)",
                     background: active
                       ? `linear-gradient(180deg, ${t.accent}1f 0%, rgba(255,255,255,0.02) 100%), linear-gradient(to bottom, #1A2946, #131F36)`
-                      : "linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))",
-                    boxShadow: active ? undefined : "inset 0 1px 0 rgba(255,255,255,0.05)",
+                      : "linear-gradient(180deg, rgba(255,255,255,0.11), rgba(255,255,255,0.035))",
+                    boxShadow: active ? undefined : "inset 0 1px 0 rgba(255,255,255,0.16)",
                   }}
                 >
                   {active && (
@@ -124,7 +124,7 @@ export default function StartModes() {
                   </span>
                   <span
                     className="block font-display text-base leading-tight mb-1.5 transition-colors"
-                    style={{ color: active ? "#F1F3F7" : "#9AA7BE" }}
+                    style={{ color: active ? "#FFFFFF" : "#C4D0E4" }}
                   >
                     {t.name}
                   </span>

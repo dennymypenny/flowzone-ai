@@ -5,6 +5,7 @@ import { hashSeed, renderStill } from "@/lib/generative";
 import GenerativeField from "@/app/components/GenerativeField";
 import VoiceSession from "@/app/components/VoiceSession";
 import Tilt3D from "@/app/components/Tilt3D";
+import Icon from "@/components/Icon";
 
 /**
  * A guided session that turns a vague intention into a real brief.
@@ -14,12 +15,27 @@ import Tilt3D from "@/app/components/Tilt3D";
  * end. The visitor is always working over their own idea, never filling in a
  * generic form.
  *
+ * The questions used to be soft, and soft questions make a soft document. These
+ * are the ones somebody who charges by the hour opens with: who pays, what one
+ * customer is worth, why you and not the next one, what proof exists, and what
+ * is actually in the way. Every one of them can be answered with a tap, because
+ * honesty has to stay cheap or people bail on question three.
+ *
+ * What comes out the other end is a document with a point of view, not a
+ * transcript. It takes a position, draws a line around the work, names what is
+ * out of scope, does the arithmetic on the price, and lists the things the
+ * visitor still has to go and find out. A brief that disagrees with you is
+ * worth more than one that flatters you.
+ *
  * Everything saves to their browser as they go, so a session survives a closed
  * tab. No backend and no signup: nothing leaves their machine until they press
  * send, which is why it can be handed to a stranger on the first visit.
  */
 
 const KEY = "flowzone.session.v2";
+// The funnel on the same page asks six of these questions first. If it ran, we
+// carry the answers across. Nobody should be asked the same thing twice.
+const FUNNEL_KEY = "flowzone.funnel.v2";
 
 type Path = {
   id: string;
@@ -33,13 +49,17 @@ type Path = {
   // Path-specific prompts, keyed by step id
   chips: Record<string, string[]>;
   focus: Record<string, string>;
+  // The line around the work, drawn per path. Out of scope is the half that
+  // saves the argument later.
+  scopeIn: string[];
+  scopeOut: string[];
 };
 
 const PATHS: Path[] = [
   {
     id: "brand",
     color: "#4C7BE8",
-    icon: "🎨",
+    icon: "palette",
     name: "Starting from nothing",
     blurb: "There is an idea and not much else yet. It needs a name, a look and a voice before anything can be built.",
     build: "The Identity Build",
@@ -48,19 +68,35 @@ const PATHS: Path[] = [
       "You are at the beginning, so the mark, the palette, the type and the voice come first. Everything after it gets built against those decisions instead of guessing.",
     chips: {
       now: ["Nothing yet", "Just a name I like", "A rough logo I made", "A notes app full of ideas"],
-      who: ["People like me", "Local customers", "A niche community", "Not sure yet, that is the problem"],
+      who: ["People like me", "People nearby", "A niche community", "Not sure yet, that is the problem"],
+      money: ["nothing yet", "under $20", "$20 to $100", "I have not picked a number"],
+      edge: ["Nobody near me does it", "I am the reason", "It is better made", "Still working that out"],
+      proof: ["Nothing yet, it is a hunch", "Friends say they would buy", "Strangers ask for it"],
       feel: ["Premium and quiet", "Loud and fun", "Warm and human", "Serious and technical"],
-      win: ["It exists and looks real", "I stop being embarrassed to share it", "First paying customer"],
+      block: ["I do not know what to build first", "I cannot explain it fast", "No money to spend"],
+      win: ["First paying customer", "10 paying customers", "I stop being embarrassed to share it"],
     },
     focus: {
-      who: "You get to choose here, which is rare. Who do you want it to be for?",
+      who: "You get to choose here, which is rare. Who do you want to be paying you?",
+      money: "Even a guess. A guessed price beats no price, because everything else is built to justify it.",
       feel: "This is the most important answer on the page. It is the one that decides what your brand ends up looking like.",
     },
+    scopeIn: [
+      "A name and a mark that still works small and in one colour",
+      "Palette, type and the rules for using them",
+      "A voice: how it talks, what it never says",
+      "One page that can carry the whole thing while the rest gets built",
+    ],
+    scopeOut: [
+      "Ecommerce, carts and checkout",
+      "Anything behind a login",
+      "Ongoing content and social management",
+    ],
   },
   {
     id: "shop",
     color: "#A78BFA",
-    icon: "🛒",
+    icon: "box",
     name: "I want to sell things",
     blurb: "Products, real ones, and a place to sell them properly instead of through DMs and screenshots.",
     build: "The Storefront Build",
@@ -70,18 +106,34 @@ const PATHS: Path[] = [
     chips: {
       now: ["Selling through DMs", "On a marketplace", "An Instagram and nothing else", "A shop I do not like"],
       who: ["Collectors", "Repeat regulars", "Gift buyers", "People who found me on social"],
+      money: ["under $20", "$20 to $100", "$100 to $1,000", "over $1,000"],
+      edge: ["Nobody else makes this", "It is better made", "I am the reason", "It is cheaper"],
+      proof: ["People already pay me", "A waitlist or a list", "The last run sold out", "Nothing yet, it is a hunch"],
       feel: ["Like a real store", "Hyped and loud", "Clean and trustworthy", "Nostalgic"],
-      win: ["First sales through my own site", "Stop taking orders in DMs", "Look legitimate enough to be trusted"],
+      block: ["Nobody knows it exists", "It looks amateur", "No time to build it", "Stock costs money up front"],
+      win: ["First sales through my own site", "Sell out the first run", "$3,000 a month", "Stop taking orders in DMs"],
     },
     focus: {
       now: "How are people buying from you today, even if it is messy?",
-      win: "What number or moment would tell you the shop was worth building?",
+      money: "Take your best seller. What does one of them cost somebody?",
+      win: "What number would tell you the shop paid for itself?",
     },
+    scopeIn: [
+      "Product pages built the way your buyers actually decide",
+      "Cart and checkout that take money without you touching it",
+      "A photography and layout template you can repeat forever",
+      "Stock, shipping and tax wired to the real world",
+    ],
+    scopeOut: [
+      "A full rebrand from scratch",
+      "Marketplace listings and the fees that come with them",
+      "Paid ads and the budget behind them",
+    ],
   },
   {
     id: "site",
     color: "#5B9BF9",
-    icon: "🌐",
+    icon: "house",
     name: "I need a proper site",
     blurb: "The business is real. The site is not doing it justice, or does not exist at all.",
     build: "The Site Build",
@@ -90,19 +142,35 @@ const PATHS: Path[] = [
       "The business exists, so this is about the place people land. Custom design against your brand, words written for you, and forms that reach your inbox.",
     chips: {
       now: ["No site at all", "A template I outgrew", "A one pager", "A site I am embarrassed by"],
-      who: ["Other businesses", "Local customers", "People comparing me to competitors", "Referrals checking me out"],
+      who: ["Other businesses", "People nearby", "People comparing me to competitors", "Referrals checking me out"],
+      money: ["$100 to $1,000", "over $1,000", "$20 to $100", "a monthly fee"],
+      edge: ["I know this audience", "It is better made", "I am the reason", "Nobody near me does it"],
+      proof: ["People already pay me", "Referrals keep coming", "Strangers ask for it", "Nothing yet, it is a hunch"],
       feel: ["Credible and calm", "Confident, not corporate", "Modern and fast", "Like a bigger company than I am"],
-      win: ["Enquiries that actually arrive", "Stop losing people who look me up", "Charge more without flinching"],
+      block: ["It looks amateur", "I cannot explain it fast", "Nobody knows it exists", "No time to build it"],
+      win: ["5 enquiries a week", "Stop losing people who look me up", "Charge more without flinching"],
     },
     focus: {
       who: "Who is looking you up right now, and what are they trying to decide?",
-      feel: "What impression do you want someone to walk away with in the first four seconds?",
+      money: "One job, one project, one client. What does that come to?",
+      feel: "What should someone walk away thinking in the first four seconds?",
     },
+    scopeIn: [
+      "A custom design against your brand, not a template",
+      "Words written for the pages, no filler",
+      "Forms that reach your inbox and get answered",
+      "Speed, search basics and analytics done properly",
+    ],
+    scopeOut: [
+      "Ecommerce and checkout",
+      "A customer login or dashboard",
+      "Ongoing content after launch",
+    ],
   },
   {
     id: "system",
     color: "#34D399",
-    icon: "⚙️",
+    icon: "bolt",
     name: "The manual work is eating me",
     blurb: "The launch went fine. Now you are doing the same jobs by hand every day and it does not scale.",
     build: "The Engine Build",
@@ -112,13 +180,29 @@ const PATHS: Path[] = [
     chips: {
       now: ["Chasing leads by hand", "Booking over DMs", "Invoicing manually", "Copying between spreadsheets"],
       who: ["Existing customers", "New enquiries", "My team", "Just me, drowning"],
+      money: ["$100 to $1,000", "over $1,000", "a monthly fee", "$20 to $100"],
+      edge: ["I know this audience", "It is faster", "I am the reason", "Still working that out"],
+      proof: ["People already pay me", "More work than I can take", "Referrals keep coming"],
       feel: ["Invisible, it should just work", "Fast and reliable", "Simple enough for my team"],
-      win: ["Get my evenings back", "Nothing falls through", "Handle double the volume"],
+      block: ["No time to build it", "It only works if I do it", "Things fall through the cracks"],
+      win: ["10 hours a week back", "Nothing falls through", "Handle double the volume"],
     },
     focus: {
       now: "Which job do you repeat most, and how often?",
-      win: "What would you do with the time it gives back?",
+      money: "What is one customer worth over a year, not one order?",
+      win: "Put a number on the hours. That is what this build is buying back.",
     },
+    scopeIn: [
+      "Intake, booking and invoicing wired end to end",
+      "One place the working day actually lives",
+      "Alerts when something needs a human",
+      "A weekly number you can look at in ten seconds",
+    ],
+    scopeOut: [
+      "A rebrand",
+      "A new public site",
+      "Anything that needs a native app",
+    ],
   },
 ];
 
@@ -148,46 +232,82 @@ const STEPS: Step[] = [
   {
     id: "what",
     color: "#4C7BE8",
-    icon: "💡",
+    icon: "chat",
     eyebrow: "The idea",
     q: "Say it in your own words.",
     hint: "The version you would say out loud to a friend. Messy is fine, this is the raw material.",
     rows: 4,
   },
   {
-    id: "now",
-    color: "#5B9BF9",
-    icon: "📍",
-    eyebrow: "Where you are",
-    q: "What exists already?",
-    hint: "Be honest about the messy parts. It changes what we would start with.",
+    id: "who",
+    color: "#A78BFA",
+    icon: "target",
+    eyebrow: "Who pays",
+    q: "Who actually hands over the money?",
+    hint: "Not who likes it. Not who follows you. The person whose card comes out.",
     rows: 3,
   },
   {
-    id: "who",
-    color: "#A78BFA",
-    icon: "🎯",
-    eyebrow: "The audience",
-    q: "Who is this for, specifically?",
-    hint: "Not everyone. The person you picture on the other end.",
+    id: "money",
+    color: "#34D399",
+    icon: "banknote",
+    eyebrow: "The money",
+    q: "What does one customer pay you?",
+    hint: "This number decides everything under it. A volume game and a trust game do not get built the same way.",
+    rows: 2,
+  },
+  {
+    id: "edge",
+    color: "#FBBF24",
+    icon: "gem",
+    eyebrow: "The edge",
+    q: "Why would they pick you over the next one?",
+    hint: "The next one is one search away and probably cheaper. If there is no answer yet, say so, that is the most useful thing on this page.",
+    rows: 3,
+  },
+  {
+    id: "proof",
+    color: "#5B9BF9",
+    icon: "eye",
+    eyebrow: "The proof",
+    q: "What already tells you people want this?",
+    hint: "Anything real. Money, a waitlist, a repeat customer, strangers asking. Wanting it yourself does not count.",
+    rows: 3,
+  },
+  {
+    id: "now",
+    color: "#5B8CFF",
+    icon: "hammer",
+    eyebrow: "What exists",
+    q: "What is built already?",
+    hint: "Be honest about the messy parts. It decides what gets kept and what gets thrown away.",
     rows: 3,
   },
   {
     id: "feel",
-    color: "#FBBF24",
-    icon: "✨",
+    color: "#C6E4F8",
+    icon: "sparkle",
     eyebrow: "The feel",
     q: "How should it feel to land on?",
-    hint: "Adjectives are welcome. So are links to things you like and things you hate.",
+    hint: "Adjectives are welcome. Links to things you love and things you hate are better.",
+    rows: 3,
+  },
+  {
+    id: "block",
+    color: "#E2703A",
+    icon: "puzzle",
+    eyebrow: "The constraint",
+    q: "What is actually in the way?",
+    hint: "Money, time, skill, nerve. Name the real one. Most people spend on the wrong one and wonder why nothing moved.",
     rows: 3,
   },
   {
     id: "win",
-    color: "#34D399",
-    icon: "🏁",
+    color: "#22C55E",
+    icon: "trophy",
     eyebrow: "The win",
-    q: "What makes this worth doing?",
-    hint: "Ninety days after launch, what would make you glad you did it?",
+    q: "What number tells you this worked?",
+    hint: "Ninety days out. Something you could check on a Friday afternoon, not a feeling.",
     rows: 3,
   },
 ];
@@ -207,17 +327,43 @@ const FALLBACK_CHIPS: Record<string, string[]> = {
     "It is an idea I have not started",
     "Something I keep explaining badly",
   ],
+  who: [
+    "People nearby",
+    "People online, anywhere",
+    "Other businesses",
+    "One big client",
+    "Not sure yet, that is the problem",
+  ],
+  money: [
+    "under $20",
+    "$20 to $100",
+    "$100 to $1,000",
+    "over $1,000",
+    "a monthly fee",
+    "nothing yet",
+  ],
+  edge: [
+    "Nobody near me does it",
+    "It is better made",
+    "It is faster",
+    "I am the reason",
+    "I know this audience",
+    "Still working that out",
+  ],
+  proof: [
+    "People already pay me",
+    "Strangers ask for it",
+    "A waitlist or a list",
+    "It works for me and nobody else yet",
+    "Nothing yet, it is a hunch",
+  ],
   now: [
     "Nothing yet, honestly",
+    "A name I like",
     "A logo I do not love",
     "Social accounts only",
     "An old site I have outgrown",
-  ],
-  who: [
-    "People like me",
-    "Local customers",
-    "Other businesses",
-    "Not sure yet, that is the problem",
+    "Paying customers",
   ],
   feel: [
     "Premium and quiet",
@@ -226,22 +372,347 @@ const FALLBACK_CHIPS: Record<string, string[]> = {
     "Serious and technical",
     "Nostalgic",
   ],
+  block: [
+    "Nobody knows it exists",
+    "It looks amateur",
+    "I cannot explain it fast",
+    "No time to build it",
+    "No money to spend",
+    "I do not know what to build first",
+  ],
   win: [
-    "It exists and looks real",
-    "People take me seriously",
-    "First paying customer",
-    "I stop doing this by hand",
+    "10 paying customers",
+    "$3,000 a month",
+    "5 enquiries a week",
+    "10 hours a week back",
+    "First sale from a stranger",
   ],
 };
 
 const RANKS = [
   { label: "Not started", color: "#647089" },
+  { label: "A sentence", color: "#4C7BE8" },
   { label: "A sketch", color: "#4C7BE8" },
   { label: "Taking shape", color: "#5B9BF9" },
-  { label: "Getting real", color: "#A78BFA" },
-  { label: "Sharp", color: "#FBBF24" },
+  { label: "Getting real", color: "#5B9BF9" },
+  { label: "It has a spine", color: "#A78BFA" },
+  { label: "Sharp", color: "#A78BFA" },
+  { label: "Nearly a brief", color: "#FBBF24" },
+  { label: "Brief in hand", color: "#FBBF24" },
   { label: "Ready to build", color: "#34D399" },
 ];
+
+/* -------------------------------------------------------------------------
+ * The read.
+ *
+ * Everything below turns nine answers into a document with an opinion. No
+ * network, no model, no cleverness: just the arithmetic somebody would do on
+ * the back of a napkin, written down properly.
+ * ---------------------------------------------------------------------- */
+
+/** First non-empty line of an answer, which is usually the one that matters. */
+const firstLine = (s?: string) =>
+  (s || "")
+    .split("\n")
+    .map((x) => x.trim())
+    .filter(Boolean)[0] || "";
+
+/** Lowercase the opening letter so an answer can sit inside a sentence. */
+const soften = (s: string) => (s ? s.charAt(0).toLowerCase() + s.slice(1) : s);
+
+/** Chips get appended, so match on contains rather than equals. */
+function pick<T>(map: Record<string, T>, text: string): T | null {
+  const t = (text || "").toLowerCase();
+  if (!t) return null;
+  const hit = Object.keys(map).find((k) => t.includes(k.toLowerCase()));
+  return hit ? map[hit] : null;
+}
+
+type Band = { id: string; mid: number; read: (n: number) => string; risk: string };
+
+/**
+ * What one customer is worth, and what that fact demands of the build. The
+ * bands match the funnel's word for word so an answer can cross over.
+ */
+const BANDS: Band[] = [
+  {
+    id: "over $1,000",
+    mid: 2000,
+    read: () =>
+      "Over $1,000 a customer means one or two yeses a month change your year. Nothing here should chase an audience. It should chase a handful of the right people and make saying yes feel safe.",
+    risk: "Few customers, each one heavy. Losing two of them is a bad quarter, so the work has to make you replaceable to nobody and findable by everybody.",
+  },
+  {
+    id: "$100 to $1,000",
+    mid: 400,
+    read: (n) =>
+      `At around $400 a sale you need roughly ${n} customers a month to clear $3,000. That is a trust game, not a volume game. Every page should be built to make one person say yes.`,
+    risk: "Trust games are lost quietly. People decide you are not serious and never tell you, so proof has to be visible before the price is.",
+  },
+  {
+    id: "$20 to $100",
+    mid: 60,
+    read: (n) =>
+      `At around $60 a sale you need roughly ${n} customers a month to clear $3,000. Reachable, and it lives or dies on how often people see you and how easily they come back.`,
+    risk: "The middle band needs both reach and repeat. One without the other stalls at about half the number you want.",
+  },
+  {
+    id: "under $20",
+    mid: 12,
+    read: (n) =>
+      `At around $12 a sale this is a volume game: roughly ${n} customers a month to clear $3,000. Volume is won with reach and repeat, never with a prettier logo.`,
+    risk: "At this price the maths only works at scale, and scale costs either money or months. Budget for one of them now.",
+  },
+  {
+    id: "a monthly fee",
+    mid: 80,
+    read: (n) =>
+      `A monthly fee changes the question from how many sales to how few leave. At around $80 a month it takes about ${n} people staying to clear $3,000, and keeping them is cheaper than finding them.`,
+    risk: "Recurring money hides its own leak. If nobody is watching who cancels, the number looks fine right up until it does not.",
+  },
+  {
+    id: "nothing yet",
+    mid: 0,
+    read: () =>
+      "Nothing has a price yet, so that is the first decision rather than the last. Pick a number you can say out loud without flinching, then build everything backwards from it.",
+    risk: "No price means no maths, and no maths means every choice below is a guess wearing a suit.",
+  },
+];
+
+const NO_PRICE = BANDS[BANDS.length - 1];
+
+/** Reads a band out of whatever they typed or tapped, digits included. */
+function readBand(text: string): Band {
+  const t = (text || "").toLowerCase();
+  const named = BANDS.find((b) => t.includes(b.id.toLowerCase()));
+  if (named) return named;
+  const m = t.match(/\$\s?([\d,]+)/);
+  if (m) {
+    const n = Number(m[1].replace(/,/g, ""));
+    if (n >= 1000) return BANDS[0];
+    if (n >= 100) return BANDS[1];
+    if (n >= 20) return BANDS[2];
+    if (n > 0) return BANDS[3];
+  }
+  return NO_PRICE;
+}
+
+const AUDIENCE: Record<string, string> = {
+  "people nearby": "Local. The map, the window and word of mouth do more work here than anything online, so the build has to be findable at street level.",
+  "local customers": "Local. The map, the window and word of mouth do more work here than anything online, so the build has to be findable at street level.",
+  "people like me": "You are the audience. That is a real advantage and a blind spot at once, because your taste and your market are not the same size.",
+  "people online": "Online, which means nobody walks past. Every visit is bought, earned or borrowed from somebody else's audience, and the site has to convert the ones you get.",
+  "other businesses": "Business buyers. Slower yes, bigger cheque, and the decision usually needs a second person to nod. Everything you make has to survive being forwarded.",
+  "one big client": "One client is a customer and a risk in the same sentence. Build it so the second one is easy to add, before you need them.",
+  "collectors": "Collectors. They care about the story, the run size and being early. Scarcity and provenance sell more than polish.",
+  "repeat regulars": "Regulars. The second purchase is the whole business, so the work should make coming back easier than deciding again.",
+  "gift buyers": "Gift buyers. They are not the user, they are the payer, and they need reassurance more than detail.",
+  "referrals": "Referrals. Somebody already vouched for you, so the job is to not lose them in the first ten seconds.",
+  "people comparing me": "People holding you against a competitor tab. Whatever they can compare fast, they will, so give them something that does not compare.",
+  "existing customers": "People who already pay you. The cheapest growth in the building, and the easiest to take for granted.",
+  "new enquiries": "People at the front door. Speed of reply beats almost everything else here.",
+  "my team": "Your team. If it is not simpler than what they do now, they will quietly keep doing what they do now.",
+  "just me": "You, on your own. That means the build has to remove work, not add a thing you now have to feed.",
+  "not sure yet": "Not named yet, which makes this the most expensive gap in the brief. Everything below is provisional until somebody real is on the other end.",
+};
+
+const EDGE: Record<string, string> = {
+  "nobody near me does it": "Being the only one nearby is a real edge and a temporary one. Use it loudly while it lasts, and build something harder to copy underneath.",
+  "nobody else makes this": "Being the only one is a real edge and a temporary one. Use it loudly while it lasts, and build something harder to copy underneath.",
+  "it is better made": "Better made only counts if people can see it before they buy. That is a proof problem, and proof is showable.",
+  "it is faster": "Speed is a promise, so it has to be measured somewhere public or it reads as a slogan.",
+  "it is cheaper": "Cheapest is the hardest position to hold. Anyone with deeper pockets can take it off you in a week.",
+  "i am the reason": "You are the moat. Your face and your voice belong out front, and no logo can do that job for you.",
+  "i know this audience": "Knowing the audience better than the competition is a durable edge, as long as the work sounds like it. Generic copy throws it away.",
+  "still working that out": "No edge named yet. This is the highest value thing on the list to fix, because everything else gets easier the moment it is answered.",
+};
+
+const PROOF: Record<string, string> = {
+  "people already pay me": "Money has changed hands, which puts you ahead of almost everyone with the same idea. Lead with it on every page.",
+  "more work than i can take": "Demand is proven and capacity is the problem. That is a good problem and a completely different build.",
+  "the last run sold out": "Sold out is proof and a story. Say the number, scarcity only works when it is specific.",
+  "referrals keep coming": "Referrals are the strongest proof there is. Write down what people say when they refer you, that is your positioning already written.",
+  "strangers ask for it": "Strangers asking is real signal. Turn it into a list before you turn it into a build.",
+  "a waitlist": "A list is proof with a phone number attached. Its size is the first honest number in this brief.",
+  "friends say they would buy": "Friends are not proof. Kind, but not proof. The first job is one stranger paying.",
+  "it works for me": "It works for you and nobody else yet. That is a hypothesis, so the build should be the cheapest way to test it on a stranger.",
+  "nothing yet": "No proof yet. Everything here is a bet, so the first thing built should be the cheapest thing that can be put in front of a stranger.",
+};
+
+const CONSTRAINT: Record<string, string> = {
+  "nobody knows it exists": "A distribution problem, not a product one. More polish will not fix it and usually delays the fix.",
+  "it looks amateur": "Trust is the leak. People decide in the first two seconds and right now they are deciding wrong, which costs sales you never hear about.",
+  "i cannot explain it fast": "The problem is the sentence, not the thing. If you cannot say it in one line, nobody can repeat it for you, and repeating is how it spreads.",
+  "no time to build it": "You are the constraint. Anything needing your hands every week will stall, so the first build has to remove work rather than add it.",
+  "it only works if i do it": "You are the constraint. Anything needing your hands every week will stall, so the first build has to remove work rather than add it.",
+  "no money to spend": "Then the first thing you make has to sell, not impress. Impressive comes out of the money that sells.",
+  "stock costs money up front": "Cash is tied up in things before anyone has bought them. Pre-orders or made to order take that risk off the table.",
+  "i do not know what to build first": "Order is the constraint, which is what this document is for. Do the top of the scope and nothing else until it is live.",
+  "things fall through the cracks": "Nothing is dropping on purpose, it is dropping because the work lives in your head. The fix is one place things land, not more discipline.",
+};
+
+/** Risks that come from the shape of the answers, not from the words. */
+const CONSTRAINT_RISK: Record<string, string> = {
+  "nobody knows it exists": "Launching quietly. A build with no distribution plan attached is a very expensive private page.",
+  "it looks amateur": "Spending on the surface and skipping the proof, which moves the same trust problem one layer down.",
+  "i cannot explain it fast": "Designing before the words exist. The layout gets rebuilt the day the sentence lands.",
+  "no time to build it": "Scope that needs you weekly. It will be abandoned by week three and blamed on the build.",
+  "no money to spend": "Building the whole thing at once. Half of it, earning, beats all of it, waiting.",
+  "i do not know what to build first": "Doing everything a little. Nothing gets finished enough to be judged.",
+  "things fall through the cracks": "Building a system nobody moves into. If the old way is still open, people use the old way.",
+};
+
+type Doc = {
+  positioning: string;
+  audience: string;
+  arithmetic: string;
+  evidence: string;
+  scopeIn: string[];
+  scopeOut: string[];
+  constraint: string;
+  measure: string;
+  risks: string[];
+  open: string[];
+};
+
+/**
+ * Builds the document. Every section has a fallback that says something true
+ * about the gap instead of printing a dash, because a named gap is useful and
+ * a dash is not.
+ */
+function buildDoc(
+  answers: Record<string, string>,
+  path: Path | null,
+  projectName: string
+): Doc {
+  const name = projectName || "This project";
+  const who = firstLine(answers.who);
+  const what = firstLine(answers.what);
+  const edge = firstLine(answers.edge);
+  const band = readBand(answers.money || "");
+  const perMonth = band.mid ? Math.max(1, Math.round(3000 / band.mid)) : 0;
+  const winLine = firstLine(answers.win);
+  const blocked = firstLine(answers.block);
+
+  // Positioning: one sentence somebody could repeat back to you.
+  const whoBit = who ? soften(who) : "an audience nobody has named yet";
+  const whatBit = what ? soften(what) : "still a sentence looking for its edges";
+  const edgeBit =
+    edge && !/still working/i.test(edge)
+      ? `They pick it over the next one because ${soften(edge)}.`
+      : "Why anyone picks it over the next one is still open, and that is the first thing this build has to answer.";
+  const positioning = `${name} is ${whatBit}, made for ${whoBit}. ${edgeBit}`;
+
+  const audience =
+    pick(AUDIENCE, answers.who || "") ||
+    (who
+      ? `Written down as: ${who}. Specific enough to build against, and worth checking against a real person this week.`
+      : "Nobody is named yet. Until somebody is, every decision below is taste rather than strategy.");
+
+  const arithmetic = band.read(perMonth);
+
+  const evidence = [
+    pick(EDGE, answers.edge || "") ||
+      "No edge is written down, so assume the next option looks identical from the outside.",
+    pick(PROOF, answers.proof || "") ||
+      "No proof is written down. Treat the first build as an experiment with a budget, not a launch.",
+  ].join(" ");
+
+  // Scope comes from the path, then the constraint edits it. Money and time
+  // change what belongs in a first build more than taste ever does.
+  const scopeIn = path
+    ? [...path.scopeIn]
+    : [
+        "A name and one page that explains it in a sentence",
+        "A way for somebody to say yes without emailing you first",
+        "Enough proof on the page to be believed",
+      ];
+  const scopeOut = path
+    ? [...path.scopeOut]
+    : ["Anything that cannot be finished in one go", "Features nobody has asked for yet"];
+
+  const b = (answers.block || "").toLowerCase();
+  if (b.includes("no money")) {
+    scopeOut.push("Anything that cannot start earning inside ninety days");
+  }
+  if (b.includes("no time") || b.includes("only works if i do it")) {
+    scopeOut.push("Anything that needs you every week to keep running");
+  }
+  if (band === NO_PRICE) {
+    scopeOut.push("Anything priced before the price exists");
+  }
+  if ((answers.proof || "").toLowerCase().includes("nothing yet")) {
+    scopeIn.push("One cheap thing a stranger can react to before the rest is built");
+  }
+
+  const constraint =
+    pick(CONSTRAINT, answers.block || "") ||
+    (blocked
+      ? `Named as: ${blocked}. Everything in scope should be judged against whether it moves that, and nothing else.`
+      : "No constraint named, which usually means the real one has not been said out loud yet. Ask again after a week of trying.");
+
+  // Success, dragged towards a number wherever the answers allow it.
+  const hasNumber = /\d/.test(winLine);
+  const measure = winLine
+    ? hasNumber
+      ? `${winLine}. Check it on a Friday, ninety days from launch. If it is not moving by day thirty, the constraint above is the wrong one.`
+      : `${winLine}. That is a feeling, so here is the number under it: ${
+          perMonth
+            ? `${perMonth} customers a month at around $${band.mid}, which is $3,000 through the door.`
+            : "pick a price first, then a count, then a date."
+        }`
+    : perMonth
+      ? `Nothing was written down, so use the arithmetic: ${perMonth} customers a month at around $${band.mid}. Ninety days to get there.`
+      : "Nothing was written down and there is no price to work from. First number, then first date.";
+
+  const risks: string[] = [];
+  risks.push(band.risk);
+  if (/still working/i.test(answers.edge || "") || !edge) {
+    risks.push("No edge yet, so the work has to compete on looks, and looks are the cheapest thing to copy.");
+  }
+  if ((answers.proof || "").toLowerCase().includes("nothing yet") || !answers.proof) {
+    risks.push("No proof yet. Spending the whole budget before one stranger has said yes is the most common way this goes wrong.");
+  }
+  const cr = pick(CONSTRAINT_RISK, answers.block || "");
+  if (cr) risks.push(cr);
+  if (!projectName) {
+    risks.push("Nothing has a name, so nothing can be searched for, said out loud or repeated by anybody else.");
+  }
+  if (path && path.id === "system" && (answers.who || "").toLowerCase().includes("my team")) {
+    risks.push("Team tools fail on adoption, not on features. Budget time for showing people, not just building.");
+  }
+
+  // Blanks are open questions too, but they are the boring kind, so only the
+  // first few get a seat and the sharper ones keep theirs.
+  const open: string[] = [];
+  STEPS.filter((s) => !(answers[s.id] || "").trim())
+    .slice(0, 2)
+    .forEach((s) => open.push(`${s.q} Left blank, and it changes the shape of the work.`));
+  if (/not sure|do not know|dunno/i.test(answers.who || "")) {
+    open.push("Who pays is still open. Name one real person you could call this week and test the sentence on them.");
+  }
+  if (band === NO_PRICE) {
+    open.push("What is the price? Pick a number, say it out loud, then see whether you flinch.");
+  }
+  open.push("What happens the day after somebody says yes? Who replies, how fast, and in what words?");
+  open.push("What is the honest budget, and what does it have to earn back before it counts as working?");
+  if (path && path.id !== "brand") {
+    open.push("Who writes the words when the design is ready? That job lands on somebody, usually late.");
+  }
+
+  return {
+    positioning,
+    audience,
+    arithmetic,
+    evidence,
+    scopeIn,
+    scopeOut,
+    constraint,
+    measure,
+    risks: risks.slice(0, 5),
+    open: open.slice(0, 6),
+  };
+}
 
 type Saved = {
   answers: Record<string, string>;
@@ -257,21 +728,54 @@ export default function WorkSession() {
   const [started, setStarted] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [savedTick, setSavedTick] = useState(false);
+  const [carried, setCarried] = useState<string[]>([]);
   const timer = useRef<number | null>(null);
 
   useEffect(() => {
+    let loadedAnswers: Record<string, string> = {};
     try {
       const raw = window.localStorage.getItem(KEY);
       if (raw) {
         const p: Saved = JSON.parse(raw);
-        setAnswers(p.answers || {});
+        loadedAnswers = p.answers || {};
         setPathId(p.path || null);
-        setStep(Math.min(p.step || 0, STEPS.length + 1));
+        setStep(Math.min(p.step || 0, STEPS.length + 2));
         setStarted(p.started || null);
       }
     } catch {
       /* storage must never break the page */
     }
+
+    // The funnel asked six of these already. Carrying them over is the whole
+    // difference between a session that respects your time and a form.
+    try {
+      const raw = window.localStorage.getItem(FUNNEL_KEY);
+      if (raw) {
+        const f = JSON.parse(raw) as { answers?: Record<string, string> };
+        const from = f && f.answers ? f.answers : {};
+        const map: Array<[string, string]> = [
+          ["who", "who"],
+          ["now", "have"],
+          ["money", "price"],
+          ["edge", "edge"],
+          ["block", "block"],
+        ];
+        const took: string[] = [];
+        map.forEach(([step, funnelKey]) => {
+          const v = (from[funnelKey] || "").trim();
+          if (v && !(loadedAnswers[step] || "").trim()) {
+            loadedAnswers[step] = v.charAt(0).toUpperCase() + v.slice(1);
+            took.push(step);
+          }
+        });
+        if (from.first && !loadedAnswers.first) loadedAnswers.first = from.first;
+        setCarried(took);
+      }
+    } catch {
+      /* a missing or broken funnel is normal, carry on */
+    }
+
+    setAnswers(loadedAnswers);
     try {
       if (window.localStorage.getItem("flowzone.briefunlock.v1")) setUnlocked(true);
     } catch {
@@ -335,23 +839,40 @@ export default function WorkSession() {
     setAnswers({ ...answers, [id]: existing ? `${existing}\n${chip}` : chip });
   };
 
+  const doc = buildDoc(answers, path, projectName);
+
+  /**
+   * The document, as plain text. Same sections in the same order as the screen,
+   * because somebody is going to paste this into an email to a developer and it
+   * has to hold up on its own with none of the styling.
+   */
   const brief = () =>
     [
-      `NAME — ${projectName || "Not named yet"}`,
-      `PATH — ${path ? path.name : "Not chosen"}`,
-      `DIRECTION — ${palette.name}`,
-      ...STEPS.map(
-        (s) => `${s.eyebrow.toUpperCase()} — ${s.q}\n${(answers[s.id] || "").trim() || "—"}`
-      ),
-      path ? `SUGGESTED BUILD — ${path.build}` : "",
+      `PROJECT BRIEF: ${projectName || "Not named yet"}`,
+      `Written in Flow Mode on flowzone.dev${started ? ", " + started : ""}`,
+      `POSITIONING\n${doc.positioning}`,
+      `THE AUDIENCE\n${doc.audience}`,
+      `THE MONEY\n${doc.arithmetic}`,
+      `EDGE AND PROOF\n${doc.evidence}`,
+      `IN SCOPE\n${doc.scopeIn.map((x) => `- ${x}`).join("\n")}`,
+      `NOT IN SCOPE\n${doc.scopeOut.map((x) => `- ${x}`).join("\n")}`,
+      `THE CONSTRAINT\n${doc.constraint}`,
+      `WHAT SUCCESS LOOKS LIKE\n${doc.measure}`,
+      `RISKS\n${doc.risks.map((x) => `- ${x}`).join("\n")}`,
+      `OPEN QUESTIONS\n${doc.open.map((x) => `- ${x}`).join("\n")}`,
+      `DIRECTION\n${palette.name}${answers.feel ? `\n${(answers.feel || "").trim()}` : ""}`,
+      path ? `SUGGESTED BUILD\n${path.build}\n${path.buildWhy}` : "",
+      `IN THEIR OWN WORDS\n${STEPS.map(
+        (s) => `${s.eyebrow.toUpperCase()}: ${s.q}\n${(answers[s.id] || "").trim() || "Left blank"}`
+      ).join("\n\n")}`,
     ]
       .filter(Boolean)
       .join("\n\n");
 
   const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent(
-    `My work session${path ? " — " + path.build : ""}`
+    `My project brief${path ? ", " + path.build : ""}`
   )}&body=${encodeURIComponent(
-    `Hi FlowZone,\n\nI worked through the session on your site. Here is where I landed.\n\n${brief()}\n\nThanks,\n`
+    `Hi FlowZone,\n\nI worked through the session on your site and it wrote this brief. Here is where I landed.\n\n${brief()}\n\nThanks,\n`
   )}`;
 
   const unlock = async () => {
@@ -424,14 +945,27 @@ export default function WorkSession() {
       return out;
     };
 
+    // The image gets the document, not the transcript. Somebody screenshots this
+    // into a group chat, so it has to make the argument on its own.
+    const sections: Array<{ head: string; color: string; body: string }> = [
+      { head: "POSITIONING", color: "#4C7BE8", body: doc.positioning },
+      { head: "THE AUDIENCE", color: "#A78BFA", body: doc.audience },
+      { head: "THE MONEY", color: "#34D399", body: doc.arithmetic },
+      { head: "EDGE AND PROOF", color: "#5B9BF9", body: doc.evidence },
+      { head: "IN SCOPE", color: "#5B8CFF", body: doc.scopeIn.map((x) => `- ${x}`).join("\n") },
+      { head: "NOT IN SCOPE", color: "#647089", body: doc.scopeOut.map((x) => `- ${x}`).join("\n") },
+      { head: "THE CONSTRAINT", color: "#E2703A", body: doc.constraint },
+      { head: "WHAT SUCCESS LOOKS LIKE", color: "#22C55E", body: doc.measure },
+      { head: "RISKS", color: "#FBBF24", body: doc.risks.map((x) => `- ${x}`).join("\n") },
+      { head: "OPEN QUESTIONS", color: "#C6E4F8", body: doc.open.map((x) => `- ${x}`).join("\n") },
+    ];
+
     const blocks: Array<{ t: string; kind: "eyebrow" | "body"; color: string }> = [];
-    STEPS.forEach((s) => {
-      blocks.push({ t: s.eyebrow.toUpperCase(), kind: "eyebrow", color: s.color });
-      wrap(
-        (answers[s.id] || "").trim() || "Left blank",
-        "300 26px Poppins, sans-serif",
-        W - pad * 2
-      ).forEach((l) => blocks.push({ t: l, kind: "body", color: "#C7CFDD" }));
+    sections.forEach((s) => {
+      blocks.push({ t: s.head, kind: "eyebrow", color: s.color });
+      wrap(s.body, "300 26px Poppins, sans-serif", W - pad * 2).forEach((l) =>
+        blocks.push({ t: l, kind: "body", color: "#C7CFDD" })
+      );
     });
 
     const headH = 452;
@@ -481,10 +1015,14 @@ export default function WorkSession() {
 
     ctx.fillStyle = "#F1F3F7";
     ctx.font = "600 52px Poppins, sans-serif";
-    ctx.fillText("Your brief", pad, 356);
+    ctx.fillText(projectName || "Project brief", pad, 356);
     ctx.font = "300 24px Poppins, sans-serif";
     ctx.fillStyle = "#8B94A3";
-    ctx.fillText(path ? path.name : "Work session", pad, 396);
+    ctx.fillText(
+      path ? `Project brief · ${path.name}` : "Project brief",
+      pad,
+      396
+    );
 
     let y = headH;
     blocks.forEach((b) => {
@@ -782,7 +1320,7 @@ export default function WorkSession() {
             {STEPS.map((s) => (
               <span
                 key={s.id}
-                className="w-5 h-[3px] block transition-colors duration-300"
+                className="w-3.5 h-[3px] block transition-colors duration-300"
                 style={{
                   background: (answers[s.id] || "").trim() ? s.color : "#26355A",
                 }}
@@ -811,8 +1349,10 @@ export default function WorkSession() {
               a different answer at the end.
             </p>
             <p className="text-sm text-ink-mute font-light leading-relaxed max-w-reading mb-8">
-              Five questions after that. It saves as you go, so close the tab whenever
-              you like. Nothing is sent anywhere until you decide to send it.
+              Nine questions after that, and none of them are decoration. Who pays,
+              what they pay, why you and not the next one. Tap the answers if you
+              like, typing is optional. It saves as you go, so close the tab whenever
+              you want. Nothing is sent anywhere until you decide to send it.
             </p>
             <button onClick={() => setStep(1)} className="btn-primary">
               {started ? "Pick up where you left off" : "Start the session"}{" "}
@@ -825,7 +1365,7 @@ export default function WorkSession() {
         {onPathPick && (
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <span className="text-2xl leading-none">🧭</span>
+              <Icon name="compass" size={22} color="#5B8CFF" />
               <p className="text-[11px] font-medium uppercase tracking-label text-accent">
                 First decision
               </p>
@@ -849,7 +1389,9 @@ export default function WorkSession() {
                     className="absolute top-0 left-0 h-[3px] w-full opacity-60 group-hover:opacity-100 transition-opacity"
                     style={{ background: p.color }}
                   />
-                  <span className="block text-2xl mb-4 mt-1 leading-none">{p.icon}</span>
+                  <span className="block mb-4 mt-1 leading-none">
+                    <Icon name={p.icon} size={26} color={p.color} />
+                  </span>
                   <p className="font-display text-xl mb-2">{p.name}</p>
                   <p className="text-sm text-ink-soft font-light leading-relaxed">
                     {p.blurb}
@@ -873,7 +1415,7 @@ export default function WorkSession() {
         {current && !onSummary && (
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <span className="text-2xl leading-none">{current.icon}</span>
+              <Icon name={current.icon} size={22} color={current.color} />
               <p
                 className="text-[11px] font-medium uppercase tracking-label"
                 style={{ color: current.color }}
@@ -908,6 +1450,16 @@ export default function WorkSession() {
             <p className="text-sm text-ink-soft font-light leading-relaxed max-w-reading mb-6">
               {hintFor(current)}
             </p>
+
+            {carried.includes(current.id) && (
+              <p
+                className="text-[12px] font-light mb-5 border-l-2 pl-3"
+                style={{ borderColor: current.color, color: "#8B94A3" }}
+              >
+                You answered this upstairs, so we brought it down. Change it if it
+                was a guess.
+              </p>
+            )}
 
             {current.id === "feel" && (
               <div className="mb-6">
@@ -990,13 +1542,13 @@ export default function WorkSession() {
                 Back
               </button>
               <div className="flex items-center gap-3">
-                <span
-                  className={`text-[11px] uppercase tracking-label transition-opacity duration-500 ${
-                    savedTick ? "opacity-100 text-accent" : "opacity-0"
-                  }`}
-                >
-                  Saved
-                </span>
+                {/* Rendered only when it is true. Nothing on this site sits on
+                    the page at zero opacity waiting for its turn. */}
+                {savedTick && (
+                  <span className="text-[11px] uppercase tracking-label text-accent">
+                    Saved
+                  </span>
+                )}
                 <button onClick={() => setStep(step + 1)} className="btn-primary">
                   {step === STEPS.length + 1 ? "See the brief" : "Next"}{" "}
                   <span className="arrow">→</span>
@@ -1013,28 +1565,230 @@ export default function WorkSession() {
               className="inline-flex items-center gap-2.5 border px-3.5 py-2 mb-6"
               style={{ borderColor: rank.color }}
             >
-              <span className="text-base leading-none">
-                {answered === STEPS.length ? "🏆" : "📈"}
-              </span>
+              <Icon
+                name={answered === STEPS.length ? "trophy" : "bolt"}
+                size={16}
+                color={rank.color}
+              />
               <span
                 className="text-[11px] font-medium uppercase tracking-label"
                 style={{ color: rank.color }}
               >
                 {answered === STEPS.length
-                  ? "All five answered · Ready to build"
+                  ? `All ${STEPS.length} answered · Ready to build`
                   : `${answered} of ${STEPS.length} answered · ${rank.label}`}
               </span>
             </div>
 
             <h3 className="font-display text-3xl md:text-4xl mb-3">
               {answered === STEPS.length
-                ? "You just built a brief."
+                ? "This is a brief now."
                 : "Already more than most people arrive with."}
             </h3>
             <p className="text-ink-soft font-light leading-relaxed max-w-reading mb-9">
-              It is yours. Take it anywhere, brief anyone with it. Or send it here and
-              you will get back a scope, a price and a date.
+              Not a summary of what you said. A position, a scope, a number and the
+              questions you still have to go and answer. Hand it to any designer,
+              developer or agency and they can quote it. Or send it here and you get
+              back a scope, a price and a date.
             </p>
+
+            {/* The document. Written in the same voice we would write it in if
+                somebody had paid for the hour. */}
+            <div className="border border-rule p-7 md:p-8 mb-9">
+              <p className="text-[11px] font-medium uppercase tracking-label text-ink-mute mb-2">
+                Project brief
+              </p>
+              <p className="font-display text-3xl md:text-4xl mb-6">
+                {projectName || "Not named yet"}
+              </p>
+
+              <div className="space-y-7">
+                <section>
+                  <p
+                    className="text-[11px] font-medium uppercase tracking-label mb-2"
+                    style={{ color: "#4C7BE8" }}
+                  >
+                    Positioning
+                  </p>
+                  <p className="text-[15px] text-ink font-light leading-relaxed">
+                    {doc.positioning}
+                  </p>
+                </section>
+
+                <section>
+                  <p
+                    className="text-[11px] font-medium uppercase tracking-label mb-2"
+                    style={{ color: "#A78BFA" }}
+                  >
+                    The audience
+                  </p>
+                  <p className="text-sm text-ink-soft font-light leading-relaxed">
+                    {doc.audience}
+                  </p>
+                </section>
+
+                <section>
+                  <p
+                    className="text-[11px] font-medium uppercase tracking-label mb-2"
+                    style={{ color: "#34D399" }}
+                  >
+                    The money
+                  </p>
+                  <p className="text-sm text-ink-soft font-light leading-relaxed">
+                    {doc.arithmetic}
+                  </p>
+                </section>
+
+                <section>
+                  <p
+                    className="text-[11px] font-medium uppercase tracking-label mb-2"
+                    style={{ color: "#5B9BF9" }}
+                  >
+                    Edge and proof
+                  </p>
+                  <p className="text-sm text-ink-soft font-light leading-relaxed">
+                    {doc.evidence}
+                  </p>
+                </section>
+
+                <section className="grid sm:grid-cols-2 gap-6">
+                  <div>
+                    <p
+                      className="text-[11px] font-medium uppercase tracking-label mb-2"
+                      style={{ color: "#5B8CFF" }}
+                    >
+                      In scope
+                    </p>
+                    <ul className="space-y-1.5">
+                      {doc.scopeIn.map((x) => (
+                        <li
+                          key={x}
+                          className="text-sm text-ink-soft font-light leading-relaxed pl-4 relative"
+                        >
+                          <span
+                            className="absolute left-0 top-[9px] w-1.5 h-1.5 block"
+                            style={{ background: "#5B8CFF" }}
+                          />
+                          {x}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-[11px] font-medium uppercase tracking-label mb-2 text-ink-mute">
+                      Not in this build
+                    </p>
+                    <ul className="space-y-1.5">
+                      {doc.scopeOut.map((x) => (
+                        <li
+                          key={x}
+                          className="text-sm text-ink-mute font-light leading-relaxed pl-4 relative"
+                        >
+                          <span className="absolute left-0 top-[11px] w-2 h-px block bg-ink-mute" />
+                          {x}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="text-[11px] text-ink-mute font-light mt-3 leading-relaxed">
+                      Out of scope is the half that saves the argument later. Add to it
+                      before you add to the other side.
+                    </p>
+                  </div>
+                </section>
+
+                <section>
+                  <p
+                    className="text-[11px] font-medium uppercase tracking-label mb-2"
+                    style={{ color: "#E2703A" }}
+                  >
+                    The constraint
+                  </p>
+                  <p className="text-sm text-ink-soft font-light leading-relaxed">
+                    {doc.constraint}
+                  </p>
+                </section>
+
+                <section>
+                  <p
+                    className="text-[11px] font-medium uppercase tracking-label mb-2"
+                    style={{ color: "#22C55E" }}
+                  >
+                    What success looks like
+                  </p>
+                  <p className="text-sm text-ink-soft font-light leading-relaxed">
+                    {doc.measure}
+                  </p>
+                </section>
+
+                <section>
+                  <p
+                    className="text-[11px] font-medium uppercase tracking-label mb-2"
+                    style={{ color: "#FBBF24" }}
+                  >
+                    Risks
+                  </p>
+                  <ul className="space-y-1.5">
+                    {doc.risks.map((x) => (
+                      <li
+                        key={x}
+                        className="text-sm text-ink-soft font-light leading-relaxed pl-4 relative"
+                      >
+                        <span
+                          className="absolute left-0 top-[9px] w-1.5 h-1.5 block"
+                          style={{ background: "#FBBF24" }}
+                        />
+                        {x}
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+
+                <section>
+                  <p
+                    className="text-[11px] font-medium uppercase tracking-label mb-2"
+                    style={{ color: "#C6E4F8" }}
+                  >
+                    Open questions
+                  </p>
+                  <p className="text-[12px] text-ink-mute font-light mb-2.5">
+                    Nobody can answer these for you. They are the difference between a
+                    quote and a guess.
+                  </p>
+                  <ul className="space-y-1.5">
+                    {doc.open.map((x) => (
+                      <li
+                        key={x}
+                        className="text-sm text-ink-soft font-light leading-relaxed pl-4 relative"
+                      >
+                        <span
+                          className="absolute left-0 top-[9px] w-1.5 h-1.5 block"
+                          style={{ background: "#C6E4F8" }}
+                        />
+                        {x}
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+
+                <section>
+                  <p className="text-[11px] font-medium uppercase tracking-label mb-2 text-ink-mute">
+                    Direction
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <span className="flex gap-1">
+                      {[palette.a, palette.b, palette.ink, palette.bg].map((c) => (
+                        <span
+                          key={c}
+                          className="w-4 h-4 block border border-rule"
+                          style={{ background: c }}
+                        />
+                      ))}
+                    </span>
+                    <p className="text-sm text-ink-soft font-light">{palette.name}</p>
+                  </div>
+                </section>
+              </div>
+            </div>
 
             {path && (
               <div
@@ -1051,9 +1805,22 @@ export default function WorkSession() {
                 <p className="text-sm text-ink-soft font-light leading-relaxed max-w-reading">
                   {path.buildWhy}
                 </p>
+                {answers.first && (
+                  <p className="text-[12px] text-ink-mute font-light leading-relaxed max-w-reading mt-3">
+                    Upstairs you said {answers.first} should exist first. That still
+                    holds, as long as it moves the constraint above. If it does not,
+                    it is a nice thing to own and not the first thing to buy.
+                  </p>
+                )}
               </div>
             )}
 
+            {/* The raw answers stay on the page. The document has a point of
+                view, and anybody reading it deserves to see what it was built
+                from. */}
+            <p className="text-[11px] font-medium uppercase tracking-label text-ink-mute mb-4">
+              In your own words
+            </p>
             <div className="space-y-5 mb-9">
               {STEPS.map((s) => (
                 <div key={s.id} className="border-l-2 pl-5" style={{ borderColor: s.color }}>

@@ -73,9 +73,9 @@ button {
     @apply inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-label text-ink-soft;
     padding: 7px 14px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+      linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.04));
     backdrop-filter: blur(8px);
   }
 
@@ -105,12 +105,13 @@ button {
   }
   .btn-ghost {
     @apply btn text-ink;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.035));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
   }
   .btn-ghost:hover {
-    border-color: rgba(168, 196, 255, 0.45);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+    border-color: rgba(198, 228, 248, 0.6);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.17), rgba(255, 255, 255, 0.06));
     transform: translateY(-1px);
   }
   .btn-onink {
@@ -123,13 +124,14 @@ button {
 
   /* Glass panel. Layered light instead of flat fill. */
   .panel {
-    border: 1px solid rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.24);
     border-radius: var(--radius-panel);
     background:
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0.018) 42%, rgba(255, 255, 255, 0.008) 100%),
-      linear-gradient(to bottom, #1A2946 0%, #131F36 62%);
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 42%, rgba(255, 255, 255, 0.06) 100%),
+      linear-gradient(to bottom, #2B3E68 0%, #1F304F 62%);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.07),
+      inset 0 1px 0 rgba(255, 255, 255, 0.26),
+      inset 0 0 60px -20px rgba(255, 255, 255, 0.55),
       0 24px 60px -28px rgba(0, 0, 0, 0.8);
     transition:
       border-color 0.35s cubic-bezier(0.22, 1, 0.36, 1),
@@ -137,7 +139,7 @@ button {
       box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .panel:hover {
-    border-color: rgba(139, 173, 255, 0.28);
+    border-color: rgba(196, 217, 255, 0.5);
   }
   .panel-lift:hover {
     transform: translateY(-3px);
@@ -164,6 +166,9 @@ button {
   input:not([type]),
   textarea {
     caret-color: #5B8CFF;
+    /* A wash of white over whatever background utility the field carries, so a
+       box you can type into reads as lit glass rather than a hole in the page. */
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.05),
       inset 0 0 22px -16px rgba(139, 173, 255, 0.9),
@@ -180,6 +185,7 @@ button {
   input[type="number"]:hover,
   input:not([type]):hover,
   textarea:hover {
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.045) 100%);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.07),
       inset 0 0 26px -14px rgba(139, 173, 255, 0.9),
@@ -193,6 +199,7 @@ button {
   input[type="number"]:focus,
   input:not([type]):focus,
   textarea:focus {
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.17) 0%, rgba(255, 255, 255, 0.055) 100%);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.1),
       inset 0 0 30px -12px rgba(139, 173, 255, 1),
@@ -214,6 +221,15 @@ button {
       inset 0 0 40px -14px rgba(139, 173, 255, 1),
       0 0 0 1px rgba(91, 140, 255, 0.55),
       0 0 64px -10px rgba(91, 140, 255, 0.95) !important;
+  }
+
+  /* A lighter surface for the small cards and tiles that are not full panels.
+     Same glass, more of the white in it, because navy on navy reads flat. */
+  .surface {
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: var(--radius-control);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.07) 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
   }
 
   /* Dark glass bar for the nav */

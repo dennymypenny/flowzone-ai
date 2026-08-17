@@ -4,15 +4,25 @@ import {
   CONTAINERS,
   LOCKUPS,
   TYPESETS,
+  brandSpec,
+  categoryById,
+  classify,
   contrast,
   findIcons,
+  generatedMarks,
+  hashSeed,
   iconMark,
+  iconsForIdea,
   lockupSVG,
   makePalette,
   markSVG,
+  nameIdeas,
   paletteCSS,
-  suggestLines,
-  suggestNames,
+  paletteReport,
+  palettePlan,
+  readableOn,
+  slugify,
+  taglineIdeas,
   variants,
   type Locks,
   type Palette,
@@ -26,24 +36,28 @@ import Icon from "@/components/Icon";
 /**
  * Flow Mode.
  *
- * You pick a flow, then you make things. Every control produces a real file at
- * the end: a composed logo lockup as SVG, a palette as CSS, a written spec.
- * Nothing here is a picture of a deliverable.
+ * You say what you are making, then you make it. Every control produces a real
+ * file at the end: a composed logo lockup as SVG, a palette as CSS, a written
+ * spec. Nothing here is a picture of a deliverable.
  *
- * Two ideas hold it together. Rerolling is for when you have no idea, and
- * direct picking is for when you do, so every generated thing can also be
- * clicked and overridden. And anything that opens must be easy to close:
- * click outside it, or press escape.
+ * Three ideas hold it together. The words the visitor typed drive everything,
+ * so the same idea always grows the same identity and a bakery never comes out
+ * looking like a law firm. Rerolling is for when you have no idea, and direct
+ * picking is for when you do, so every generated thing can also be clicked and
+ * overridden. And anything that opens must be easy to close: click outside it,
+ * or press escape.
  */
 
 const KEY = "flowzone.flow.v1";
+const IDEA_KEY = "flowzone.idealens.v1";
 
 const ROLES: Array<{ id: Role; label: string }> = [
   { id: "bg", label: "Background" },
+  { id: "surface", label: "Surface" },
   { id: "ink", label: "Text" },
+  { id: "muted", label: "Quiet" },
   { id: "a", label: "Accent" },
   { id: "b", label: "Second" },
-  { id: "muted", label: "Muted" },
 ];
 
 type Flow = {
@@ -58,7 +72,11 @@ type Flow = {
   container: string;
 };
 
-/** A lot of doors, because "a small business" is fifty different businesses. */
+/**
+ * A lot of doors, because "a small business" is fifty different businesses.
+ * The ids match the categories in the generator, so picking a flow and typing
+ * an idea point at the same place.
+ */
 const FLOWS: Flow[] = [
   { id: "food", icon: "bread", name: "Food and drink", blurb: "Cafes, kitchens, bakeries, trucks, bars.", vibe: { energy: 62, temp: 78, era: 45 }, icons: "coffee", refs: "bakery interior", lockup: "badge", container: "circle" },
   { id: "shop", icon: "box", name: "A shop", blurb: "Products, drops, collectors, merch.", vibe: { energy: 78, temp: 45, era: 78 }, icons: "shopping-bag", refs: "retail store front", lockup: "block", container: "block" },
@@ -90,7 +108,7 @@ const LEVELS = ["Nothing yet", "A sketch", "Taking shape", "Nearly there", "Read
 /**
  * Reference topics as a list to choose from rather than a blank search box.
  * A blank box asks somebody to already know what to look for, which is the
- * exact thing they came here without.
+ * exact thing they came here without. The first few come from their own idea.
  */
 const REF_GROUPS: Array<{ group: string; items: string[] }> = [
   { group: "Places", items: ["bakery interior", "retail store front", "coffee roaster", "workshop tools", "design studio", "modern office", "interior architecture", "market stall"] },
@@ -101,7 +119,6 @@ const REF_GROUPS: Array<{ group: string; items: string[] }> = [
 ];
 
 const GIF_IDEAS = ["celebration", "thumbs up", "confetti", "fireworks", "dancing", "applause", "loading", "sparkle"];
-
 
 /**
  * The teaching layer.
@@ -120,10 +137,10 @@ function Principle({ title, color, points }: { title: string; color: string; poi
     <div className="mt-5 border-t border-rule pt-4">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-label transition-colors"
+        className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-label transition-colors motion-reduce:transition-none"
         style={{ color }}
       >
-        <span>{open ? "\u2212" : "+"}</span> Why this matters: {title}
+        <span>{open ? "−" : "+"}</span> Why this matters: {title}
       </button>
       {open && (
         <ul className="mt-3 space-y-2.5">
@@ -140,6 +157,7 @@ function Principle({ title, color, points }: { title: string; color: string; poi
 
 export default function Playground() {
   const [flowId, setFlowId] = useState<string | null>(null);
+  const [idea, setIdea] = useState("");
   const [seed, setSeed] = useState(1);
   const [name, setName] = useState("");
   const [line, setLine] = useState("");
@@ -147,6 +165,8 @@ export default function Playground() {
   const [vibe, setVibe] = useState<Vibe>({ energy: 55, temp: 45, era: 65 });
   const [locks, setLocks] = useState<Locks>({});
   const [typeId, setTypeId] = useState(TYPESETS[0].id);
+  const [markMode, setMarkMode] = useState<"built" | "library">("built");
+  const [builtId, setBuiltId] = useState("");
   const [iconId, setIconId] = useState("sparkles");
   const [iconQ, setIconQ] = useState("");
   const [containerId, setContainerId] = useState("circle");
@@ -170,6 +190,7 @@ export default function Playground() {
       if (raw) {
         const p = JSON.parse(raw);
         setFlowId(p.flowId ?? null);
+        setIdea(p.idea ?? "");
         setSeed(p.seed ?? 1);
         setName(p.name ?? "");
         setLine(p.line ?? "");
@@ -177,10 +198,21 @@ export default function Playground() {
         setVibe(p.vibe ?? { energy: 55, temp: 45, era: 65 });
         setLocks(p.locks ?? {});
         setTypeId(p.typeId ?? TYPESETS[0].id);
+        setMarkMode(p.markMode ?? "built");
+        setBuiltId(p.builtId ?? "");
         setIconId(p.iconId ?? "sparkles");
         setContainerId(p.containerId ?? "circle");
         setLockupId(p.lockupId ?? "horizontal");
         setDone(p.done ?? {});
+        // Somebody who has already got going keeps what they have. Only a run
+        // with nothing in it yet gets handed the idea from the front door.
+        if (p.idea || p.name) return;
+      }
+      // Whatever they typed on the way in is the whole point. Pick it up.
+      const lens = window.localStorage.getItem(IDEA_KEY);
+      if (lens) {
+        const parsed = JSON.parse(lens);
+        if (parsed?.q) setIdea(String(parsed.q));
       }
     } catch {
       /* storage must never break the page */
@@ -192,28 +224,60 @@ export default function Playground() {
       try {
         window.localStorage.setItem(
           KEY,
-          JSON.stringify({ flowId, seed, name, line, dark, vibe, locks, typeId, iconId, containerId, lockupId, done })
+          JSON.stringify({ flowId, idea, seed, name, line, dark, vibe, locks, typeId, markMode, builtId, iconId, containerId, lockupId, done })
         );
       } catch {
         /* ignore */
       }
     }, 400);
     return () => window.clearTimeout(t);
-  }, [flowId, seed, name, line, dark, vibe, locks, typeId, iconId, containerId, lockupId, done]);
+  }, [flowId, idea, seed, name, line, dark, vibe, locks, typeId, markMode, builtId, iconId, containerId, lockupId, done]);
 
-  const palette: Palette = useMemo(() => makePalette(seed, vibe, dark, locks), [seed, vibe, dark, locks]);
+  /**
+   * Everything downstream grows from these two lines. The idea sets the seed,
+   * so the same sentence always regrows the same identity, and rerolling is
+   * just walking one step along from it rather than starting again somewhere
+   * unrelated.
+   */
+  const detected = useMemo(() => classify(idea), [idea]);
+  const category = useMemo(() => (flowId ? categoryById(flowId) : detected), [flowId, detected]);
+  const seedNum = useMemo(
+    () => (hashSeed(`${idea.trim().toLowerCase()}|${category.id}`) + seed * 2654435761) >>> 0,
+    [idea, category.id, seed]
+  );
+
+  const palette: Palette = useMemo(
+    () => makePalette(seedNum, vibe, dark, locks, { hue: category.hue }),
+    [seedNum, vibe, dark, locks, category.hue]
+  );
+  const plan = useMemo(() => palettePlan(seedNum, vibe, { hue: category.hue }), [seedNum, vibe, category.hue]);
+  const checks = useMemo(() => paletteReport(palette), [palette]);
+  const failing = checks.filter((c) => !c.pass);
+
+  const initials =
+    (name.trim() || "Your Thing").split(/\s+/).map((w) => w[0]).join("").toUpperCase().slice(0, 3) || "YT";
+
+  const built = useMemo(() => generatedMarks(seedNum, initials, category), [seedNum, initials, category]);
+  const suggestedIcons = useMemo(() => iconsForIdea(idea, category, 12), [idea, category]);
   const iconList = useMemo(() => findIcons(iconQ, 48), [iconQ]);
   const icon = useMemo(
     () => findIcons(iconId, 1).find((i) => i.id === iconId) || iconList[0] || findIcons("sparkles", 1)[0],
     [iconId, iconList]
   );
-  const mark = useMemo(() => iconMark(icon, containerId), [icon, containerId]);
+  const builtMark = built.find((m) => m.id === builtId) || built[0];
+  const mark = useMemo(
+    () => (markMode === "built" ? builtMark : iconMark(icon, containerId)),
+    [markMode, builtMark, icon, containerId]
+  );
+
   const typeSet = TYPESETS.find((t) => t.id === typeId) || TYPESETS[0];
   const lockup = LOCKUPS.find((l) => l.id === lockupId) || LOCKUPS[0];
-
-  const initials =
-    (name.trim() || "Your Thing").split(/\s+/).map((w) => w[0]).join("").toUpperCase().slice(0, 3) || "YT";
+  const fonts = { displayFont: typeSet.displayFont, bodyFont: typeSet.bodyFont, tracking: typeSet.tracking };
   const rendered = mark.render(palette, initials);
+
+  const names = useMemo(() => nameIdeas(idea, seedNum, 7, category), [idea, seedNum, category]);
+  const lines = useMemo(() => taglineIdeas(idea, name, seedNum, 4, category), [idea, name, seedNum, category]);
+  const chosenName = names.find((n) => n.name.toLowerCase() === name.trim().toLowerCase());
 
   /**
    * Progress is measured from the kit itself, not from clicks. A bar that fills
@@ -224,13 +288,13 @@ export default function Playground() {
     name: Boolean(name.trim()),
     purpose: Boolean(line.trim()),
     color: Object.keys(locks).length > 0 || Boolean(done.color),
-    mark: Boolean(done.mark) || iconId !== "sparkles",
+    mark: Boolean(done.mark) || Boolean(builtId) || iconId !== "sparkles",
     logo: Boolean(done.logo),
   };
   const xp = QUESTS.reduce((n, q) => n + (has[q.id] ? q.xp : 0), 0);
   const levelIdx = Math.min(LEVELS.length - 1, Math.floor(xp / 25));
   const complete = (id: string) => setDone((d) => (d[id] ? d : { ...d, [id]: true }));
-  const music = useAmbient(seed, vibe.energy, vibe.era, vibe.temp);
+  const music = useAmbient(seedNum, vibe.energy, vibe.era, vibe.temp);
 
   // Click outside, or escape, closes whatever is open. Nothing traps you.
   useEffect(() => {
@@ -273,11 +337,11 @@ export default function Playground() {
     URL.revokeObjectURL(a.href);
   };
 
-  const slug = (name.trim() || "brand").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const slug = slugify(name);
 
   const downloadLockup = () => {
     download(
-      lockupSVG(lockup, mark, palette, name, line, initials, typeSet.display, typeSet.body),
+      lockupSVG(lockup, mark, palette, name, line, initials, typeSet.display, typeSet.body, true, fonts),
       `${slug}-logo-${lockup.id}.svg`,
       "image/svg+xml"
     );
@@ -320,38 +384,56 @@ export default function Playground() {
     setIconId(f.icons);
     setContainerId(f.container);
     setLockupId(f.lockup);
+    setBuiltId("");
     setRefQ(f.refs);
   };
 
-  const nameIdeas = useMemo(() => suggestNames(seed * 7 + 13, 6), [seed]);
-  const lineIdeas = useMemo(() => suggestLines(seed * 3 + 5, name, 4), [seed, name]);
-  const readable = contrast(palette.bg, palette.ink) >= 4.5;
-
   /* ------------------------------------------------------- pick your flow -- */
   if (!flow) {
+    const suggestion = FLOWS.find((f) => f.id === detected.id) || FLOWS[FLOWS.length - 1];
     return (
       <div>
         <div className="flex items-center gap-3 mb-3">
           <Icon name="wave" size={24} color="#5B9BF9" />
-          <h2 className="font-display text-3xl">Pick your flow.</h2>
+          <h2 className="font-display text-3xl">Say what you are making.</h2>
         </div>
-        <p className="text-ink-soft font-light leading-relaxed max-w-reading mb-8">
-          Each one starts you somewhere different: different colours, a different
-          symbol, a different logo shape and different references. Nothing is locked,
-          it is just a running start instead of a blank page.
+        <p className="text-ink-soft font-light leading-relaxed max-w-reading mb-6">
+          One line is enough. Everything after this is built out of the words you
+          use here: the names, the base colour, the symbol, what is worth looking
+          at. Type it, then pick the door that fits.
         </p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {FLOWS.map((f) => (
-            <button
-              key={f.id}
-              onClick={() => startFlow(f)}
-              className="text-left border border-rule p-5 hover:border-accent hover:bg-raised transition-colors"
-            >
-              <span className="block mb-3"><Icon name={f.icon} size={22} color="#8BADFF" /></span>
-              <p className="font-display text-lg mb-1">{f.name}</p>
-              <p className="text-[13px] text-ink-soft font-light leading-relaxed">{f.blurb}</p>
+        <input
+          value={idea}
+          onChange={(e) => setIdea(e.target.value)}
+          placeholder="a bakery people cross town for"
+          className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule px-4 py-3.5 text-base font-light outline-none focus:border-accent transition-colors motion-reduce:transition-none mb-4"
+        />
+        {idea.trim() && (
+          <p className="text-[13px] text-ink-soft font-light leading-relaxed mb-6">
+            That reads like <span style={{ color: "#8BADFF" }}>{suggestion.name.toLowerCase()}</span> to me.
+            Base colour will be {detected.hueNote}.{" "}
+            <button onClick={() => startFlow(suggestion)} className="underline text-accent">
+              Start there
             </button>
-          ))}
+            , or choose your own below.
+          </p>
+        )}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {FLOWS.map((f) => {
+            const hint = idea.trim() && f.id === suggestion.id;
+            return (
+              <button
+                key={f.id}
+                onClick={() => startFlow(f)}
+                className="text-left border p-5 hover:border-accent hover:bg-raised transition-colors motion-reduce:transition-none"
+                style={{ borderColor: hint ? "#5B8CFF" : "#26355A" }}
+              >
+                <span className="block mb-3"><Icon name={f.icon} size={22} color="#8BADFF" /></span>
+                <p className="font-display text-lg mb-1">{f.name}</p>
+                <p className="text-[13px] text-ink-soft font-light leading-relaxed">{f.blurb}</p>
+              </button>
+            );
+          })}
         </div>
       </div>
     );
@@ -401,9 +483,24 @@ export default function Playground() {
           </div>
         </div>
 
+        {/* The idea, still editable, because it drives everything below it. */}
+        <label className="block mb-5">
+          <span className="label mb-2 block">What you are making</span>
+          <input
+            value={idea}
+            onChange={(e) => setIdea(e.target.value)}
+            placeholder="a bakery people cross town for"
+            className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule px-4 py-3 text-sm font-light outline-none focus:border-accent transition-colors motion-reduce:transition-none"
+          />
+          <span className="block text-[11px] text-ink-mute font-light mt-2 leading-relaxed">
+            Change this and the names, the colours and the symbols all change with it.
+            Same sentence, same kit, every time.
+          </span>
+        </label>
+
         <div className="h-1.5 w-full bg-raised mb-5">
           <div
-            className="h-full transition-all duration-700"
+            className="h-full transition-all duration-700 motion-reduce:transition-none"
             style={{ width: `${xp}%`, background: "linear-gradient(90deg,#1E3A8A,#5B9BF9,#34D399)" }}
           />
         </div>
@@ -450,19 +547,28 @@ export default function Playground() {
                 if (e.target.value.trim()) complete("name");
               }}
               placeholder="Type a name, or take one below"
-              className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule px-4 py-3 text-sm font-light outline-none focus:border-accent transition-colors mb-3"
+              className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule px-4 py-3 text-sm font-light outline-none focus:border-accent transition-colors motion-reduce:transition-none mb-3"
             />
-            <div className="flex flex-wrap gap-2 mb-6">
-              {nameIdeas.map((n) => (
+            {chosenName && (
+              <p className="text-[12px] text-ink-soft font-light leading-relaxed mb-3">
+                <span style={{ color: "#5B9BF9" }}>{chosenName.strategy}.</span> {chosenName.why}
+              </p>
+            )}
+            <div className="space-y-2 mb-6">
+              {names.map((n) => (
                 <button
-                  key={n}
+                  key={n.name}
                   onClick={() => {
-                    setName(n);
+                    setName(n.name);
                     complete("name");
                   }}
-                  className="text-xs border border-rule text-ink-soft px-3 py-2 hover:text-ink hover:bg-raised transition-colors"
+                  className="w-full text-left border border-rule px-4 py-3 hover:border-accent hover:bg-raised transition-colors motion-reduce:transition-none"
                 >
-                  {n}
+                  <span className="flex items-baseline justify-between gap-3">
+                    <span className="text-sm text-ink">{n.name}</span>
+                    <span className="text-[10px] uppercase tracking-label text-ink-mute shrink-0">{n.strategy}</span>
+                  </span>
+                  <span className="block text-[11px] text-ink-mute font-light leading-relaxed mt-1">{n.why}</span>
                 </button>
               ))}
             </div>
@@ -470,14 +576,14 @@ export default function Playground() {
               value={line}
               onChange={(e) => setLine(e.target.value)}
               placeholder="What it is, in one line. This is the purpose."
-              className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule px-4 py-3 text-sm font-light outline-none focus:border-accent transition-colors mb-3"
+              className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule px-4 py-3 text-sm font-light outline-none focus:border-accent transition-colors motion-reduce:transition-none mb-3"
             />
             <div className="flex flex-wrap gap-2">
-              {lineIdeas.map((l) => (
+              {lines.map((l) => (
                 <button
                   key={l}
                   onClick={() => setLine(l)}
-                  className="text-xs border border-rule text-ink-soft px-3 py-2 hover:text-ink hover:bg-raised transition-colors text-left"
+                  className="text-xs border border-rule text-ink-soft px-3 py-2 hover:text-ink hover:bg-raised transition-colors motion-reduce:transition-none text-left"
                 >
                   {l}
                 </button>
@@ -498,10 +604,16 @@ export default function Playground() {
           {/* Colour, now clickable */}
           <div className="panel p-6 relative overflow-hidden">
             <span className="absolute top-0 left-0 h-[3px] w-full" style={{ background: "#A78BFA" }} />
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-2">
               <p className="label">🎨 Colour it</p>
-              {!readable && <span className="text-[10px] text-[#FBBF24]">Low contrast</span>}
+              <span className="text-[10px]" style={{ color: failing.length ? "#FBBF24" : "#34D399" }}>
+                {failing.length ? `${failing.length} pair below AA` : "all pairs pass AA"}
+              </span>
             </div>
+            <p className="text-[12px] text-ink-mute font-light leading-relaxed mb-4">
+              Base hue {Math.round(plan.base)}°, {category.hueNote}. Second colour is{" "}
+              {plan.relation}, {Math.round(plan.hueB)}°.
+            </p>
 
             {(
               [
@@ -529,15 +641,15 @@ export default function Playground() {
               </div>
             ))}
 
-            <div className="grid grid-cols-5 gap-2 mt-5">
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 mt-5">
               {ROLES.map((r) => (
                 <button
                   key={r.id}
                   onClick={() => setOpenRole(openRole === r.id ? null : r.id)}
-                  title={`${r.label} — click to change`}
+                  title={`${r.label}, click to change`}
                 >
                   <span
-                    className="block w-full h-14 border transition-all"
+                    className="block w-full h-14 border transition-all motion-reduce:transition-none"
                     style={{
                       background: palette[r.id],
                       borderColor: openRole === r.id ? "#5B8CFF" : locks[r.id] ? "#5B8CFF" : "#26355A",
@@ -554,6 +666,17 @@ export default function Playground() {
             <p className="text-[11px] text-ink-mute font-light mt-3 leading-relaxed">
               Click any swatch to change it. Locked colours survive every reroll.
             </p>
+
+            <ul className="mt-4 space-y-1">
+              {checks.map((c) => (
+                <li key={c.label} className="flex items-center justify-between text-[11px] font-light">
+                  <span className="text-ink-mute">{c.label}</span>
+                  <span style={{ color: c.pass ? "#34D399" : "#FBBF24" }}>
+                    {c.ratio}:1 {c.pass ? "✓" : "low"}
+                  </span>
+                </li>
+              ))}
+            </ul>
 
             {openRole && (
               <div
@@ -578,12 +701,12 @@ export default function Playground() {
                   {variants(palette[openRole], 14).map((c) => (
                     <button
                       key={c}
-                      title={c}
+                      title={`${c} · ${Math.round(contrast(c, palette.bg) * 10) / 10}:1 on the background`}
                       onClick={() => {
                         setLocks((l) => ({ ...l, [openRole]: c }));
                         complete("color");
                       }}
-                      className="block h-8 border border-rule hover:border-accent transition-colors"
+                      className="block h-8 border border-rule hover:border-accent transition-colors motion-reduce:transition-none"
                       style={{ background: c }}
                     />
                   ))}
@@ -610,7 +733,7 @@ export default function Playground() {
                         return n;
                       })
                     }
-                    className="text-xs border border-rule text-ink-soft px-3 py-2 hover:text-ink hover:bg-raised transition-colors"
+                    className="text-xs border border-rule text-ink-soft px-3 py-2 hover:text-ink hover:bg-raised transition-colors motion-reduce:transition-none"
                   >
                     Unlock, let it roll
                   </button>
@@ -631,10 +754,11 @@ export default function Playground() {
               title="how palettes actually hold together"
               color="#A78BFA"
               points={[
+                "One base hue, then a real relationship. Analogous for calm, complementary for tension, triadic for noise. Two hues picked at random are just two hues.",
                 "Two accents, not five. Colours far apart on the wheel stay readable together; a crowd of them turns to mush the second anything gets small.",
                 "Most of the surface should be near neutral. Accent is punctuation, not paragraphs, and colour only reads as loud when there is quiet around it.",
                 "Tint the neutrals with the base hue. Pure grey next to colour is what makes a palette look like it was assembled rather than chosen.",
-                "Check contrast before you fall in love. If text fails against the background, the palette is already broken, however good it looks here.",
+                "Measure contrast, do not eyeball it. Yellow at half lightness is twice as bright as blue at half lightness, which is why the numbers above exist.",
               ]}
             />
           </div>
@@ -642,53 +766,160 @@ export default function Playground() {
           {/* Symbol */}
           <div className="panel p-6 relative overflow-hidden">
             <span className="absolute top-0 left-0 h-[3px] w-full" style={{ background: "#FBBF24" }} />
-            <p className="label mb-4">🛡️ Draw the mark</p>
-            <input
-              value={iconQ}
-              onChange={(e) => setIconQ(e.target.value)}
-              placeholder="Search 199 symbols: coffee, dog, wrench, wave..."
-              className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule px-4 py-3 text-sm font-light outline-none focus:border-accent transition-colors mb-3"
-            />
-            <div className="grid grid-cols-8 gap-1.5 max-h-52 overflow-y-auto mb-4 pr-1">
-              {iconList.map((ic) => {
-                const on = ic.id === icon.id;
-                return (
-                  <button
-                    key={ic.id}
-                    title={ic.id.replace(/-/g, " ")}
-                    onClick={() => {
-                      setIconId(ic.id);
-                      complete("mark");
-                    }}
-                    className="aspect-square border flex items-center justify-center transition-colors"
-                    style={{ borderColor: on ? "#5B8CFF" : "#26355A", background: on ? "#172440" : "transparent" }}
-                  >
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke={on ? "#F1F3F7" : "#9AA7BE"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: ic.d }} />
-                  </button>
-                );
-              })}
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <p className="label">🛡️ Draw the mark</p>
+              <div className="flex">
+                {(
+                  [
+                    ["built", "Built for you"],
+                    ["library", "Symbol library"],
+                  ] as const
+                ).map(([k, label]) => {
+                  const on = markMode === k;
+                  return (
+                    <button
+                      key={k}
+                      onClick={() => setMarkMode(k)}
+                      className="text-[11px] px-3 py-1.5 border-t border-b border-r first:border-l transition-colors motion-reduce:transition-none"
+                      style={{
+                        borderColor: on ? "#5B8CFF" : "#26355A",
+                        color: on ? "#F1F3F7" : "#9AA7BE",
+                        background: on ? "#172440" : "transparent",
+                      }}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-            <div className="flex flex-wrap gap-2">
-              {CONTAINERS.map((c) => (
-                <button
-                  key={c.id}
-                  onClick={() => {
-                    setContainerId(c.id);
-                    complete("mark");
-                  }}
-                  className="text-xs border px-3 py-2 transition-colors"
-                  style={{ borderColor: c.id === containerId ? "#5B8CFF" : "#26355A", color: c.id === containerId ? "#F1F3F7" : "#9AA7BE" }}
-                >
-                  {c.name}
-                </button>
+
+            {markMode === "built" ? (
+              <>
+                <p className="text-[13px] text-ink-soft font-light leading-relaxed mb-4">
+                  Ten mark systems, each one a rule rather than a picture: how many
+                  arcs, how tall the bars, which cells are filled. Your seed sets the
+                  numbers, so reroll gives you a cousin, not a stranger.
+                </p>
+                <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+                  {built.map((m) => {
+                    const on = m.id === mark.id;
+                    const r = m.render(palette, initials);
+                    return (
+                      <button
+                        key={m.id}
+                        title={m.note}
+                        onClick={() => {
+                          setBuiltId(m.id);
+                          complete("mark");
+                        }}
+                        className="border p-1 transition-colors motion-reduce:transition-none"
+                        style={{
+                          borderColor: on ? "#5B8CFF" : "#26355A",
+                          borderWidth: on ? 2 : 1,
+                          background: palette.bg,
+                        }}
+                      >
+                        <svg viewBox="0 0 100 100" width="100%" height="100%" aria-label={m.name}>
+                          {r.defs ? <defs dangerouslySetInnerHTML={{ __html: r.defs }} /> : null}
+                          <g dangerouslySetInnerHTML={{ __html: r.body }} />
+                        </svg>
+                      </button>
+                    );
+                  })}
+                </div>
+                <p className="text-[11px] text-ink-mute font-light mt-3 leading-relaxed">
+                  {builtMark.name}. {builtMark.note}
+                </p>
+              </>
+            ) : (
+              <>
+                {suggestedIcons.length > 0 && (
+                  <>
+                    <p className="text-[11px] text-ink-mute font-light mb-2">From what you typed</p>
+                    <div className="grid grid-cols-8 gap-1.5 mb-4">
+                      {suggestedIcons.map((ic) => {
+                        const on = ic.id === icon.id;
+                        return (
+                          <button
+                            key={`s-${ic.id}`}
+                            title={ic.id.replace(/-/g, " ")}
+                            onClick={() => {
+                              setIconId(ic.id);
+                              complete("mark");
+                            }}
+                            className="aspect-square border flex items-center justify-center transition-colors motion-reduce:transition-none"
+                            style={{ borderColor: on ? "#5B8CFF" : "#26355A", background: on ? "#172440" : "transparent" }}
+                          >
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke={on ? "#F1F3F7" : "#9AA7BE"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: ic.d }} />
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </>
+                )}
+                <input
+                  value={iconQ}
+                  onChange={(e) => setIconQ(e.target.value)}
+                  placeholder="Search 199 symbols: coffee, dog, wrench, wave..."
+                  className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule px-4 py-3 text-sm font-light outline-none focus:border-accent transition-colors motion-reduce:transition-none mb-3"
+                />
+                <div className="grid grid-cols-8 gap-1.5 max-h-52 overflow-y-auto mb-4 pr-1">
+                  {iconList.map((ic) => {
+                    const on = ic.id === icon.id;
+                    return (
+                      <button
+                        key={ic.id}
+                        title={ic.id.replace(/-/g, " ")}
+                        onClick={() => {
+                          setIconId(ic.id);
+                          complete("mark");
+                        }}
+                        className="aspect-square border flex items-center justify-center transition-colors motion-reduce:transition-none"
+                        style={{ borderColor: on ? "#5B8CFF" : "#26355A", background: on ? "#172440" : "transparent" }}
+                      >
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke={on ? "#F1F3F7" : "#9AA7BE"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: ic.d }} />
+                      </button>
+                    );
+                  })}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {CONTAINERS.map((c) => (
+                    <button
+                      key={c.id}
+                      onClick={() => {
+                        setContainerId(c.id);
+                        complete("mark");
+                      }}
+                      className="text-xs border px-3 py-2 transition-colors motion-reduce:transition-none"
+                      style={{ borderColor: c.id === containerId ? "#5B8CFF" : "#26355A", color: c.id === containerId ? "#F1F3F7" : "#9AA7BE" }}
+                    >
+                      {c.name}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {/* The only test that matters, at the size it will live at. */}
+            <div className="flex items-center gap-4 mt-5 border-t border-rule pt-4">
+              {[16, 24, 40].map((s) => (
+                <span key={s} className="flex items-center gap-2">
+                  <svg viewBox="0 0 100 100" width={s} height={s} aria-label={`Mark at ${s} pixels`}>
+                    {rendered.defs ? <defs dangerouslySetInnerHTML={{ __html: rendered.defs }} /> : null}
+                    <g dangerouslySetInnerHTML={{ __html: rendered.body }} />
+                  </svg>
+                  <span className="text-[10px] text-ink-mute">{s}px</span>
+                </span>
               ))}
             </div>
+
             <Principle
               title="what stops a mark dying at small sizes"
               color="#FBBF24"
               points={[
                 "The silhouette has to work in one flat colour first. Gradients and shine are the last thing you add, never the thing holding it up.",
-                "It spends its life at about forty pixels, in a tab and on a phone. Judge it there, not at the size you are drawing it.",
+                "It spends its life at about forty pixels, in a tab and on a phone. Judge it there, which is why the row above exists.",
                 "Pick a symbol that says something about the business, not one that looks nice. Every element should answer a question or come out.",
                 "The container is a real decision. A circle reads friendly, a shield reads authority, bare reads modern and confident.",
               ]}
@@ -698,17 +929,34 @@ export default function Playground() {
           {/* Type */}
           <div className="panel p-6 relative overflow-hidden">
             <span className="absolute top-0 left-0 h-[3px] w-full" style={{ background: "#C6E4F8" }} />
-            <p className="label mb-4">🔤 Set the type</p>
+            <p className="label mb-2">🔤 Set the type</p>
+            <p className="text-[12px] text-ink-mute font-light leading-relaxed mb-4">
+              Every one of these is installed on the machine you are reading this on.
+              No licence to buy, no download, and the preview is the real thing.
+            </p>
             <div className="space-y-2">
               {TYPESETS.map((t) => (
                 <button
                   key={t.id}
                   onClick={() => setTypeId(t.id)}
-                  className="w-full text-left border px-4 py-3 transition-colors"
+                  className="w-full text-left border px-4 py-3 transition-colors motion-reduce:transition-none"
                   style={{ borderColor: t.id === typeId ? "#5B8CFF" : "#26355A" }}
                 >
-                  <span className="block text-sm" style={{ fontWeight: Number(t.display) }}>{t.name}</span>
-                  <span className="block text-[11px] text-ink-mute font-light mt-0.5">{t.note}</span>
+                  <span
+                    className="block text-lg leading-tight"
+                    style={{ fontFamily: t.displayFont, fontWeight: Number(t.display), letterSpacing: `${t.tracking}px` }}
+                  >
+                    {name.trim() || "Your Thing"}
+                  </span>
+                  <span
+                    className="block text-[12px] text-ink-soft mt-1"
+                    style={{ fontFamily: t.bodyFont, fontWeight: Number(t.body) }}
+                  >
+                    {t.name}. {t.note}
+                  </span>
+                  {t.id === typeId && (
+                    <span className="block text-[11px] text-ink-mute font-light leading-relaxed mt-2">{t.why}</span>
+                  )}
                 </button>
               ))}
             </div>
@@ -728,18 +976,18 @@ export default function Playground() {
             </div>
             <p className="text-[13px] text-ink-soft font-light leading-relaxed mb-4">
               Not an icon, a finished lockup: symbol, name and line arranged properly.
-              Pick the layout, take the file.
+              Each one measures your name and grows to fit it. Pick the layout, take the file.
             </p>
 
             <div className="space-y-3">
               {LOCKUPS.map((lk) => {
                 const on = lk.id === lockupId;
-                const svg = lockupSVG(lk, mark, palette, name, line, initials, typeSet.display, typeSet.body);
+                const svg = lockupSVG(lk, mark, palette, name, line, initials, typeSet.display, typeSet.body, true, fonts);
                 return (
                   <button
                     key={lk.id}
                     onClick={() => setLockupId(lk.id)}
-                    className="w-full border overflow-hidden transition-colors text-left"
+                    className="w-full border overflow-hidden transition-colors motion-reduce:transition-none text-left"
                     style={{ borderColor: on ? "#5B8CFF" : "#26355A", borderWidth: on ? 2 : 1 }}
                   >
                     <div
@@ -773,35 +1021,52 @@ export default function Playground() {
           </div>
 
           {/* Applied preview */}
-          <div className="rounded-2xl border border-rule overflow-hidden transition-colors duration-500" style={{ background: palette.bg }}>
+          <div className="rounded-2xl border border-rule overflow-hidden transition-colors duration-500 motion-reduce:transition-none" style={{ background: palette.bg }}>
             <div className="p-8">
               <div className="flex items-center gap-4 mb-8">
                 <svg viewBox="0 0 100 100" width="56" height="56" aria-label="Generated mark">
-                  <defs dangerouslySetInnerHTML={{ __html: rendered.defs }} />
+                  {rendered.defs ? <defs dangerouslySetInnerHTML={{ __html: rendered.defs }} /> : null}
                   <g dangerouslySetInnerHTML={{ __html: rendered.body }} />
                 </svg>
                 <div>
-                  <p className="text-2xl leading-tight tracking-tight" style={{ color: palette.ink, fontWeight: Number(typeSet.display) }}>
+                  <p
+                    className="text-2xl leading-tight"
+                    style={{ color: palette.ink, fontFamily: typeSet.displayFont, fontWeight: Number(typeSet.display), letterSpacing: `${typeSet.tracking}px` }}
+                  >
                     {name.trim() || "Your Thing"}
                   </p>
-                  <p className="text-sm mt-0.5" style={{ color: palette.ink, opacity: 0.6, fontWeight: Number(typeSet.body) }}>
+                  <p className="text-sm mt-0.5" style={{ color: palette.muted, fontFamily: typeSet.bodyFont, fontWeight: Number(typeSet.body) }}>
                     {line.trim() || "One line that says what it is"}
                   </p>
                 </div>
               </div>
-              <p className="text-[32px] leading-[1.08] tracking-tight mb-4" style={{ color: palette.ink, fontWeight: Number(typeSet.display) }}>
+              <p
+                className="text-[32px] leading-[1.08] mb-4"
+                style={{ color: palette.ink, fontFamily: typeSet.displayFont, fontWeight: Number(typeSet.display), letterSpacing: `${typeSet.tracking}px` }}
+              >
                 {line.trim() || "The headline sits here."}
               </p>
+              <p className="text-sm leading-relaxed mb-6 max-w-reading" style={{ color: palette.muted, fontFamily: typeSet.bodyFont, fontWeight: Number(typeSet.body) }}>
+                And this is the body text underneath it, set in the pairing you picked, on
+                the surface colour that came out of the same base hue. If this is hard to
+                read here it will be hard to read everywhere.
+              </p>
               <div className="flex flex-wrap gap-2 mb-8">
-                <span className="text-xs px-4 py-2.5 font-medium" style={{ background: palette.a, color: palette.bg }}>Primary action</span>
-                <span className="text-xs px-4 py-2.5 font-medium" style={{ border: `1px solid ${palette.ink}44`, color: palette.ink }}>Secondary</span>
-                <span className="text-xs px-4 py-2.5 font-medium" style={{ background: palette.b, color: palette.bg }}>Highlight</span>
+                <span className="text-xs px-4 py-2.5 font-medium" style={{ background: palette.a, color: readableOn(palette.a, palette) }}>Primary action</span>
+                <span className="text-xs px-4 py-2.5 font-medium" style={{ border: `1px solid ${palette.muted}`, color: palette.ink }}>Secondary</span>
+                <span className="text-xs px-4 py-2.5 font-medium" style={{ background: palette.b, color: readableOn(palette.b, palette) }}>Highlight</span>
               </div>
-              <div className="grid grid-cols-5 gap-2">
+              <div className="p-5 mb-8" style={{ background: palette.surface }}>
+                <p className="text-[11px] uppercase tracking-label mb-1" style={{ color: palette.a }}>A card on the surface colour</p>
+                <p className="text-sm" style={{ color: palette.ink, fontFamily: typeSet.bodyFont, fontWeight: Number(typeSet.body) }}>
+                  Every real interface has a layer above the page. This is it.
+                </p>
+              </div>
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
                 {ROLES.map((r) => (
                   <div key={r.id}>
-                    <span className="block h-10" style={{ background: palette[r.id] }} />
-                    <span className="block text-[9px] mt-1" style={{ color: palette.ink, opacity: 0.45 }}>{r.label}</span>
+                    <span className="block h-10" style={{ background: palette[r.id], outline: `1px solid ${palette.muted}` }} />
+                    <span className="block text-[9px] mt-1" style={{ color: palette.muted }}>{r.label}</span>
                   </div>
                 ))}
               </div>
@@ -821,7 +1086,7 @@ export default function Playground() {
                     ["meme", "Meme maker"],
                   ] as const
                 ).map(([k, label]) => {
-                  const on = refKind === k || (k === "meme" && refKind === "meme");
+                  const on = refKind === k;
                   return (
                     <button
                       key={k}
@@ -829,7 +1094,7 @@ export default function Playground() {
                         setRefKind(k as never);
                         if (k !== "meme" && refQ) fetchRefs(refQ, k as "photo" | "gif");
                       }}
-                      className="text-[11px] px-3 py-1.5 border-t border-b border-r first:border-l transition-colors"
+                      className="text-[11px] px-3 py-1.5 border-t border-b border-r first:border-l transition-colors motion-reduce:transition-none"
                       style={{
                         borderColor: on ? "#5B8CFF" : "#26355A",
                         color: on ? "#F1F3F7" : "#9AA7BE",
@@ -853,6 +1118,24 @@ export default function Playground() {
                     : "Generated shapes cannot give you taste. Real things other people made can."}
                 </p>
 
+                {refKind === "photo" && (
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {category.refs.map((r) => (
+                      <button
+                        key={r}
+                        onClick={() => {
+                          setRefQ(r);
+                          fetchRefs(r, "photo");
+                        }}
+                        className="text-[11px] border px-3 py-1.5 hover:bg-raised transition-colors motion-reduce:transition-none"
+                        style={{ borderColor: refQ === r ? "#5B8CFF" : "#26355A", color: refQ === r ? "#F1F3F7" : "#9AA7BE" }}
+                      >
+                        {r}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
                 <div className="flex flex-wrap gap-2 mb-4">
                   <select
                     value={refQ}
@@ -860,7 +1143,7 @@ export default function Playground() {
                       setRefQ(e.target.value);
                       if (e.target.value) fetchRefs(e.target.value);
                     }}
-                    className="flex-1 min-w-0 bg-paper-deep text-ink border border-rule px-3.5 py-2.5 text-sm font-light outline-none focus:border-accent transition-colors"
+                    className="flex-1 min-w-0 bg-paper-deep text-ink border border-rule px-3.5 py-2.5 text-sm font-light outline-none focus:border-accent transition-colors motion-reduce:transition-none"
                   >
                     <option value="">Choose what to look at...</option>
                     {refKind === "gif"
@@ -899,8 +1182,8 @@ export default function Playground() {
                           <button
                             key={s.id}
                             onClick={() => setPicked(on ? null : s.url)}
-                            title={`${s.title} — ${s.creator} (${s.license})`}
-                            className="block overflow-hidden border transition-colors relative"
+                            title={`${s.title}, by ${s.creator} (${s.license})`}
+                            className="block overflow-hidden border transition-colors motion-reduce:transition-none relative"
                             style={{ borderColor: on ? "#5B8CFF" : "#26355A", borderWidth: on ? 2 : 1 }}
                           >
                             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -943,7 +1226,19 @@ export default function Playground() {
               <button
                 onClick={() =>
                   download(
-                    `${name || "Your thing"}\n${line || ""}\n\nFLOW\n${flow.name}\n\nPALETTE\n${ROLES.map((r) => `${r.label}: ${palette[r.id]}`).join("\n")}\n\nMARK\n${icon.id.replace(/-/g, " ")} in a ${containerId}\n\nLOGO\n${lockup.name} lockup\n\nTYPE\nPoppins ${typeSet.display} / ${typeSet.body} (${typeSet.name})\n\nMade in Flow Mode at flowzone.dev/start\n`,
+                    brandSpec({
+                      idea,
+                      name,
+                      line,
+                      category,
+                      palette,
+                      plan,
+                      type: typeSet,
+                      markName: markMode === "built" ? `${builtMark.name}, built from your seed` : `${icon.id.replace(/-/g, " ")} in a ${containerId}`,
+                      lockupName: lockup.name,
+                      strategy: chosenName?.strategy,
+                      why: chosenName?.why,
+                    }),
                     `${slug}-identity.txt`,
                     "text/plain"
                   )
@@ -955,9 +1250,9 @@ export default function Playground() {
             </div>
             {xp >= 100 && (
               <p className="text-sm mt-4 leading-relaxed" style={{ color: "#34D399" }}>
-                🏆 That is a complete brand kit. A name, a purpose, colours you chose on
-                purpose and a real vector logo. Further than most projects get before
-                anybody starts building.
+                🏆 That is a complete brand kit. A name with a reason behind it, a
+                purpose, colours that pass contrast and a real vector logo. Further than
+                most projects get before anybody starts building.
               </p>
             )}
           </div>
