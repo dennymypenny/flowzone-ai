@@ -28,14 +28,23 @@ const DRIFT_WORDS = [
   "go",
 ];
 
-/** The options you can grab on the way in. */
+/**
+ * The options you can grab on the way in.
+ *
+ * These were a bakery, a sneaker shop and a flower stand, which is a fun list
+ * and the wrong one. The people who land here are running or about to run a
+ * real thing, and mostly a service business with a van, a chair or a camera
+ * rather than a shopfront. If somebody does not see themselves in six words
+ * they type their own, and most do not bother. So these are the six that
+ * cover the most of them.
+ */
 const GATES = [
-  { icon: "bread", label: "a bakery" },
-  { icon: "scissors", label: "a barbershop" },
-  { icon: "shoe", label: "a sneaker shop" },
-  { icon: "dumbbell", label: "a gym" },
-  { icon: "truck", label: "a taco truck" },
-  { icon: "flower", label: "a flower stand" },
+  { icon: "hammer", label: "a trade business" },
+  { icon: "scissors", label: "a barber or salon" },
+  { icon: "truck", label: "a food business" },
+  { icon: "dumbbell", label: "a coach or trainer" },
+  { icon: "palette", label: "a creative service" },
+  { icon: "box", label: "a shop or a brand" },
 ];
 
 /** Act two: how it should feel. Colours the search on landing. */

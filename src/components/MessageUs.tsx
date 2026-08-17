@@ -1,19 +1,16 @@
 import { SITE } from "@/lib/site";
 
 /**
- * Instant contact. Opens the visitor's Messages app with a text started to us,
- * so it lands as a notification on a phone rather than in an inbox.
+ * The primary way in.
  *
- * If no number is set in SITE.phone it silently becomes an email button, so
- * this can ship before the number exists and can never be a dead end.
+ * This used to open a text message, which meant every enquiry landed on one
+ * person's phone at whatever hour it arrived. Everything comes to the inbox
+ * now, and the mailto arrives with the questions already asked, so nobody has
+ * to stare at a blank message wondering what to write.
  */
 
-const TEXT = "Hi FlowZone, I want to get something moving:";
-
 export function messageHref() {
-  if (!SITE.phone) return SITE.mailto;
-  // The ?&body= form is the one that works on both iOS and Android.
-  return `sms:${SITE.phone}?&body=${encodeURIComponent(TEXT + " ")}`;
+  return SITE.mailto;
 }
 
 export default function MessageUs({
@@ -23,11 +20,9 @@ export default function MessageUs({
   className?: string;
   label?: string;
 }) {
-  const live = Boolean(SITE.phone);
   return (
     <a href={messageHref()} className={className}>
-      {label || (live ? "Start the conversation" : "Start the conversation")}{" "}
-      <span className="arrow">→</span>
+      {label || "Start the conversation"} <span className="arrow">→</span>
     </a>
   );
 }

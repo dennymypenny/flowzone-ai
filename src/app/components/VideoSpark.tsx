@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Icon from "@/components/Icon";
 import ReelClipInspector from "@/app/components/ReelClipInspector";
+import AskAboutThis, { askBody } from "@/app/components/AskAboutThis";
 import {
   Clip,
   Drawable,
@@ -40,15 +41,28 @@ import {
 
 type Shot = { id: string; thumb: string };
 
+/**
+ * The ghostwriter.
+ *
+ * These used to be moods: "it is not a product, it is a mood", "this is your
+ * sign to start the thing". Nice to read, useless to film, and nobody posts
+ * them. A short video earns attention by being about something specific that
+ * happens, so every line here is a real angle with a shot behind it: the
+ * process, the price, the mistake, the before and after, the objection. The
+ * person can still type their own, but the free option should be the one a
+ * strategist would suggest.
+ */
 const LINES = [
-  (t: string) => `why ${t} deserves more credit than it gets`,
-  (t: string) => `the feeling of walking into a place that takes ${t} seriously`,
-  (t: string) => `what makes people fall in love with ${t}`,
-  (t: string) => `${t}, done properly, changes someone's whole day`,
-  (t: string) => `nobody needed ${t} until they saw it done right`,
-  (t: string) => `the difference between ${t} and great ${t}`,
-  (t: string) => `this is your sign to finally start the ${t} thing`,
-  (t: string) => `${t} is not a product, it is a mood`,
+  (t: string) => `how ${t} actually gets made, start to finish, in thirty seconds`,
+  (t: string) => `what ${t} costs, and why, said out loud with no dancing around it`,
+  (t: string) => `the mistake I made in the first year of ${t} so you do not have to`,
+  (t: string) => `before and after: the same job, ${t}, and what changed`,
+  (t: string) => `the question everybody asks about ${t}, answered properly`,
+  (t: string) => `one thing to look for before you pay anybody for ${t}`,
+  (t: string) => `a day of ${t}, the unglamorous version, no music`,
+  (t: string) => `why ${t} takes as long as it does, shown rather than explained`,
+  (t: string) => `the part of ${t} people never see, and why it is the part that matters`,
+  (t: string) => `who ${t} is not for, said honestly, so the right people stay`,
 ];
 
 const MAX_SIDE = 2048;
@@ -1529,6 +1543,43 @@ export default function VideoSpark({ topic }: { topic: string }) {
               Roll another take <span className="arrow">→</span>
             </button>
           </div>
+
+          {/* Only after phase "done", so a half finished or failed render never
+              gets an ask. This is the single biggest moment on the site: they
+              have a real video file, made from nothing, and the very next
+              thought is whether it is good enough to post. The video cannot
+              travel in a mailto, so the mail carries the script and the edit,
+              which is enough for a useful answer. */}
+          {phase === "done" && (
+            <AskAboutThis
+              id="video-export"
+              icon="clapper"
+              subject={`Would you post this? ${safeName(topic).replace(/-/g, " ")}`}
+              title="Would you post it?"
+              note="Send the edit to Denny before it goes out. He cuts these for clients and he will say what he would trim, free, no obligation."
+              body={() =>
+                askBody({
+                  opener: `I just exported a reel in Flow Mode. I cannot attach the file to this, so here is the edit it came from. Say the word and I will send you the video.`,
+                  sections: [
+                    { label: "What it is about", text: topic.trim() },
+                    {
+                      label: "The cut",
+                      text: `${clips.length} clips, ${fmtSecs(lay.total)}, ${proj.w} by ${proj.h}${music ? `, music: ${music.name}` : ", no music"}`,
+                    },
+                    { label: "The script", text: script.trim() },
+                    {
+                      label: "Shot by shot",
+                      text: clips
+                        .map((c, i) => `${i + 1}. ${c.name}${c.text?.text ? ` / on screen: ${c.text.text}` : ""}`)
+                        .join("\n"),
+                    },
+                  ],
+                  unsure: "What I am worried about:",
+                })
+              }
+              className="mt-5"
+            />
+          )}
         </div>
       )}
     </div>

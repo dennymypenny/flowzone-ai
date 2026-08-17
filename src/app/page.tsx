@@ -3,10 +3,10 @@ import type { Metadata } from "next";
 import ChatWidget from "@/app/components/ChatWidget";
 import WorkSession from "@/app/components/WorkSession";
 import MessageUs from "@/components/MessageUs";
-import FlowField from "@/app/components/FlowField";
 import FlowRide from "@/app/components/FlowRide";
 import { SITE, PILLARS } from "@/lib/site";
 import Icon from "@/components/Icon";
+import NodeWeb from "@/app/components/NodeWeb";
 
 export const metadata: Metadata = {
   title: "FlowZone | Creative Studio",
@@ -30,15 +30,14 @@ export default function Home() {
     <>
       {/* ---------- Hero ---------- */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 aurora drift pointer-events-none" />
+        <NodeWeb className="opacity-90" />
         <div className="absolute inset-0 gridlight pointer-events-none" />
         {/* The mark, explained: points scatter, connect, resolve, then flow on. */}
-        <FlowField />
 
-        <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-20 md:pt-32 md:pb-28">
+        <div className="relative max-w-6xl mx-auto px-6 pt-20 pb-14 md:pt-28 md:pb-20">
 
           {/* The mark, spelled out: each dot is a word */}
-          <div className="flex items-center flex-wrap gap-y-2 mb-8" aria-label="Brand, site and system, one studio">
+          <div className="flex items-center flex-wrap gap-y-2 mb-6" aria-label="Brand, site and system, one studio">
             {[
               { w: "Brand", c: "#4C7BE8", pulse: "pulse-1" },
               { w: "Site", c: "#5B9BF9", pulse: "pulse-2" },
@@ -78,33 +77,34 @@ export default function Home() {
             We get it <span className="text-gradient">moving</span>.
           </h1>
 
-          <p className="text-xl md:text-2xl text-ink leading-snug max-w-2xl mt-8 font-light">
+          <p className="text-xl md:text-2xl text-ink leading-snug max-w-2xl mt-6 font-light">
             Arrive with an intention. Leave with the running thing.
             Brand, site and system, built for you.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-3 mt-10">
+          <div className="flex flex-col sm:flex-row gap-3 mt-8">
             <MessageUs className="btn-primary shine" />
             <FlowRide />
           </div>
 
-          {/* Value at a glance */}
-          <div className="mt-16 grid grid-cols-2 lg:grid-cols-5 gap-3">
+          {/* Value at a glance. This row is the only place these five answers
+              live, so nothing below repeats them. */}
+          <div className="mt-10 grid grid-cols-2 lg:grid-cols-5 gap-2.5">
             {[
               { i: "box", k: "What you get", v: "Brand, site and system", c: "#5B9BF9" },
-              { i: "hands", k: "How much you do", v: "Almost nothing. 100% done for you", c: "#2DD4BF" },
+              { i: "hands", k: "How much you do", v: "Almost nothing. Done for you", c: "#2DD4BF" },
               { i: "bolt", k: "How fast it moves", v: "Started the day you say go", c: "#FBBF24" },
               { i: "banknote", k: "What it costs", v: "Nothing to find out. Flow Mode is free", c: "#F0845F" },
               { i: "key", k: "What you own", v: "All of it. Code, domain, accounts", c: "#34D399" },
             ].map((x) => (
-              <div key={x.k} className="panel panel-lift relative overflow-hidden px-5 py-6">
+              <div key={x.k} className="panel panel-lift relative overflow-hidden px-4 py-4">
                 <span
                   className="absolute -top-8 left-1/2 -translate-x-1/2 w-24 h-16 rounded-full blur-2xl opacity-25 pointer-events-none"
                   style={{ background: x.c }}
                 />
-                <span className="block mb-3"><Icon name={x.i} size={20} color={x.c} /></span>
+                <span className="block mb-2"><Icon name={x.i} size={18} color={x.c} /></span>
                 <p
-                  className="text-[11px] font-medium uppercase tracking-label mb-2"
+                  className="text-[11px] font-medium uppercase tracking-label mb-1.5"
                   style={{ color: x.c }}
                 >
                   {x.k}
@@ -117,8 +117,9 @@ export default function Home() {
           {/* The number is here for anybody who wants it, but it is not the
               first thing a stranger meets. Leading with a price makes people
               brace. Leading with the free thing makes them look. */}
-          <p className="mt-6 text-sm text-ink-mute font-light">
-            Builds are flat and paid once, and you see your number before
+          <p className="mt-5 text-sm text-ink-mute font-light">
+            Builds are flat and
+            paid once, no hourly billing, and you see your number before
             anything starts.{" "}
             <Link href="/pricing" className="text-ink-soft hover:text-ink transition-colors underline decoration-rule underline-offset-4">
               See the prices
@@ -130,11 +131,11 @@ export default function Home() {
 
 
       {/* ---------- Three pillars ---------- */}
-      <section data-flow className="border-t border-rule px-6 py-24">
+      <section data-flow className="border-t border-rule px-6 py-16 md:py-20">
         <div className="max-w-6xl mx-auto">
-          <p className="label mb-10">What we build</p>
+          <p className="label mb-6">What we build</p>
 
-          <div className="grid md:grid-cols-12 gap-10 mb-14">
+          <div className="grid md:grid-cols-12 gap-6 mb-10">
             <h2 className="md:col-span-6 display text-4xl md:text-5xl">
               Three parts.
               <br />
@@ -151,13 +152,18 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-4">
             {PILLARS.map((p) => (
-              <div key={p.name} className="panel panel-lift p-7 flex flex-col relative overflow-hidden">
+              <div key={p.name} className="panel panel-lift p-5 flex flex-col relative overflow-hidden">
                 <span
                   className="absolute top-0 left-0 h-[3px] w-full"
                   style={{ background: p.color }}
                 />
-                <div className="flex items-center justify-between mb-8 mt-1">
+                <div className="flex items-center justify-between mb-5 mt-1">
                   <div className="flex items-center gap-3">
+                    {/* Denny asked for these. Emoji were retired site-wide as an
+                        AI-slop tell, so they exist in exactly two places, here
+                        and on the four levels, where they name the part rather
+                        than decorate a bullet. */}
+                    <span className="text-xl leading-none" aria-hidden>{p.emoji}</span>
                     <Icon name={p.icon} size={20} color={p.color} />
                     <svg width="10" height="10" viewBox="0 0 14 14" aria-hidden>
                       <circle cx="7" cy="7" r="7" fill={p.color} />
@@ -173,14 +179,14 @@ export default function Home() {
                     </p>
                   )}
                 </div>
-                <h3 className="font-display text-3xl mb-1.5">{p.name}</h3>
-                <p className="text-sm mb-5" style={{ color: p.color }}>
+                <h3 className="font-display text-2xl mb-1.5">{p.name}</h3>
+                <p className="text-sm mb-3" style={{ color: p.color }}>
                   {p.line}
                 </p>
-                <p className="text-sm text-ink-soft leading-relaxed font-light mb-7">
+                <p className="text-sm text-ink-soft leading-relaxed font-light mb-5">
                   {p.body}
                 </p>
-                <ul className="mt-auto space-y-2.5 border-t border-rule pt-5">
+                <ul className="mt-auto space-y-2 border-t border-rule pt-4">
                   {p.items.map((i) => (
                     <li key={i} className="text-sm text-ink-soft font-light flex gap-3">
                       <span style={{ color: p.color }}>/</span>
@@ -192,10 +198,10 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="mt-12 panel p-8 md:p-10 grid md:grid-cols-12 gap-8 items-center">
-            <div className="md:col-span-7">
-              <p className="label mb-4">Why three</p>
-              <h3 className="font-display text-2xl md:text-3xl leading-snug mb-4">
+          <div className="mt-6 panel p-6 grid md:grid-cols-12 gap-6 items-center">
+            <div className="md:col-span-8">
+              <p className="label mb-3">Why three</p>
+              <h3 className="font-display text-2xl leading-snug mb-2">
                 Three dots in the logo, three parts to the work. That was on purpose.
               </h3>
               <p className="text-sm text-ink-soft leading-relaxed font-light max-w-reading">
@@ -203,15 +209,8 @@ export default function Home() {
                 this site comes from one of the three.
               </p>
             </div>
-            <div className="md:col-span-5">
-              <div className="rounded-2xl border border-rule p-6">
-                <p className="label mb-4">All of it, done for you</p>
-                <p className="text-sm text-ink-soft leading-relaxed font-light">
-                  You send the idea. It comes back finished: written, designed,
-                  built, tested and live.
-                </p>
-              </div>
-              <Link href="/services" className="btn-ghost w-full mt-4">
+            <div className="md:col-span-4 md:text-right">
+              <Link href="/services" className="btn-ghost">
                 What that looks like in detail
               </Link>
             </div>
@@ -220,12 +219,12 @@ export default function Home() {
       </section>
 
       {/* ---------- Point of view, on white for contrast ---------- */}
-      <section data-flow className="band-light px-6 py-28">
+      <section data-flow className="band-light px-6 py-16 md:py-20">
         <div className="max-w-6xl mx-auto">
-          <p className="text-[11px] font-medium uppercase tracking-label text-[#3D6FE8] mb-6">
+          <p className="text-[11px] font-medium uppercase tracking-label text-[#3D6FE8] mb-4">
             Where we have a point of view
           </p>
-          <div className="grid md:grid-cols-12 gap-10 mb-16">
+          <div className="grid md:grid-cols-12 gap-6 mb-10">
             <h2 className="md:col-span-7 font-display text-4xl md:text-5xl leading-[1.05] text-[#0B1322]">
               Brand identity and communications
               <br />
@@ -237,7 +236,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-x-14 gap-y-12">
+          <div className="grid md:grid-cols-2 gap-x-10 gap-y-8">
             {[
               {
                 n: "01",
@@ -264,25 +263,25 @@ export default function Home() {
                 b: "Every choice is defensible. If we cannot explain a decision to you, it was not a decision.",
               },
             ].map((x) => (
-              <div key={x.n} className="border-t-2 pt-6" style={{ borderTopColor: x.c }}>
+              <div key={x.n} className="border-t-2 pt-4" style={{ borderTopColor: x.c }}>
                 <p
-                  className="text-[11px] font-medium uppercase tracking-label mb-3"
+                  className="text-[11px] font-medium uppercase tracking-label mb-2"
                   style={{ color: x.c }}
                 >
                   {x.n}
                 </p>
-                <h3 className="font-display text-2xl leading-snug mb-3 text-[#0B1322]">{x.t}</h3>
+                <h3 className="font-display text-xl leading-snug mb-2 text-[#0B1322]">{x.t}</h3>
                 <p className="text-sm text-[#49566E] font-light leading-relaxed">{x.b}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-14 rounded-2xl border border-[#DCE5F2] bg-[#F6F9FE] p-8 grid md:grid-cols-12 gap-8 items-center">
+          <div className="mt-10 rounded-2xl border border-[#DCE5F2] bg-[#F6F9FE] p-6 grid md:grid-cols-12 gap-6 items-center">
             <div className="md:col-span-8">
-              <p className="text-[11px] font-medium uppercase tracking-label text-[#2B57C4] mb-3">
+              <p className="text-[11px] font-medium uppercase tracking-label text-[#2B57C4] mb-2">
                 What that covers
               </p>
-              <p className="text-[#49566E] font-light leading-relaxed">
+              <p className="text-sm text-[#49566E] font-light leading-relaxed">
                 Naming and name treatment, logo and wordmark, colour and type systems,
                 verbal identity and tone, positioning and messaging hierarchy, launch
                 copy, and the usage guide that keeps it all intact after we hand it
@@ -302,10 +301,10 @@ export default function Home() {
       </section>
 
       {/* ---------- Work ---------- */}
-      <section data-flow className="band-light px-6 py-28">
+      <section data-flow className="band-light px-6 py-16 md:py-20">
         <div className="max-w-6xl mx-auto">
           {/* Dots and a caption, the same mark the whole studio runs on */}
-          <div className="flex flex-col items-center text-center mb-14">
+          <div className="flex flex-col items-center text-center mb-10">
             <svg width="74" height="22" viewBox="0 0 58 18" fill="none" aria-hidden>
               <line x1="10.5" y1="9" x2="23.5" y2="9" stroke="#9FC4E8" strokeWidth="1.2" />
               <line x1="34.5" y1="9" x2="46.5" y2="9" stroke="#9FC4E8" strokeWidth="1.2" />
@@ -313,19 +312,17 @@ export default function Home() {
               <circle className="pulse-2" cx="29" cy="9" r="5.6" fill="#5B9BF9" style={{ transformOrigin: "29px 9px" }} />
               <circle className="pulse-3" cx="52" cy="9" r="5.6" fill="#9FC4E8" style={{ transformOrigin: "52px 9px" }} />
             </svg>
-            <p className="text-[11px] font-medium uppercase tracking-label text-[#3D6FE8] mt-6">
+            <p className="text-[11px] font-medium uppercase tracking-label text-[#3D6FE8] mt-4">
               Brand · Site · System, on one project
             </p>
-            <h2 className="font-display text-4xl md:text-6xl text-[#0B1322] mt-5 max-w-3xl">
+            <h2 className="font-display text-4xl md:text-5xl text-[#0B1322] mt-3 max-w-3xl">
               An Instagram DM business,
               <br />
               turned into a real shop.
             </h2>
-            <p className="text-[#647089] font-light leading-relaxed max-w-reading mt-6">
+            <p className="text-[#647089] font-light leading-relaxed max-w-reading mt-4">
               CardsRG sells PSA graded cards, rare inserts and pack rips. It had an
-              audience and no storefront. We built the mark, the whole shop, product
-              pages with grade and set detail, cart and checkout. It went live and it
-              sells.
+              audience and no storefront. It went live and it sells.
             </p>
           </div>
 
@@ -347,14 +344,14 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-12 gap-6 mt-8 items-start">
+            <div className="grid md:grid-cols-12 gap-4 mt-5 items-start">
               <div className="md:col-span-5">
-                <p className="font-display text-3xl text-[#0B1322] group-hover:text-accent transition-colors">
+                <p className="font-display text-2xl text-[#0B1322] group-hover:text-accent transition-colors">
                   CardsRG
                 </p>
-                <p className="text-sm text-[#3D6FE8] mt-1.5">cardsrg.com</p>
+                <p className="text-sm text-[#3D6FE8] mt-1">cardsrg.com</p>
               </div>
-              <div className="md:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-6 border-t border-[#E8EEF7] pt-5">
+              <div className="md:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-4 border-t border-[#E8EEF7] pt-4">
                 {[
                   ["Brand", "Mark and palette"],
                   ["Site", "Full storefront"],
@@ -362,7 +359,7 @@ export default function Home() {
                   ["Built in", "Under two weeks"],
                 ].map(([k, v]) => (
                   <div key={k}>
-                    <p className="text-[11px] font-medium uppercase tracking-label text-[#647089] mb-1.5">
+                    <p className="text-[11px] font-medium uppercase tracking-label text-[#647089] mb-1">
                       {k}
                     </p>
                     <p className="text-sm text-[#0B1322] font-light leading-snug">{v}</p>
@@ -372,7 +369,7 @@ export default function Home() {
             </div>
           </Link>
 
-          <div className="mt-12 flex flex-col sm:flex-row gap-3 justify-center">
+          <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/work"
               className="btn border border-[#C9D6EA] text-[#0B1322] hover:bg-[#F4F7FC]"
@@ -387,10 +384,10 @@ export default function Home() {
       </section>
 
       {/* ---------- How it works, in four steps ---------- */}
-      <section data-flow className="border-t border-rule px-6 py-24">
+      <section data-flow className="border-t border-rule px-6 py-16 md:py-20">
         <div className="max-w-6xl mx-auto">
-          <p className="label mb-6">How it works</p>
-          <h2 className="display text-4xl md:text-5xl max-w-3xl mb-14">
+          <p className="label mb-4">How it works</p>
+          <h2 className="display text-4xl md:text-5xl max-w-3xl mb-10">
             Four levels, and you are busy for about twenty minutes of it.
           </h2>
 
@@ -402,15 +399,17 @@ export default function Home() {
             {[
               {
                 i: "pencil",
+                e: "✍️",
                 c: "#5B9BF9",
                 step: "Level 1",
                 day: "The spark",
                 t: "Send the intention",
-                b: "One short form. A few sentences about what you want to exist. No discovery call, no brief, no deck. You get back a scope, a price and a date, and that date is the one we work to.",
+                b: "One short form. A few sentences about what you want to exist. No discovery call, no brief, no deck. You get back a scope, a price and a date we work to.",
                 you: "15 minutes",
               },
               {
                 i: "eye",
+                e: "👀",
                 c: "#F0845F",
                 step: "Level 2",
                 day: "First look",
@@ -420,6 +419,7 @@ export default function Home() {
               },
               {
                 i: "hammer",
+                e: "🔨",
                 c: "#FBBF24",
                 step: "Level 3",
                 day: "The build",
@@ -429,17 +429,21 @@ export default function Home() {
               },
               {
                 i: "rocket",
+                e: "🚀",
                 c: "#34D399",
                 step: "Level 4",
                 day: "Live",
                 t: "It goes live and it is yours",
-                b: "On your domain, tested on a phone, handed over with docs. You own the code and the accounts.",
+                b: "On your domain, tested on a phone, handed over with docs.",
                 you: "Approve it",
               },
             ].map((x, gi) => (
-              <div key={x.step} className="panel panel-lift p-6 flex flex-col">
-                <span className="block mb-4"><Icon name={x.i} size={22} color={x.c} /></span>
-                <div className="flex items-baseline gap-2 mb-3">
+              <div key={x.step} className="panel panel-lift p-5 flex flex-col">
+                <span className="flex items-center gap-2.5 mb-3">
+                  <span className="text-xl leading-none" aria-hidden>{x.e}</span>
+                  <Icon name={x.i} size={20} color={x.c} />
+                </span>
+                <div className="flex items-baseline gap-2 mb-2">
                   <p
                     className="text-[11px] font-medium uppercase tracking-label"
                     style={{ color: x.c }}
@@ -449,7 +453,7 @@ export default function Home() {
                   <p className="label">· {x.day}</p>
                 </div>
                 {/* Level meter, filled to here */}
-                <div className="flex gap-1.5 mb-4" aria-hidden>
+                <div className="flex gap-1.5 mb-3" aria-hidden>
                   {[0, 1, 2, 3].map((seg) => (
                     <span
                       key={seg}
@@ -461,11 +465,11 @@ export default function Home() {
                     />
                   ))}
                 </div>
-                <h3 className="font-display text-xl leading-snug mb-2.5">{x.t}</h3>
-                <p className="text-sm text-ink-soft font-light leading-relaxed mb-5">
+                <h3 className="font-display text-lg leading-snug mb-2">{x.t}</h3>
+                <p className="text-sm text-ink-soft font-light leading-relaxed mb-4">
                   {x.b}
                 </p>
-                <div className="mt-auto border-t border-rule pt-4">
+                <div className="mt-auto border-t border-rule pt-3">
                   <p className="label mb-1">Your time</p>
                   <p className="text-sm" style={{ color: x.c }}>
                     {x.you}
@@ -475,7 +479,7 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="mt-8">
+          <div className="mt-6">
             <Link href="/how-we-work" className="btn-ghost">
               The long version, including the awkward questions
             </Link>
@@ -484,76 +488,27 @@ export default function Home() {
       </section>
 
 
-      {/* ---------- Proof points ---------- */}
-      <section data-flow className="border-t border-rule px-6 py-24">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-14">
-            <p className="label mb-6">Why a company hires us</p>
-            <h2 className="display text-4xl md:text-5xl max-w-3xl">
-              One vendor, one price, one person accountable.
-            </h2>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
-            {[
-              {
-                i: "handshake",
-                c: "#2DD4BF",
-                k: "You stop managing vendors",
-                v: "One studio, one thread of email. No handoffs.",
-              },
-              {
-                i: "banknote",
-                c: "#F0845F",
-                k: "You know the number first",
-                v: "Flat price agreed before work starts. No hourly billing, no retainers.",
-              },
-              {
-                i: "bolt",
-                c: "#FBBF24",
-                k: "We are as excited as you are",
-                v: "Nobody chases us for updates. We want to see the thing exist too.",
-              },
-              {
-                i: "key",
-                c: "#34D399",
-                k: "You own the asset",
-                v: "The code, the domain, the accounts. Nothing is held hostage.",
-              },
-            ].map((s) => (
-              <div key={s.k} className="border-t-2 pt-5" style={{ borderTopColor: s.c }}>
-                <span className="block mb-4"><Icon name={s.i} size={22} color={s.c} /></span>
-                <p className="font-display text-xl mb-3">{s.k}</p>
-                <p className="text-sm text-ink-soft leading-relaxed font-light">{s.v}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ---------- The name as a verb ---------- */}
-      <section data-flow className="band-light px-6 py-24">
+      <section data-flow className="band-light px-6 py-16 md:py-20">
         <div className="max-w-6xl mx-auto">
-          <div className="panel p-8 md:p-12 grid md:grid-cols-12 gap-10">
+          <div className="panel p-6 md:p-8 grid md:grid-cols-12 gap-6">
             <div className="md:col-span-5">
-              <p className="label mb-6">What the name means</p>
-              <p className="font-display text-5xl md:text-6xl leading-none">
+              <p className="label mb-4">What the name means</p>
+              <p className="font-display text-5xl leading-none">
                 flow<span className="text-accent">zone</span>
               </p>
-              <p className="text-[13px] text-ink-mute mt-4">
+              <p className="text-[13px] text-ink-mute mt-3">
                 verb · flowzoned, flowzoning
               </p>
             </div>
             <div className="md:col-span-7">
-              <p className="text-xl md:text-2xl text-ink font-light leading-snug">
+              <p className="text-xl text-ink font-light leading-snug">
                 To take an intention and get it moving. To go from a thing you keep
                 meaning to start, to a thing that is live, branded and running on its
                 own.
               </p>
-              <p className="text-ink-soft font-light leading-relaxed mt-6 max-w-reading">
+              <p className="text-ink-soft font-light leading-relaxed mt-4 max-w-reading">
                 The gap is never the idea. It is the design, the words, the build and the plumbing, all needed at once. That gap is the whole job.
-              </p>
-              <p className="text-ink font-light leading-relaxed mt-5 max-w-reading">
-                You hand us the intention. We hand you back the running thing.
               </p>
             </div>
           </div>
@@ -561,10 +516,10 @@ export default function Home() {
       </section>
 
       {/* ---------- The obvious question ---------- */}
-      <section data-flow className="border-t border-rule px-6 py-24">
+      <section data-flow className="border-t border-rule px-6 py-16 md:py-20">
         <div className="max-w-6xl mx-auto">
-          <p className="label mb-6">The obvious question</p>
-          <div className="grid md:grid-cols-12 gap-10 mb-16">
+          <p className="label mb-4">The obvious question</p>
+          <div className="grid md:grid-cols-12 gap-6 mb-10">
             <h2 className="md:col-span-7 display text-4xl md:text-5xl">
               Why not just ask AI
               <br />
@@ -575,7 +530,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-x-14 gap-y-12">
+          <div className="grid md:grid-cols-2 gap-x-10 gap-y-8">
             {[
               {
                 n: "01",
@@ -602,69 +557,60 @@ export default function Home() {
                 b: "You are hiring a person who is on the hook for the result, and who you can reply to.",
               },
             ].map((x) => (
-              <div key={x.n} className="border-t-2 pt-6" style={{ borderTopColor: x.c }}>
+              <div key={x.n} className="border-t-2 pt-4" style={{ borderTopColor: x.c }}>
                 <p
-                  className="text-[11px] font-medium uppercase tracking-label mb-3"
+                  className="text-[11px] font-medium uppercase tracking-label mb-2"
                   style={{ color: x.c }}
                 >
                   {x.n}
                 </p>
-                <h3 className="font-display text-2xl leading-snug mb-3">{x.t}</h3>
+                <h3 className="font-display text-xl leading-snug mb-2">{x.t}</h3>
                 <p className="text-sm text-ink-soft font-light leading-relaxed">{x.b}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-14 panel p-8 md:p-10 grid md:grid-cols-12 gap-8">
+          {/* The speed answer and the do-not-hire-us answer were two sections
+              saying the same thing. One panel now. */}
+          <div className="mt-10 panel p-6 grid md:grid-cols-12 gap-6">
             <div className="md:col-span-7">
-              <p className="label mb-4">And when you should not hire us</p>
-              <p className="text-ink-soft font-light leading-relaxed max-w-reading">
-                If you have taste, technical confidence and free evenings, build it yourself and keep the money.
+              <p className="label mb-3">Why it can be this fast</p>
+              <p className="font-display text-2xl md:text-3xl leading-snug">
+                AI gives us the speed. Humans give it the{" "}
+                <span className="text-gradient">taste</span>.
               </p>
-              <p className="text-ink font-light leading-relaxed max-w-reading mt-4">
-                We are not selling you access to AI. You already have that. We are the
-                judgment on top of it, and the person who finishes.
+              <p className="text-sm text-ink-soft font-light leading-relaxed mt-3 max-w-reading">
+                A model can produce a hundred layouts in a minute. Knowing which one is
+                right is the part you are paying for. A week instead of two months,
+                without it looking like everyone else's AI site.
               </p>
             </div>
-            <div className="md:col-span-5 md:text-right md:self-end">
-              <Link href="/how-we-work" className="btn-ghost">
-                More straight answers <span className="arrow">→</span>
-              </Link>
+            <div className="md:col-span-5 md:border-l md:border-rule md:pl-6 flex flex-col">
+              <p className="label mb-3">And when you should not hire us</p>
+              <p className="text-sm text-ink-soft font-light leading-relaxed">
+                If you have taste, technical confidence and free evenings, build it
+                yourself and keep the money.
+              </p>
+              <div className="mt-4 md:mt-auto">
+                <Link href="/how-we-work" className="btn-ghost">
+                  More straight answers <span className="arrow">→</span>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ---------- The philosophy line, white for punch ---------- */}
-      <section data-flow className="band-light px-6 py-28">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-[11px] font-medium uppercase tracking-label text-[#3D6FE8] mb-8">
-            Why it can be this fast
-          </p>
-          <p className="font-display text-3xl md:text-5xl leading-[1.15] text-[#0B1322]">
-            AI gives us the speed.
-            <br />
-            Humans give it the <span className="text-gradient">taste</span>.
-          </p>
-          <p className="text-[#49566E] font-light leading-relaxed mt-8 max-w-reading mx-auto">
-            A model can produce a hundred layouts in a minute. Knowing which one is
-            right is the part you are actually paying for, and it is the part that does
-            not get delegated. That is the whole trade: a week instead of two months,
-            without it looking like everyone else's AI site.
-          </p>
-        </div>
-      </section>
-
       {/* ---------- Chat ---------- */}
-      <section data-flow className="border-t border-rule px-6 py-24">
+      <section data-flow className="border-t border-rule px-6 py-16 md:py-20">
         <div className="max-w-4xl mx-auto">
-          <p className="label mb-8">Ask first</p>
-          <h2 className="display text-4xl md:text-5xl mb-4 max-w-2xl">
+          <p className="label mb-4">Ask first</p>
+          <h2 className="display text-4xl md:text-5xl mb-3 max-w-2xl">
             Not sure what you actually need?
           </h2>
-          <p className="text-ink-soft font-light mb-10 max-w-reading">
-            No form, no call. Describe the thing you are launching and get a straight
-            answer about which of the three parts it needs.
+          <p className="text-ink-soft font-light mb-6 max-w-reading">
+            Describe the thing you are launching and get a straight answer about which
+            of the three parts it needs.
           </p>
           <ChatWidget />
 
@@ -675,19 +621,18 @@ export default function Home() {
       </section>
 
       {/* ---------- CTA ---------- */}
-      <section data-flow className="bg-paper-deep glow border-t border-rule px-6 py-28">
+      <section data-flow className="bg-paper-deep glow border-t border-rule px-6 py-20">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-[11px] font-medium uppercase tracking-label text-ink-mute mb-8">
+          <p className="text-[11px] font-medium uppercase tracking-label text-ink-mute mb-6">
             Start here
           </p>
-          <h2 className="font-display text-4xl md:text-6xl leading-[1.05] mb-8">
+          <h2 className="font-display text-4xl md:text-6xl leading-[1.05] mb-5">
             Bring the imagination.
             <br />
             We bring the running thing.
           </h2>
-          <p className="text-ink-soft max-w-md mx-auto mb-10 leading-relaxed font-light">
-            A few sentences is enough. You get a real reply with scope, price and a
-            date. No discovery call required.
+          <p className="text-ink-soft max-w-md mx-auto mb-8 leading-relaxed font-light">
+            A few sentences is enough. You get a real reply.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <MessageUs className="btn-primary shine" />
@@ -696,7 +641,7 @@ export default function Home() {
             </a>
           </div>
           <p className="text-[12px] text-ink-mute mt-6">
-            Messages land with a person, not in a queue. {SITE.phoneDisplay}
+            Mail lands with a person, not in a queue.
           </p>
         </div>
       </section>

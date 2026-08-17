@@ -377,13 +377,9 @@ export default function FunnelNarrow({
             </p>
             <div className="flex flex-wrap items-center gap-3">
               <a
-                href={
-                  SITE.phone
-                    ? `sms:${SITE.phone}?&body=${encodeURIComponent(message)}`
-                    : `mailto:${SITE.email}?subject=${encodeURIComponent(
-                        `Get ${topic} moving`
-                      )}&body=${encodeURIComponent(message)}`
-                }
+                href={`mailto:${SITE.email}?subject=${encodeURIComponent(
+                  `Get ${topic} moving`
+                )}&body=${encodeURIComponent(message)}`}
                 className="btn-primary shine !px-5 !py-2.5 text-sm"
               >
                 Have us build it <span className="arrow">→</span>

@@ -39,6 +39,7 @@ import {
 } from "@/lib/session";
 import { useAmbient } from "@/app/components/useAmbient";
 import MemeMaker from "@/app/components/MemeMaker";
+import AskAboutThis, { askBody } from "@/app/components/AskAboutThis";
 import Icon from "@/components/Icon";
 
 /**
@@ -1276,6 +1277,52 @@ export default function Playground() {
               </p>
             )}
           </div>
+
+          {/* Placed here because this is the moment of most doubt. The kit is
+              finished enough to download and they are looking at a name they
+              picked twenty seconds ago, wondering if it is any good. That is
+              when a second opinion is worth something. Anywhere earlier and
+              there is nothing to show; anywhere later and they have gone. */}
+          {has.name && has.mark && (
+            <AskAboutThis
+              id="design-kit"
+              icon="palette"
+              subject={`Is this any good? ${name.trim()}`}
+              title="Not sure about the name?"
+              note="Send the kit to Denny. He names things for a living and he will tell you what he would change, free, no obligation."
+              body={() =>
+                askBody({
+                  opener: `I built this in Flow Mode and I want a second opinion on it.`,
+                  sections: [
+                    { label: "The idea", text: idea.trim() || category.label },
+                    {
+                      label: "The name",
+                      text: [name.trim(), chosenName?.why || "", line.trim() ? `Line: ${line.trim()}` : ""]
+                        .filter(Boolean)
+                        .join("\n"),
+                    },
+                    {
+                      label: "The colours",
+                      text: ROLES.map((r) => `${r.label}: ${palette[r.id]}`).join("\n"),
+                    },
+                    {
+                      label: "The mark",
+                      text:
+                        markMode === "built"
+                          ? `${builtMark.name}, built from the idea. Lockup: ${lockup.name}.`
+                          : `${icon.id.replace(/-/g, " ")} in a ${containerId}. Lockup: ${lockup.name}.`,
+                    },
+                    { label: "The type", text: `${typeSet.name}. ${typeSet.why || ""}`.trim() },
+                    failing.length
+                      ? { label: "Known problem", text: `${failing.length} colour pairs fail contrast.` }
+                      : null,
+                  ],
+                  unsure: "The bit I am not sure about:",
+                })
+              }
+              className="mt-4"
+            />
+          )}
         </div>
       </div>
     </div>

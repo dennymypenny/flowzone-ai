@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SITE } from "@/lib/site";
+import NodeWeb from "@/app/components/NodeWeb";
 
 export const metadata: Metadata = {
   title: "Work",
@@ -25,7 +26,7 @@ export default function Work() {
     <>
       {/* Header */}
       <section className="relative overflow-hidden px-6 pt-20 pb-16">
-        <div className="absolute inset-0 aurora drift pointer-events-none" />
+        <NodeWeb className="opacity-90" />
         <div className="absolute inset-0 gridlight pointer-events-none" />
         <div className="relative max-w-6xl mx-auto">
           <div className="flex items-center justify-between border-b border-rule pb-4 mb-12">

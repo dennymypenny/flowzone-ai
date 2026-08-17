@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import MessageUs from "@/components/MessageUs";
 import ContactForm from "@/components/ContactForm";
 import { SITE } from "@/lib/site";
+import NodeWeb from "@/app/components/NodeWeb";
 
 export const metadata: Metadata = {
   title: "Talk to us",
@@ -24,12 +25,10 @@ export const metadata: Metadata = {
 };
 
 export default function Talk() {
-  const hasPhone = Boolean(SITE.phone);
-
   return (
     <>
       <section className="relative overflow-hidden px-6 pt-20 pb-14">
-        <div className="absolute inset-0 aurora drift pointer-events-none" />
+        <NodeWeb className="opacity-90" />
         <div className="absolute inset-0 gridlight pointer-events-none" />
         <div className="relative max-w-6xl mx-auto">
           <div className="flex items-center justify-between border-b border-rule pb-4 mb-12">
@@ -58,23 +57,15 @@ export default function Talk() {
           <div className="panel p-8 flex flex-col relative overflow-hidden">
             <span className="absolute top-0 left-0 h-[3px] w-full bg-[#0F6B4F]" />
             <span className="block mb-5 mt-1"><Icon name="chat" size={22} color="#0C6E80" /></span>
-            <h2 className="font-display text-2xl mb-2">Message us</h2>
-            <p className="text-sm text-[#0F6B4F] mb-5">Fastest. Lands on a phone.</p>
+            <h2 className="font-display text-2xl mb-2">Send the rough version</h2>
+            <p className="text-sm text-[#0F6B4F] mb-5">Fastest. No form.</p>
             <p className="text-sm text-ink-soft font-light leading-relaxed mb-7">
-              {hasPhone
-                ? "Opens your messages app with a text started. Good for a quick question, a rough idea, or a photo of the thing you are trying to describe."
-                : "Coming shortly. Until the number is live, email is the fastest route and it is read by the same person."}
+              A quick question, a half-formed idea, a photo of the thing you are
+              trying to describe. It opens already started, so you only have to
+              finish the sentence.
             </p>
             <div className="mt-auto">
-              <MessageUs className="btn-primary w-full" />
-              {hasPhone && (
-                <p className="text-[12px] text-ink-mute mt-3.5">
-                  Or save it:{" "}
-                  <a href={`tel:${SITE.phone}`} className="text-ink-soft hover:text-accent transition-colors">
-                    {SITE.phoneDisplay}
-                  </a>
-                </p>
-              )}
+              <MessageUs className="btn-primary w-full" label="Start it" />
             </div>
           </div>
 

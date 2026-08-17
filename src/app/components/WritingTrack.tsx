@@ -8,6 +8,7 @@ import {
   readIdea,
   saveJSON,
 } from "@/lib/session";
+import AskAboutThis, { askBody } from "@/app/components/AskAboutThis";
 
 /**
  * The writing track.
@@ -800,6 +801,11 @@ export default function WritingTrack({ accent }: { accent: string }) {
 
   const slots = (full.match(/\[[^\]]+\]/g) || []).length;
 
+  /* A draft exists from the first second, so "a draft was generated" is not a
+     real signal here. Investment is: they typed the idea, edited a section or
+     asked for it again. Any one of those and the words on screen are theirs. */
+  const touched = Boolean(facts.idea.trim()) || Object.keys(edits).length > 0 || seed > 0;
+
   const fileName = () =>
     `${(phrase(facts.idea) || pieceId).toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${pieceId}.md`;
 
@@ -1091,6 +1097,34 @@ export default function WritingTrack({ accent }: { accent: string }) {
             {full}
           </pre>
         </div>
+
+        {/* Directly under the finished draft, because that is where the doubt
+            lives. Nobody wonders whether copy is good while they are writing
+            it. They wonder after they read it back. Gated on real work, so an
+            untouched default draft never triggers an ask. */}
+        {touched && (
+          <AskAboutThis
+            id="writing-draft"
+            icon="pencil"
+            subject={`Does this copy land? ${piece.name}`}
+            title="Read it back. Does it sound like you?"
+            note="Send the draft to Denny. He writes this stuff for clients and he will mark up what is working and what is not, free, no obligation."
+            body={() =>
+              askBody({
+                opener: `I wrote this in Flow Mode. It is ${piece.name.toLowerCase()} and I want to know if it lands.`,
+                sections: [
+                  { label: "What it is for", text: facts.idea.trim() },
+                  { label: "Who it is for", text: facts.who.trim() },
+                  { label: "The headline", text: head },
+                  ...sections.map((s) => ({ label: s.label, text: valueOf(s) })),
+                  slots ? { label: "Still blank", text: `${slots} facts in brackets I have not filled in.` } : null,
+                ],
+                unsure: "The line I keep rewriting:",
+              })
+            }
+            accent={accent}
+          />
+        )}
       </div>
     </div>
   );

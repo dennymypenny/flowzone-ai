@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import VideoSpark from "@/app/components/VideoSpark";
 import Icon from "@/components/Icon";
 import FunnelNarrow from "@/app/components/FunnelNarrow";
+import DropZone, { SaveNote } from "@/app/components/DropZone";
 import { readPhoto, PHOTO_READ_KEY, type PhotoRead } from "@/lib/photoread";
 import {
   KEYS,
@@ -39,54 +40,33 @@ type Shot = {
 };
 
 const KEY = KEYS.idea;
-const UPLOADS_KEY = KEYS.uploads;
 
-/** The murmur: ideas the input dreams about while it waits. */
+/**
+ * The murmur: ideas the input dreams about while it waits.
+ *
+ * These used to be whimsical, a flower truck and a sneaker vault, which read
+ * as decoration. Somebody arriving here is running or about to run a real
+ * thing, and the first job of this line is to say "yes, this is for you". So
+ * they are the businesses people around here actually start: trades, food,
+ * services, a side thing that grew. Specific enough to feel real, broad
+ * enough that most visitors see themselves in at least one.
+ */
 const MURMURS = [
-  "a late night ramen bar",
-  "a sneaker vault",
-  "a flower truck",
-  "a barber studio with a waitlist",
-  "a candle brand",
-  "a card shop that goes live on Fridays",
-  "a supper club",
-  "a vintage store",
-  "my clothing line",
+  "a mobile detailing business",
   "a bakery people cross town for",
+  "a cleaning company that runs without me",
+  "a barber shop with a waitlist",
+  "a landscaping crew going out on my own",
+  "a photography side thing turning into work",
+  "a food truck at the same lot every Friday",
+  "a personal training studio",
+  "a card shop that goes live on weekends",
+  "a clothing line I keep not launching",
+  "a coffee shop with regulars by name",
+  "a handyman business, just me and a van",
+  "an online store for the thing I make",
+  "a consulting thing I do on the side",
 ];
-
-/** Shrink a dropped image on-device so storage stays small and paint stays fast. */
-function shrink(file: File): Promise<string | null> {
-  return new Promise((resolve) => {
-    if (!file.type.startsWith("image/")) return resolve(null);
-    const url = URL.createObjectURL(file);
-    const im = new Image();
-    im.onload = () => {
-      const max = 1280;
-      const scale = Math.min(1, max / Math.max(im.width, im.height));
-      const canvas = document.createElement("canvas");
-      canvas.width = Math.round(im.width * scale);
-      canvas.height = Math.round(im.height * scale);
-      const c = canvas.getContext("2d");
-      if (!c) {
-        URL.revokeObjectURL(url);
-        return resolve(null);
-      }
-      c.drawImage(im, 0, 0, canvas.width, canvas.height);
-      URL.revokeObjectURL(url);
-      try {
-        resolve(canvas.toDataURL("image/jpeg", 0.82));
-      } catch {
-        resolve(null);
-      }
-    };
-    im.onerror = () => {
-      URL.revokeObjectURL(url);
-      resolve(null);
-    };
-    im.src = url;
-  });
-}
 
 /** Data URLs render directly; web images go through the same-origin pass. */
 const src = (thumb: string) =>
@@ -108,8 +88,15 @@ export default function IdeaLens() {
      for the video. */
   const [showVideo, setShowVideo] = useState(false);
   const [oops, setOops] = useState("");
+  /* A write that came back false. The save note stops claiming everything is
+     kept the moment this is true, because the claim would be a lie. */
+  const [saveFailed, setSaveFailed] = useState(false);
   const timer = useRef<number | undefined>(undefined);
-  const fileRef = useRef<HTMLInputElement | null>(null);
+  /* The dropzone owns the file list. This is how files dropped anywhere else
+     on the entry get to it. */
+  const dropAdd = useRef<((f: FileList | File[]) => void) | null>(null);
+  /* dragenter and dragleave fire again on every child, so a boolean flickers. */
+  const dragDepth = useRef(0);
   /* Typing debounces by a second, so two entries can be in flight at once. A
      slow first answer used to land on top of a fast second one and the backdrop
      showed the wrong idea. Every response checks it is still the current one. */
@@ -208,7 +195,7 @@ export default function IdeaLens() {
     setChosen(sel);
     if (thumb) setPhoto(thumb);
     setQ("");
-    saveIdea(sel);
+    if (!saveIdea(sel)) setSaveFailed(true);
   };
 
   // Typing pauses, and you are in. Enter also works.
@@ -220,28 +207,25 @@ export default function IdeaLens() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [q]);
 
-  /** Dropped files are theirs: they lead the backdrop and the reel. */
-  const addFiles = async (list: FileList | File[]) => {
-    const files = Array.from(list).slice(0, 6);
-    if (!files.length) return;
-    setBusy(true);
-    const datas = (await Promise.all(files.map(shrink))).filter(Boolean) as string[];
-    setBusy(false);
-    if (!datas.length) return;
-    const all = [...datas, ...readUploads()].slice(0, 6);
-    // A full quota means the photos ride along for this visit only. Say so.
-    if (!saveJSON(UPLOADS_KEY, all)) {
-      setOops("Storage is full, so these photos will not survive a reload.");
-    }
-    setUploadCount(all.length);
+  /**
+   * New photos from the dropzone. They are theirs, so they lead the backdrop
+   * and the reel, and the palette read runs here on the device.
+   *
+   * The dropzone already wrote them to the uploads key in its old shape, so
+   * this only handles what a photo means to the page.
+   */
+  const handleImages = async (added: string[], total: number) => {
+    setUploadCount(total);
+    if (!added.length) return;
+    const first = added[0];
 
     // The picture already knows most of the brief. Read it here, on this
     // device, and hand the answer to the rest of the page.
     try {
-      const r = await readPhoto(datas[0]);
+      const r = await readPhoto(first);
       if (r) {
         setRead(r);
-        saveJSON(PHOTO_READ_KEY, r);
+        if (!saveJSON(PHOTO_READ_KEY, r)) setSaveFailed(true);
       }
     } catch {
       /* a picture that will not read is not a reason to stop */
@@ -251,11 +235,11 @@ export default function IdeaLens() {
     // flight loses. Bumping the id is what makes it lose.
     reqId.current += 1;
     const term = q.trim() || chosen?.q || "your own thing";
-    const sel = { q: term, thumb: datas[0] };
+    const sel = { q: term, thumb: first };
     setChosen(sel);
-    setPhoto(datas[0]);
+    setPhoto(first);
     setClip("");
-    saveIdea(sel);
+    if (!saveIdea(sel)) setSaveFailed(true);
   };
 
   const clear = () => {
@@ -271,16 +255,24 @@ export default function IdeaLens() {
     removeJSON(KEYS.funnel);
   };
 
+  /* The whole entry still catches a file dropped anywhere near it. The panel
+     handles its own drops and stops them here, so nothing lands twice. */
   const dropProps = {
-    onDragOver: (e: React.DragEvent) => {
+    onDragEnter: (e: React.DragEvent) => {
       e.preventDefault();
+      dragDepth.current += 1;
       setDragOver(true);
     },
-    onDragLeave: () => setDragOver(false),
+    onDragOver: (e: React.DragEvent) => e.preventDefault(),
+    onDragLeave: () => {
+      dragDepth.current = Math.max(0, dragDepth.current - 1);
+      if (dragDepth.current === 0) setDragOver(false);
+    },
     onDrop: (e: React.DragEvent) => {
       e.preventDefault();
+      dragDepth.current = 0;
       setDragOver(false);
-      if (e.dataTransfer?.files?.length) addFiles(e.dataTransfer.files);
+      if (e.dataTransfer?.files?.length) dropAdd.current?.(e.dataTransfer.files);
     },
   };
 
@@ -357,27 +349,22 @@ export default function IdeaLens() {
             </p>
           </div>
           <button
-            onClick={() => fileRef.current?.click()}
-            className="text-xs border border-rule text-ink-soft px-3 py-2 hover:text-ink hover:border-accent transition-colors shrink-0"
-          >
-            + Your photos
-          </button>
-          <button
             onClick={clear}
             className="text-xs border border-rule text-ink-soft px-3 py-2 hover:text-ink hover:border-accent transition-colors shrink-0"
           >
             New idea
           </button>
         </div>
-        <input
-          ref={fileRef}
-          type="file"
-          accept="image/*"
-          multiple
-          aria-label="Add your own photos"
-          className="hidden"
-          onChange={(e) => e.target.files && addFiles(e.target.files)}
-        />
+        <div className="mt-4">
+          <DropZone
+            hasIdea
+            compact
+            addRef={dropAdd}
+            onImages={handleImages}
+            onStorageIssue={setSaveFailed}
+          />
+        </div>
+        <SaveNote failed={saveFailed} />
         {read && (
           <div
             className="panel p-5 mt-4 max-w-xl"
@@ -438,7 +425,7 @@ export default function IdeaLens() {
       {dragOver && (
         <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-paper/80 pointer-events-none">
           <p className="font-display text-2xl text-accent flex items-center gap-3">
-            <Icon name="download" size={24} color="#5B8CFF" /> Drop your photos in
+            <Icon name="download" size={24} color="#5B8CFF" /> Drop your files in
           </p>
         </div>
       )}
@@ -465,21 +452,18 @@ export default function IdeaLens() {
         )}
       </div>
       {oops && <p className="mt-3 text-[12px] text-[#FBBF24]">{oops}</p>}
-      <button
-        onClick={() => fileRef.current?.click()}
-        className="mt-3 text-xs text-ink-mute hover:text-ink transition-colors"
-      >
-        Or drag your own photos anywhere here
-      </button>
-      <input
-        ref={fileRef}
-        type="file"
-        accept="image/*"
-        multiple
-        aria-label="Add your own photos"
-        className="hidden"
-        onChange={(e) => e.target.files && addFiles(e.target.files)}
-      />
+      {/* Second in line, on purpose. The idea box is still the main event, so
+          this sits under it, smaller, saying what it takes and where it goes. */}
+      <div className="mt-4">
+        <DropZone
+          hasIdea={false}
+          addRef={dropAdd}
+          onImages={handleImages}
+          onIdea={(line) => enter(line)}
+          onStorageIssue={setSaveFailed}
+        />
+      </div>
+      <SaveNote failed={saveFailed} />
     </div>
   );
 }

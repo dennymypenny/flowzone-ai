@@ -6,6 +6,7 @@ import FlowPath from "@/app/components/FlowPath";
 import Arrival from "@/app/components/Arrival";
 import Icon from "@/components/Icon";
 import { SITE } from "@/lib/site";
+import NodeWeb from "@/app/components/NodeWeb";
 
 export const metadata: Metadata = {
   title: "Flow Mode",
@@ -46,7 +47,7 @@ export default function Start() {
       {/* Light through the whole flow */}
       <div className="fixed inset-0 -z-10 lightshaft pointer-events-none" aria-hidden />
       <section className="relative overflow-hidden px-6 pt-24 pb-6">
-        <div className="absolute inset-0 aurora drift pointer-events-none" />
+        <NodeWeb className="opacity-90" />
         <div className="absolute inset-0 gridlight pointer-events-none" />
         <div className="relative max-w-6xl mx-auto">
           <div className="flex flex-wrap items-center gap-3 mb-10">

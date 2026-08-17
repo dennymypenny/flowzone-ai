@@ -14,24 +14,18 @@ export const SITE = {
 
   // Displayed publicly. Swap to hello@flowzone.dev the day that mailbox exists.
   // This is the ONLY place it is written down, so it is a one line change.
-  email: "flowzoneautomation@gmail.com",
+  email: "heyflowzone@gmail.com",
 
   // Where lead notifications are delivered. Server side only.
-  leadInbox: "flowzoneautomation@gmail.com",
+  leadInbox: "heyflowzone@gmail.com",
 
   // LinkedIn is the only social the studio actually works. Keep it visible.
   linkedin: "https://www.linkedin.com/company/116623924/",
   linkedinFounder: "https://www.linkedin.com/in/dennisvaldesjr/",
 
-  // Instant contact. E.164 for the sms: link, readable form for anything a
-  // human looks at. Left empty, every Text us button quietly falls back to
-  // email so nothing ever breaks.
-  phone: "+17863337887",
-  phoneDisplay: "(786) 333-7887",
-
   // Prefilled mailto used by every primary CTA
   mailto:
-    "mailto:flowzoneautomation@gmail.com?subject=New%20project%20for%20FlowZone&body=Hi%20FlowZone%2C%0A%0AHere%20is%20what%20I%20want%20to%20get%20moving%3A%0A%0A%0AWhat%20I%20already%20have%20(brand%2C%20site%2C%20anything)%3A%0A%0A%0AWhen%20I%20want%20it%20live%3A%0A%0A%0AThanks%2C%0A",
+    "mailto:heyflowzone@gmail.com?subject=New%20project%20for%20FlowZone&body=Hi%20FlowZone%2C%0A%0AHere%20is%20what%20I%20want%20to%20get%20moving%3A%0A%0A%0AWhat%20I%20already%20have%20(brand%2C%20site%2C%20anything)%3A%0A%0A%0AWhen%20I%20want%20it%20live%3A%0A%0A%0AThanks%2C%0A",
 
   url: "https://flowzone.dev",
 } as const;
@@ -43,6 +37,7 @@ export const PILLARS = [
     // Colors come straight off the three dots in the mark. Left to right.
     color: "#4C7BE8",
     icon: "palette",
+    emoji: "🎨",
     line: "What people recognize you by.",
     lead: true,
     body:
@@ -54,6 +49,7 @@ export const PILLARS = [
     name: "Site",
     color: "#5B9BF9",
     icon: "compass",
+    emoji: "🧭",
     line: "Where people decide.",
     body:
       "A marketing site or a full storefront, designed against your brand rather than a theme. Fast, mobile first and deployed on your own domain.",
@@ -64,6 +60,7 @@ export const PILLARS = [
     name: "System",
     color: "#C6E4F8",
     icon: "bolt",
+    emoji: "⚡",
     line: "What keeps running after launch.",
     body:
       "The unglamorous part that decides whether the brand survives contact with real customers. Lead intake, booking, invoicing, reporting, built in and tested.",

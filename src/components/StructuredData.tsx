@@ -17,12 +17,10 @@ export default function StructuredData() {
         alternateName: ["FlowZone Studio", "flowzone.dev"],
         url: SITE.url,
         email: SITE.email,
-        telephone: SITE.phone,
         contactPoint: [
           {
             "@type": "ContactPoint",
             contactType: "sales",
-            telephone: SITE.phone,
             email: SITE.email,
             // Matches the areaServed on the organization below. The two used
             // to disagree, US here and Worldwide there.

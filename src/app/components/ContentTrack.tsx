@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import MemeMaker from "@/app/components/MemeMaker";
+import AskAboutThis, { askBody } from "@/app/components/AskAboutThis";
 import {
   copyOrDownload,
   downloadBlob,
@@ -1349,6 +1350,41 @@ export default function ContentTrack({ accent }: { accent: string }) {
               Next, the caption <span className="arrow">→</span>
             </button>
           </div>
+
+          {/* At the foot of the shot list, once there is a topic and scenes to
+              read. This is the point where somebody has to decide whether they
+              are actually going to stand in front of a camera on Saturday, and
+              the honest question in their head is whether the plan is worth
+              filming. Asking on the caption or thumbnail step would be later
+              and quieter, so it goes here. */}
+          {Boolean(topic.trim()) && scenes.length > 0 && (
+            <AskAboutThis
+              id="content-plan"
+              icon="clapper"
+              subject={`Would you shoot this? ${topic.trim().slice(0, 60)}`}
+              title="Worth filming, or is the opening wrong?"
+              note="Send the shot plan to Denny. He will tell you which scene to cut and which line to open on, free, no obligation."
+              body={() =>
+                askBody({
+                  opener: `I planned this in Flow Mode and I want to know if it is worth shooting.`,
+                  sections: [
+                    { label: "The video", text: `${topic.trim()}\n${format.name}, ${format.unit === "slide" ? `${scenes.length} slides` : `${total} seconds`}` },
+                    { label: "Opening line", text: hooks[hookPick % hooks.length]?.line || "" },
+                    ...scenes.map((s, i) => ({
+                      label: format.unit === "slide" ? `Slide ${i + 1}` : `Scene ${i + 1}, ${s.secs}s`,
+                      text: [s.show && `See: ${s.show}`, s.say && `Say: ${s.say}`, s.text && `On screen: ${s.text}`]
+                        .filter(Boolean)
+                        .join("\n"),
+                    })),
+                    caption.trim() ? { label: "Caption", text: caption.trim() } : null,
+                  ],
+                  unsure: "The part I think is weak:",
+                })
+              }
+              accent={accent}
+              className="mt-4"
+            />
+          )}
         </>
       )}
 
