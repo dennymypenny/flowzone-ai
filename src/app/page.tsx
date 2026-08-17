@@ -5,8 +5,8 @@ import WorkSession from "@/app/components/WorkSession";
 import MessageUs from "@/components/MessageUs";
 import FlowRide from "@/app/components/FlowRide";
 import { SITE, PILLARS } from "@/lib/site";
-import Icon from "@/components/Icon";
 import NodeWeb from "@/app/components/NodeWeb";
+import FlowField from "@/app/components/FlowField";
 
 export const metadata: Metadata = {
   title: "FlowZone | Creative Studio",
@@ -31,6 +31,7 @@ export default function Home() {
       {/* ---------- Hero ---------- */}
       <section className="relative overflow-hidden">
         <NodeWeb className="opacity-90" />
+        <FlowField />
         <div className="absolute inset-0 gridlight pointer-events-none" />
         {/* The mark, explained: points scatter, connect, resolve, then flow on. */}
 
@@ -91,18 +92,18 @@ export default function Home() {
               live, so nothing below repeats them. */}
           <div className="mt-10 grid grid-cols-2 lg:grid-cols-5 gap-2.5">
             {[
-              { i: "box", k: "What you get", v: "Brand, site and system", c: "#5B9BF9" },
-              { i: "hands", k: "How much you do", v: "Almost nothing. Done for you", c: "#2DD4BF" },
-              { i: "bolt", k: "How fast it moves", v: "Started the day you say go", c: "#FBBF24" },
-              { i: "banknote", k: "What it costs", v: "Nothing to find out. Flow Mode is free", c: "#F0845F" },
-              { i: "key", k: "What you own", v: "All of it. Code, domain, accounts", c: "#34D399" },
+              { i: "box", e: "📦", k: "What you get", v: "Brand, site and system", c: "#5B9BF9" },
+              { i: "hands", e: "🙌", k: "How much you do", v: "Almost nothing. Done for you", c: "#2DD4BF" },
+              { i: "bolt", e: "⚡", k: "How fast it moves", v: "Started the day you say go", c: "#FBBF24" },
+              { i: "banknote", e: "💸", k: "What it costs", v: "Nothing to find out. Flow Mode is free", c: "#F0845F" },
+              { i: "key", e: "🔑", k: "What you own", v: "All of it. Code, domain, accounts", c: "#34D399" },
             ].map((x) => (
               <div key={x.k} className="panel panel-lift relative overflow-hidden px-4 py-4">
                 <span
                   className="absolute -top-8 left-1/2 -translate-x-1/2 w-24 h-16 rounded-full blur-2xl opacity-25 pointer-events-none"
                   style={{ background: x.c }}
                 />
-                <span className="block mb-2"><Icon name={x.i} size={18} color={x.c} /></span>
+                <span className="block text-lg leading-none mb-2" aria-hidden>{x.e}</span>
                 <p
                   className="text-[11px] font-medium uppercase tracking-label mb-1.5"
                   style={{ color: x.c }}
@@ -164,7 +165,6 @@ export default function Home() {
                         and on the four levels, where they name the part rather
                         than decorate a bullet. */}
                     <span className="text-xl leading-none" aria-hidden>{p.emoji}</span>
-                    <Icon name={p.icon} size={20} color={p.color} />
                     <svg width="10" height="10" viewBox="0 0 14 14" aria-hidden>
                       <circle cx="7" cy="7" r="7" fill={p.color} />
                     </svg>
@@ -439,10 +439,7 @@ export default function Home() {
               },
             ].map((x, gi) => (
               <div key={x.step} className="panel panel-lift p-5 flex flex-col">
-                <span className="flex items-center gap-2.5 mb-3">
-                  <span className="text-xl leading-none" aria-hidden>{x.e}</span>
-                  <Icon name={x.i} size={20} color={x.c} />
-                </span>
+                <span className="block text-xl leading-none mb-3" aria-hidden>{x.e}</span>
                 <div className="flex items-baseline gap-2 mb-2">
                   <p
                     className="text-[11px] font-medium uppercase tracking-label"
