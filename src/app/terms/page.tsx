@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import { SITE } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: "Terms of Service",
+  description: "The terms you agree to when you use FlowZone.",
+};
+
 export default function TermsPage() {
   return (
     <main className="bg-paper min-h-screen">
@@ -6,21 +13,21 @@ export default function TermsPage() {
         <h1 className="text-4xl font-display font-normal text-ink mb-2">Terms of Service</h1>
         <p className="text-sm text-ink-mute mb-10">Last updated: March 1, 2025</p>
 
-        <div className="bg-paper-deep border border-rule rounded-xl p-5 mb-10 text-sky-800 text-sm leading-relaxed">
-          Please read these Terms of Service carefully before using FlowZone AI. By accessing or using our services, you agree to be bound by these terms.
+        <div className="bg-paper-deep border border-rule rounded-xl p-5 mb-10 text-ink-soft text-sm leading-relaxed">
+          Please read these Terms of Service carefully before using FlowZone. By accessing or using our services, you agree to be bound by these terms.
         </div>
 
         <section className="mb-10">
           <h2 className="text-2xl font-bold text-ink mb-4">1. Acceptance of Terms</h2>
           <p className="text-ink-soft leading-relaxed">
-            By accessing or using the services provided by FlowZone AI (&quot;Company,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;), you agree to be bound by these Terms of Service (&quot;Terms&quot;). If you do not agree to all of these Terms, do not use our services. These Terms apply to all visitors, users, and others who access or use our services.
+            By accessing or using the services provided by FlowZone (&quot;Company,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;), you agree to be bound by these Terms of Service (&quot;Terms&quot;). If you do not agree to all of these Terms, do not use our services. These Terms apply to all visitors, users, and others who access or use our services.
           </p>
         </section>
 
         <section className="mb-10">
           <h2 className="text-2xl font-bold text-ink mb-4">2. Description of Services</h2>
           <p className="text-ink-soft leading-relaxed mb-3">
-            FlowZone AI provides AI-powered business systems services, including but not limited to:
+            FlowZone provides AI-powered business systems services, including but not limited to:
           </p>
           <ul className="list-disc list-inside text-ink-soft space-y-2 leading-relaxed">
             <li>Lead follow-up systems</li>
@@ -75,7 +82,7 @@ export default function TermsPage() {
         <section className="mb-10">
           <h2 className="text-2xl font-bold text-ink mb-4">6. Intellectual Property</h2>
           <p className="text-ink-soft leading-relaxed mb-3">
-            <strong>Our IP:</strong> The FlowZone AI name, logo, website design, proprietary systems frameworks, templates, and all related intellectual property are owned by FlowZone AI and are protected by applicable copyright, trademark, and other intellectual property laws.
+            <strong>Our IP:</strong> The FlowZone name, logo, website design, proprietary systems frameworks, templates, and all related intellectual property are owned by FlowZone and are protected by applicable copyright, trademark, and other intellectual property laws.
           </p>
           <p className="text-ink-soft leading-relaxed mb-3">
             <strong>Your IP:</strong> You retain ownership of all data, content, and materials you provide to us. By using our services, you grant us a limited, non-exclusive license to use your materials solely to provide our services to you.
@@ -126,7 +133,7 @@ export default function TermsPage() {
         <section className="mb-10">
           <h2 className="text-2xl font-bold text-ink mb-4">11. Indemnification</h2>
           <p className="text-ink-soft leading-relaxed">
-            You agree to indemnify, defend, and hold harmless FlowZone AI and its officers, directors, employees, and agents from any claims, damages, losses, liabilities, and expenses (including reasonable legal fees) arising out of or related to your use of our services, your violation of these Terms, or your violation of any rights of a third party.
+            You agree to indemnify, defend, and hold harmless FlowZone and its officers, directors, employees, and agents from any claims, damages, losses, liabilities, and expenses (including reasonable legal fees) arising out of or related to your use of our services, your violation of these Terms, or your violation of any rights of a third party.
           </p>
         </section>
 
@@ -169,7 +176,7 @@ export default function TermsPage() {
             If you have any questions or concerns about these Terms of Service, please contact us:
           </p>
           <div className="bg-paper-deep rounded-xl p-6 text-ink-soft space-y-1">
-            <p className="font-semibold text-ink">FlowZone AI</p>
+            <p className="font-semibold text-ink">FlowZone</p>
             <p>Email: <a href={`mailto:${SITE.email}`} className="text-accent hover:underline">{SITE.email}</a></p>
             <p>Website: <a href="https://flowzoneai.com" className="text-accent hover:underline">flowzoneai.com</a></p>
           </div>

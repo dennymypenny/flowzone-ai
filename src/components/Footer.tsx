@@ -64,7 +64,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-rule pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-ink-mute">© 2026 FlowZone AI. All rights reserved.</p>
+          <p className="text-xs text-ink-mute">© 2026 FlowZone. All rights reserved.</p>
           <div className="flex gap-6">
             <Link href="/privacy" className="text-xs text-ink-mute hover:text-ink transition-colors">Privacy</Link>
             <Link href="/terms" className="text-xs text-ink-mute hover:text-ink transition-colors">Terms</Link>

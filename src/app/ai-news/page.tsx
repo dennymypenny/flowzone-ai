@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-    title: "AI News & Resources | FlowZone AI",
+    title: "AI News and Resources",
     description: "The best AI news, tools and industry updates, curated for business owners who want to stay ahead.",
 };
 

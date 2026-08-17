@@ -92,6 +92,11 @@ export default function IdeaLens() {
   const [uploadCount, setUploadCount] = useState(0);
   const [murmur, setMurmur] = useState("");
   const [read, setRead] = useState<PhotoRead | null>(null);
+  /* The video maker used to sit under the questions from the first second, so
+     everything a person had not done yet was visible at once. It opens when
+     the questions are answered, or the moment somebody says they only came
+     for the video. */
+  const [showVideo, setShowVideo] = useState(false);
   const timer = useRef<number | undefined>(undefined);
   const fileRef = useRef<HTMLInputElement | null>(null);
 
@@ -392,8 +397,17 @@ export default function IdeaLens() {
             </p>
           </div>
         )}
-        <FunnelNarrow topic={chosen.q} />
-        <VideoSpark topic={chosen.q} />
+        <FunnelNarrow topic={chosen.q} onDone={() => setShowVideo(true)} />
+        {showVideo ? (
+          <VideoSpark topic={chosen.q} />
+        ) : (
+          <button
+            onClick={() => setShowVideo(true)}
+            className="mt-6 text-xs text-ink-mute hover:text-ink transition-colors"
+          >
+            Only came for the video? Open the editor now
+          </button>
+        )}
       </div>
     );
   }
@@ -407,6 +421,11 @@ export default function IdeaLens() {
           </p>
         </div>
       )}
+      <p className="text-ink-soft font-light leading-relaxed max-w-reading mb-5">
+        Not the polished version. The one line you would say to a friend across
+        a table. Type it and you are in, and everything after this is built out
+        of the words you use here.
+      </p>
       <div className="relative max-w-xl">
         <input
           value={q}

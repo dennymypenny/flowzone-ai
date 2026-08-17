@@ -21,7 +21,7 @@ export default function Nav() {
   return (
     <nav className="fixed top-[3px] w-full glassbar z-50">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link href="/" aria-label="FlowZone AI, home">
+        <Link href="/" aria-label="FlowZone, home">
           <Wordmark tone="dark" />
         </Link>
 

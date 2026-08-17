@@ -167,7 +167,15 @@ const HAVE: Record<string, string> = {
     "You have proof, which almost nobody else on this page has. Lead with it everywhere.",
 };
 
-export default function FunnelNarrow({ topic }: { topic: string }) {
+export default function FunnelNarrow({
+  topic,
+  onDone,
+}: {
+  topic: string;
+  /** Fires the moment the last question lands, so the page can open up the
+      next thing instead of having it sitting there the whole time. */
+  onDone?: () => void;
+}) {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [done, setDone] = useState(false);
 
@@ -178,6 +186,7 @@ export default function FunnelNarrow({ topic }: { topic: string }) {
         const parsed = JSON.parse(saved);
         setAnswers(parsed.answers || {});
         setDone(Boolean(parsed.done));
+        if (parsed.done) onDone?.();
       }
     } catch {
       /* ignore */
@@ -191,7 +200,10 @@ export default function FunnelNarrow({ topic }: { topic: string }) {
     const next = { ...answers, [q.id]: opt };
     setAnswers(next);
     const finished = QUESTIONS.every((qq) => next[qq.id]);
-    if (finished) setDone(true);
+    if (finished) {
+      setDone(true);
+      onDone?.();
+    }
     try {
       window.localStorage.setItem(KEY, JSON.stringify({ answers: next, done: finished }));
     } catch {

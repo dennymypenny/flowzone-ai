@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
     const { name, email, business, service, description } = await req.json();
 
     const html = `
-      <h2 style="color:#1e3a8a">New FlowZone AI Inquiry</h2>
+      <h2 style="color:#1e3a8a">New FlowZone Inquiry</h2>
       <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
         <tr><td style="padding:8px 12px;background:#f1f5f9;font-weight:600;width:140px">Name</td><td style="padding:8px 12px;border-bottom:1px solid #e2e8f0">${name}</td></tr>
         <tr><td style="padding:8px 12px;background:#f1f5f9;font-weight:600">Email</td><td style="padding:8px 12px;border-bottom:1px solid #e2e8f0">${email}</td></tr>

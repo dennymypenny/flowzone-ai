@@ -52,7 +52,7 @@ function IntakeForm() {
 
   if (submitted) {
     const amount = venmoAmounts[form.service];
-    const note = encodeURIComponent(`FlowZone AI – ${form.service}`);
+    const note = encodeURIComponent(`FlowZone – ${form.service}`);
     const venmoUrl = `https://venmo.com/u/flowzoneautomation?txn=pay&amount=${amount}&note=${note}`;
     return (
       <div className="min-h-screen bg-paper-deep flex items-center justify-center px-6">

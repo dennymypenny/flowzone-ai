@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "You're In | FlowZone AI",
+  title: "You are in",
   description: "We received your request and will send your free systems plan within 24 hours.",
 };
 

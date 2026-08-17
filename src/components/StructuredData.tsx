@@ -12,7 +12,7 @@ export default function StructuredData() {
       {
         "@type": ["Organization", "ProfessionalService"],
         "@id": `${SITE.url}/#organization`,
-        name: "FlowZone AI",
+        name: "FlowZone",
         alternateName: ["FlowZone", "FlowZone Studio", "flowzone.dev"],
         url: SITE.url,
         email: SITE.email,
@@ -74,7 +74,7 @@ export default function StructuredData() {
         "@type": "WebSite",
         "@id": `${SITE.url}/#website`,
         url: SITE.url,
-        name: "FlowZone AI",
+        name: "FlowZone",
         description: SITE.descriptor,
         publisher: { "@id": `${SITE.url}/#organization` },
         inLanguage: "en-US",

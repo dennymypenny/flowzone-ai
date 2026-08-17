@@ -3,7 +3,7 @@
 
 export const SITE = {
   name: "FlowZone",
-  fullName: "FlowZone AI",
+  fullName: "FlowZone",
 
   // The one positioning line. Do not run a second one anywhere.
   line: "AI gives us the speed. Humans give it the taste.",

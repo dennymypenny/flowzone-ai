@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
 
       // TODO: Send onboarding email via Resend
       // await resend.emails.send({
-      //   from: "FlowZone AI <noreply@flowzone.dev>",
+      //   from: "FlowZone <noreply@flowzone.dev>",
       //   to: email,
       //   subject: "Your AI Scan & Diagnosis Has Started",
       //   html: `<p>Hi ${name},</p><p>We received your payment. Our team is starting your AI Scan now and will deliver your roadmap within 48 hours.</p><p>Questions? Reply to this email or reach us at flowzoneautomation@gmail.com</p>`,
@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
 
       // TODO: Notify internal team
       // await resend.emails.send({
-      //   from: "FlowZone AI <noreply@flowzone.dev>",
+      //   from: "FlowZone <noreply@flowzone.dev>",
       //   to: "flowzoneautomation@gmail.com",
       //   subject: `New AI Scan Payment: ${name} — $${amount}`,
       //   html: `<p>New paid client: ${name} (${email}). Stripe session: ${session.id}. Start the 48-hour clock.</p>`,

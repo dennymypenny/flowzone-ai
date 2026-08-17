@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | FlowZone AI",
-  description: "FlowZone AI privacy policy — how we collect, use, and protect your information.",
+  title: "Privacy Policy",
+  description: "FlowZone privacy policy — how we collect, use, and protect your information.",
 };
 
 export default function PrivacyPolicy() {
@@ -19,7 +19,7 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="text-xl font-bold text-ink mb-3">1. Who We Are</h2>
             <p>
-              FlowZone AI (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) is a done-for-you AI systems
+              FlowZone (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) is a done-for-you AI systems
               agency operating at <a href="https://flowzone.dev" className="text-accent hover:underline">flowzone.dev</a>.
               We build custom workflow systems for small and mid-size businesses using tools such as Make.com,
               Zapier, Airtable, and other no-code/low-code platforms. This Privacy Policy explains how we collect,
@@ -145,7 +145,7 @@ export default function PrivacyPolicy() {
               If you have any questions about this Privacy Policy, please contact us:
             </p>
             <div className="mt-4 bg-paper-deep border border-rule rounded-xl p-6">
-              <p className="font-semibold text-ink">FlowZone AI</p>
+              <p className="font-semibold text-ink">FlowZone</p>
               <p className="text-ink-soft mt-1">Email: <a href={`mailto:${SITE.email}`} className="text-accent hover:underline">{SITE.email}</a></p>
               <p className="text-ink-soft">Website: <a href="https://flowzone.dev" className="text-accent hover:underline">flowzone.dev</a></p>
             </div>

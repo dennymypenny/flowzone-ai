@@ -8,7 +8,7 @@ import { SITE, PILLARS } from "@/lib/site";
 import Icon from "@/components/Icon";
 
 export const metadata = {
-  title: "FlowZone AI | Creative Studio",
+  title: "FlowZone | Creative Studio",
   description: `${SITE.line} ${SITE.descriptor}`,
 };
 
@@ -81,7 +81,7 @@ export default function Home() {
               { i: "box", k: "What you get", v: "Brand, site and system", c: "#5B9BF9" },
               { i: "hands", k: "How much you do", v: "Almost nothing. 100% done for you", c: "#2DD4BF" },
               { i: "bolt", k: "How fast it moves", v: "Started the day you say go", c: "#FBBF24" },
-              { i: "banknote", k: "What it costs", v: "Flat, from $600, paid once", c: "#A78BFA" },
+              { i: "banknote", k: "What it costs", v: "Nothing to find out. Flow Mode is free", c: "#A78BFA" },
               { i: "key", k: "What you own", v: "All of it. Code, domain, accounts", c: "#34D399" },
             ].map((x) => (
               <div key={x.k} className="panel panel-lift relative overflow-hidden px-5 py-6">
@@ -100,6 +100,17 @@ export default function Home() {
               </div>
             ))}
           </div>
+
+          {/* The number is here for anybody who wants it, but it is not the
+              first thing a stranger meets. Leading with a price makes people
+              brace. Leading with the free thing makes them look. */}
+          <p className="mt-6 text-sm text-ink-mute font-light">
+            Builds are flat and paid once, and you see your number before
+            anything starts.{" "}
+            <Link href="/pricing" className="text-ink-soft hover:text-ink transition-colors underline decoration-rule underline-offset-4">
+              See the prices
+            </Link>
+          </p>
 
         </div>
       </section>

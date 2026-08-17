@@ -10,10 +10,10 @@ import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: {
-    default: "FlowZone AI | Brand, Site and Systems Studio",
-    template: "%s | FlowZone AI",
+    default: "FlowZone | Brand, Site and Systems Studio",
+    template: "%s | FlowZone",
   },
-  applicationName: "FlowZone AI",
+  applicationName: "FlowZone",
   alternates: { canonical: "/" },
   robots: {
     index: true,
@@ -21,26 +21,26 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
   authors: [{ name: "Dennis Valdes", url: SITE.linkedinFounder }],
-  creator: "FlowZone AI",
-  publisher: "FlowZone AI",
+  creator: "FlowZone",
+  publisher: "FlowZone",
   description: SITE.descriptor,
   metadataBase: new URL(SITE.url),
   openGraph: {
-    siteName: "FlowZone AI",
+    siteName: "FlowZone",
     type: "website",
-    title: "FlowZone AI, a creative studio",
+    title: "FlowZone, a creative studio",
     description: SITE.descriptor,
     url: SITE.url,
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "FlowZone AI, a creative studio",
+    title: "FlowZone, a creative studio",
     description: SITE.descriptor,
   },
   keywords: [
     "FlowZone",
-    "FlowZone AI",
+    "FlowZone",
     "flowzone.dev",
     "FlowZone studio",
     "creative studio",
