@@ -11,6 +11,18 @@ export const metadata: Metadata = {
   title: "Flow Mode",
   description:
     "Flow through the zone with your thoughts. Six moves, and you walk away holding a real brief for your idea, yours to keep whether you hire us or not.",
+  alternates: { canonical: "/start" },
+  // Set in full because metadata merging is shallow. A page that declares
+  // openGraph replaces the layout block outright, so anything omitted is gone.
+  openGraph: {
+    title: "Flow Mode | FlowZone",
+    description:
+      "Six moves, and you walk away holding a real brief for your idea. Yours to keep whether you hire us or not.",
+    url: `${SITE.url}/start`,
+    siteName: "FlowZone",
+    type: "website",
+    locale: "en_US",
+  },
 };
 
 /**
@@ -81,7 +93,7 @@ export default function Start() {
       {/* ---------- Dot 1: the idea ---------- */}
       <section id="flow-idea" className="relative overflow-hidden px-6 pt-16 pb-20 scroll-mt-28">
         <div className="max-w-6xl mx-auto">
-          <DotHeading n={1} color="#1E3A8A" label="The idea" />
+          <DotHeading n={1} color="#5B9BF9" label="The idea" />
           <h2 className="display text-3xl md:text-5xl max-w-2xl mb-8">
             Say the thing out loud.
           </h2>

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { downloadDataURL } from "@/lib/session";
 
 /**
  * The meme maker.
@@ -25,6 +26,27 @@ export default function MemeMaker({
   const [local, setLocal] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
   const [error, setError] = useState("");
+  // Every picked file used to mint an object URL that was never released, so
+  // picking six files leaked six images for the life of the tab.
+  const localUrl = useRef<string | null>(null);
+  const [say, setSay] = useState("");
+
+  const dropLocalUrl = () => {
+    if (localUrl.current) {
+      URL.revokeObjectURL(localUrl.current);
+      localUrl.current = null;
+    }
+  };
+
+  const pickLocal = (f: File) => {
+    dropLocalUrl();
+    const url = URL.createObjectURL(f);
+    localUrl.current = url;
+    setLocal(url);
+  };
+
+  // The last one has to go too, or closing the maker leaks it.
+  useEffect(() => dropLocalUrl, []);
 
   const image = local || src;
 
@@ -51,7 +73,7 @@ export default function MemeMaker({
       const draw = (text: string, atTop: boolean) => {
         if (!text.trim()) return;
         const size = Math.max(30, Math.round(W / 12));
-        ctx.font = `700 ${size}px Poppins, Impact, sans-serif`;
+        ctx.font = `700 ${size}px Figtree, Impact, sans-serif`;
         ctx.textAlign = "center";
         ctx.lineJoin = "round";
         ctx.lineWidth = Math.max(6, size / 7);
@@ -88,6 +110,7 @@ export default function MemeMaker({
       ctx.fillStyle = brandColor;
       ctx.fillRect(0, H - 8, W, 8);
       setReady(true);
+      setSay("Meme ready to download.");
     };
 
     img.onerror = () => {
@@ -102,17 +125,20 @@ export default function MemeMaker({
     const canvas = canvasRef.current;
     if (!canvas || !ready) return;
     try {
-      const a = document.createElement("a");
-      a.href = canvas.toDataURL("image/png");
-      a.download = "flowzone-meme.png";
-      a.click();
+      downloadDataURL(canvas.toDataURL("image/png"), "flowzone-meme.png");
+      setSay("Meme downloaded.");
     } catch {
-      setError("That image is protected, so it cannot be exported. Upload one instead.");
+      const msg = "That image is protected, so it cannot be exported. Upload one instead.";
+      setError(msg);
+      setSay(msg);
     }
   };
 
   return (
     <div>
+      <p aria-live="polite" className="sr-only">
+        {say}
+      </p>
       {!image && (
         <p className="text-sm text-ink-soft font-light leading-relaxed mb-4">
           Pick any picture from the references above, or upload one, and it lands here
@@ -129,13 +155,16 @@ export default function MemeMaker({
             className="hidden"
             onChange={(e) => {
               const f = e.target.files?.[0];
-              if (f) setLocal(URL.createObjectURL(f));
+              if (f) pickLocal(f);
             }}
           />
         </label>
         {local && (
           <button
-            onClick={() => setLocal(null)}
+            onClick={() => {
+              dropLocalUrl();
+              setLocal(null);
+            }}
             className="text-xs border border-rule text-ink-mute px-3.5 py-2 hover:text-ink-soft transition-colors"
           >
             Use the selected reference instead
@@ -150,12 +179,14 @@ export default function MemeMaker({
               value={top}
               onChange={(e) => setTop(e.target.value)}
               placeholder="Top line"
+              aria-label="Top line of the meme"
               className="bg-paper-deep text-ink placeholder-ink-mute border border-rule px-3.5 py-2.5 text-sm font-light outline-none focus:border-accent transition-colors"
             />
             <input
               value={bottom}
               onChange={(e) => setBottom(e.target.value)}
               placeholder="Bottom line"
+              aria-label="Bottom line of the meme"
               className="bg-paper-deep text-ink placeholder-ink-mute border border-rule px-3.5 py-2.5 text-sm font-light outline-none focus:border-accent transition-colors"
             />
           </div>

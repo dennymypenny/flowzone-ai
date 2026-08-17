@@ -3,7 +3,21 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "You are in",
-  description: "We received your request and will send your free systems plan within 24 hours.",
+  description: "We got your request. A person reads it and replies.",
+  alternates: { canonical: "/thank-you" },
+  // A confirmation page has no business in search results, and it still
+  // promises an offer the studio retired. Keep it out of the index.
+  robots: { index: false, follow: false },
+  // Set in full because metadata merging is shallow. A page that declares
+  // openGraph replaces the layout block outright, so anything omitted is gone.
+  openGraph: {
+    title: "You are in | FlowZone",
+    description: "We got your request. A person reads it and replies.",
+    url: "/thank-you",
+    siteName: "FlowZone",
+    type: "website",
+    locale: "en_US",
+  },
 };
 
 export default function ThankYou() {

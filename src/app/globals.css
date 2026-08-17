@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -20,7 +18,7 @@ html {
 body {
   color: var(--ink);
   background: var(--paper);
-  font-family: 'Poppins', system-ui, sans-serif;
+  font-family: 'Figtree', system-ui, sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -91,7 +89,11 @@ button {
   }
   .btn-primary {
     @apply btn text-white;
-    background: linear-gradient(180deg, #6EA0FF 0%, #4478F2 100%);
+    /* White text on the old gradient measured 2.58:1 at the top, well under
+       the 4.5:1 an eye needs at this size. Darkened until even the lightest
+       pixel of the gradient passes: 4.53 at the top, 6.44 at the bottom.
+       Same button, now readable everywhere on it. */
+    background: linear-gradient(180deg, #3D6FE8 0%, #2B57C4 100%);
     border: 1px solid rgba(255, 255, 255, 0.22);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.35),
@@ -232,6 +234,84 @@ button {
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
   }
 
+  /* The white bands.
+     The page should not be one long dark scroll. Light bands break it into
+     chapters, give the eye somewhere to rest, and push contrast up hard where
+     the words matter most. Text inside is near black on purpose, 16:1 rather
+     than the 9:1 the dark sections run at. */
+  .band-light {
+    background: linear-gradient(180deg, #FFFFFF 0%, #F4F7FC 100%);
+    color: #0B1322;
+  }
+  .band-light,
+  .band-light .display,
+  .band-light .text-ink,
+  .band-light h1,
+  .band-light h2,
+  .band-light h3 {
+    color: #0B1322;
+  }
+  .band-light .text-gradient,
+  .band-light .text-gradient-white {
+    background: none;
+    -webkit-background-clip: border-box;
+    background-clip: border-box;
+    color: #0B1322;
+  }
+  .band-light .text-gradient {
+    color: #2B57C4;
+  }
+  .band-light .text-ink-soft,
+  .band-light .lede {
+    color: #35425E;
+  }
+  .band-light .text-ink-mute {
+    color: #5A6884;
+  }
+  .band-light .text-accent {
+    color: #2B57C4;
+  }
+  .band-light .border-rule {
+    border-color: rgba(11, 19, 34, 0.16);
+  }
+  .band-light .chip {
+    border-color: rgba(11, 19, 34, 0.18);
+    background: #FFFFFF;
+    color: #35425E;
+    backdrop-filter: none;
+  }
+  .band-light .label {
+    color: #4A5875;
+  }
+  .band-light .label::before {
+    background: linear-gradient(90deg, #1E3A8A, #4478F2, #7FB2F0);
+  }
+  .band-light .panel {
+    border: 1px solid rgba(11, 19, 34, 0.14);
+    background: #FFFFFF;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      0 20px 44px -26px rgba(11, 19, 34, 0.4);
+  }
+  .band-light .panel:hover {
+    border-color: rgba(11, 19, 34, 0.3);
+  }
+  .band-light .surface {
+    border: 1px solid rgba(11, 19, 34, 0.12);
+    background: #F7FAFF;
+    box-shadow: none;
+  }
+  .band-light .btn-ghost {
+    color: #0B1322;
+    border: 1px solid rgba(11, 19, 34, 0.22);
+    background: #FFFFFF;
+    box-shadow: none;
+  }
+  .band-light .btn-ghost:hover {
+    border-color: rgba(11, 19, 34, 0.45);
+    background: #EEF3FB;
+  }
+
   /* Dark glass bar for the nav */
   .glassbar {
     background: rgba(12, 20, 36, 0.72);
@@ -256,11 +336,13 @@ button {
     color: transparent;
   }
 
-  /* Wide, soft ambient light. Open and warm rather than technical. */
+  /* Wide, soft ambient light. Deliberately all one blue family: a violet
+     bleeding into a blue is the single most recognisable tell of a site
+     nobody art directed, and this one was art directed. */
   .aurora {
     background-image:
       radial-gradient(80rem 46rem at 8% -20%, rgba(91, 155, 249, 0.28), transparent 66%),
-      radial-gradient(64rem 40rem at 92% -14%, rgba(76, 55, 205, 0.30), transparent 66%),
+      radial-gradient(64rem 40rem at 92% -14%, rgba(20, 58, 138, 0.34), transparent 66%),
       radial-gradient(52rem 30rem at 55% 8%, rgba(45, 122, 249, 0.12), transparent 62%),
       radial-gradient(70rem 34rem at 50% 118%, rgba(91, 155, 249, 0.11), transparent 68%);
   }
@@ -269,7 +351,7 @@ button {
   .glow {
     background-image:
       radial-gradient(70rem 34rem at 20% -30%, rgba(91, 155, 249, 0.18), transparent 66%),
-      radial-gradient(56rem 30rem at 84% -18%, rgba(76, 55, 205, 0.22), transparent 66%);
+      radial-gradient(56rem 30rem at 84% -18%, rgba(20, 58, 138, 0.26), transparent 66%);
   }
 
   /* Hairline grid, faded out fast. Barely there, pure depth. */

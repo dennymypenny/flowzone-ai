@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Icon from "@/components/Icon";
 
@@ -74,6 +74,8 @@ export default function FlowRide({ className = "" }: { className?: string }) {
   const boosting = useRef(false);
   const alive = useRef(false);
   const audio = useRef<{ ctx: AudioContext; gain: GainNode; filter: BiquadFilterNode } | null>(null);
+  const overlayRef = useRef<HTMLDivElement | null>(null);
+  const closeRef = useRef<HTMLButtonElement | null>(null);
 
   /** The thinking sound: filtered wind, made from nothing, no file. */
   const startSound = () => {
@@ -193,6 +195,71 @@ export default function FlowRide({ className = "" }: { className?: string }) {
     boosting.current = true;
   };
 
+  /**
+   * Leave now, land where the ride was going anyway.
+   *
+   * The overlay used to sit over the whole page for up to seventeen seconds
+   * with no way out and no way back to the keyboard. Escape and the skip
+   * button both come here.
+   */
+  const exitRide = useCallback(() => {
+    alive.current = false;
+    boosting.current = false;
+    try {
+      const a = audio.current;
+      if (a) {
+        a.gain.gain.linearRampToValueAtTime(0, a.ctx.currentTime + 0.3);
+        window.setTimeout(() => {
+          try {
+            a.ctx.close();
+          } catch {
+            /* fine */
+          }
+        }, 400);
+        audio.current = null;
+      }
+    } catch {
+      /* fine */
+    }
+    setRiding(false);
+    setCruise(false);
+    router.push("/start");
+  }, [router]);
+
+  /* While the overlay is up it owns the keyboard. Escape gets out, and Tab
+     cycles inside it instead of wandering into the page underneath. */
+  useEffect(() => {
+    if (!riding) return;
+    closeRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        exitRide();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const node = overlayRef.current;
+      if (!node) return;
+      const stops = Array.from(
+        node.querySelectorAll<HTMLElement>('button, input, [href], [tabindex]:not([tabindex="-1"])')
+      ).filter((el) => !el.hasAttribute("disabled"));
+      if (!stops.length) return;
+      const first = stops[0];
+      const last = stops[stops.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+      const inside = active ? node.contains(active) : false;
+      if (e.shiftKey && (!inside || active === first)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (!inside || active === last)) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [riding, exitRide]);
+
   const go = () => {
     const reduced =
       typeof window.matchMedia === "function" &&
@@ -299,7 +366,7 @@ export default function FlowRide({ className = "" }: { className?: string }) {
           const near = Math.min(1, th.r / (maxR * 0.75));
           c.globalAlpha = Math.max(0, Math.min(0.7, near * 0.9 - 0.05)) * (1 - bp * 0.5);
           c.fillStyle = "#DCE8FA";
-          c.font = `300 ${Math.round(12 + near * 26 * th.s)}px Poppins, system-ui, sans-serif`;
+          c.font = `300 ${Math.round(12 + near * 26 * th.s)}px Figtree, system-ui, sans-serif`;
           c.fillText(th.w, x, y);
           if (th.r > maxR + 80) {
             th.r = 30 + Math.random() * 80;
@@ -348,8 +415,23 @@ export default function FlowRide({ className = "" }: { className?: string }) {
       </button>
 
       {riding && (
-        <div className="fixed inset-0 z-[90]" aria-hidden={!cruise}>
-          <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
+        <div
+          ref={overlayRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Riding into Flow Mode"
+          className="fixed inset-0 z-[90]"
+        >
+          <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden />
+
+          <button
+            ref={closeRef}
+            type="button"
+            onClick={exitRide}
+            className="absolute top-4 right-4 z-10 chip !text-[13px] !normal-case !tracking-normal hover:!border-accent"
+          >
+            Skip the ride
+          </button>
 
           {cruise && (
             <div className="absolute inset-0" key={act}>

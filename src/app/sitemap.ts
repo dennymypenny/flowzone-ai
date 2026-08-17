@@ -1,30 +1,45 @@
 import type { MetadataRoute } from "next";
 import { SITE } from "@/lib/site";
 
-// Every public route, most important first.
-const ROUTES: Array<[string, number, MetadataRoute.Sitemap[number]["changeFrequency"]]> = [
-  ["", 1.0, "weekly"],
-  ["/start", 0.9, "monthly"],
-  ["/work", 0.9, "monthly"],
-  ["/services", 0.9, "monthly"],
-  ["/pricing", 0.9, "monthly"],
-  ["/book", 0.85, "monthly"],
-  ["/how-we-work", 0.8, "monthly"],
-  ["/about", 0.7, "monthly"],
-  ["/ai-news", 0.4, "weekly"],
-  ["/intake", 0.4, "yearly"],
-  ["/privacy", 0.2, "yearly"],
-  ["/terms", 0.2, "yearly"],
+/**
+ * Every indexable route, most important first.
+ *
+ * lastModified is hardcoded on purpose. It used to be new Date(), which told
+ * every crawler that all twelve pages changed on every deploy. That is a lie,
+ * and once a crawler catches you lying it stops trusting the field. There is
+ * no git access at build time, so the honest move is to type the date by hand.
+ * Change a page, change its date here in the same commit.
+ *
+ * /scan, /ai-news and /thank-you are missing on purpose. They are noindex.
+ */
+type Route = {
+  path: string;
+  priority: number;
+  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
+  lastModified: string;
+};
+
+const ROUTES: Route[] = [
+  { path: "", priority: 1.0, changeFrequency: "monthly", lastModified: "2026-08-17" },
+  { path: "/start", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-08-17" },
+  { path: "/work", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-08-17" },
+  { path: "/services", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-08-17" },
+  { path: "/pricing", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-08-17" },
+  { path: "/book", priority: 0.85, changeFrequency: "monthly", lastModified: "2026-08-17" },
+  { path: "/how-we-work", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-08-17" },
+  { path: "/about", priority: 0.7, changeFrequency: "monthly", lastModified: "2026-08-17" },
+  { path: "/intake", priority: 0.4, changeFrequency: "yearly", lastModified: "2026-08-17" },
+  // Legal pages carry their own effective dates in the copy. Keep these two
+  // matched to what the page actually says.
+  { path: "/privacy", priority: 0.2, changeFrequency: "yearly", lastModified: "2026-03-22" },
+  { path: "/terms", priority: 0.2, changeFrequency: "yearly", lastModified: "2025-03-01" },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-  return [
-    ...ROUTES.map(([path, priority, changeFrequency]) => ({
-      url: `${SITE.url}${path}`,
-      lastModified: now,
-      changeFrequency,
-      priority,
-    })),
-  ];
+  return ROUTES.map(({ path, priority, changeFrequency, lastModified }) => ({
+    url: `${SITE.url}${path}`,
+    lastModified,
+    changeFrequency,
+    priority,
+  }));
 }

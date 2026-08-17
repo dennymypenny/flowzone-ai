@@ -2,6 +2,7 @@
 import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { SITE } from "@/lib/site";
+import Icon from "@/components/Icon";
 
 const services = [
   "Starter — $600",
@@ -31,33 +32,53 @@ function IntakeForm() {
     service: preselected,
     description: "",
   });
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
+  const [error, setError] = useState("");
+  const loading = state === "sending";
 
   const set = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
 
+  // The lead in their own mail app, ready to send. This is what saves the
+  // project when our email is down, so it carries every answer they typed.
+  const fallbackMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(
+    `New project for FlowZone — ${form.service || "not sure yet"}`
+  )}&body=${encodeURIComponent(
+    `Hi FlowZone,\n\nName: ${form.name}\nEmail: ${form.email}\nBusiness: ${form.business}\nPackage: ${
+      form.service
+    }\n\nWhat I want built:\n${form.description}\n\nThanks,\n${form.name}`
+  )}`;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setState("sending");
+    setError("");
     try {
-      await fetch("/api/intake", {
+      const res = await fetch("/api/intake", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-    } catch {}
-    setLoading(false);
-    setSubmitted(true);
+      // The success screen shows a payment link, so it only ever runs when the
+      // server says the details really landed. No body, no promise.
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data?.ok) throw new Error(data?.error || "That did not send.");
+      setState("done");
+    } catch (err) {
+      setState("error");
+      setError(err instanceof Error ? err.message : "That did not send.");
+    }
   };
 
-  if (submitted) {
+  if (state === "done") {
     const amount = venmoAmounts[form.service];
     const note = encodeURIComponent(`FlowZone – ${form.service}`);
     const venmoUrl = `https://venmo.com/u/flowzoneautomation?txn=pay&amount=${amount}&note=${note}`;
     return (
       <div className="min-h-screen bg-paper-deep flex items-center justify-center px-6">
         <div className="max-w-md w-full bg-paper rounded-xl border border-rule p-10 text-center">
-          <div className="text-5xl mb-4">✓</div>
+          <div className="flex justify-center mb-4">
+            <Icon name="sparkle" size={32} color="#5B8CFF" />
+          </div>
           <h2 className="text-2xl font-display font-normal text-ink mb-3">You&apos;re all set!</h2>
           {amount ? (
             <>
@@ -178,6 +199,24 @@ function IntakeForm() {
           >
             {loading ? "Submitting..." : "Submit Project →"}
           </button>
+
+          {state === "error" && (
+            <div className="surface border border-rule rounded-xl p-5">
+              <div className="flex items-center gap-2 mb-2">
+                <Icon name="chat" size={20} color="#5B8CFF" />
+                <p className="label">That did not send</p>
+              </div>
+              <p className="text-sm text-ink-soft leading-relaxed mb-2">{error}</p>
+              <p className="text-sm text-ink-mute leading-relaxed mb-4">
+                Nothing you typed is lost. Press submit again, or open the email below. It is already
+                filled in with your answers and it goes straight to Denny.
+              </p>
+              <a href={fallbackMailto} className="btn-primary shine">
+                Email it to us <span className="arrow">→</span>
+              </a>
+              <p className="text-xs text-ink-mute mt-3">Or write to {SITE.email}</p>
+            </div>
+          )}
         </form>
       </div>
     </div>

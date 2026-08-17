@@ -6,6 +6,18 @@ export const metadata: Metadata = {
   title: "Pricing",
   description:
     "Three flat packages for brand, site and the system that runs it. One payment, no retainers, and a date agreed before you pay.",
+  alternates: { canonical: "/pricing" },
+  // Set in full because metadata merging is shallow. A page that declares
+  // openGraph replaces the layout block outright, so anything omitted is gone.
+  openGraph: {
+    title: "Pricing | FlowZone",
+    description:
+      "Three flat packages for brand, site and the system that runs it. One payment, no retainers, and a date agreed before you pay.",
+    url: `${SITE.url}/pricing`,
+    siteName: "FlowZone",
+    type: "website",
+    locale: "en_US",
+  },
 };
 
 const tiers = [

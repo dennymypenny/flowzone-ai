@@ -259,7 +259,7 @@ export function drawOverlay(c: CanvasRenderingContext2D, W: number, H: number, o
   const px = Math.max(8, Math.round((short * o.size) / 100));
   c.save();
   c.globalAlpha = alpha;
-  c.font = `${o.weight} ${px}px Poppins, system-ui, sans-serif`;
+  c.font = `${o.weight} ${px}px Figtree, system-ui, sans-serif`;
   c.textBaseline = "top";
   const pad = Math.round(short * 0.07);
   const lines = wrapText(c, text, W - pad * 2, 5);

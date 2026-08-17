@@ -3,7 +3,22 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "AI Scan and Diagnosis",
-  description: "Get a complete audit of your business workflows, 3 system opportunities ranked by ROI, and a prioritized roadmap, delivered in 48 hours.",
+  description: "A workflow audit, your top three system opportunities ranked by ROI and a prioritized roadmap, delivered in 48 hours.",
+  alternates: { canonical: "/scan" },
+  // This sells the automation era offer the studio retired, and nothing links
+  // to it. Kept live so old links do not 404, kept out of the index so it
+  // stops competing with /pricing.
+  robots: { index: false, follow: false },
+  // Set in full because metadata merging is shallow. A page that declares
+  // openGraph replaces the layout block outright, so anything omitted is gone.
+  openGraph: {
+    title: "AI Scan and Diagnosis | FlowZone",
+    description: "A workflow audit, your top three system opportunities ranked by ROI and a prioritized roadmap, delivered in 48 hours.",
+    url: "/scan",
+    siteName: "FlowZone",
+    type: "website",
+    locale: "en_US",
+  },
 };
 
 const deliverables = [
@@ -85,7 +100,7 @@ export default function ScanPage() {
             href="/intake"
             className="inline-block bg-paper text-accent font-bold px-10 py-4 rounded-xl hover:bg-paper-deep transition-colors text-lg"
           >
-            Get My AI Scan — $97
+            Get My AI Scan, $97
           </Link>
         </div>
       </section>

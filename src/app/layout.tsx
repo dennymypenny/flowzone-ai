@@ -14,7 +14,9 @@ export const metadata: Metadata = {
     template: "%s | FlowZone",
   },
   applicationName: "FlowZone",
-  alternates: { canonical: "/" },
+  // No alternates here on purpose. App Router inherits alternates into every
+  // child segment, so a canonical set at the root made every page claim to be
+  // a duplicate of the homepage. Each page declares its own canonical instead.
   robots: {
     index: true,
     follow: true,
@@ -25,6 +27,9 @@ export const metadata: Metadata = {
   publisher: "FlowZone",
   description: SITE.descriptor,
   metadataBase: new URL(SITE.url),
+  // Fallback only, for any route that forgets to declare its own. Metadata
+  // merging is shallow, so a page that sets openGraph replaces this whole
+  // block. Every page below does exactly that.
   openGraph: {
     siteName: "FlowZone",
     type: "website",
@@ -33,13 +38,13 @@ export const metadata: Metadata = {
     url: SITE.url,
     locale: "en_US",
   },
+  // No title or description here. X falls back to og:title and og:description
+  // when the twitter tags are missing, so leaving them out lets every page
+  // preview as itself instead of as the homepage.
   twitter: {
     card: "summary_large_image",
-    title: "FlowZone, a creative studio",
-    description: SITE.descriptor,
   },
   keywords: [
-    "FlowZone",
     "FlowZone",
     "flowzone.dev",
     "FlowZone studio",
@@ -58,7 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
         <StructuredData />

@@ -6,6 +6,18 @@ export const metadata: Metadata = {
   title: "How We Work",
   description:
     "What actually happens between your idea and a finished brand, site or storefront. Four steps, one person on it the whole way, and a date agreed before you pay.",
+  alternates: { canonical: "/how-we-work" },
+  // Set in full because metadata merging is shallow. A page that declares
+  // openGraph replaces the layout block outright, so anything omitted is gone.
+  openGraph: {
+    title: "How We Work | FlowZone",
+    description:
+      "What happens between your idea and a finished brand, site or storefront. Four steps, one person on it the whole way, and a date agreed before you pay.",
+    url: `${SITE.url}/how-we-work`,
+    siteName: "FlowZone",
+    type: "website",
+    locale: "en_US",
+  },
 };
 
 const days = [

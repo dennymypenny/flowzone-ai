@@ -138,7 +138,11 @@ export default function GenerativeField({
       if (io) io.disconnect();
     };
     // Re-seeding on any of these is the point: the artwork answers the answers.
-  }, [seed, colors.a, colors.b, colors.bg, colors.ink, warp, height, colors]);
+    // Colours are listed channel by channel on purpose. Depending on the object
+    // itself tore the whole particle system down on every single render, because
+    // a caller passing an inline literal hands over a new identity each time.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [seed, colors.a, colors.b, colors.bg, colors.ink, warp, height]);
 
   return (
     <canvas

@@ -4,6 +4,17 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description: "The terms you agree to when you use FlowZone.",
+  alternates: { canonical: "/terms" },
+  // Set in full because metadata merging is shallow. A page that declares
+  // openGraph replaces the layout block outright, so anything omitted is gone.
+  openGraph: {
+    title: "Terms of Service | FlowZone",
+    description: "The terms you agree to when you use FlowZone.",
+    url: `${SITE.url}/terms`,
+    siteName: "FlowZone",
+    type: "website",
+    locale: "en_US",
+  },
 };
 
 export default function TermsPage() {

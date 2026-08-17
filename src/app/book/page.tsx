@@ -9,6 +9,18 @@ export const metadata: Metadata = {
   title: "Talk to us",
   description:
     "Text, email or work your idea out first. However you get in touch, a person reads it and answers, usually the same day.",
+  alternates: { canonical: "/book" },
+  // Set in full because metadata merging is shallow. A page that declares
+  // openGraph replaces the layout block outright, so anything omitted is gone.
+  openGraph: {
+    title: "Talk to us | FlowZone",
+    description:
+      "Three ways in and all of them reach a person. Text, email or work your idea out first. Usually answered the same day.",
+    url: `${SITE.url}/book`,
+    siteName: "FlowZone",
+    type: "website",
+    locale: "en_US",
+  },
 };
 
 export default function Talk() {
@@ -78,10 +90,10 @@ export default function Talk() {
           </div>
 
           <div className="panel p-8 flex flex-col relative overflow-hidden">
-            <span className="absolute top-0 left-0 h-[3px] w-full bg-[#A78BFA]" />
-            <span className="block mb-5 mt-1"><Icon name="compass" size={22} color="#A78BFA" /></span>
+            <span className="absolute top-0 left-0 h-[3px] w-full bg-[#F0845F]" />
+            <span className="block mb-5 mt-1"><Icon name="compass" size={22} color="#F0845F" /></span>
             <h2 className="font-display text-2xl mb-2">Work it out first</h2>
-            <p className="text-sm text-[#A78BFA] mb-5">Best if it is still fuzzy.</p>
+            <p className="text-sm text-[#F0845F] mb-5">Best if it is still fuzzy.</p>
             <p className="text-sm text-ink-soft font-light leading-relaxed mb-7">
               Six questions that turn a vague intention into a real brief, with a sketch
               of it building beside you as you answer. Send it when it is ready.

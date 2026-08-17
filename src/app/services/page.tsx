@@ -6,6 +6,18 @@ export const metadata: Metadata = {
   title: "What We Build",
   description:
     "Brand, site and the system that runs it. Three parts of one piece of work, from a studio that does all three.",
+  alternates: { canonical: "/services" },
+  // Set in full because metadata merging is shallow. A page that declares
+  // openGraph replaces the layout block outright, so anything omitted is gone.
+  openGraph: {
+    title: "What We Build | FlowZone",
+    description:
+      "Brand, site and the system that runs it. Three parts of one piece of work, from a studio that does all three.",
+    url: `${SITE.url}/services`,
+    siteName: "FlowZone",
+    type: "website",
+    locale: "en_US",
+  },
 };
 
 const PARTS = [
@@ -188,7 +200,7 @@ export default function Services() {
               },
               {
                 icon: "\u{1F6D2}",
-                c: "#A78BFA",
+                c: "#F0845F",
                 name: "The Storefront Build",
                 one: "A real shop. Products, cart, checkout, money in your account.",
                 what: [

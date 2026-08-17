@@ -324,7 +324,7 @@ export default function FunnelNarrow({
             </div>
 
             <div>
-              <p className="text-[11px] font-medium uppercase tracking-label mb-1.5" style={{ color: "#A78BFA" }}>
+              <p className="text-[11px] font-medium uppercase tracking-label mb-1.5" style={{ color: "#F0845F" }}>
                 Your edge, honestly
               </p>
               <p className="text-sm text-ink-soft font-light leading-relaxed">{EDGE[answers.edge]}</p>

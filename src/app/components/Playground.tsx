@@ -29,6 +29,14 @@ import {
   type Role,
   type Vibe,
 } from "@/lib/brandkit";
+import {
+  copyOrDownload,
+  downloadBlob,
+  fetchJSON,
+  loadJSON,
+  readIdea,
+  saveJSON,
+} from "@/lib/session";
 import { useAmbient } from "@/app/components/useAmbient";
 import MemeMaker from "@/app/components/MemeMaker";
 import Icon from "@/components/Icon";
@@ -49,7 +57,6 @@ import Icon from "@/components/Icon";
  */
 
 const KEY = "flowzone.flow.v1";
-const IDEA_KEY = "flowzone.idealens.v1";
 
 const ROLES: Array<{ id: Role; label: string }> = [
   { id: "bg", label: "Background" },
@@ -97,7 +104,7 @@ type Quest = { id: string; icon: string; name: string; goal: string; xp: number;
 
 const QUESTS: Quest[] = [
   { id: "name", icon: "pencil", name: "A name", goal: "What the thing is called", xp: 20, color: "#5B9BF9" },
-  { id: "purpose", icon: "target", name: "A purpose", goal: "The line that says what it is", xp: 20, color: "#A78BFA" },
+  { id: "purpose", icon: "target", name: "A purpose", goal: "The line that says what it is", xp: 20, color: "#F0845F" },
   { id: "color", icon: "palette", name: "Colours", goal: "A palette you chose on purpose", xp: 20, color: "#FBBF24" },
   { id: "mark", icon: "shield", name: "A symbol", goal: "The mark and the shape it sits in", xp: 20, color: "#2DD4BF" },
   { id: "logo", icon: "ruler", name: "A logo", goal: "The finished lockup, downloaded", xp: 20, color: "#34D399" },
@@ -180,15 +187,17 @@ export default function Playground() {
   const [refKind, setRefKind] = useState<"photo" | "gif" | "meme">("photo");
   const [picked, setPicked] = useState<string | null>(null);
   const [refError, setRefError] = useState("");
+  // Everything async lands here so a screen reader hears the result. Without
+  // it, copying and pulling references are completely silent.
+  const [say, setSay] = useState("");
   const popRef = useRef<HTMLDivElement | null>(null);
 
   const flow = FLOWS.find((f) => f.id === flowId) || null;
 
   useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem(KEY);
-      if (raw) {
-        const p = JSON.parse(raw);
+    {
+      const p = loadJSON<Record<string, any> | null>(KEY, null);
+      if (p) {
         setFlowId(p.flowId ?? null);
         setIdea(p.idea ?? "");
         setSeed(p.seed ?? 1);
@@ -208,27 +217,15 @@ export default function Playground() {
         // with nothing in it yet gets handed the idea from the front door.
         if (p.idea || p.name) return;
       }
-      // Whatever they typed on the way in is the whole point. Pick it up.
-      const lens = window.localStorage.getItem(IDEA_KEY);
-      if (lens) {
-        const parsed = JSON.parse(lens);
-        if (parsed?.q) setIdea(String(parsed.q));
-      }
-    } catch {
-      /* storage must never break the page */
     }
+    // Whatever they typed on the way in is the whole point. Pick it up.
+    const lens = readIdea();
+    if (lens?.q) setIdea(lens.q);
   }, []);
 
   useEffect(() => {
     const t = window.setTimeout(() => {
-      try {
-        window.localStorage.setItem(
-          KEY,
-          JSON.stringify({ flowId, idea, seed, name, line, dark, vibe, locks, typeId, markMode, builtId, iconId, containerId, lockupId, done })
-        );
-      } catch {
-        /* ignore */
-      }
+      saveJSON(KEY, { flowId, idea, seed, name, line, dark, vibe, locks, typeId, markMode, builtId, iconId, containerId, lockupId, done });
     }, 400);
     return () => window.clearTimeout(t);
   }, [flowId, idea, seed, name, line, dark, vibe, locks, typeId, markMode, builtId, iconId, containerId, lockupId, done]);
@@ -329,12 +326,8 @@ export default function Playground() {
   }, [openRole]);
 
   const download = (content: string, filename: string, type: string) => {
-    const blob = new Blob([content], { type });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(a.href);
+    downloadBlob(content, filename, type);
+    setSay(`${filename} downloaded.`);
   };
 
   const slug = slugify(name);
@@ -350,12 +343,13 @@ export default function Playground() {
 
   const copyCSS = async () => {
     const css = paletteCSS(palette, name);
-    try {
-      await navigator.clipboard.writeText(css);
+    const how = await copyOrDownload(css, `${slug}-palette.css`, "text/css");
+    if (how === "copied") {
       setCopied("css");
+      setSay("Palette copied as CSS variables.");
       window.setTimeout(() => setCopied(""), 1800);
-    } catch {
-      download(css, `${slug}-palette.css`, "text/css");
+    } else {
+      setSay("Clipboard was blocked, so the palette downloaded as a CSS file.");
     }
     complete("color");
   };
@@ -365,16 +359,28 @@ export default function Playground() {
     if (!query) return;
     setRefState("loading");
     setRefError("");
+    setSay("Looking for references.");
     try {
-      const res = await fetch(`/api/moodboard?q=${encodeURIComponent(query)}&kind=${kind}`);
-      const data = await res.json();
-      if (!res.ok || !data.ok) throw new Error(data.error || "failed");
-      setShots(data.shots || []);
+      // A hung request used to spin here forever. Eight seconds, then say so.
+      const data = await fetchJSON<{ ok?: boolean; error?: string; shots?: Shot[] }>(
+        `/api/moodboard?q=${encodeURIComponent(query)}&kind=${kind}`
+      );
+      if (!data.ok) throw new Error(data.error || "failed");
+      const found = data.shots || [];
+      setShots(found);
       setRefState("idle");
-      if ((data.shots || []).length) complete("refs");
+      setSay(found.length ? `${found.length} references loaded.` : "No references came back for that.");
+      if (found.length) complete("refs");
     } catch (e) {
+      const msg =
+        e instanceof Error && e.name === "AbortError"
+          ? "That took too long. Check your connection and hit Pull again."
+          : e instanceof Error && e.message !== "failed" && !/^HTTP /.test(e.message)
+            ? e.message
+            : "Could not reach the reference service. Hit Pull to try again.";
       setRefState("error");
-      setRefError(e instanceof Error && e.message !== "failed" ? e.message : "Could not reach the reference service.");
+      setRefError(msg);
+      setSay(msg);
     }
   };
 
@@ -406,6 +412,7 @@ export default function Playground() {
           value={idea}
           onChange={(e) => setIdea(e.target.value)}
           placeholder="a bakery people cross town for"
+          aria-label="What you are making"
           className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule px-4 py-3.5 text-base font-light outline-none focus:border-accent transition-colors motion-reduce:transition-none mb-4"
         />
         {idea.trim() && (
@@ -442,6 +449,10 @@ export default function Playground() {
   /* ------------------------------------------------------------ workspace -- */
   return (
     <div>
+      {/* Async results happen far from focus, so they get announced here. */}
+      <p aria-live="polite" className="sr-only">
+        {say}
+      </p>
       {/* Run header */}
       <div className="panel p-6 mb-6">
         <div className="flex flex-wrap items-center justify-between gap-5 mb-5">
@@ -542,6 +553,7 @@ export default function Playground() {
             <p className="label mb-4">✍️ Name it</p>
             <input
               value={name}
+              aria-label="Your brand name"
               onChange={(e) => {
                 setName(e.target.value);
                 if (e.target.value.trim()) complete("name");
@@ -576,6 +588,7 @@ export default function Playground() {
               value={line}
               onChange={(e) => setLine(e.target.value)}
               placeholder="What it is, in one line. This is the purpose."
+              aria-label="Your one line purpose"
               className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule px-4 py-3 text-sm font-light outline-none focus:border-accent transition-colors motion-reduce:transition-none mb-3"
             />
             <div className="flex flex-wrap gap-2">
@@ -603,7 +616,7 @@ export default function Playground() {
 
           {/* Colour, now clickable */}
           <div className="panel p-6 relative overflow-hidden">
-            <span className="absolute top-0 left-0 h-[3px] w-full" style={{ background: "#A78BFA" }} />
+            <span className="absolute top-0 left-0 h-[3px] w-full" style={{ background: "#F0845F" }} />
             <div className="flex items-center justify-between mb-2">
               <p className="label">🎨 Colour it</p>
               <span className="text-[10px]" style={{ color: failing.length ? "#FBBF24" : "#34D399" }}>
@@ -617,11 +630,11 @@ export default function Playground() {
 
             {(
               [
-                ["energy", "Quiet", "Loud"],
-                ["temp", "Cool", "Warm"],
-                ["era", "Classic", "Modern"],
+                ["energy", "Quiet", "Loud", "Energy"],
+                ["temp", "Cool", "Warm", "Temperature"],
+                ["era", "Classic", "Modern", "Era"],
               ] as const
-            ).map(([k, lo, hi]) => (
+            ).map(([k, lo, hi, label]) => (
               <div key={k} className="mb-4">
                 <div className="flex justify-between text-[11px] text-ink-mute mb-1.5">
                   <span>{lo}</span>
@@ -631,6 +644,10 @@ export default function Playground() {
                   type="range"
                   min={0}
                   max={100}
+                  // Three unlabelled sliders all announced as "slider, 55".
+                  // Now each one says what it is and where it sits.
+                  aria-label={`${label}, ${lo} to ${hi}`}
+                  aria-valuetext={`${vibe[k]} of 100, ${lo} to ${hi}`}
                   value={vibe[k]}
                   onChange={(e) => {
                     setVibe((v) => ({ ...v, [k]: Number(e.target.value) }));
@@ -716,6 +733,7 @@ export default function Playground() {
                   <label className="flex items-center gap-2 text-xs text-ink-soft">
                     <input
                       type="color"
+                      aria-label="Exact colour"
                       value={palette[openRole]}
                       onChange={(e) => {
                         setLocks((l) => ({ ...l, [openRole]: e.target.value.toUpperCase() }));
@@ -752,7 +770,7 @@ export default function Playground() {
             </button>
             <Principle
               title="how palettes actually hold together"
-              color="#A78BFA"
+              color="#F0845F"
               points={[
                 "One base hue, then a real relationship. Analogous for calm, complementary for tension, triadic for noise. Two hues picked at random are just two hues.",
                 "Two accents, not five. Colours far apart on the wheel stay readable together; a crowd of them turns to mush the second anything gets small.",
@@ -862,6 +880,7 @@ export default function Playground() {
                   value={iconQ}
                   onChange={(e) => setIconQ(e.target.value)}
                   placeholder="Search 199 symbols: coffee, dog, wrench, wave..."
+                  aria-label="Search symbols"
                   className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule px-4 py-3 text-sm font-light outline-none focus:border-accent transition-colors motion-reduce:transition-none mb-3"
                 />
                 <div className="grid grid-cols-8 gap-1.5 max-h-52 overflow-y-auto mb-4 pr-1">
@@ -1139,6 +1158,7 @@ export default function Playground() {
                 <div className="flex flex-wrap gap-2 mb-4">
                   <select
                     value={refQ}
+                    aria-label="What to look at for references"
                     onChange={(e) => {
                       setRefQ(e.target.value);
                       if (e.target.value) fetchRefs(e.target.value);

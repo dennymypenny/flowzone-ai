@@ -1,11 +1,22 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { SITE } from "@/lib/site";
 import { hashSeed, renderStill } from "@/lib/generative";
 import GenerativeField from "@/app/components/GenerativeField";
 import VoiceSession from "@/app/components/VoiceSession";
 import Tilt3D from "@/app/components/Tilt3D";
 import Icon from "@/components/Icon";
+import {
+  FETCH_TIMEOUT,
+  downloadBlob,
+  downloadDataURL,
+  loadJSON,
+  loadRaw,
+  readFunnelAnswers,
+  removeJSON,
+  saveJSON,
+  saveRaw,
+} from "@/lib/session";
 
 /**
  * A guided session that turns a vague intention into a real brief.
@@ -33,9 +44,7 @@ import Icon from "@/components/Icon";
  */
 
 const KEY = "flowzone.session.v2";
-// The funnel on the same page asks six of these questions first. If it ran, we
-// carry the answers across. Nobody should be asked the same thing twice.
-const FUNNEL_KEY = "flowzone.funnel.v2";
+const UNLOCK_KEY = "flowzone.briefunlock.v1";
 
 type Path = {
   id: string;
@@ -95,7 +104,7 @@ const PATHS: Path[] = [
   },
   {
     id: "shop",
-    color: "#A78BFA",
+    color: "#F0845F",
     icon: "box",
     name: "I want to sell things",
     blurb: "Products, real ones, and a place to sell them properly instead of through DMs and screenshots.",
@@ -240,7 +249,7 @@ const STEPS: Step[] = [
   },
   {
     id: "who",
-    color: "#A78BFA",
+    color: "#F0845F",
     icon: "target",
     eyebrow: "Who pays",
     q: "Who actually hands over the money?",
@@ -395,8 +404,8 @@ const RANKS = [
   { label: "A sketch", color: "#4C7BE8" },
   { label: "Taking shape", color: "#5B9BF9" },
   { label: "Getting real", color: "#5B9BF9" },
-  { label: "It has a spine", color: "#A78BFA" },
-  { label: "Sharp", color: "#A78BFA" },
+  { label: "It has a spine", color: "#F0845F" },
+  { label: "Sharp", color: "#F0845F" },
   { label: "Nearly a brief", color: "#FBBF24" },
   { label: "Brief in hand", color: "#FBBF24" },
   { label: "Ready to build", color: "#34D399" },
@@ -729,58 +738,43 @@ export default function WorkSession() {
   const [loaded, setLoaded] = useState(false);
   const [savedTick, setSavedTick] = useState(false);
   const [carried, setCarried] = useState<string[]>([]);
+  // Saving, sending and downloading all finish silently, so they get said here.
+  const [say, setSay] = useState("");
   const timer = useRef<number | null>(null);
 
   useEffect(() => {
     let loadedAnswers: Record<string, string> = {};
-    try {
-      const raw = window.localStorage.getItem(KEY);
-      if (raw) {
-        const p: Saved = JSON.parse(raw);
-        loadedAnswers = p.answers || {};
-        setPathId(p.path || null);
-        setStep(Math.min(p.step || 0, STEPS.length + 2));
-        setStarted(p.started || null);
-      }
-    } catch {
-      /* storage must never break the page */
+    const p = loadJSON<Partial<Saved> | null>(KEY, null);
+    if (p) {
+      loadedAnswers = p.answers || {};
+      setPathId(p.path || null);
+      setStep(Math.min(p.step || 0, STEPS.length + 2));
+      setStarted(p.started || null);
     }
 
     // The funnel asked six of these already. Carrying them over is the whole
     // difference between a session that respects your time and a form.
-    try {
-      const raw = window.localStorage.getItem(FUNNEL_KEY);
-      if (raw) {
-        const f = JSON.parse(raw) as { answers?: Record<string, string> };
-        const from = f && f.answers ? f.answers : {};
-        const map: Array<[string, string]> = [
-          ["who", "who"],
-          ["now", "have"],
-          ["money", "price"],
-          ["edge", "edge"],
-          ["block", "block"],
-        ];
-        const took: string[] = [];
-        map.forEach(([step, funnelKey]) => {
-          const v = (from[funnelKey] || "").trim();
-          if (v && !(loadedAnswers[step] || "").trim()) {
-            loadedAnswers[step] = v.charAt(0).toUpperCase() + v.slice(1);
-            took.push(step);
-          }
-        });
-        if (from.first && !loadedAnswers.first) loadedAnswers.first = from.first;
-        setCarried(took);
+    const from = readFunnelAnswers();
+    const map: Array<[string, "who" | "have" | "price" | "edge" | "block"]> = [
+      ["who", "who"],
+      ["now", "have"],
+      ["money", "price"],
+      ["edge", "edge"],
+      ["block", "block"],
+    ];
+    const took: string[] = [];
+    map.forEach(([stepId, funnelKey]) => {
+      const v = (from[funnelKey] || "").trim();
+      if (v && !(loadedAnswers[stepId] || "").trim()) {
+        loadedAnswers[stepId] = v.charAt(0).toUpperCase() + v.slice(1);
+        took.push(stepId);
       }
-    } catch {
-      /* a missing or broken funnel is normal, carry on */
-    }
+    });
+    if (from.first && !loadedAnswers.first) loadedAnswers.first = from.first;
+    setCarried(took);
 
     setAnswers(loadedAnswers);
-    try {
-      if (window.localStorage.getItem("flowzone.briefunlock.v1")) setUnlocked(true);
-    } catch {
-      /* ignore */
-    }
+    if (loadRaw(UNLOCK_KEY)) setUnlocked(true);
     setLoaded(true);
   }, []);
 
@@ -788,15 +782,9 @@ export default function WorkSession() {
     if (!loaded) return;
     if (timer.current) window.clearTimeout(timer.current);
     timer.current = window.setTimeout(() => {
-      try {
-        window.localStorage.setItem(
-          KEY,
-          JSON.stringify({ answers, path: pathId, step, started } as Saved)
-        );
+      if (saveJSON(KEY, { answers, path: pathId, step, started } as Saved)) {
         setSavedTick(true);
         window.setTimeout(() => setSavedTick(false), 1400);
-      } catch {
-        /* ignore */
       }
     }, 500);
     return () => {
@@ -816,6 +804,13 @@ export default function WorkSession() {
 
   // The artwork's fingerprint. Built from what they have actually said, so it
   // is theirs, it is reproducible, and it visibly changes as they go.
+  // A fresh object literal every render restarted the whole particle system on
+  // every keystroke. The identity now only changes when a colour does.
+  const fieldColors = useMemo(
+    () => ({ bg: palette.bg, a: palette.a, b: palette.b, ink: palette.ink }),
+    [palette.bg, palette.a, palette.b, palette.ink]
+  );
+
   const fieldSeed = `${pathId || "none"}|${palette.id}|${projectName}|${STEPS.map(
     (s) => (answers[s.id] || "").length
   ).join(",")}`;
@@ -875,6 +870,15 @@ export default function WorkSession() {
     `Hi FlowZone,\n\nI worked through the session on your site and it wrote this brief. Here is where I landed.\n\n${brief()}\n\nThanks,\n`
   )}`;
 
+  /** A send that never returns leaves Sending on screen forever. Eight seconds. */
+  const postSignal = () => {
+    try {
+      return AbortSignal.timeout ? AbortSignal.timeout(FETCH_TIMEOUT) : undefined;
+    } catch {
+      return undefined;
+    }
+  };
+
   const unlock = async () => {
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(gateEmail)) {
       setGateErr("That does not look like an email address.");
@@ -882,15 +886,12 @@ export default function WorkSession() {
     }
     setGateErr("");
     setUnlocked(true);
-    try {
-      window.localStorage.setItem("flowzone.briefunlock.v1", "1");
-    } catch {
-      /* ignore */
-    }
+    saveRaw(UNLOCK_KEY, "1");
     // Best effort. A failed send must never block someone from their own work.
     try {
       await fetch("/api/subscribe", {
         method: "POST",
+        signal: postSignal(),
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: gateEmail,
@@ -911,15 +912,12 @@ export default function WorkSession() {
   };
 
   const downloadText = () => {
-    const blob = new Blob(
-      [`FLOWZONE WORK SESSION\n${started ? "Started " + started : ""}\n\n${brief()}\n\nflowzone.dev\n`],
-      { type: "text/plain" }
+    downloadBlob(
+      `FLOWZONE WORK SESSION\n${started ? "Started " + started : ""}\n\n${brief()}\n\nflowzone.dev\n`,
+      "flowzone-brief.txt",
+      "text/plain"
     );
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "flowzone-brief.txt";
-    a.click();
-    URL.revokeObjectURL(a.href);
+    setSay("Your brief downloaded as a text file.");
   };
 
   const downloadImage = () => {
@@ -949,7 +947,7 @@ export default function WorkSession() {
     // into a group chat, so it has to make the argument on its own.
     const sections: Array<{ head: string; color: string; body: string }> = [
       { head: "POSITIONING", color: "#4C7BE8", body: doc.positioning },
-      { head: "THE AUDIENCE", color: "#A78BFA", body: doc.audience },
+      { head: "THE AUDIENCE", color: "#F0845F", body: doc.audience },
       { head: "THE MONEY", color: "#34D399", body: doc.arithmetic },
       { head: "EDGE AND PROOF", color: "#5B9BF9", body: doc.evidence },
       { head: "IN SCOPE", color: "#5B8CFF", body: doc.scopeIn.map((x) => `- ${x}`).join("\n") },
@@ -963,7 +961,7 @@ export default function WorkSession() {
     const blocks: Array<{ t: string; kind: "eyebrow" | "body"; color: string }> = [];
     sections.forEach((s) => {
       blocks.push({ t: s.head, kind: "eyebrow", color: s.color });
-      wrap(s.body, "300 26px Poppins, sans-serif", W - pad * 2).forEach((l) =>
+      wrap(s.body, "300 26px Figtree, sans-serif", W - pad * 2).forEach((l) =>
         blocks.push({ t: l, kind: "body", color: "#C7CFDD" })
       );
     });
@@ -1014,9 +1012,9 @@ export default function WorkSession() {
     );
 
     ctx.fillStyle = "#F1F3F7";
-    ctx.font = "600 52px Poppins, sans-serif";
+    ctx.font = "600 52px Figtree, sans-serif";
     ctx.fillText(projectName || "Project brief", pad, 356);
-    ctx.font = "300 24px Poppins, sans-serif";
+    ctx.font = "300 24px Figtree, sans-serif";
     ctx.fillStyle = "#8B94A3";
     ctx.fillText(
       path ? `Project brief · ${path.name}` : "Project brief",
@@ -1028,12 +1026,12 @@ export default function WorkSession() {
     blocks.forEach((b) => {
       if (b.kind === "eyebrow") {
         y += 18;
-        ctx.font = "500 17px Poppins, sans-serif";
+        ctx.font = "500 17px Figtree, sans-serif";
         ctx.fillStyle = b.color;
         ctx.fillText(b.t, pad, y);
         y += 40;
       } else {
-        ctx.font = "300 26px Poppins, sans-serif";
+        ctx.font = "300 26px Figtree, sans-serif";
         ctx.fillStyle = b.color;
         ctx.fillText(b.t, pad, y);
         y += 40;
@@ -1041,18 +1039,16 @@ export default function WorkSession() {
     });
 
     if (path) {
-      ctx.font = "500 22px Poppins, sans-serif";
+      ctx.font = "500 22px Figtree, sans-serif";
       ctx.fillStyle = path.color;
       ctx.fillText(`Suggested: ${path.build}`, pad, c.height - 84);
     }
-    ctx.font = "500 20px Poppins, sans-serif";
+    ctx.font = "500 20px Figtree, sans-serif";
     ctx.fillStyle = "#5B8CFF";
     ctx.fillText("flowzone.dev", pad, c.height - 44);
 
-    const a = document.createElement("a");
-    a.href = c.toDataURL("image/png");
-    a.download = "flowzone-brief.png";
-    a.click();
+    downloadDataURL(c.toDataURL("image/png"), "flowzone-brief.png");
+    setSay("Your brief downloaded as an image.");
   };
 
   const [saveEmail, setSaveEmail] = useState("");
@@ -1074,6 +1070,7 @@ export default function WorkSession() {
     try {
       const res = await fetch("/api/subscribe", {
         method: "POST",
+        signal: postSignal(),
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: saveEmail,
@@ -1086,8 +1083,10 @@ export default function WorkSession() {
       });
       if (!res.ok) throw new Error("failed");
       setSaveState("done");
+      setSay("Sent. Check your inbox for the brief.");
     } catch {
       setSaveState("error");
+      setSay("That did not send. Check the address and try again.");
     }
   };
 
@@ -1096,11 +1095,8 @@ export default function WorkSession() {
     setPathId(null);
     setStep(0);
     setStarted(null);
-    try {
-      window.localStorage.removeItem(KEY);
-    } catch {
-      /* ignore */
-    }
+    removeJSON(KEY);
+    setSay("Session cleared. Starting over.");
   };
 
   // Path prompts first, generic ones behind them, deduped. Never an empty list.
@@ -1158,7 +1154,7 @@ export default function WorkSession() {
           <div style={{ transform: "translateZ(14px)" }}>
             <GenerativeField
               seed={fieldSeed}
-              colors={{ bg: palette.bg, a: palette.a, b: palette.b, ink: palette.ink }}
+              colors={fieldColors}
               warp={answered / STEPS.length}
               height={132}
             />
@@ -1303,6 +1299,10 @@ export default function WorkSession() {
 
   return (
     <div className="grid lg:grid-cols-12 gap-6 items-start">
+      {/* Saves, sends and downloads all land silently. Not any more. */}
+      <p aria-live="polite" className="sr-only">
+        {say}
+      </p>
       <div className="lg:col-span-7 panel overflow-hidden">
       {/* Session bar */}
       <div className="flex flex-wrap items-center justify-between gap-4 px-6 py-4 border-b border-rule bg-paper-deep">
@@ -1528,6 +1528,7 @@ export default function WorkSession() {
 
             <textarea
               rows={current.rows}
+              aria-label={current.q}
               value={answers[current.id] || ""}
               onChange={(e) => setAnswers({ ...answers, [current.id]: e.target.value })}
               placeholder="In your own words, or press the mic and just say it..."
@@ -1618,7 +1619,7 @@ export default function WorkSession() {
                 <section>
                   <p
                     className="text-[11px] font-medium uppercase tracking-label mb-2"
-                    style={{ color: "#A78BFA" }}
+                    style={{ color: "#F0845F" }}
                   >
                     The audience
                   </p>
@@ -1858,6 +1859,7 @@ export default function WorkSession() {
                   <div className="flex flex-col sm:flex-row gap-2">
                     <input
                       type="email"
+                      aria-label="Your email address"
                       value={saveEmail}
                       onChange={(e) => {
                         setSaveEmail(e.target.value);
@@ -1927,6 +1929,7 @@ export default function WorkSession() {
                 <div className="flex flex-wrap gap-2">
                   <input
                     type="email"
+                    aria-label="Your email address"
                     value={gateEmail}
                     onChange={(e) => {
                       setGateEmail(e.target.value);

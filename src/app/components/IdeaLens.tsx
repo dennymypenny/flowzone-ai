@@ -4,6 +4,16 @@ import VideoSpark from "@/app/components/VideoSpark";
 import Icon from "@/components/Icon";
 import FunnelNarrow from "@/app/components/FunnelNarrow";
 import { readPhoto, PHOTO_READ_KEY, type PhotoRead } from "@/lib/photoread";
+import {
+  KEYS,
+  fetchJSON,
+  loadJSON,
+  readIdea,
+  readUploads,
+  removeJSON,
+  saveIdea,
+  saveJSON,
+} from "@/lib/session";
 
 /**
  * Say the thing, and you are in it.
@@ -28,8 +38,8 @@ type Shot = {
   source: string;
 };
 
-const KEY = "flowzone.idealens.v1";
-const UPLOADS_KEY = "flowzone.uploads.v1";
+const KEY = KEYS.idea;
+const UPLOADS_KEY = KEYS.uploads;
 
 /** The murmur: ideas the input dreams about while it waits. */
 const MURMURS = [
@@ -97,33 +107,37 @@ export default function IdeaLens() {
      the questions are answered, or the moment somebody says they only came
      for the video. */
   const [showVideo, setShowVideo] = useState(false);
+  const [oops, setOops] = useState("");
   const timer = useRef<number | undefined>(undefined);
   const fileRef = useRef<HTMLInputElement | null>(null);
+  /* Typing debounces by a second, so two entries can be in flight at once. A
+     slow first answer used to land on top of a fast second one and the backdrop
+     showed the wrong idea. Every response checks it is still the current one. */
+  const reqId = useRef(0);
 
   useEffect(() => {
+    const saved = readIdea();
+    if (saved) {
+      setChosen(saved);
+      if (saved.thumb) setPhoto(saved.thumb);
+      if (saved.q) fetchClip(saved.q, reqId.current);
+    }
+    const savedRead = loadJSON<PhotoRead | null>(PHOTO_READ_KEY, null);
+    if (savedRead) setRead(savedRead);
+    setUploadCount(readUploads().length);
+    // A thought grabbed mid-ride lands here, already inside it.
+    let grabbed: string | null = null;
     try {
-      const saved = window.localStorage.getItem(KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        setChosen(parsed);
-        if (parsed?.thumb) setPhoto(parsed.thumb);
-        if (parsed?.q) fetchClip(parsed.q);
-      }
-      const savedRead = window.localStorage.getItem(PHOTO_READ_KEY);
-      if (savedRead) setRead(JSON.parse(savedRead));
-      const ups = window.localStorage.getItem(UPLOADS_KEY);
-      if (ups) setUploadCount((JSON.parse(ups) as string[]).length);
-      // A thought grabbed mid-ride lands here, already inside it.
-      const grabbed = window.sessionStorage.getItem("flowzone.ride.idea");
-      if (grabbed) {
-        window.sessionStorage.removeItem("flowzone.ride.idea");
-        window.localStorage.removeItem(KEY);
-        window.localStorage.removeItem("flowzone.funnel.v2");
-        setChosen(null);
-        enter(grabbed);
-      }
+      grabbed = window.sessionStorage.getItem("flowzone.ride.idea");
+      if (grabbed) window.sessionStorage.removeItem("flowzone.ride.idea");
     } catch {
-      /* ignore */
+      /* a blocked session store just means no handoff */
+    }
+    if (grabbed) {
+      removeJSON(KEY);
+      removeJSON(KEYS.funnel);
+      setChosen(null);
+      enter(grabbed);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -152,15 +166,17 @@ export default function IdeaLens() {
   }, [chosen]);
 
   /** The room fills with the idea: footage first, a photograph as fallback. */
-  const fetchClip = async (term: string) => {
+  const fetchClip = async (term: string, mine: number) => {
     try {
-      const res = await fetch(`/api/clips?q=${encodeURIComponent(term)}`);
-      const data = await res.json();
+      const data = await fetchJSON<{ ok?: boolean; clips?: Array<{ url: string }> }>(
+        `/api/clips?q=${encodeURIComponent(term)}`
+      );
+      if (mine !== reqId.current) return; // a newer idea already won
       if (data.ok && data.clips?.length) {
         setClip(data.clips[(Math.random() * data.clips.length) | 0].url);
       }
     } catch {
-      /* stillness is fine */
+      /* stillness is fine, and the timeout stops it hanging */
     }
   };
 
@@ -168,26 +184,31 @@ export default function IdeaLens() {
   const enter = async (query: string) => {
     const term = query.trim();
     if (!term) return;
+    const mine = ++reqId.current;
     setBusy(true);
-    fetchClip(term);
+    setOops("");
+    setClip("");
+    fetchClip(term, mine);
     let thumb = "";
+    let timedOut = false;
     try {
-      const res = await fetch(`/api/moodboard?q=${encodeURIComponent(term)}`);
-      const data = await res.json();
-      if (data.ok && data.shots?.length) thumb = (data.shots as Shot[])[0].thumb;
-    } catch {
-      /* the questions do not need a picture to work */
+      const data = await fetchJSON<{ ok?: boolean; shots?: Shot[] }>(
+        `/api/moodboard?q=${encodeURIComponent(term)}`
+      );
+      if (data.ok && data.shots?.length) thumb = data.shots[0].thumb;
+    } catch (e) {
+      // The questions do not need a picture to work, but a silent stall does
+      // need saying, otherwise the dot just spins.
+      timedOut = e instanceof Error && e.name === "AbortError";
     }
+    if (mine !== reqId.current) return; // a newer idea already won
     setBusy(false);
+    if (timedOut) setOops("The backdrop could not load. Your idea still went through.");
     const sel = { q: term, thumb };
     setChosen(sel);
     if (thumb) setPhoto(thumb);
     setQ("");
-    try {
-      window.localStorage.setItem(KEY, JSON.stringify(sel));
-    } catch {
-      /* ignore */
-    }
+    saveIdea(sel);
   };
 
   // Typing pauses, and you are in. Enter also works.
@@ -207,17 +228,10 @@ export default function IdeaLens() {
     const datas = (await Promise.all(files.map(shrink))).filter(Boolean) as string[];
     setBusy(false);
     if (!datas.length) return;
-    let existing: string[] = [];
-    try {
-      existing = JSON.parse(window.localStorage.getItem(UPLOADS_KEY) || "[]");
-    } catch {
-      /* ignore */
-    }
-    const all = [...datas, ...existing].slice(0, 6);
-    try {
-      window.localStorage.setItem(UPLOADS_KEY, JSON.stringify(all));
-    } catch {
-      /* storage full: carry on */
+    const all = [...datas, ...readUploads()].slice(0, 6);
+    // A full quota means the photos ride along for this visit only. Say so.
+    if (!saveJSON(UPLOADS_KEY, all)) {
+      setOops("Storage is full, so these photos will not survive a reload.");
     }
     setUploadCount(all.length);
 
@@ -227,21 +241,21 @@ export default function IdeaLens() {
       const r = await readPhoto(datas[0]);
       if (r) {
         setRead(r);
-        window.localStorage.setItem(PHOTO_READ_KEY, JSON.stringify(r));
+        saveJSON(PHOTO_READ_KEY, r);
       }
     } catch {
       /* a picture that will not read is not a reason to stop */
     }
 
+    // Their own photos beat anything a search returns, so any search still in
+    // flight loses. Bumping the id is what makes it lose.
+    reqId.current += 1;
     const term = q.trim() || chosen?.q || "your own thing";
     const sel = { q: term, thumb: datas[0] };
     setChosen(sel);
     setPhoto(datas[0]);
-    try {
-      window.localStorage.setItem(KEY, JSON.stringify(sel));
-    } catch {
-      /* ignore */
-    }
+    setClip("");
+    saveIdea(sel);
   };
 
   const clear = () => {
@@ -249,13 +263,12 @@ export default function IdeaLens() {
     setClip("");
     setPhoto("");
     setRead(null);
-    try {
-      window.localStorage.removeItem(KEY);
-      window.localStorage.removeItem(PHOTO_READ_KEY);
-      window.localStorage.removeItem("flowzone.funnel.v2");
-    } catch {
-      /* ignore */
-    }
+    setOops("");
+    // Nothing in flight may land on a cleared board.
+    reqId.current += 1;
+    removeJSON(KEY);
+    removeJSON(PHOTO_READ_KEY);
+    removeJSON(KEYS.funnel);
   };
 
   const dropProps = {
@@ -314,6 +327,9 @@ export default function IdeaLens() {
   if (chosen) {
     return (
       <div {...dropProps} className={`relative transition-all ${dropRing}`}>
+        <p aria-live="polite" className="sr-only">
+          {busy ? "Looking for your idea." : oops || (chosen ? `You are in: ${chosen.q}` : "")}
+        </p>
         {ambient}
         {dragOver && (
           <p className="absolute -top-8 left-0 label text-accent">Drop them in</p>
@@ -358,6 +374,7 @@ export default function IdeaLens() {
           type="file"
           accept="image/*"
           multiple
+          aria-label="Add your own photos"
           className="hidden"
           onChange={(e) => e.target.files && addFiles(e.target.files)}
         />
@@ -397,6 +414,7 @@ export default function IdeaLens() {
             </p>
           </div>
         )}
+        {oops && <p className="text-[12px] text-[#FBBF24] mt-3">{oops}</p>}
         <FunnelNarrow topic={chosen.q} onDone={() => setShowVideo(true)} />
         {showVideo ? (
           <VideoSpark topic={chosen.q} />
@@ -414,6 +432,9 @@ export default function IdeaLens() {
 
   return (
     <div {...dropProps} className={`relative transition-all ${dropRing}`}>
+      <p aria-live="polite" className="sr-only">
+        {busy ? "Looking for your idea." : oops}
+      </p>
       {dragOver && (
         <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-paper/80 pointer-events-none">
           <p className="font-display text-2xl text-accent flex items-center gap-3">
@@ -442,6 +463,7 @@ export default function IdeaLens() {
           </span>
         )}
       </div>
+      {oops && <p className="mt-3 text-[12px] text-[#FBBF24]">{oops}</p>}
       <button
         onClick={() => fileRef.current?.click()}
         className="mt-3 text-xs text-ink-mute hover:text-ink transition-colors"
@@ -453,6 +475,7 @@ export default function IdeaLens() {
         type="file"
         accept="image/*"
         multiple
+        aria-label="Add your own photos"
         className="hidden"
         onChange={(e) => e.target.files && addFiles(e.target.files)}
       />

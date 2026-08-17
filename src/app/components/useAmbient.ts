@@ -33,6 +33,13 @@ export function useAmbient(seed: number, energy: number, era: number, temp: numb
   const ctxRef = useRef<Ctx | null>(null);
   const timer = useRef<number | null>(null);
   const masterRef = useRef<GainNode | null>(null);
+  const stepRef = useRef(0);
+
+  /* The vibe used to be frozen at the moment the music started, so dragging a
+     slider mid-track did nothing until you stopped and started again. Live
+     values live in a ref and the scheduler reads them on every note. */
+  const vibe = useRef({ seed, energy, era, temp });
+  vibe.current = { seed, energy, era, temp };
 
   useEffect(() => {
     setSupported(
@@ -43,7 +50,7 @@ export function useAmbient(seed: number, energy: number, era: number, temp: numb
 
   const stop = useCallback(() => {
     if (timer.current) {
-      window.clearInterval(timer.current);
+      window.clearTimeout(timer.current);
       timer.current = null;
     }
     const m = masterRef.current;
@@ -91,15 +98,27 @@ export function useAmbient(seed: number, energy: number, era: number, temp: numb
     // A little room, so it does not sound like a test tone.
     const filter = ctx.createBiquadFilter();
     filter.type = "lowpass";
-    filter.frequency.value = 900 + (energy / 100) * 2600;
+    filter.frequency.value = 900 + (vibe.current.energy / 100) * 2600;
     filter.Q.value = 0.6;
     filter.connect(master);
 
-    const rand = mulberry32(seed);
-    const scaleName = era > 66 ? "bright" : era > 33 ? "calm" : "moody";
-    const scale = SCALES[scaleName];
-    const root = 138 + (temp / 100) * 60 + rand() * 14; // roughly C#3 upward
-    const beat = 60 / (52 + (energy / 100) * 46); // 52 to 98 bpm
+    const rand = mulberry32(vibe.current.seed);
+    // Drawn once, exactly as before, so the same seed still sounds the same.
+    const jitter = rand() * 14;
+    // Read fresh every note, so a slider move is heard on the next one.
+    const shape = () => {
+      const v = vibe.current;
+      const scaleName = v.era > 66 ? "bright" : v.era > 33 ? "calm" : "moody";
+      return {
+        scale: SCALES[scaleName],
+        root: 138 + (v.temp / 100) * 60 + jitter, // roughly C#3 upward
+        beat: 60 / (52 + (v.energy / 100) * 46), // 52 to 98 bpm
+        era: v.era,
+        energy: v.energy,
+      };
+    };
+    const first = shape();
+    const root = first.root;
 
     const voice = (freq: number, at: number, dur: number, gain: number, type: OscillatorType) => {
       const o = ctx.createOscillator();
@@ -130,27 +149,36 @@ export function useAmbient(seed: number, energy: number, era: number, temp: numb
     padA.start();
     padB.start();
 
-    let step = 0;
+    stepRef.current = 0;
     const tick = () => {
       const c = ctxRef.current;
       if (!c) return;
+      const s = shape();
+      // The pad and the filter follow the sliders too, not just the melody.
+      padA.frequency.setTargetAtTime(s.root / 2, c.currentTime, 0.2);
+      padB.frequency.setTargetAtTime((s.root / 2) * 1.005, c.currentTime, 0.2);
+      filter.frequency.setTargetAtTime(900 + (s.energy / 100) * 2600, c.currentTime, 0.2);
+
       const at = c.currentTime + 0.06;
-      const deg = scale[Math.floor(rand() * scale.length)];
+      const deg = s.scale[Math.floor(rand() * s.scale.length)];
       const oct = rand() > 0.78 ? 2 : 1;
-      const freq = root * oct * Math.pow(2, deg / 12);
-      voice(freq, at, 0.9 + rand() * 1.4, 0.055 + (energy / 100) * 0.05, era > 66 ? "triangle" : "sine");
+      const freq = s.root * oct * Math.pow(2, deg / 12);
+      voice(freq, at, 0.9 + rand() * 1.4, 0.055 + (s.energy / 100) * 0.05, s.era > 66 ? "triangle" : "sine");
 
       // An occasional fifth above, which is what stops it sounding random.
-      if (step % 4 === 0) {
-        voice(freq * 1.5, at + beat * 0.5, 1.1, 0.03, "sine");
+      if (stepRef.current % 4 === 0) {
+        voice(freq * 1.5, at + s.beat * 0.5, 1.1, 0.03, "sine");
       }
-      step++;
+      stepRef.current++;
+
+      // Rescheduled every note rather than a fixed interval, so the tempo
+      // slider is felt on the next beat instead of the next session.
+      timer.current = window.setTimeout(tick, s.beat * 1000 * 2);
     };
 
     tick();
-    timer.current = window.setInterval(tick, beat * 1000 * 2);
     setPlaying(true);
-  }, [seed, energy, era, temp]);
+  }, []);
 
   const toggle = useCallback(() => (playing ? stop() : start()), [playing, start, stop]);
 
@@ -162,7 +190,7 @@ export function useAmbient(seed: number, energy: number, era: number, temp: numb
     document.addEventListener("visibilitychange", onHide);
     return () => {
       document.removeEventListener("visibilitychange", onHide);
-      if (timer.current) window.clearInterval(timer.current);
+      if (timer.current) window.clearTimeout(timer.current);
       try {
         ctxRef.current?.close();
       } catch {

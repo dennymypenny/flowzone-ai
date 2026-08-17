@@ -6,6 +6,18 @@ export const metadata: Metadata = {
   title: "Work",
   description:
     "Real work shipped by FlowZone. CardsRG, a collector trading card storefront taken from an idea to a live shop.",
+  alternates: { canonical: "/work" },
+  // Set in full because metadata merging is shallow. A page that declares
+  // openGraph replaces the layout block outright, so anything omitted is gone.
+  openGraph: {
+    title: "Work | FlowZone",
+    description:
+      "A short list, on purpose. CardsRG, a collector trading card storefront taken from an idea to a live shop.",
+    url: `${SITE.url}/work`,
+    siteName: "FlowZone",
+    type: "website",
+    locale: "en_US",
+  },
 };
 
 export default function Work() {

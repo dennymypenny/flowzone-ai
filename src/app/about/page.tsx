@@ -6,6 +6,18 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "FlowZone is a small creative studio. AI gives us the speed, humans give it the taste.",
+  alternates: { canonical: "/about" },
+  // Set in full because metadata merging is shallow. A page that declares
+  // openGraph replaces the layout block outright, so anything omitted is gone.
+  openGraph: {
+    title: "About | FlowZone",
+    description:
+      "A small studio, on purpose. Every idea worth starting deserves a real brand, a real site and real systems behind it.",
+    url: `${SITE.url}/about`,
+    siteName: "FlowZone",
+    type: "website",
+    locale: "en_US",
+  },
 };
 
 export default function About() {

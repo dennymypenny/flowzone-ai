@@ -1,5 +1,13 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
+import {
+  copyOrDownload,
+  downloadBlob,
+  loadJSON,
+  readFunnelAnswers,
+  readIdea,
+  saveJSON,
+} from "@/lib/session";
 
 /**
  * The writing track.
@@ -22,8 +30,6 @@ import { useEffect, useMemo, useState } from "react";
  */
 
 const KEY = "flowzone.writing.v3";
-const FUNNEL_KEY = "flowzone.funnel.v2";
-const IDEA_KEY = "flowzone.idealens.v1";
 
 /* -------------------------------------------------------------------------
    What we know about the visitor
@@ -708,6 +714,8 @@ export default function WritingTrack({ accent }: { accent: string }) {
   const [bump, setBump] = useState<Record<string, number>>({});
   const [pulled, setPulled] = useState(false);
   const [openNote, setOpenNote] = useState<string | null>(null);
+  // Copying and downloading change nothing on screen, so they get said here.
+  const [say, setSay] = useState("");
 
   /* Everything the visitor already told the site comes through here. Funnel
      answers first, then the idea itself, then anything saved from last time.
@@ -715,56 +723,36 @@ export default function WritingTrack({ accent }: { accent: string }) {
   useEffect(() => {
     let next = { ...EMPTY };
     let got = false;
-    try {
-      const raw = window.localStorage.getItem(FUNNEL_KEY);
-      if (raw) {
-        const a = (JSON.parse(raw) || {}).answers || {};
-        (["who", "have", "price", "edge", "block"] as const).forEach((k) => {
-          if (typeof a[k] === "string" && a[k]) {
-            next[k] = a[k];
-            got = true;
-          }
-        });
+
+    const a = readFunnelAnswers();
+    (["who", "have", "price", "edge", "block"] as const).forEach((k) => {
+      const v = a[k];
+      if (v) {
+        next[k] = v;
+        got = true;
       }
-    } catch {
-      /* the funnel is a bonus, never a dependency */
+    });
+
+    const idea = readIdea();
+    if (idea?.q) {
+      next.idea = idea.q;
+      got = true;
     }
-    try {
-      const raw = window.localStorage.getItem(IDEA_KEY);
-      if (raw) {
-        const idea = (JSON.parse(raw) || {}).q;
-        if (typeof idea === "string" && idea.trim()) {
-          next.idea = idea.trim();
-          got = true;
-        }
-      }
-    } catch {
-      /* ignore */
-    }
-    try {
-      const raw = window.localStorage.getItem(KEY);
-      if (raw) {
-        const saved = JSON.parse(raw) || {};
-        if (saved.facts) next = { ...next, ...saved.facts };
-        if (typeof saved.pieceId === "string") setPieceId(saved.pieceId);
-        if (typeof saved.headIdx === "number") setHeadIdx(saved.headIdx);
-        if (typeof saved.seed === "number") setSeed(saved.seed);
-        if (saved.edits) setEdits(saved.edits);
-      }
-    } catch {
-      /* storage must never break the page */
-    }
+
+    const saved = loadJSON<Record<string, any>>(KEY, {});
+    if (saved.facts) next = { ...next, ...saved.facts };
+    if (typeof saved.pieceId === "string") setPieceId(saved.pieceId);
+    if (typeof saved.headIdx === "number") setHeadIdx(saved.headIdx);
+    if (typeof saved.seed === "number") setSeed(saved.seed);
+    if (saved.edits) setEdits(saved.edits);
+
     setFacts(next);
     setPulled(got);
   }, []);
 
   useEffect(() => {
     const t = window.setTimeout(() => {
-      try {
-        window.localStorage.setItem(KEY, JSON.stringify({ facts, pieceId, headIdx, seed, edits }));
-      } catch {
-        /* ignore */
-      }
+      saveJSON(KEY, { facts, pieceId, headIdx, seed, edits });
     }, 400);
     return () => window.clearTimeout(t);
   }, [facts, pieceId, headIdx, seed, edits]);
@@ -812,21 +800,17 @@ export default function WritingTrack({ accent }: { accent: string }) {
 
   const slots = (full.match(/\[[^\]]+\]/g) || []).length;
 
+  const fileName = () =>
+    `${(phrase(facts.idea) || pieceId).toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${pieceId}.md`;
+
   const download = () => {
-    const blob = new Blob([full], { type: "text/markdown" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = `${(phrase(facts.idea) || pieceId).toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${pieceId}.md`;
-    a.click();
-    URL.revokeObjectURL(a.href);
+    downloadBlob(full, fileName(), "text/markdown");
+    setSay("Downloaded as a markdown file.");
   };
 
   const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(full);
-    } catch {
-      download();
-    }
+    const how = await copyOrDownload(full, fileName(), "text/markdown");
+    setSay(how === "copied" ? "Copied. Paste it wherever it needs to go." : "Clipboard was blocked, so it downloaded instead.");
   };
 
   const reroll = (id: string) => {
@@ -843,6 +827,10 @@ export default function WritingTrack({ accent }: { accent: string }) {
 
   return (
     <div className="grid lg:grid-cols-12 gap-6 items-start">
+      {/* Results appear away from focus, so assistive tech hears them here. */}
+      <p aria-live="polite" className="sr-only">
+        {say}
+      </p>
       <div className="lg:col-span-7 space-y-4">
         {/* What the copy is written against. Wrong here means wrong everywhere. */}
         <div className="panel p-6 relative overflow-hidden">
@@ -858,6 +846,7 @@ export default function WritingTrack({ accent }: { accent: string }) {
             value={facts.idea}
             onChange={(e) => set("idea", e.target.value)}
             placeholder="a bakery people cross town for"
+            aria-label="What you are making"
             className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule px-4 py-3 text-sm font-light outline-none focus:border-accent transition-colors mb-3"
           />
 
@@ -916,12 +905,14 @@ export default function WritingTrack({ accent }: { accent: string }) {
 
           <input
             value={facts.proof}
+            aria-label="One true thing about it"
             onChange={(e) => set("proof", e.target.value)}
             placeholder="One true thing: 200 loaves a week, all gone by noon"
             className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule px-4 py-3 text-sm font-light outline-none focus:border-accent transition-colors mb-3"
           />
           <input
             value={facts.ask}
+            aria-label="What you want them to do"
             onChange={(e) => set("ask", e.target.value)}
             placeholder="What you want them to do: text 555 0100 and you get a time back"
             className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule px-4 py-3 text-sm font-light outline-none focus:border-accent transition-colors"
@@ -1001,6 +992,7 @@ export default function WritingTrack({ accent }: { accent: string }) {
             <textarea
               rows={Math.min(14, Math.max(3, valueOf(s).split("\n").length + 1))}
               value={valueOf(s)}
+              aria-label={s.label}
               onChange={(e) => setEdits({ ...edits, [keyOf(s.id)]: e.target.value })}
               className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule px-4 py-3 text-sm font-light leading-relaxed outline-none focus:border-accent transition-colors resize-y"
             />

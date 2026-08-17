@@ -9,10 +9,11 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        // Poppins, matching the type Denny uses in Canva
-        sans: ["Poppins", "system-ui", "sans-serif"],
-        display: ["Poppins", "system-ui", "sans-serif"],
-        mono: ["Poppins", "system-ui", "sans-serif"],
+        // Figtree. Geometric like Poppins was, but with a tighter, less circular
+        // bowl, so it reads as a studio rather than as a template.
+        sans: ["Figtree", "system-ui", "sans-serif"],
+        display: ["Figtree", "system-ui", "sans-serif"],
+        mono: ["Figtree", "system-ui", "sans-serif"],
       },
       colors: {
         // Dark canvas
@@ -23,7 +24,7 @@ const config: Config = {
         // Type
         ink: "#F1F3F7",
         "ink-soft": "#ABB8CF",
-        "ink-mute": "#7A89A5",
+        "ink-mute": "#93A2BC",
         // Brand blue, light end of the family
         accent: "#5B8CFF",
         "accent-deep": "#3D6FE8",
@@ -31,9 +32,11 @@ const config: Config = {
         "accent-pale": "#C6E4F8",
         "brand-navy": "#1E3A8A",
         // Signal colours. Each one always means the same thing:
-        // speed = amber, price = violet, ownership = emerald, effort = teal
+        // speed = amber, price = ember, ownership = emerald, effort = teal.
+        // Price used to be a violet. Violet next to this blue is the house
+        // style of every site nobody designed, so it is an ember now.
         speed: "#FBBF24",
-        price: "#A78BFA",
+        price: "#F0845F",
         own: "#34D399",
         effort: "#2DD4BF",
       },

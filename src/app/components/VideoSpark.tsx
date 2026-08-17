@@ -739,7 +739,7 @@ export default function VideoSpark({ topic }: { topic: string }) {
     const H = proj.h;
 
     try {
-      // Poppins may still be loading. Waiting means the words come out in the
+      // Figtree may still be loading. Waiting means the words come out in the
       // right typeface instead of whatever the system had lying around.
       try {
         await document.fonts.ready;

@@ -13,7 +13,8 @@ export default function StructuredData() {
         "@type": ["Organization", "ProfessionalService"],
         "@id": `${SITE.url}/#organization`,
         name: "FlowZone",
-        alternateName: ["FlowZone", "FlowZone Studio", "flowzone.dev"],
+        // Only real alternates. Repeating the name here says nothing.
+        alternateName: ["FlowZone Studio", "flowzone.dev"],
         url: SITE.url,
         email: SITE.email,
         telephone: SITE.phone,
@@ -23,7 +24,9 @@ export default function StructuredData() {
             contactType: "sales",
             telephone: SITE.phone,
             email: SITE.email,
-            areaServed: "US",
+            // Matches the areaServed on the organization below. The two used
+            // to disagree, US here and Worldwide there.
+            areaServed: "Worldwide",
             availableLanguage: "English",
           },
         ],
@@ -39,6 +42,9 @@ export default function StructuredData() {
         image: `${SITE.url}/opengraph-image.png`,
         foundingDate: "2026",
         sameAs: [SITE.linkedin, SITE.linkedinFounder],
+        // The Person node is already in this graph. Point at it so Google
+        // connects the studio to the person who runs it.
+        founder: { "@id": `${SITE.url}/#founder` },
         areaServed: "Worldwide",
         priceRange: "$$",
         knowsAbout: [
@@ -48,12 +54,15 @@ export default function StructuredData() {
           "Ecommerce storefronts",
           "Business systems",
         ],
+        // Prices track /pricing. If a tier changes there, change it here in
+        // the same commit or the rich result starts quoting a stale number.
         makesOffer: [
           {
             "@type": "Offer",
             name: "Starter",
             price: "600",
             priceCurrency: "USD",
+            url: `${SITE.url}/pricing`,
             description: "One part: Brand, Site or System, built and handed over finished.",
           },
           {
@@ -61,11 +70,13 @@ export default function StructuredData() {
             name: "Growth",
             price: "2497",
             priceCurrency: "USD",
+            url: `${SITE.url}/pricing`,
             description: "Brand, site and one system wired together and handed over working.",
           },
           {
             "@type": "Offer",
             name: "Scale",
+            url: `${SITE.url}/pricing`,
             description: "Multi brand, larger catalogs and custom integrations, quoted flat.",
           },
         ],

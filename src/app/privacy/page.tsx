@@ -3,7 +3,18 @@ import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "FlowZone privacy policy — how we collect, use, and protect your information.",
+  description: "How FlowZone collects, uses and protects your information.",
+  alternates: { canonical: "/privacy" },
+  // Set in full because metadata merging is shallow. A page that declares
+  // openGraph replaces the layout block outright, so anything omitted is gone.
+  openGraph: {
+    title: "Privacy Policy | FlowZone",
+    description: "How FlowZone collects, uses and protects your information.",
+    url: `${SITE.url}/privacy`,
+    siteName: "FlowZone",
+    type: "website",
+    locale: "en_US",
+  },
 };
 
 export default function PrivacyPolicy() {

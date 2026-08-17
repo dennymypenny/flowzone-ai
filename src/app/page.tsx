@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import ChatWidget from "@/app/components/ChatWidget";
 import WorkSession from "@/app/components/WorkSession";
 import MessageUs from "@/components/MessageUs";
@@ -7,9 +8,21 @@ import FlowRide from "@/app/components/FlowRide";
 import { SITE, PILLARS } from "@/lib/site";
 import Icon from "@/components/Icon";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "FlowZone | Creative Studio",
   description: `${SITE.line} ${SITE.descriptor}`,
+  alternates: { canonical: "/" },
+  // openGraph merging is shallow, so siteName, type and locale get repeated on
+  // every page. The card image is not repeated because app/opengraph-image.png
+  // is file based metadata, which every route inherits on its own.
+  openGraph: {
+    title: "FlowZone | Creative Studio",
+    description: `${SITE.line} ${SITE.descriptor}`,
+    url: SITE.url,
+    siteName: "FlowZone",
+    type: "website",
+    locale: "en_US",
+  },
 };
 
 export default function Home() {
@@ -81,7 +94,7 @@ export default function Home() {
               { i: "box", k: "What you get", v: "Brand, site and system", c: "#5B9BF9" },
               { i: "hands", k: "How much you do", v: "Almost nothing. 100% done for you", c: "#2DD4BF" },
               { i: "bolt", k: "How fast it moves", v: "Started the day you say go", c: "#FBBF24" },
-              { i: "banknote", k: "What it costs", v: "Nothing to find out. Flow Mode is free", c: "#A78BFA" },
+              { i: "banknote", k: "What it costs", v: "Nothing to find out. Flow Mode is free", c: "#F0845F" },
               { i: "key", k: "What you own", v: "All of it. Code, domain, accounts", c: "#34D399" },
             ].map((x) => (
               <div key={x.k} className="panel panel-lift relative overflow-hidden px-5 py-6">
@@ -207,7 +220,7 @@ export default function Home() {
       </section>
 
       {/* ---------- Point of view, on white for contrast ---------- */}
-      <section data-flow className="bg-white text-[#0B1322] px-6 py-28">
+      <section data-flow className="band-light px-6 py-28">
         <div className="max-w-6xl mx-auto">
           <p className="text-[11px] font-medium uppercase tracking-label text-[#3D6FE8] mb-6">
             Where we have a point of view
@@ -240,7 +253,7 @@ export default function Home() {
               },
               {
                 n: "03",
-                c: "#A78BFA",
+                c: "#F0845F",
                 t: "Consistency beats cleverness",
                 b: "One line repeated everywhere outperforms three good lines competing.",
               },
@@ -289,7 +302,7 @@ export default function Home() {
       </section>
 
       {/* ---------- Work ---------- */}
-      <section data-flow className="bg-white text-[#0B1322] px-6 py-28">
+      <section data-flow className="band-light px-6 py-28">
         <div className="max-w-6xl mx-auto">
           {/* Dots and a caption, the same mark the whole studio runs on */}
           <div className="flex flex-col items-center text-center mb-14">
@@ -398,7 +411,7 @@ export default function Home() {
               },
               {
                 i: "eye",
-                c: "#A78BFA",
+                c: "#F0845F",
                 step: "Level 2",
                 day: "First look",
                 t: "See a real direction",
@@ -490,7 +503,7 @@ export default function Home() {
               },
               {
                 i: "banknote",
-                c: "#A78BFA",
+                c: "#F0845F",
                 k: "You know the number first",
                 v: "Flat price agreed before work starts. No hourly billing, no retainers.",
               },
@@ -518,7 +531,7 @@ export default function Home() {
       </section>
 
       {/* ---------- The name as a verb ---------- */}
-      <section data-flow className="border-t border-rule px-6 py-20">
+      <section data-flow className="band-light px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <div className="panel p-8 md:p-12 grid md:grid-cols-12 gap-10">
             <div className="md:col-span-5">
@@ -623,7 +636,7 @@ export default function Home() {
       </section>
 
       {/* ---------- The philosophy line, white for punch ---------- */}
-      <section data-flow className="bg-white text-[#0B1322] px-6 py-28">
+      <section data-flow className="band-light px-6 py-28">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-[11px] font-medium uppercase tracking-label text-[#3D6FE8] mb-8">
             Why it can be this fast

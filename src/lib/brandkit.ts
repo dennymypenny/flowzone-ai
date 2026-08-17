@@ -661,7 +661,7 @@ const arc = (cx: number, cy: number, r: number, a0: number, a1: number) => {
   return `M${f(x0)} ${f(y0)} A${r} ${r} 0 ${large} ${sweep} ${f(x1)} ${f(y1)}`;
 };
 
-const MARK_FONT = "Poppins, Helvetica Neue, Helvetica, Arial, sans-serif";
+const MARK_FONT = "Figtree, Helvetica Neue, Helvetica, Arial, sans-serif";
 
 /** Letters in a mark are set once, properly, and reused everywhere. */
 const letters = (t: string, x: number, y: number, size: number, fill: string, weight = 600, anchor = "middle") =>
@@ -1139,7 +1139,7 @@ export type TypeSet = {
   why: string;
 };
 
-const POPPINS = "Poppins, Helvetica Neue, Helvetica, Arial, sans-serif";
+const FIGTREE = "Figtree, Helvetica Neue, Helvetica, Arial, sans-serif";
 const GEORGIA = "Georgia, Cambria, Times New Roman, Times, serif";
 const PALATINO = "Palatino Linotype, Palatino, Book Antiqua, Georgia, serif";
 const GROTESK = "Helvetica Neue, Helvetica, Arial, sans-serif";
@@ -1148,7 +1148,7 @@ const MONO = "ui-monospace, SFMono-Regular, Menlo, Consolas, Courier New, monosp
 /**
  * Real pairings, from fonts that are actually there.
  *
- * Poppins is the one webfont this site loads. Everything paired with it ships
+ * Figtree is the one webfont this site loads. Everything paired with it ships
  * with the operating system, so none of these need a font licence, a download
  * or a fallback that looks nothing like the preview. A type pairing you cannot
  * install is a mood board, not a decision.
@@ -1160,8 +1160,8 @@ export const TYPESETS: TypeSet[] = [
     display: "600",
     body: "300",
     note: "Modern, calm, gets out of the way.",
-    displayFont: POPPINS,
-    bodyFont: POPPINS,
+    displayFont: FIGTREE,
+    bodyFont: FIGTREE,
     tracking: -0.8,
     why: "One family, contrast made out of weight. The safest pairing there is, because two weights of the same face can never clash.",
   },
@@ -1171,10 +1171,10 @@ export const TYPESETS: TypeSet[] = [
     display: "700",
     body: "400",
     note: "Loud, confident, made to be seen small.",
-    displayFont: POPPINS,
-    bodyFont: POPPINS,
+    displayFont: FIGTREE,
+    bodyFont: FIGTREE,
     tracking: -1.4,
-    why: "Poppins at 700 with the tracking pulled in. Heavy geometric letters keep their shape at thumbnail size, which is where most people will meet you.",
+    why: "Figtree at 700 with the tracking pulled in. Heavy geometric letters keep their shape at thumbnail size, which is where most people will meet you.",
   },
   {
     id: "editorial",
@@ -1182,7 +1182,7 @@ export const TYPESETS: TypeSet[] = [
     display: "500",
     body: "400",
     note: "Quiet and premium. Needs space around it.",
-    displayFont: POPPINS,
+    displayFont: FIGTREE,
     bodyFont: GEORGIA,
     tracking: -0.4,
     why: "Geometric name, serif reading. Georgia was drawn for screens and sits on every machine, so long copy stops feeling like an interface and starts feeling like something written.",
@@ -1194,7 +1194,7 @@ export const TYPESETS: TypeSet[] = [
     body: "300",
     note: "Old money. Good for trust and craft.",
     displayFont: GEORGIA,
-    bodyFont: POPPINS,
+    bodyFont: FIGTREE,
     tracking: -0.6,
     why: "Serif on top, geometric underneath. The serif buys you age and care, the sans keeps the small print modern.",
   },
@@ -1205,9 +1205,9 @@ export const TYPESETS: TypeSet[] = [
     body: "400",
     note: "Neutral, industrial, never in the way.",
     displayFont: GROTESK,
-    bodyFont: POPPINS,
+    bodyFont: FIGTREE,
     tracking: -1.2,
-    why: "Helvetica or Arial set tight, with Poppins doing the body. Neutral on purpose, so the colour and the mark carry the personality.",
+    why: "Helvetica or Arial set tight, with Figtree doing the body. Neutral on purpose, so the colour and the mark carry the personality.",
   },
   {
     id: "technical",
@@ -1215,7 +1215,7 @@ export const TYPESETS: TypeSet[] = [
     display: "600",
     body: "400",
     note: "For tools, dashboards, anything with numbers in it.",
-    displayFont: POPPINS,
+    displayFont: FIGTREE,
     bodyFont: MONO,
     tracking: -0.5,
     why: "A monospace body reads as precision and lines numbers up for free. Use it where the numbers matter, not for paragraphs.",
@@ -1227,7 +1227,7 @@ export const TYPESETS: TypeSet[] = [
     body: "300",
     note: "Warm, printed, unhurried.",
     displayFont: PALATINO,
-    bodyFont: POPPINS,
+    bodyFont: FIGTREE,
     tracking: 0.4,
     why: "Palatino is a calligraphic old style with real warmth in it, and it falls back to Georgia everywhere it is missing. Set it with air around it or it looks like a letter from a bank.",
   },
@@ -1277,7 +1277,7 @@ export function completeness(state: {
   const tiers: Array<[number, string, string]> = [
     [100, "Ready to hand over", "#34D399"],
     [80, "Nearly there", "#FBBF24"],
-    [50, "Taking shape", "#A78BFA"],
+    [50, "Taking shape", "#F0845F"],
     [30, "A sketch", "#5B9BF9"],
     [0, "Blank canvas", "#647089"],
   ];
@@ -1333,7 +1333,7 @@ export type Lockup = {
 const esc = (t: string) =>
   t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-const FONT = POPPINS;
+const FONT = FIGTREE;
 
 /**
  * Roughly how wide a string will set.

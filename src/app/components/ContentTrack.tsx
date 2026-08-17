@@ -1,6 +1,15 @@
 "use client";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import MemeMaker from "@/app/components/MemeMaker";
+import {
+  copyOrDownload,
+  downloadBlob,
+  fetchJSON,
+  loadJSON,
+  readFunnelAnswers,
+  readIdea,
+  saveJSON,
+} from "@/lib/session";
 
 /**
  * Planning a short video, for somebody who has never planned one.
@@ -22,8 +31,6 @@ import MemeMaker from "@/app/components/MemeMaker";
  */
 
 const KEY = "flowzone.content.v3";
-const FUNNEL_KEY = "flowzone.funnel.v2";
-const IDEA_KEY = "flowzone.idealens.v1";
 
 type Scene = {
   id: string;
@@ -740,6 +747,10 @@ export default function ContentTrack({ accent }: { accent: string }) {
   const [picked, setPicked] = useState<string | null>(null);
   const [shots, setShots] = useState<Array<{ id: string; thumb: string; url: string; title: string }>>([]);
   const [loadingRefs, setLoadingRefs] = useState(false);
+  const [refError, setRefError] = useState("");
+  // Pulling references and copying the plan both finish somewhere nobody is
+  // looking, so the outcome gets announced.
+  const [say, setSay] = useState("");
   const [ask, setAsk] = useState("");
   const [log, setLog] = useState<Array<{ you: string; back: string }>>([]);
   const logEnd = useRef<HTMLDivElement | null>(null);
@@ -749,42 +760,27 @@ export default function ContentTrack({ accent }: { accent: string }) {
   useEffect(() => {
     let seededTopic = "";
     let seededFmt = "reel30";
-    let a: Answers = {};
-    try {
-      const f = window.localStorage.getItem(FUNNEL_KEY);
-      if (f) {
-        a = (JSON.parse(f).answers || {}) as Answers;
-        setAnswers(a);
+    const a: Answers = readFunnelAnswers();
+    setAnswers(a);
+
+    const idea = readIdea();
+    if (idea?.q) seededTopic = idea.q;
+
+    const p = loadJSON<Record<string, any> | null>(KEY, null);
+    if (p) {
+      seededFmt = p.fmt && FORMATS[p.fmt] ? p.fmt : "reel30";
+      setFmt(seededFmt);
+      seededTopic = p.topic || seededTopic;
+      setTopic(seededTopic);
+      setCaption(p.caption || "");
+      setTagSet(p.tagSet || guessTagSet(p.topic || seededTopic));
+      if (Array.isArray(p.scenes) && p.scenes.length) {
+        setScenes(p.scenes as Scene[]);
+        return;
       }
-    } catch {
-      /* the plan works without them, it is just broader */
-    }
-    try {
-      const idea = window.localStorage.getItem(IDEA_KEY);
-      if (idea) seededTopic = String(JSON.parse(idea)?.q || "");
-    } catch {
-      /* ignore */
-    }
-    try {
-      const raw = window.localStorage.getItem(KEY);
-      if (raw) {
-        const p = JSON.parse(raw);
-        seededFmt = p.fmt && FORMATS[p.fmt] ? p.fmt : "reel30";
-        setFmt(seededFmt);
-        seededTopic = p.topic || seededTopic;
-        setTopic(seededTopic);
-        setCaption(p.caption || "");
-        setTagSet(p.tagSet || guessTagSet(p.topic || seededTopic));
-        if (Array.isArray(p.scenes) && p.scenes.length) {
-          setScenes(p.scenes as Scene[]);
-          return;
-        }
-      } else {
-        setTopic(seededTopic);
-        setTagSet(guessTagSet(seededTopic));
-      }
-    } catch {
-      /* ignore */
+    } else {
+      setTopic(seededTopic);
+      setTagSet(guessTagSet(seededTopic));
     }
     // Nothing saved, so there is a real plan on screen before they touch anything.
     setScenes(
@@ -796,11 +792,7 @@ export default function ContentTrack({ accent }: { accent: string }) {
 
   useEffect(() => {
     const t = window.setTimeout(() => {
-      try {
-        window.localStorage.setItem(KEY, JSON.stringify({ fmt, topic, scenes, caption, tagSet }));
-      } catch {
-        /* ignore */
-      }
+      saveJSON(KEY, { fmt, topic, scenes, caption, tagSet });
     }, 400);
     return () => window.clearTimeout(t);
   }, [fmt, topic, scenes, caption, tagSet]);
@@ -941,12 +933,25 @@ export default function ContentTrack({ accent }: { accent: string }) {
   const pullRefs = async (kind: "photo" | "gif") => {
     const q = topic.trim() || "small business";
     setLoadingRefs(true);
+    setRefError("");
+    setSay("Looking for references.");
     try {
-      const res = await fetch(`/api/moodboard?q=${encodeURIComponent(q)}&kind=${kind}`);
-      const data = await res.json();
-      if (data.ok) setShots(data.shots || []);
-    } catch {
-      /* leave it as it was */
+      // No leash here meant a dead network span forever. Eight seconds, then
+      // an error somebody can actually act on.
+      const data = await fetchJSON<{ ok?: boolean; shots?: typeof shots }>(
+        `/api/moodboard?q=${encodeURIComponent(q)}&kind=${kind}`
+      );
+      if (!data.ok) throw new Error("failed");
+      const found = data.shots || [];
+      setShots(found);
+      setSay(found.length ? `${found.length} references loaded.` : "No references came back for that.");
+    } catch (e) {
+      const msg =
+        e instanceof Error && e.name === "AbortError"
+          ? "That took too long. Check your connection and try again."
+          : "Could not reach the reference service. Try again.";
+      setRefError(msg);
+      setSay(msg);
     }
     setLoadingRefs(false);
   };
@@ -982,22 +987,22 @@ export default function ContentTrack({ accent }: { accent: string }) {
       "Planned at flowzone.dev/start",
     ].join("\n");
 
+  const planFile = () =>
+    `${(topic.trim() || "video-plan").toLowerCase().replace(/[^a-z0-9]+/g, "-")}.txt`;
+
   const download = () => {
-    const blob = new Blob([plan()], { type: "text/plain" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = `${(topic.trim() || "video-plan").toLowerCase().replace(/[^a-z0-9]+/g, "-")}.txt`;
-    a.click();
-    URL.revokeObjectURL(a.href);
+    downloadBlob(plan(), planFile(), "text/plain");
+    setSay("The plan downloaded as a text file.");
   };
 
   const copyAll = async () => {
-    try {
-      await navigator.clipboard.writeText(plan());
-      setLog((l) => [...l, { you: "Copy the plan", back: "Copied. Paste it into your notes app and shoot from your phone." }]);
-    } catch {
-      download();
-    }
+    const how = await copyOrDownload(plan(), planFile(), "text/plain");
+    const back =
+      how === "copied"
+        ? "Copied. Paste it into your notes app and shoot from your phone."
+        : "Clipboard was blocked, so the plan downloaded instead.";
+    setLog((l) => [...l, { you: "Copy the plan", back }]);
+    setSay(back);
   };
 
   const STEPS: Array<{ id: typeof step; n: string; label: string }> = [
@@ -1027,6 +1032,10 @@ export default function ContentTrack({ accent }: { accent: string }) {
 
   return (
     <div>
+      {/* Async results land nowhere near focus, so they get said out loud. */}
+      <p aria-live="polite" className="sr-only">
+        {say}
+      </p>
       {/* Three steps, in order, always visible. That is the whole navigation. */}
       <div className="grid sm:grid-cols-3 gap-2 mb-5">
         {STEPS.map((s) => {
@@ -1064,6 +1073,7 @@ export default function ContentTrack({ accent }: { accent: string }) {
                 <p className="label mb-2">What is the video about?</p>
                 <input
                   value={topic}
+                  aria-label="What the video is about"
                   onChange={(e) => {
                     setTopic(e.target.value);
                     setTagSet(guessTagSet(e.target.value));
@@ -1076,6 +1086,7 @@ export default function ContentTrack({ accent }: { accent: string }) {
                 <p className="label mb-2">How long, what shape</p>
                 <select
                   value={fmt}
+                  aria-label="How long and what shape"
                   onChange={(e) => {
                     setFmt(e.target.value);
                     build(e.target.value, variant);
@@ -1130,7 +1141,7 @@ export default function ContentTrack({ accent }: { accent: string }) {
               {(
                 [
                   ["What this video has to do", read.job, "#FBBF24"],
-                  ["Where to point the camera", read.point, "#A78BFA"],
+                  ["Where to point the camera", read.point, "#F0845F"],
                   ["What counts as proof", read.proof, "#34D399"],
                   ["The ask you have earned", read.ask, "#5B9BF9"],
                 ] as const
@@ -1227,6 +1238,7 @@ export default function ContentTrack({ accent }: { accent: string }) {
             <div className="flex flex-wrap gap-2 mb-3">
               <input
                 value={ask}
+                aria-label="Say what you want changed"
                 onChange={(e) => setAsk(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && sendAsk()}
                 placeholder="Make it shorter and less formal"
@@ -1287,6 +1299,7 @@ export default function ContentTrack({ accent }: { accent: string }) {
                         <input
                           type="number"
                           min={1}
+                          aria-label={`Seconds for scene ${i + 1}`}
                           value={s.secs}
                           onChange={(e) => patch(s.id, "secs", Number(e.target.value))}
                           className="w-14 bg-paper-deep text-ink border border-rule px-2 py-1.5 text-xs outline-none focus:border-accent"
@@ -1294,10 +1307,10 @@ export default function ContentTrack({ accent }: { accent: string }) {
                         <span className="text-[11px] text-ink-mute mr-1">sec</span>
                       </>
                     )}
-                    <button onClick={() => move(i, -1)} disabled={i === 0} title="Move up" className="text-ink-mute hover:text-ink disabled:opacity-30 px-1.5 text-sm">↑</button>
-                    <button onClick={() => move(i, 1)} disabled={i === scenes.length - 1} title="Move down" className="text-ink-mute hover:text-ink disabled:opacity-30 px-1.5 text-sm">↓</button>
-                    <button onClick={() => duplicate(i)} title="Duplicate" className="text-ink-mute hover:text-ink px-1.5 text-xs">copy</button>
-                    <button onClick={() => setScenes((ss) => ss.filter((x) => x.id !== s.id))} title="Remove" className="text-ink-mute hover:text-ink px-1.5 text-xs">remove</button>
+                    <button onClick={() => move(i, -1)} disabled={i === 0} title="Move up" aria-label={`Move scene ${i + 1} up`} className="text-ink-mute hover:text-ink disabled:opacity-30 px-1.5 text-sm">↑</button>
+                    <button onClick={() => move(i, 1)} disabled={i === scenes.length - 1} title="Move down" aria-label={`Move scene ${i + 1} down`} className="text-ink-mute hover:text-ink disabled:opacity-30 px-1.5 text-sm">↓</button>
+                    <button onClick={() => duplicate(i)} title="Duplicate" aria-label={`Duplicate scene ${i + 1}`} className="text-ink-mute hover:text-ink px-1.5 text-xs">copy</button>
+                    <button onClick={() => setScenes((ss) => ss.filter((x) => x.id !== s.id))} title="Remove" aria-label={`Remove scene ${i + 1}`} className="text-ink-mute hover:text-ink px-1.5 text-xs">remove</button>
                   </div>
                 </div>
                 {fieldLabels.map(([f, label, ph]) => (
@@ -1305,6 +1318,7 @@ export default function ContentTrack({ accent }: { accent: string }) {
                     <p className="text-[10px] uppercase tracking-label text-ink-mute mb-1">{label}</p>
                     <textarea
                       rows={f === "say" || f === "frame" ? 2 : 1}
+                      aria-label={`${label}, ${format.unit === "slide" ? "slide" : "scene"} ${i + 1}`}
                       value={String(s[f] ?? "")}
                       onChange={(e) => patch(s.id, f, e.target.value)}
                       placeholder={ph}
@@ -1372,6 +1386,7 @@ export default function ContentTrack({ accent }: { accent: string }) {
             <textarea
               rows={10}
               value={caption}
+              aria-label="The caption"
               onChange={(e) => setCaption(e.target.value)}
               placeholder="First line is the hook. Then the detail. Then what to do."
               className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule px-4 py-3 text-sm font-light leading-relaxed outline-none focus:border-accent transition-colors resize-none mb-4"
@@ -1399,6 +1414,7 @@ export default function ContentTrack({ accent }: { accent: string }) {
             <p className="label mb-2">Hashtags</p>
             <select
               value={tagSet}
+              aria-label="Hashtag set"
               onChange={(e) => setTagSet(e.target.value)}
               className="w-full bg-paper-deep text-ink border border-rule px-4 py-3 text-sm font-light outline-none focus:border-accent transition-colors mb-3"
             >
@@ -1446,6 +1462,7 @@ export default function ContentTrack({ accent }: { accent: string }) {
                 Find GIFs
               </button>
             </div>
+            {refError && <p className="text-[12px] text-[#FBBF24] mb-3">{refError}</p>}
             {shots.length > 0 && (
               <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
                 {shots.map((s) => (
