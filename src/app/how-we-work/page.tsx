@@ -127,7 +127,7 @@ export default function HowWeWork() {
       </section>
 
       {/* Timeline */}
-      <section data-flow className="px-6 pb-16">
+      <section data-flow className="band-light px-6 py-16">
         <div className="max-w-6xl mx-auto">
           {days.map((d) => (
             <div key={d.tag} className="border-t border-rule py-12 grid md:grid-cols-12 gap-8">
@@ -165,7 +165,7 @@ export default function HowWeWork() {
       </section>
 
       {/* FAQ */}
-      <section data-flow className="px-6 py-24">
+      <section data-flow className="band-light px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <div className="border-b border-rule pb-4 mb-14 flex items-baseline justify-between">
             <p className="label">Straight Answers</p>

@@ -241,25 +241,25 @@ export default function Home() {
             {[
               {
                 n: "01",
-                c: "#4C7BE8",
+                c: "#2B57C4",
                 t: "A logo is not a brand",
                 b: "It is one asset inside a system. Buy a logo on its own and in six months you will have five versions of yourself.",
               },
               {
                 n: "02",
-                c: "#5B9BF9",
+                c: "#155E9C",
                 t: "Most rebrands fail at the sentence, not the symbol",
                 b: "The first thing a customer processes is a sentence. If it could describe any of your competitors, it has done nothing.",
               },
               {
                 n: "03",
-                c: "#F0845F",
+                c: "#B03A12",
                 t: "Consistency beats cleverness",
                 b: "One line repeated everywhere outperforms three good lines competing.",
               },
               {
                 n: "04",
-                c: "#34D399",
+                c: "#0F6B4F",
                 t: "Taste is a decision, not a vibe",
                 b: "Every choice is defensible. If we cannot explain a decision to you, it was not a decision.",
               },
@@ -279,7 +279,7 @@ export default function Home() {
 
           <div className="mt-14 rounded-2xl border border-[#DCE5F2] bg-[#F6F9FE] p-8 grid md:grid-cols-12 gap-8 items-center">
             <div className="md:col-span-8">
-              <p className="text-[11px] font-medium uppercase tracking-label text-[#3D6FE8] mb-3">
+              <p className="text-[11px] font-medium uppercase tracking-label text-[#2B57C4] mb-3">
                 What that covers
               </p>
               <p className="text-[#49566E] font-light leading-relaxed">
@@ -579,7 +579,7 @@ export default function Home() {
             {[
               {
                 n: "01",
-                c: "#4C7BE8",
+                c: "#2B57C4",
                 t: "You have to know what to ask for",
                 b: "AI gives you exactly what you describe. Most people cannot describe it yet, and that is the actual work.",
               },

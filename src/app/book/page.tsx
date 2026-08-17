@@ -48,13 +48,18 @@ export default function Talk() {
         </div>
       </section>
 
-      <section data-flow className="px-6 pb-24">
+      {/* The three ways in, on white. Every signal colour in here is paired
+          down to a dark twin for the band: emerald #34D399 (1.92:1 on white)
+          becomes #0F6B4F at 6.49:1, teal #2DD4BF (1.86:1) becomes #0C6E80 at
+          5.90:1, sky #5B9BF9 (2.80:1) becomes #155E9C at 6.75:1, and ember
+          #F0845F (2.57:1) becomes #B03A12 at 6.07:1. */}
+      <section data-flow className="band-light px-6 py-20">
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-4">
           <div className="panel p-8 flex flex-col relative overflow-hidden">
-            <span className="absolute top-0 left-0 h-[3px] w-full bg-[#34D399]" />
-            <span className="block mb-5 mt-1"><Icon name="chat" size={22} color="#2DD4BF" /></span>
+            <span className="absolute top-0 left-0 h-[3px] w-full bg-[#0F6B4F]" />
+            <span className="block mb-5 mt-1"><Icon name="chat" size={22} color="#0C6E80" /></span>
             <h2 className="font-display text-2xl mb-2">Message us</h2>
-            <p className="text-sm text-[#34D399] mb-5">Fastest. Lands on a phone.</p>
+            <p className="text-sm text-[#0F6B4F] mb-5">Fastest. Lands on a phone.</p>
             <p className="text-sm text-ink-soft font-light leading-relaxed mb-7">
               {hasPhone
                 ? "Opens your messages app with a text started. Good for a quick question, a rough idea, or a photo of the thing you are trying to describe."
@@ -74,10 +79,10 @@ export default function Talk() {
           </div>
 
           <div className="panel p-8 flex flex-col relative overflow-hidden">
-            <span className="absolute top-0 left-0 h-[3px] w-full bg-[#5B9BF9]" />
-            <span className="block mb-5 mt-1"><Icon name="pencil" size={22} color="#5B9BF9" /></span>
+            <span className="absolute top-0 left-0 h-[3px] w-full bg-[#155E9C]" />
+            <span className="block mb-5 mt-1"><Icon name="pencil" size={22} color="#155E9C" /></span>
             <h2 className="font-display text-2xl mb-2">Email us</h2>
-            <p className="text-sm text-[#5B9BF9] mb-5">Best for detail.</p>
+            <p className="text-sm text-[#155E9C] mb-5">Best for detail.</p>
             <p className="text-sm text-ink-soft font-light leading-relaxed mb-7">
               Opens with the questions already asked, so you are not staring at a blank
               message wondering what we need to know.
@@ -90,10 +95,10 @@ export default function Talk() {
           </div>
 
           <div className="panel p-8 flex flex-col relative overflow-hidden">
-            <span className="absolute top-0 left-0 h-[3px] w-full bg-[#F0845F]" />
-            <span className="block mb-5 mt-1"><Icon name="compass" size={22} color="#F0845F" /></span>
+            <span className="absolute top-0 left-0 h-[3px] w-full bg-[#B03A12]" />
+            <span className="block mb-5 mt-1"><Icon name="compass" size={22} color="#B03A12" /></span>
             <h2 className="font-display text-2xl mb-2">Work it out first</h2>
-            <p className="text-sm text-[#F0845F] mb-5">Best if it is still fuzzy.</p>
+            <p className="text-sm text-[#B03A12] mb-5">Best if it is still fuzzy.</p>
             <p className="text-sm text-ink-soft font-light leading-relaxed mb-7">
               Six questions that turn a vague intention into a real brief, with a sketch
               of it building beside you as you answer. Send it when it is ready.
@@ -113,7 +118,7 @@ export default function Talk() {
         </div>
       </section>
 
-      <section data-flow className="border-t border-rule px-6 py-24">
+      <section data-flow className="band-light px-6 py-24">
         <div className="max-w-6xl mx-auto grid md:grid-cols-12 gap-10">
           <div className="md:col-span-5">
             <p className="label mb-6">What happens next</p>

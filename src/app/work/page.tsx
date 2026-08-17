@@ -108,8 +108,14 @@ This is where the studio starts, and it started from something we
         </div>
       </section>
 
-      {/* ---------- Walkthrough: the thinking behind the mark ---------- */}
-      <section data-flow className="border-t border-rule px-6 py-24">
+      {/* ---------- Walkthrough: the thinking behind the mark, on white ----------
+          The longest read on the site, so it gets the light band. Every step
+          carries a signal colour, and none of the dark-theme values survive on
+          white, so each one has a paired dark value in `cl` below. Ratios on
+          #FFFFFF: #2B57C4 6.44, #A8175E 7.12, #0E6E85 5.85, #8A5100 6.45,
+          #0F6B4F 6.49, #155E9C 6.75. The originals measured 3.96, 3.29, 1.57,
+          1.67 and 1.92. */}
+      <section data-flow className="band-light px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <p className="label mb-6">Walk through one decision at a time</p>
           <div className="grid md:grid-cols-12 gap-10 mb-16">
@@ -146,38 +152,43 @@ This is where the studio starts, and it started from something we
                 {
                   n: "01",
                   c: "#4C7BE8",
+                  cl: "#2B57C4",
                   t: "A shield, because the category already speaks it",
                   b: "Trading cards live inside sports crests, team badges and holo foil. A shield is not a clever idea, it is the shape the audience already reads as authority, and using the language your buyer already speaks beats being original at them.",
                 },
                 {
                   n: "02",
                   c: "#FF3D9A",
+                  cl: "#A8175E",
                   t: "Two accents, not five",
                   b: "Teal and magenta, and nothing else fighting them. Card culture is visually loud, so the mark had to hold its own against a photo of forty foil packs without joining the noise. Two colours far apart on the wheel do that. Five would have turned into mush at the size it actually gets used.",
                 },
                 {
                   n: "03",
                   c: "#38E1FF",
+                  cl: "#0E6E85",
                   t: "The crown earns its place",
                   b: "It is not decoration. The business is built on grails, the one card everyone is chasing, so the crown is the promise restated at the top of the mark. Every element should be answering a question about the business. If it is only there because it looked good, it comes out.",
                 },
                 {
                   n: "04",
                   c: "#FBBF24",
+                  cl: "#8A5100",
                   t: "Chrome that survives being shrunk",
                   b: "The bevel and the inner glow read as premium at full size, but the mark spends its life at forty pixels in a browser tab. So the silhouette had to work in one flat colour first, and the shine got added on top. Build it the other way around and you get a logo that dies the moment it is small.",
                 },
                 {
                   n: "05",
                   c: "#34D399",
+                  cl: "#0F6B4F",
                   t: "The subline does the explaining",
                   b: "RIPS and GRAILS sits under the shield so the mark never has to explain itself. Three letters cannot tell a first-time visitor what the business does. Two words can, and they can be dropped when the audience knows you.",
                 },
               ].map((x) => (
-                <div key={x.n} className="border-l-2 pl-6" style={{ borderLeftColor: x.c }}>
+                <div key={x.n} className="border-l-2 pl-6" style={{ borderLeftColor: x.cl }}>
                   <p
                     className="text-[11px] font-medium uppercase tracking-label mb-2.5"
-                    style={{ color: x.c }}
+                    style={{ color: x.cl }}
                   >
                     {x.n}
                   </p>
@@ -207,23 +218,26 @@ This is where the studio starts, and it started from something we
                   {
                     k: "What was wrong",
                     c: "#FBBF24",
+                    cl: "#8A5100",
                     v: "Half the frame was empty sky. On a phone, at the size a thumbnail is actually seen, the faces were smaller than a fingernail and the product was an unreadable smear along the bottom.",
                   },
                   {
                     k: "What changed",
                     c: "#34D399",
+                    cl: "#0F6B4F",
                     v: "Faces scaled up until they carry the frame, product pushed into every remaining gap so the density itself is the message, sky deleted entirely. Same two people, same packs, same shoot. Only the decisions changed.",
                   },
                   {
                     k: "The rule underneath it",
                     c: "#5B9BF9",
+                    cl: "#155E9C",
                     v: "Design for the size it gets viewed at, not the size you are working at. Almost every weak thumbnail, logo and hero image is a thing that was judged on a big screen and lives on a small one.",
                   },
                 ].map((r) => (
                   <div key={r.k} className="border-t border-rule pt-5">
                     <p
                       className="text-[11px] font-medium uppercase tracking-label mb-2"
-                      style={{ color: r.c }}
+                      style={{ color: r.cl }}
                     >
                       {r.k}
                     </p>

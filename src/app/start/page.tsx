@@ -27,33 +27,17 @@ export const metadata: Metadata = {
 
 /**
  * Flow Mode follows the mark: three dots, three moves.
+ *
+ * The page used to open with a headline, a paragraph, a numbered eyebrow and
+ * a second headline before anybody reached the one box that does anything.
+ * That is a brochure. On a page whose whole point is a tool, the tool is the
+ * hero, so the input sits in the first screen and the promise under it is
+ * three short marks rather than a paragraph.
  * Dot 1 the idea, dot 2 the shape, dot 3 the files you keep.
  * The FlowPath strip charges left to right as the visitor moves through,
  * so the page itself does what the company does: it takes an idea and
  * gets it moving along the line.
  */
-
-function DotHeading({
-  n,
-  color,
-  label,
-}: {
-  n: number;
-  color: string;
-  label: string;
-}) {
-  return (
-    <div className="flex items-center gap-3 mb-6">
-      <svg width="30" height="14" viewBox="0 0 30 14" aria-hidden>
-        <line x1="0" y1="7" x2="30" y2="7" stroke="#26355A" strokeWidth="1.5" />
-        <circle cx={n === 1 ? 5 : n === 2 ? 15 : 25} cy="7" r="5" fill={color} />
-      </svg>
-      <p className="text-[11px] font-medium uppercase tracking-label" style={{ color }}>
-        {n} · {label}
-      </p>
-    </div>
-  );
-}
 
 export default function Start() {
   return (
@@ -79,43 +63,57 @@ export default function Start() {
             <span className="text-gradient">the Flow</span>
             <span className="text-gradient-white">.</span>
           </h1>
-          <p className="lede max-w-reading mt-10">
-            Flow Mode is a generative idea studio, free to use. Type what you
-            imagine, shape it into a name, a logo, colours, words and a video,
-            and leave with the files. Three dots, three moves.
+          <p className="lede max-w-reading mt-8 mb-12">
+            A free idea studio that runs inside this page. Start with the thing
+            you keep meaning to start.
           </p>
+
+          <div id="flow-idea" className="scroll-mt-28">
+            <IdeaLens />
+          </div>
+
+          {/* The three things somebody actually wants to know before they type
+              into a box on a stranger's website. */}
+          <ul className="flex flex-wrap gap-x-8 gap-y-3 mt-10 text-sm text-ink-soft font-light">
+            {[
+              ["shield", "No signup, no card"],
+              ["disk", "Nothing is uploaded"],
+              ["download", "You keep the files"],
+            ].map(([icon, text]) => (
+              <li key={text} className="flex items-center gap-2.5">
+                <Icon name={icon} size={16} color="#5B9BF9" />
+                {text}
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
       {/* The idea travels this line as you scroll */}
       <FlowPath />
 
-      {/* ---------- Dot 1: the idea ---------- */}
-      <section id="flow-idea" className="relative overflow-hidden px-6 pt-16 pb-20 scroll-mt-28">
-        <div className="max-w-6xl mx-auto">
-          <DotHeading n={1} color="#5B9BF9" label="The idea" />
-          <h2 className="display text-3xl md:text-5xl max-w-2xl mb-8">
-            Say the thing out loud.
-          </h2>
-          <IdeaLens />
-        </div>
-      </section>
-
       {/* ---------- Dot 2: the shape ---------- */}
-      <section id="flow-shape" className="border-t border-rule px-6 pt-16 pb-24 scroll-mt-28">
+      <section id="flow-shape" className="border-t border-rule px-6 pt-20 pb-24 scroll-mt-28">
         <div className="max-w-6xl mx-auto">
-          <DotHeading n={2} color="#5B9BF9" label="The shape" />
-          <h2 className="display text-3xl md:text-5xl max-w-2xl mb-8">
+          <h2 className="display text-3xl md:text-5xl max-w-2xl mb-4">
             Now give it a shape.
           </h2>
+          <p className="text-ink-soft font-light leading-relaxed max-w-reading mb-10">
+            Four tools, all running here in the browser. Pick the one that
+            matches what you need next. Your work in each is saved separately,
+            so switching never costs you anything.
+          </p>
           <StartModes />
         </div>
       </section>
 
       {/* ---------- Dot 3: yours to keep ---------- */}
-      <section id="flow-keep" data-flow className="border-t border-rule px-6 pt-16 pb-24 scroll-mt-28">
+      {/* The chapter about what you walk out with is the one that has to land,
+          so it gets the light. Near black on white reads at 16:1, where the
+          dark sections run at about 9. */}
+      <section id="flow-keep" data-flow className="band-light px-6 pt-20 pb-24 scroll-mt-28">
         <div className="max-w-6xl mx-auto">
-          <DotHeading n={3} color="#C6E4F8" label="Yours to keep" />
+          <p className="label mb-8">Yours to keep</p>
           <div className="grid md:grid-cols-12 gap-10 mb-14">
             <h2 className="md:col-span-6 display text-4xl md:text-5xl">
               Leave holding real files.
@@ -132,19 +130,23 @@ export default function Start() {
             {[
               {
                 i: "puzzle",
-                c: "#5B9BF9",
+                // Paired down for the light band. #5B9BF9 is 2.80:1 on white,
+                // #155E9C is 6.75:1. Same blue family, readable.
+                c: "#155E9C",
                 t: "It asks the taste question",
                 b: "How it should feel is the part most briefs skip entirely, and it is the part that decides whether you like the result.",
               },
               {
                 i: "disk",
-                c: "#2DD4BF",
+                // #2DD4BF is 1.86:1 on white, #0C6E80 is 5.90:1.
+                c: "#0C6E80",
                 t: "It saves as you go",
                 b: "Close the tab, sleep on it, come back. Your session is still here and nothing was sent anywhere.",
               },
               {
                 i: "download",
-                c: "#34D399",
+                // #34D399 is 1.92:1 on white, #0F6B4F is 6.49:1.
+                c: "#0F6B4F",
                 t: "It comes with you",
                 b: "Logos as SVG, palettes as CSS, the video, the brief. Real files, downloaded, yours.",
               },

@@ -442,10 +442,11 @@ export default function IdeaLens() {
           </p>
         </div>
       )}
-      <p className="text-ink-soft font-light leading-relaxed max-w-reading mb-5">
-        Not the polished version. The one line you would say to a friend across
-        a table. Type it and you are in, and everything after this is built out
-        of the words you use here.
+      {/* One short prompt, tight to the field. The hero above already said
+          what this is, and two paragraphs stacked over an input is the thing
+          that made this page feel like a form. */}
+      <p className="text-ink font-light mb-4">
+        One line, the way you would say it to a friend.
       </p>
       <div className="relative max-w-xl">
         <input

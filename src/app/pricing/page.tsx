@@ -100,12 +100,24 @@ export default function Pricing() {
       </section>
 
       {/* Tiers */}
-      <section data-flow className="px-6 pb-24">
+      <section data-flow className="band-light px-6 py-20">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-3 gap-4 items-start">
           {tiers.map((t) => (
             <div
               key={t.name}
-              className={`panel p-8 flex flex-col relative ${t.best ? "border-accent/45 bg-raised glow" : ""}`}
+              className="panel p-8 flex flex-col relative"
+              // On white the raised fill and the glow that marked the popular
+              // tier both disappear, so the ring carries it instead. #2B57C4 is
+              // 6.44:1 on white, the same blue the light band gives text-accent.
+              style={
+                t.best
+                  ? {
+                      borderColor: "#2B57C4",
+                      boxShadow:
+                        "0 0 0 1px #2B57C4, 0 24px 50px -26px rgba(11, 19, 34, 0.45)",
+                    }
+                  : undefined
+              }
             >
               <div className="flex items-baseline justify-between mb-6">
                 <p className="label">{t.name}</p>

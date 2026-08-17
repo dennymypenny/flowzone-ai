@@ -48,8 +48,8 @@ export default function About() {
       </section>
 
       {/* Story */}
-      <section data-flow className="px-6 pb-24">
-        <div className="max-w-6xl mx-auto border-t border-rule pt-14 grid md:grid-cols-12 gap-12">
+      <section data-flow className="band-light px-6 py-24">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-12 gap-12">
           <div className="md:col-span-4">
             <p className="label mb-6">The Story</p>
             <h2 className="display text-4xl md:text-5xl">
@@ -133,7 +133,7 @@ export default function About() {
       </section>
 
       {/* Stand for */}
-      <section data-flow className="px-6 py-24">
+      <section data-flow className="band-light px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <div className="border-b border-rule pb-4 mb-14">
             <p className="label">What We Stand For</p>
