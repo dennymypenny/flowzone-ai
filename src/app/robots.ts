@@ -7,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        // /thank-you, /scan and /ai-news are deliberately not listed here.
+        // /thank-you and /ai-news are deliberately not listed here. /scan is indexable again.
         // Disallow blocks crawling, not indexing, and a page Google cannot
         // crawl is a page whose noindex Google never reads. Those three now
         // send noindex from their own metadata, so they have to stay

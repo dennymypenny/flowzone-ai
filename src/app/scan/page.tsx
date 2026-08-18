@@ -1,109 +1,95 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import NodeWeb from "@/app/components/NodeWeb";
+import ScanTool from "@/app/components/ScanTool";
+import { SITE } from "@/lib/site";
+
+/**
+ * /scan, second life.
+ *
+ * This route used to sell the automation era's $97 AI Scan and sat noindexed
+ * so it could die quietly. Now it is the studio's working lead magnet: paste
+ * a link, the server actually fetches and grades the page, and the full
+ * teardown costs an email address. Because it is a real tool again it goes
+ * back into the index, the sitemap and the nav.
+ */
 
 export const metadata: Metadata = {
-  title: "AI Scan and Diagnosis",
-  description: "A workflow audit, your top three system opportunities ranked by ROI and a prioritized roadmap, delivered in 48 hours.",
+  title: "Free Site Scan",
+  description:
+    "Paste your link. We fetch your site the way a phone does and grade it on mobile, speed, structure and search, with every finding named. Free, about ten seconds.",
   alternates: { canonical: "/scan" },
-  // This sells the automation era offer the studio retired, and nothing links
-  // to it. Kept live so old links do not 404, kept out of the index so it
-  // stops competing with /pricing.
-  robots: { index: false, follow: false },
   // Set in full because metadata merging is shallow. A page that declares
   // openGraph replaces the layout block outright, so anything omitted is gone.
   openGraph: {
-    title: "AI Scan and Diagnosis | FlowZone",
-    description: "A workflow audit, your top three system opportunities ranked by ROI and a prioritized roadmap, delivered in 48 hours.",
-    url: "/scan",
+    title: "Free Site Scan | FlowZone",
+    description:
+      "Paste your link. We fetch your site the way a phone does and grade it on mobile, speed, structure and search, with every finding named. Free, about ten seconds.",
+    url: `${SITE.url}/scan`,
     siteName: "FlowZone",
     type: "website",
     locale: "en_US",
   },
 };
 
-const deliverables = [
+const graded = [
   {
-    icon: "Audit",
-    title: "Full Workflow Audit",
-    desc: "We map every manual task, tool, and handoff in your business to find what's costing you the most time.",
+    name: "Design and mobile",
+    desc: "Whether phones get a phone-sized page, whether anything on the page actually asks for the sale and whether the type reads as designed or defaulted.",
   },
   {
-    icon: "Top 3",
-    title: "3 Systems Opportunities",
-    desc: "Ranked by ROI. We identify the three highest-impact systems to build first.",
+    name: "Speed and technical",
+    desc: "HTTPS, how long the server keeps people staring at a white screen, how much page they download before the first image and how the images behave while they load.",
   },
   {
-    icon: "Roadmap",
-    title: "Prioritized Action Plan",
-    desc: "A clear, step-by-step roadmap so you know exactly what to build, in what order, and why.",
-  },
-  {
-    icon: "48hr",
-    title: "Delivered in 48 Hours",
-    desc: "No long calls, no waiting weeks. You get your full diagnosis delivered to your inbox within 48 hours.",
+    name: "Content and search",
+    desc: "The title and description Google shows, whether the page has one headline or none, alt text, the social preview a shared link gets and how decisive the navigation is.",
   },
 ];
 
 export default function ScanPage() {
   return (
-    <div className="bg-paper min-h-screen">
-      {/* Hero */}
-      <section className="pt-24 pb-16 px-6 bg-gradient-to-b from-sky-50 to-white">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-paper-deep text-accent text-xs font-bold px-4 py-1.5 rounded-full mb-6 uppercase tracking-wide">
-            One-Time Offer
+    <>
+      <section className="relative overflow-hidden px-6 pt-20 pb-16">
+        <NodeWeb className="opacity-90" />
+        <div className="absolute inset-0 gridlight pointer-events-none" />
+        <div className="relative max-w-6xl mx-auto">
+          <div className="flex items-center justify-between border-b border-rule pb-4 mb-12">
+            <p className="label">Free Site Scan</p>
+            <p className="label hidden sm:block">Real checks · about ten seconds</p>
           </div>
-          <h1 className="text-5xl font-display font-normal text-ink leading-tight mb-6">
-            AI Scan &amp; Diagnosis
+          <h1 className="display text-5xl md:text-7xl max-w-4xl mb-6">
+            Paste your link.
+            <br />
+            See what it is costing you.
           </h1>
-          <p className="text-xl text-ink-mute mb-4 leading-relaxed">
-            We audit your business, identify your top 3 system opportunities ranked by ROI,
-            and deliver a prioritized roadmap, all in 48 hours.
+          <p className="lede max-w-2xl mb-12">
+            We fetch your site the way a phone does and grade what we can measure: mobile,
+            speed, structure and search. Every finding is a fact off your own page, not a
+            sales script. It will be blunt with you, because polite audits change nothing.
           </p>
-          <div className="text-4xl font-display font-normal text-accent mb-8">$97</div>
-          <Link
-            href="/intake"
-            className="inline-block bg-accent text-white font-bold px-10 py-4 rounded-xl hover:bg-accent-deep transition-colors text-lg"
-          >
-            Get My AI Scan
-          </Link>
-          <p className="text-sm text-ink-mute mt-4">One-time payment. No subscription. Delivered in 48 hours.</p>
+          <ScanTool />
         </div>
       </section>
 
-      {/* Deliverables */}
-      <section className="py-16 px-6">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-display font-normal text-ink text-center mb-12">
-            What You Get
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {deliverables.map((item) => (
-              <div key={item.title} className="rounded-2xl border border-rule rounded-xl p-6">
-                <div className="inline-block bg-paper-deep text-accent text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-wide">
-                  {item.icon}
-                </div>
-                <h3 className="text-lg font-bold text-ink mb-2">{item.title}</h3>
-                <p className="text-ink-mute text-sm leading-relaxed">{item.desc}</p>
+      <section className="px-6 py-16 border-t border-rule">
+        <div className="max-w-6xl mx-auto">
+          <p className="label mb-10">What gets graded</p>
+          <div className="grid md:grid-cols-3 gap-6">
+            {graded.map((g) => (
+              <div key={g.name} className="panel p-7">
+                <h2 className="text-lg font-display text-ink mb-3">{g.name}</h2>
+                <p className="text-sm text-ink-soft leading-relaxed">{g.desc}</p>
               </div>
             ))}
           </div>
+          <p className="text-sm text-ink-mute mt-10 max-w-2xl">
+            The scan reads your live page once, as a visitor. It does not log in, does not
+            crawl your whole site and does not store the page. What it can measure, it
+            grades hard. What needs human eyes, like whether the brand has taste, is what
+            we do on the other side of the report.
+          </p>
         </div>
       </section>
-
-      {/* CTA */}
-      <section className="py-16 px-6 bg-accent">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl font-display font-normal text-white mb-4">Ready to see what we&apos;d build for you?</h2>
-          <p className="text-paper/60 mb-8">Get your full AI Scan delivered in 48 hours for just $97.</p>
-          <Link
-            href="/intake"
-            className="inline-block bg-paper text-accent font-bold px-10 py-4 rounded-xl hover:bg-paper-deep transition-colors text-lg"
-          >
-            Get My AI Scan, $97
-          </Link>
-        </div>
-      </section>
-    </div>
+    </>
   );
 }

@@ -11,6 +11,7 @@ const LINKS = [
   { href: "/services", label: "What We Build" },
   { href: "/how-we-work", label: "How We Work" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/scan", label: "Free Scan" },
   { href: "/book", label: "Talk To Us" },
 ];
 

@@ -10,7 +10,8 @@ import { SITE } from "@/lib/site";
  * no git access at build time, so the honest move is to type the date by hand.
  * Change a page, change its date here in the same commit.
  *
- * /scan, /ai-news and /thank-you are missing on purpose. They are noindex.
+ * /ai-news and /thank-you are missing on purpose. They are noindex. /scan
+ * rejoined the map 2026-08-18 when it became the live site scanner.
  */
 type Route = {
   path: string;
@@ -27,6 +28,7 @@ const ROUTES: Route[] = [
   { path: "/pricing", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-08-17" },
   { path: "/book", priority: 0.85, changeFrequency: "monthly", lastModified: "2026-08-17" },
   { path: "/how-we-work", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-08-17" },
+  { path: "/scan", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-08-18" },
   { path: "/about", priority: 0.7, changeFrequency: "monthly", lastModified: "2026-08-17" },
   { path: "/intake", priority: 0.4, changeFrequency: "yearly", lastModified: "2026-08-17" },
   // Legal pages carry their own effective dates in the copy. Keep these two

@@ -88,37 +88,10 @@ export default function Home() {
             <FlowRide />
           </div>
 
-          {/* Value at a glance. This row is the only place these five answers
-              live, so nothing below repeats them. */}
-          <div className="mt-10 grid grid-cols-2 lg:grid-cols-5 gap-2.5">
-            {[
-              { i: "box", e: "📦", k: "What you get", v: "Brand, site and system", c: "#5B9BF9" },
-              { i: "hands", e: "🙌", k: "How much you do", v: "Almost nothing. Done for you", c: "#2DD4BF" },
-              { i: "bolt", e: "⚡", k: "How fast it moves", v: "Started the day you say go", c: "#FBBF24" },
-              { i: "banknote", e: "💸", k: "What it costs", v: "Nothing to find out. Flow Mode is free", c: "#F0845F" },
-              { i: "key", e: "🔑", k: "What you own", v: "All of it. Code, domain, accounts", c: "#34D399" },
-            ].map((x) => (
-              <div key={x.k} className="panel panel-lift relative overflow-hidden px-4 py-4">
-                <span
-                  className="absolute -top-8 left-1/2 -translate-x-1/2 w-24 h-16 rounded-full blur-2xl opacity-25 pointer-events-none"
-                  style={{ background: x.c }}
-                />
-                <span className="block text-lg leading-none mb-2" aria-hidden>{x.e}</span>
-                <p
-                  className="text-[11px] font-medium uppercase tracking-label mb-1.5"
-                  style={{ color: x.c }}
-                >
-                  {x.k}
-                </p>
-                <p className="text-sm text-ink font-light leading-snug">{x.v}</p>
-              </div>
-            ))}
-          </div>
-
           {/* The number is here for anybody who wants it, but it is not the
               first thing a stranger meets. Leading with a price makes people
               brace. Leading with the free thing makes them look. */}
-          <p className="mt-5 text-sm text-ink-mute font-light">
+          <p className="mt-8 text-sm text-ink-mute font-light">
             Builds are flat and
             paid once, no hourly billing, and you see your number before
             anything starts.{" "}
