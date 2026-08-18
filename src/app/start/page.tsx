@@ -7,6 +7,7 @@ import Arrival from "@/app/components/Arrival";
 import Icon from "@/components/Icon";
 import { SITE } from "@/lib/site";
 import NodeWeb from "@/app/components/NodeWeb";
+import ClearAll from "@/app/components/ClearAll";
 
 export const metadata: Metadata = {
   title: "Flow Mode",
@@ -46,7 +47,7 @@ export default function Start() {
       <Arrival />
       {/* Light through the whole flow */}
       <div className="fixed inset-0 -z-10 lightshaft pointer-events-none" aria-hidden />
-      <section className="relative overflow-hidden px-6 pt-24 pb-6">
+      <section className="relative overflow-hidden px-6 pt-20 pb-6">
         <NodeWeb className="opacity-90" />
         <div className="absolute inset-0 gridlight pointer-events-none" />
         <div className="relative max-w-6xl mx-auto">
@@ -64,7 +65,7 @@ export default function Start() {
             <span className="text-gradient">the Flow</span>
             <span className="text-gradient-white">.</span>
           </h1>
-          <p className="lede max-w-reading mt-8 mb-12">
+          <p className="lede max-w-reading mt-5 mb-8">
             A free idea studio that runs inside this page. Start with the thing
             you keep meaning to start.
           </p>
@@ -75,18 +76,22 @@ export default function Start() {
 
           {/* The three things somebody actually wants to know before they type
               into a box on a stranger's website. */}
-          <ul className="flex flex-wrap gap-x-8 gap-y-3 mt-10 text-sm text-ink-soft font-light">
-            {[
-              ["shield", "No signup, no card"],
-              ["disk", "Nothing is uploaded"],
-              ["download", "You keep the files"],
-            ].map(([icon, text]) => (
-              <li key={text} className="flex items-center gap-2.5">
-                <Icon name={icon} size={16} color="#5B9BF9" />
-                {text}
-              </li>
-            ))}
-          </ul>
+          <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3 mt-8">
+            <ul className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-ink-soft font-light">
+              {[
+                ["shield", "No signup, no card"],
+                ["disk", "Nothing is uploaded"],
+                ["download", "You keep the files"],
+              ].map(([icon, text]) => (
+                <li key={text} className="flex items-center gap-2.5">
+                  <Icon name={icon} size={16} color="#5B9BF9" />
+                  {text}
+                </li>
+              ))}
+            </ul>
+            {/* The fourth promise: you can always leave nothing behind. */}
+            <ClearAll />
+          </div>
         </div>
       </section>
 
@@ -94,15 +99,18 @@ export default function Start() {
       <FlowPath />
 
       {/* ---------- Dot 2: the shape ---------- */}
-      <section id="flow-shape" className="border-t border-rule px-6 pt-20 pb-24 scroll-mt-28">
+      <section id="flow-shape" className="border-t border-rule px-6 pt-14 pb-20 scroll-mt-28">
         <div className="max-w-6xl mx-auto">
+          <p className="label mb-4" style={{ color: "#F0845F" }}>
+            Step 2 · The shape
+          </p>
           <h2 className="display text-3xl md:text-5xl max-w-2xl mb-4">
             Now give it a shape.
           </h2>
-          <p className="text-ink-soft font-light leading-relaxed max-w-reading mb-10">
-            Four tools, all running here in the browser. Pick the one that
-            matches what you need next. Your work in each is saved separately,
-            so switching never costs you anything.
+          <p className="text-ink-soft font-light leading-relaxed max-w-reading mb-8">
+            Four tools, four colours, all running here in the browser. Pick the
+            one that matches what you need next. Your work in each is saved
+            separately, so switching never costs you anything.
           </p>
           <StartModes />
         </div>
@@ -114,7 +122,7 @@ export default function Start() {
           dark sections run at about 9. */}
       <section id="flow-keep" data-flow className="band-light px-6 pt-20 pb-24 scroll-mt-28">
         <div className="max-w-6xl mx-auto">
-          <p className="label mb-8">Yours to keep</p>
+          <p className="label mb-8" style={{ color: "#0F6B4F" }}>Step 3 · Yours to keep</p>
           <div className="grid md:grid-cols-12 gap-10 mb-14">
             <h2 className="md:col-span-6 display text-4xl md:text-5xl">
               Leave holding real files.

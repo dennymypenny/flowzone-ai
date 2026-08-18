@@ -432,6 +432,12 @@ export default function IdeaLens() {
       {/* One short prompt, tight to the field. The hero above already said
           what this is, and two paragraphs stacked over an input is the thing
           that made this page feel like a form. */}
+      {/* The field says its own name in the step colour and, in one small
+          line, why it deserves to be filled in. Nobody should have to guess
+          what a box on a stranger's site is for. */}
+      <p className="label mb-2" style={{ color: "#5B9BF9" }}>
+        Step 1 · The idea
+      </p>
       <p className="text-ink font-light mb-4">
         One line, the way you would say it to a friend.
       </p>
@@ -451,6 +457,10 @@ export default function IdeaLens() {
           </span>
         )}
       </div>
+      <p className="mt-2.5 text-[12px] text-ink-mute font-light max-w-xl">
+        This line is the seed. The names, the colours, the logo, the brief:
+        every track builds out of the words you put here.
+      </p>
       {oops && <p className="mt-3 text-[12px] text-[#FBBF24]">{oops}</p>}
       {/* Second in line, on purpose. The idea box is still the main event, so
           this sits under it, smaller, saying what it takes and where it goes. */}

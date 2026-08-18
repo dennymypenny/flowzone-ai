@@ -155,7 +155,7 @@ export default function DropZone({ hasIdea, compact, addRef, onImages, onIdea, o
           <Icon name="download" size={20} color="#5B8CFF" />
         </span>
         <div className="min-w-0">
-          <p className="label mb-1">{over ? "Let go" : "Bring your files"}</p>
+          <p className="label mb-1" style={{ color: "#2DD4BF" }}>{over ? "Let go" : "Your files, optional"}</p>
           <p className="text-sm text-ink-soft font-light leading-relaxed">
             {over
               ? "Drop them here."

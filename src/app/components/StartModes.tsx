@@ -266,7 +266,9 @@ export default function StartModes() {
                   }`}
                   style={{
                     ["--ga" as string]: t.rgb,
-                    borderColor: active ? `${t.accent}88` : "rgba(255,255,255,0.16)",
+                    // Each tool keeps its colour even at rest, so the four
+                    // cards read as four different doors before any is open.
+                    borderColor: active ? `${t.accent}88` : `${t.accent}3d`,
                     background: active
                       ? `linear-gradient(180deg, ${t.accent}1f 0%, rgba(255,255,255,0.02) 100%), linear-gradient(to bottom, #1A2946, #131F36)`
                       : "linear-gradient(180deg, rgba(255,255,255,0.11), rgba(255,255,255,0.035))",
@@ -279,6 +281,10 @@ export default function StartModes() {
                       style={{ background: t.accent }}
                     />
                   )}
+                  <span
+                    className="absolute inset-x-0 top-0 h-[3px] pointer-events-none"
+                    style={{ background: t.accent, opacity: active ? 0.9 : 0.45 }}
+                  />
                   <span className="flex items-center justify-between mb-3">
                     <Icon name={t.icon} size={22} color={t.accent} />
                     {active && (
