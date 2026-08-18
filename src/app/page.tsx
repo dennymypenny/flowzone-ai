@@ -131,6 +131,100 @@ export default function Home() {
       </section>
 
 
+
+      {/* ---------- How close it already is ----------
+          The problem most people have is not that the idea is far away, it is
+          that nobody has ever measured the distance for them, so it stays
+          vague and vague always feels far. This section measures it. It names
+          the five things that stand between a thought and a live business,
+          says out loud that most people already have three of them, and lets
+          the reader count their own. Naming the gap is what shrinks it. */}
+      <section data-flow className="band-light px-6 py-16 md:py-20">
+        <div className="max-w-6xl mx-auto">
+          <p className="label mb-4">The distance</p>
+          <div className="grid md:grid-cols-12 gap-6 mb-10">
+            <h2 className="md:col-span-7 display text-4xl md:text-5xl">
+              Your idea is closer
+              <br />
+              than it feels.
+            </h2>
+            <p className="md:col-span-5 text-ink-soft font-light leading-relaxed self-end max-w-reading">
+              Nobody ever measures the gap for you, so it stays a fog, and a fog
+              always looks wider than it is. Here is the actual list. Five
+              things stand between the thing in your head and a business people
+              can find, pay and come back to.
+            </p>
+          </div>
+
+          <ol className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-8">
+            {[
+              {
+                n: "01",
+                t: "A name and a look",
+                b: "Something people can recognise twice.",
+                have: "Most have a name already.",
+              },
+              {
+                n: "02",
+                t: "One sentence",
+                b: "What it is, who it is for, said once and repeatable.",
+                have: "Most can say it, just not shortly.",
+              },
+              {
+                n: "03",
+                t: "Somewhere to send people",
+                b: "A page that answers and asks for the next step.",
+                have: "Most have a profile, not a page.",
+              },
+              {
+                n: "04",
+                t: "A way to get paid",
+                b: "Booking, checkout or an invoice that goes out on its own.",
+                have: "Most are doing this by hand.",
+              },
+              {
+                n: "05",
+                t: "Something that runs without you",
+                b: "Follow up, reminders, the parts you forget at 9pm.",
+                have: "Almost nobody has this yet.",
+              },
+            ].map((x) => (
+              <li
+                key={x.n}
+                className="surface p-5 flex flex-col"
+              >
+                <p className="text-[11px] font-medium uppercase tracking-label mb-2 text-[#2B57C4]">
+                  {x.n}
+                </p>
+                <p className="font-display text-lg leading-snug mb-2">{x.t}</p>
+                <p className="text-sm text-ink-soft font-light leading-relaxed mb-3">
+                  {x.b}
+                </p>
+                <p className="text-[12px] text-ink-mute mt-auto">{x.have}</p>
+              </li>
+            ))}
+          </ol>
+
+          <p className="text-lg md:text-xl font-light leading-relaxed max-w-reading mb-8">
+            Count the ones you already have. Almost everybody who lands here has
+            three. That is the whole point. You are not starting from nothing,
+            you are two or three moves from live, and those moves are the ones
+            that keep getting put off because they are nobody's job.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Link href="/start" className="btn-primary shine">
+              Find out which ones you are missing <span className="arrow">&rarr;</span>
+            </Link>
+            <MessageUs className="btn-ghost" label="Or just tell us the idea" />
+          </div>
+          <p className="text-[13px] text-ink-mute mt-4">
+            Flow Mode asks six questions and tells you which move comes first.
+            Free, no signup, nothing is uploaded.
+          </p>
+        </div>
+      </section>
+
       {/* ---------- Three pillars ---------- */}
       <section data-flow className="border-t border-rule px-6 py-16 md:py-20">
         <div className="max-w-6xl mx-auto">

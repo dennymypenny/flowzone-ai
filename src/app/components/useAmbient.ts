@@ -55,7 +55,14 @@ export function useAmbient(seed: number, energy: number, era: number, temp: numb
     }
     const m = masterRef.current;
     const c = ctxRef.current;
-    if (m && c) {
+    /* The refs are released now rather than in the timeout. Stopping and
+       starting again inside the fade used to let the old timeout null out the
+       refs belonging to the new context, which killed the music silently. */
+    ctxRef.current = null;
+    masterRef.current = null;
+    setPlaying(false);
+    if (!c) return;
+    if (m) {
       // Fade rather than cut, so stopping does not click.
       try {
         m.gain.cancelScheduledValues(c.currentTime);
@@ -67,14 +74,11 @@ export function useAmbient(seed: number, energy: number, era: number, temp: numb
     }
     window.setTimeout(() => {
       try {
-        ctxRef.current?.close();
+        c.close();
       } catch {
         /* ignore */
       }
-      ctxRef.current = null;
-      masterRef.current = null;
     }, 420);
-    setPlaying(false);
   }, []);
 
   const start = useCallback(() => {
@@ -88,6 +92,13 @@ export function useAmbient(seed: number, energy: number, era: number, temp: numb
       return;
     }
     ctxRef.current = ctx;
+    // Safari hands back a suspended context, and this call is inside the click.
+    try {
+      const woke = ctx.resume?.();
+      if (woke && typeof woke.catch === "function") woke.catch(() => {});
+    } catch {
+      /* silence is better than a thrown toggle */
+    }
 
     const master = ctx.createGain();
     master.gain.setValueAtTime(0.0001, ctx.currentTime);
@@ -132,6 +143,16 @@ export function useAmbient(seed: number, energy: number, era: number, temp: numb
       g.connect(filter);
       o.start(at);
       o.stop(at + dur + 0.05);
+      /* Safari keeps stopped nodes alive while they are still connected, so a
+         long session used to grow a graph it never let go of. */
+      o.onended = () => {
+        try {
+          o.disconnect();
+          g.disconnect();
+        } catch {
+          /* ignore */
+        }
+      };
     };
 
     // A held pad underneath everything.
@@ -150,33 +171,48 @@ export function useAmbient(seed: number, energy: number, era: number, temp: numb
     padB.start();
 
     stepRef.current = 0;
-    const tick = () => {
+
+    /* Notes used to fire from a setTimeout that ran at the moment the note was
+       meant to sound, so anything busy on the main thread pushed the beat late
+       and you heard the page struggling. Now the timer only looks ahead and
+       hands the audio clock absolute times, which it keeps on its own thread.
+       LOOKAHEAD is how far ahead notes get booked, TICK is how often we check. */
+    const LOOKAHEAD = 0.7;
+    const TICK = 200;
+    const MAX_PER_TICK = 4; // a stalled tab must not dump a minute of notes at once
+    let nextAt = ctx.currentTime + 0.15;
+
+    const plan = () => {
       const c = ctxRef.current;
       if (!c) return;
-      const s = shape();
-      // The pad and the filter follow the sliders too, not just the melody.
-      padA.frequency.setTargetAtTime(s.root / 2, c.currentTime, 0.2);
-      padB.frequency.setTargetAtTime((s.root / 2) * 1.005, c.currentTime, 0.2);
-      filter.frequency.setTargetAtTime(900 + (s.energy / 100) * 2600, c.currentTime, 0.2);
+      let made = 0;
+      while (nextAt < c.currentTime + LOOKAHEAD && made < MAX_PER_TICK) {
+        const s = shape();
+        // The pad and the filter follow the sliders too, not just the melody.
+        padA.frequency.setTargetAtTime(s.root / 2, nextAt, 0.2);
+        padB.frequency.setTargetAtTime((s.root / 2) * 1.005, nextAt, 0.2);
+        filter.frequency.setTargetAtTime(900 + (s.energy / 100) * 2600, nextAt, 0.2);
 
-      const at = c.currentTime + 0.06;
-      const deg = s.scale[Math.floor(rand() * s.scale.length)];
-      const oct = rand() > 0.78 ? 2 : 1;
-      const freq = s.root * oct * Math.pow(2, deg / 12);
-      voice(freq, at, 0.9 + rand() * 1.4, 0.055 + (s.energy / 100) * 0.05, s.era > 66 ? "triangle" : "sine");
+        const deg = s.scale[Math.floor(rand() * s.scale.length)];
+        const oct = rand() > 0.78 ? 2 : 1;
+        const freq = s.root * oct * Math.pow(2, deg / 12);
+        voice(freq, nextAt, 0.9 + rand() * 1.4, 0.055 + (s.energy / 100) * 0.05, s.era > 66 ? "triangle" : "sine");
 
-      // An occasional fifth above, which is what stops it sounding random.
-      if (stepRef.current % 4 === 0) {
-        voice(freq * 1.5, at + s.beat * 0.5, 1.1, 0.03, "sine");
+        // An occasional fifth above, which is what stops it sounding random.
+        if (stepRef.current % 4 === 0) {
+          voice(freq * 1.5, nextAt + s.beat * 0.5, 1.1, 0.03, "sine");
+        }
+        stepRef.current++;
+        // Tempo is read fresh each note, so a slider move lands within a bar.
+        nextAt += s.beat * 2;
+        made++;
       }
-      stepRef.current++;
-
-      // Rescheduled every note rather than a fixed interval, so the tempo
-      // slider is felt on the next beat instead of the next session.
-      timer.current = window.setTimeout(tick, s.beat * 1000 * 2);
+      // A dropped-out tab comes back to the present rather than catching up.
+      if (nextAt < c.currentTime) nextAt = c.currentTime + 0.1;
+      timer.current = window.setTimeout(plan, TICK);
     };
 
-    tick();
+    plan();
     setPlaying(true);
   }, []);
 
