@@ -117,9 +117,9 @@ export default function Home() {
               </h2>
             </div>
             <p className="md:col-span-5 text-ink-soft font-light leading-relaxed self-end max-w-reading">
-              Pick the one that sounds like your problem and open a ticket. Four
-              questions, no meeting. Not sure which? The ticket has a lane for that
-              too.
+              Know what you need? Pick it and open a ticket: four questions, no
+              call. Not sure? Open one anyway, tell us the idea, and we will
+              tell you which build fits.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -129,7 +129,7 @@ export default function Home() {
                 c: "#2B57C4",
                 n: "01",
                 name: "The Identity Build",
-                one: "Everything people recognize you by.",
+                one: "Your logo, colors and words. A brand people remember.",
                 from: "From $500",
               },
               {
@@ -137,7 +137,7 @@ export default function Home() {
                 c: "#155E9C",
                 n: "02",
                 name: "The Site Build",
-                one: "A site that explains you and asks for the sale.",
+                one: "A website that looks legit and turns visitors into customers.",
                 from: "From $500",
               },
               {
@@ -145,7 +145,7 @@ export default function Home() {
                 c: "#A03D14",
                 n: "03",
                 name: "The Storefront Build",
-                one: "A real shop. Cart, checkout, money in your account.",
+                one: "An online store. Cart, checkout, money in your account.",
                 from: "From $2,500",
               },
               {
@@ -153,7 +153,7 @@ export default function Home() {
                 c: "#0F6B4F",
                 n: "04",
                 name: "The Engine Build",
-                one: "The machinery, so it runs without you.",
+                one: "Follow-ups, booking and invoicing that run themselves.",
                 from: "From $500",
               },
             ].map((b) => (
