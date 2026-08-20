@@ -71,8 +71,8 @@ const builds: Build[] = [
     emoji: "\u{2702}\u{FE0F}",
     c: "#FBBF24",
     name: "A Small Job",
-    one: "A reel, a logo, a design, a page, a form, a fix. From $50.",
-    from: "From $50",
+    one: "A reel, a logo, a design, a page, a form, a fix. From $49.99.",
+    from: "From $49.99",
   },
 ];
 

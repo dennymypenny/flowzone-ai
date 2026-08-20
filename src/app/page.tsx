@@ -199,43 +199,43 @@ export default function Home() {
             ))}
           </div>
 
-          {/* The price-fear killer, loud on purpose: most small jobs are
-              fifty bucks. Deep amber #8A5100 is 6.45:1 on white. */}
+          {/* The price-fear killer, warm and green: most small jobs land
+              under fifty dollars. #0F6B4F is 6.49:1 on white. */}
           <div
             className="mt-6 rounded-[18px] p-8 md:p-10 grid md:grid-cols-12 gap-8 items-center border"
             style={{
-              background: "linear-gradient(120deg, #FFF7E8 0%, #FFEFD0 55%, #FFE7BB 100%)",
-              borderColor: "#8A510033",
-              boxShadow: "0 24px 48px -28px rgba(138, 81, 0, 0.35)",
+              background: "linear-gradient(120deg, #EDFBF4 0%, #DDF6E9 55%, #CBF1DD 100%)",
+              borderColor: "#0F6B4F2E",
+              boxShadow: "0 24px 48px -28px rgba(15, 107, 79, 0.35)",
             }}
           >
             <div className="md:col-span-7">
               <p
                 className="text-[11px] font-medium uppercase tracking-label mb-3"
-                style={{ color: "#8A5100" }}
+                style={{ color: "#0F6B4F" }}
               >
                 The small job menu
               </p>
               <h3 className="font-display text-4xl md:text-5xl leading-[1.02] mb-4">
                 Most small jobs?{" "}
-                <span style={{ color: "#8A5100" }}>Fifty bucks.</span>
+                <span style={{ color: "#0F6B4F" }}>Under $50.</span>
               </h3>
               <div className="flex flex-wrap gap-2">
                 {[
-                  ["A flyer or post", "$50"],
-                  ["A form, wired in", "$50"],
-                  ["A logo refresh", "$50"],
-                  ["A fix pass", "$50"],
-                  ["A promo reel", "$75"],
-                  ["A new page", "$100"],
+                  ["A flyer or post", "$49.99"],
+                  ["A form, wired in", "$49.99"],
+                  ["A logo refresh", "$49.99"],
+                  ["A fix pass", "$49.99"],
+                  ["A promo reel", "$74.99"],
+                  ["A new page", "$99.99"],
                 ].map(([w, price]) => (
                   <span
                     key={w}
-                    className="inline-flex items-center gap-2 text-sm font-light rounded-full px-4 py-1.5 bg-white/80 border"
-                    style={{ borderColor: "#8A510026" }}
+                    className="inline-flex items-center gap-2 text-sm font-light rounded-full px-4 py-1.5 bg-white/85 border"
+                    style={{ borderColor: "#0F6B4F26" }}
                   >
                     <span className="text-ink-soft">{w}</span>
-                    <span className="font-medium" style={{ color: "#8A5100" }}>
+                    <span className="font-medium" style={{ color: "#0F6B4F" }}>
                       {price}
                     </span>
                   </span>

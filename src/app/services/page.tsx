@@ -192,9 +192,9 @@ export default function Services() {
                 from: "From $500",
                 right: "You are launching, or your business has outgrown a logo you made in a hurry.",
                 small: [
-                  ["One-off design — flyer, post or cover", "$50"],
-                  ["Promo reel, cut for sound-off feeds", "$75"],
-                  ["Logo-only refresh", "$50"],
+                  ["One-off design — flyer, post or cover", "$49.99"],
+                  ["Promo reel, cut for sound-off feeds", "$74.99"],
+                  ["Logo-only refresh", "$49.99"],
                 ],
               },
               {
@@ -214,9 +214,9 @@ export default function Services() {
                 from: "From $500",
                 right: "People are already finding you and the site is doing nothing to help.",
                 small: [
-                  ["Booking or contact form, wired to your email", "$50"],
-                  ["One new page or landing page", "$100"],
-                  ["Speed and mobile fix pass", "$50"],
+                  ["Booking or contact form, wired to your email", "$49.99"],
+                  ["One new page or landing page", "$99.99"],
+                  ["Speed and mobile fix pass", "$49.99"],
                 ],
               },
               {
