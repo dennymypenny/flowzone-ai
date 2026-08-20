@@ -153,11 +153,11 @@ export default function Pricing() {
           <div className="md:col-span-4">
             <p className="label mb-4">Not ready for a build?</p>
             <h2 className="font-display text-3xl leading-snug mb-3">
-              Small jobs, from $50.
+              Most small jobs? $50.
             </h2>
             <p className="text-sm text-ink-soft font-light leading-relaxed max-w-reading">
-              One-off pieces, priced like one-off pieces. Open a ticket, pick A
-              Small Job and say which one.
+              One-off pieces, priced like one-off pieces. Most of them are fifty
+              bucks. Open a ticket, pick A Small Job and say which one.
             </p>
             <Link href="/intake?build=small" className="btn-ghost mt-6">
               Start a small job <span className="arrow">→</span>
@@ -166,11 +166,11 @@ export default function Pricing() {
           <div className="md:col-span-8 grid sm:grid-cols-2 gap-x-10 gap-y-3 self-center">
             {[
               ["One-off design — flyer, post or cover", "$50"],
-              ["Booking or contact form, wired to your email", "$100"],
-              ["Promo reel, cut for sound-off feeds", "$150"],
-              ["One new page or landing page", "$150"],
-              ["Logo-only refresh", "$150"],
-              ["Speed and mobile fix pass", "$150"],
+              ["Booking or contact form, wired to your email", "$50"],
+              ["Promo reel, cut for sound-off feeds", "$75"],
+              ["One new page or landing page", "$100"],
+              ["Logo-only refresh", "$50"],
+              ["Speed and mobile fix pass", "$50"],
             ].map(([w, price]) => (
               <div key={w} className="flex justify-between gap-4 border-b border-rule pb-3">
                 <span className="text-sm text-ink-soft font-light">{w}</span>

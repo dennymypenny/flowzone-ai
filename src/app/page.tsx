@@ -199,43 +199,55 @@ export default function Home() {
             ))}
           </div>
 
-          {/* The price-fear killer: you can start at fifty bucks. Amber so it
-              reads as its own thing, not a fifth build. #8A5100 is 6.45:1 on
-              white. */}
+          {/* The price-fear killer, loud on purpose: most small jobs are
+              fifty bucks. Deep amber #8A5100 is 6.45:1 on white. */}
           <div
-            className="mt-6 panel p-6 md:p-7 grid md:grid-cols-12 gap-6 items-center border-t-2"
-            style={{ borderTopColor: "#8A5100", background: "#FBBF240F" }}
+            className="mt-6 rounded-[18px] p-8 md:p-10 grid md:grid-cols-12 gap-8 items-center border"
+            style={{
+              background: "linear-gradient(120deg, #FFF7E8 0%, #FFEFD0 55%, #FFE7BB 100%)",
+              borderColor: "#8A510033",
+              boxShadow: "0 24px 48px -28px rgba(138, 81, 0, 0.35)",
+            }}
           >
-            <div className="md:col-span-2 flex md:justify-center">
-              <span className="inline-flex items-baseline gap-1.5">
-                <span className="font-display text-5xl" style={{ color: "#8A5100" }}>
-                  $50
-                </span>
-                <span className="text-[11px] font-medium uppercase tracking-label text-ink-mute">
-                  from
-                </span>
-              </span>
-            </div>
             <div className="md:col-span-7">
-              <h3 className="font-display text-xl leading-snug mb-2">
-                Not ready for a full build? Start with a small job.
+              <p
+                className="text-[11px] font-medium uppercase tracking-label mb-3"
+                style={{ color: "#8A5100" }}
+              >
+                The small job menu
+              </p>
+              <h3 className="font-display text-4xl md:text-5xl leading-[1.02] mb-4">
+                Most small jobs?{" "}
+                <span style={{ color: "#8A5100" }}>Fifty bucks.</span>
               </h3>
-              <div className="flex flex-wrap gap-x-5 gap-y-1.5">
+              <div className="flex flex-wrap gap-2">
                 {[
                   ["A flyer or post", "$50"],
-                  ["A form, wired in", "$100"],
-                  ["A promo reel", "$150"],
-                  ["A new page", "$150"],
-                  ["A fix pass", "$150"],
+                  ["A form, wired in", "$50"],
+                  ["A logo refresh", "$50"],
+                  ["A fix pass", "$50"],
+                  ["A promo reel", "$75"],
+                  ["A new page", "$100"],
                 ].map(([w, price]) => (
-                  <span key={w} className="text-sm text-ink-soft font-light">
-                    {w} <span className="text-ink font-medium">{price}</span>
+                  <span
+                    key={w}
+                    className="inline-flex items-center gap-2 text-sm font-light rounded-full px-4 py-1.5 bg-white/80 border"
+                    style={{ borderColor: "#8A510026" }}
+                  >
+                    <span className="text-ink-soft">{w}</span>
+                    <span className="font-medium" style={{ color: "#8A5100" }}>
+                      {price}
+                    </span>
                   </span>
                 ))}
               </div>
             </div>
-            <div className="md:col-span-3 md:flex md:justify-end">
-              <Link href="/intake?build=small" className="btn-ghost whitespace-nowrap">
+            <div className="md:col-span-5 md:text-right">
+              <p className="text-sm text-ink-soft font-light leading-relaxed mb-5 md:ml-auto max-w-xs">
+                Same studio, same taste, one small thing. Done in days, not
+                weeks.
+              </p>
+              <Link href="/intake?build=small" className="btn-primary">
                 Start a small job <span className="arrow">→</span>
               </Link>
             </div>
