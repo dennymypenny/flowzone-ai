@@ -189,7 +189,7 @@ export default function Services() {
                   "A usage guide you can hand to a printer, a contractor or a new hire",
                 ],
                 takes: "Starts the day you say go",
-                from: "From $600",
+                from: "From $500",
                 right: "You are launching, or your business has outgrown a logo you made in a hurry.",
               },
               {
@@ -206,7 +206,7 @@ export default function Services() {
                   "Live on your own domain, and you own the code",
                 ],
                 takes: "Starts the day you say go",
-                from: "From $600",
+                from: "From $500",
                 right: "People are already finding you and the site is doing nothing to help.",
               },
               {
@@ -223,7 +223,7 @@ export default function Services() {
                   "Order notifications and the admin you need to run it",
                 ],
                 takes: "Starts the day you say go",
-                from: "From $2,497",
+                from: "From $2,500",
                 right: "You are selling through DMs, a marketplace, or nothing at all yet.",
               },
               {
@@ -240,7 +240,7 @@ export default function Services() {
                   "Connected to the tools you already use, not replacing them",
                 ],
                 takes: "Starts the day you say go",
-                from: "From $600",
+                from: "From $500",
                 right: "Launch went fine and now you do the same three jobs by hand every day.",
               },
             ].map((b) => (

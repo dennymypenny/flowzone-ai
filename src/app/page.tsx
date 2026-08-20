@@ -130,7 +130,7 @@ export default function Home() {
                 n: "01",
                 name: "The Identity Build",
                 one: "Everything people recognize you by.",
-                from: "From $600",
+                from: "From $500",
               },
               {
                 k: "site",
@@ -138,7 +138,7 @@ export default function Home() {
                 n: "02",
                 name: "The Site Build",
                 one: "A site that explains you and asks for the sale.",
-                from: "From $600",
+                from: "From $500",
               },
               {
                 k: "storefront",
@@ -146,7 +146,7 @@ export default function Home() {
                 n: "03",
                 name: "The Storefront Build",
                 one: "A real shop. Cart, checkout, money in your account.",
-                from: "From $2,497",
+                from: "From $2,500",
               },
               {
                 k: "engine",
@@ -154,7 +154,7 @@ export default function Home() {
                 n: "04",
                 name: "The Engine Build",
                 one: "The machinery, so it runs without you.",
-                from: "From $600",
+                from: "From $500",
               },
             ].map((b) => (
               <Link

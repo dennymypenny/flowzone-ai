@@ -19,7 +19,7 @@ const REASONS = [
   { id: "other", label: "Something else" },
 ];
 
-const BUDGETS = ["Not sure yet", "Around $600", "$600 to $2,500", "$2,500 plus", "Ongoing work"];
+const BUDGETS = ["Not sure yet", "Around $500", "$500 to $2,500", "$2,500 plus", "Ongoing work"];
 
 export default function ContactForm({ accent = "#5B9BF9" }: { accent?: string }) {
   const [name, setName] = useState("");

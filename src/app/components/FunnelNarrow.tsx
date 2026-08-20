@@ -373,7 +373,7 @@ export default function FunnelNarrow({
             <p className="text-sm text-ink-soft font-light leading-relaxed mb-4">
               Or skip the homework entirely. {advice.thing.charAt(0).toUpperCase() + advice.thing.slice(1)} and
               the rest of it, built for you and live in days.{" "}
-              <span className="text-ink">Flat, from $600.</span>
+              <span className="text-ink">Flat, from $500.</span>
             </p>
             <div className="flex flex-wrap items-center gap-3">
               <a

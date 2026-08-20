@@ -27,8 +27,8 @@ const builds: Build[] = [
     c: "#4C7BE8",
     name: "The Identity Build",
     one: "Everything people recognize you by.",
-    from: "From $600",
-    amount: 600,
+    from: "From $500",
+    amount: 500,
   },
   {
     key: "site",
@@ -36,8 +36,17 @@ const builds: Build[] = [
     c: "#5B9BF9",
     name: "The Site Build",
     one: "A site that explains you and asks for the sale.",
-    from: "From $600",
-    amount: 600,
+    from: "From $500",
+    amount: 500,
+  },
+  {
+    key: "full",
+    emoji: "\u{1F680}",
+    c: "#5B8CFF",
+    name: "The Full Build",
+    one: "Brand, site and system, wired together.",
+    from: "From $1,500",
+    amount: 1500,
   },
   {
     key: "storefront",
@@ -45,8 +54,8 @@ const builds: Build[] = [
     c: "#F0845F",
     name: "The Storefront Build",
     one: "A real shop. Cart, checkout, money in your account.",
-    from: "From $2,497",
-    amount: 2497,
+    from: "From $2,500",
+    amount: 2500,
   },
   {
     key: "engine",
@@ -54,8 +63,8 @@ const builds: Build[] = [
     c: "#34D399",
     name: "The Engine Build",
     one: "The machinery, so it runs without you.",
-    from: "From $600",
-    amount: 600,
+    from: "From $500",
+    amount: 500,
   },
 ];
 

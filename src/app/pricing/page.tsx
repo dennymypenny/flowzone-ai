@@ -23,55 +23,52 @@ export const metadata: Metadata = {
 
 const tiers = [
   {
-    name: "Starter",
-    price: "$600",
-    tagline: "One thing, built properly.",
+    link: "/intake",
+    name: "One Build",
+    price: "$500",
+    tagline: "Pick one thing. Get it done.",
     best: false,
     blurb:
-      "You know exactly what you need. A brand, a site, or one system. We build that one thing and hand it over finished.",
+      "Your identity, your site, or the system that runs things — one build, finished and handed over. Less than most agencies charge for a discovery call.",
     includes: [
-      "One part: Brand, Site or System",
-      "Designed against your brand, never a template",
-      "Fast on mobile, live on your own domain",
-      "One full round of revisions",
-      "30 days of post launch support",
+      "One build: Identity, Site or Engine",
+      "Designed for you, never a template",
+      "A full round of revisions",
+      "30 days of support after launch",
     ],
-    cta: "Start with Starter",
+    cta: "Start with one",
   },
   {
-    name: "Growth",
-    price: "$2,497",
-    tagline: "All three, working together.",
+    link: "/intake?build=full",
+    name: "The Full Build",
+    price: "$1,500",
+    tagline: "Brand, site and system. The whole thing.",
     best: true,
     blurb:
-      "The one most people should take. Brand, site and one system wired into it, so the thing runs after launch instead of sitting there.",
+      "What most people are actually here for. The look, the site and the machinery wired together, live in weeks — for less than one month of a typical agency retainer.",
     includes: [
-      "Everything in Starter",
-      "Brand identity: logo, palette, type and usage rules",
-      "Full site or storefront, up to 6 pages",
-      "One system built in (intake, booking, invoicing or reporting)",
-      "Payments, forms and email wired end to end",
-      "Two rounds of revisions",
-      "60 days of post launch support",
+      "Identity, site and one working system",
+      "Copy written for you, end to end",
+      "Payments, forms and email wired in",
+      "Two rounds of revisions, 60 days of support",
     ],
-    cta: "Start with Growth",
+    cta: "Start the Full Build",
   },
   {
-    name: "Scale",
-    price: "Custom",
-    tagline: "More moving parts.",
+    link: "/intake?build=storefront",
+    name: "The Storefront",
+    price: "From $2,500",
+    tagline: "A real shop, quoted flat.",
     best: false,
     blurb:
-      "Multiple brands, a bigger catalog, or systems that have to talk to tools you already run. We scope it together and quote it flat.",
+      "Cart, checkout and money in your account, like cardsrg.com. Bigger catalogs and custom integrations get scoped together and quoted flat before anything starts.",
     includes: [
-      "Everything in Growth",
-      "Multi brand or large catalog storefronts",
-      "Custom API and tool integrations",
-      "Ongoing build partnership if you want it",
-      "A direct line to me, not a support queue",
-      "Flat quote agreed before any work starts",
+      "Everything in The Full Build",
+      "Full storefront with cart and checkout",
+      "Your existing tools connected",
+      "A flat number agreed before you pay",
     ],
-    cta: "Get a quote",
+    cta: "Get your flat quote",
   },
 ];
 
@@ -93,9 +90,9 @@ export default function Pricing() {
             to work together.
           </h1>
           <p className="lede max-w-reading mt-10">
-            You know the number and the date before we start. No hourly billing, no
-            scope creep invoice at the end and no retainer you forget to cancel. If a
-            cheaper tier fits your idea, we will tell you that before you pay.
+            Three numbers, all flat, all agreed before we start. No hourly billing and
+            no retainer you forget to cancel. If the cheaper tier fits your idea, we
+            will tell you that before you pay.
           </p>
         </div>
       </section>
@@ -122,7 +119,7 @@ export default function Pricing() {
             >
               <div className="flex items-baseline justify-between mb-6">
                 <p className="label">{t.name}</p>
-                {t.best && <p className="text-[11px] font-medium uppercase tracking-label text-accent">Most taken</p>}
+                {t.best && <p className="text-[11px] font-medium uppercase tracking-label text-accent">Best value</p>}
               </div>
 
               <p className="font-display text-5xl leading-none mb-3 text-ink">{t.price}</p>
@@ -140,7 +137,7 @@ export default function Pricing() {
               </ul>
 
               <Link
-                href={`/intake?service=${encodeURIComponent(t.name)}`}
+                href={t.link}
                 className={`${t.best ? "btn-primary" : "btn-ghost"} mt-auto w-full`}
               >
                 {t.cta}

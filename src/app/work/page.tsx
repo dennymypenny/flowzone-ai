@@ -109,64 +109,94 @@ This is where the studio starts, and it started from something we
         </div>
       </section>
 
-      {/* Motion sample: the Vice City reel. A sample, and labeled as one,
-          because the rule on this page is that nothing pretends. On white,
-          because the reel itself is dark neon and needs the contrast. */}
+      {/* Motion: two reels, on white because both are dark neon. One is
+          client work, one is a studio sample, and each says which it is,
+          because the rule on this page is that nothing pretends. */}
       <section data-flow className="band-light px-6 py-24">
         <div className="max-w-6xl mx-auto">
-          <div className="border-t border-rule pt-10 grid md:grid-cols-12 gap-10 items-start">
-            <div className="md:col-span-7">
-              <p className="label mb-4">02 · Motion</p>
-              <h2 className="font-display text-5xl leading-none mb-4">
-                Vice City Property Runs
+          <div className="border-t border-rule pt-10 mb-12">
+            <p className="label mb-4">02 · Motion</p>
+            <div className="grid md:grid-cols-12 gap-10">
+              <h2 className="md:col-span-6 font-display text-5xl leading-none">
+                Reels built for
+                <br />
+                sound-off feeds.
               </h2>
-              <p className="text-ink-soft leading-relaxed max-w-reading">
-                A sample reel cut in the studio for Vice City Property Runs, a South
-                Florida property appointment service. Fourteen seconds, vertical,
-                built for the place it actually lives: a phone, in a feed, sound off.
+              <p className="md:col-span-6 text-ink-soft leading-relaxed self-end max-w-reading">
+                Short vertical pieces that make the whole pitch on screen, in
+                seconds, with no audio needed. They ship alongside a brand or
+                storefront build so the launch does not go out silent.
               </p>
-              <p className="text-ink-soft leading-relaxed max-w-reading mt-4">
-                The whole pitch is on screen in under fifteen seconds: the problem,
-                the coverage, the hours, the handle. That discipline is the work.
-                A reel that needs sound or a second watch is a reel nobody saw.
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 mt-10 border-t border-rule pt-6">
-                {[
-                  ["Format", "9:16 vertical reel"],
-                  ["Length", "14 seconds"],
-                  ["Made for", "Instagram and TikTok"],
-                ].map(([k, v]) => (
-                  <div key={k}>
-                    <p className="label mb-1.5">{k}</p>
-                    <p className="text-sm text-ink-soft">{v}</p>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-10">
+            {[
+              {
+                name: "Shutters Depot",
+                kind: "Client work",
+                base: "shutters-depot-reel",
+                aria: "Shutters Depot promo reel: Miami, hurricane season does not wait. Accordion shutters, hurricane panels, impact doors and windows.",
+                blurb:
+                  "Cut for Shutters Depot, a hurricane protection company in Hialeah. Twenty-five seconds that walk the product line — accordion shutters, panels, impact windows — with the urgency Miami actually feels every June.",
+                link: { href: "https://shutters-depot.com", label: "shutters-depot.com ↗" },
+                facts: [["Length", "25 seconds"], ["Format", "9:16 vertical"], ["Made for", "Instagram and TikTok"]],
+              },
+              {
+                name: "Vice City Property Runs",
+                kind: "Studio sample",
+                base: "vice-city-reel",
+                aria: "Vice City Property Runs promo reel: can't make a property appointment? Property runs across South Florida, open seven days a week, same day service.",
+                blurb:
+                  "A sample cut in the studio for a South Florida property appointment service. The whole pitch in fourteen seconds: the problem, the coverage, the hours, the handle.",
+                link: null,
+                facts: [["Length", "14 seconds"], ["Format", "9:16 vertical"], ["Made for", "Instagram and TikTok"]],
+              },
+            ].map((r) => (
+              <div key={r.base} className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
+                <div className="panel overflow-hidden">
+                  <video
+                    className="w-full h-auto block"
+                    poster={`/assets/${r.base}-poster.jpg`}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    controls
+                    preload="metadata"
+                    aria-label={r.aria}
+                  >
+                    <source src={`/assets/${r.base}.webm`} type="video/webm" />
+                    <source src={`/assets/${r.base}.mp4`} type="video/mp4" />
+                  </video>
+                </div>
+                <div>
+                  <p className="label mb-3">{r.kind}</p>
+                  <h3 className="font-display text-3xl leading-none mb-2">{r.name}</h3>
+                  {r.link && (
+                    <a
+                      href={r.link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-accent hover:underline"
+                    >
+                      {r.link.label}
+                    </a>
+                  )}
+                  <p className="text-sm text-ink-soft font-light leading-relaxed mt-4">
+                    {r.blurb}
+                  </p>
+                  <div className="border-t border-rule mt-6 pt-4 space-y-3">
+                    {r.facts.map(([k, v]) => (
+                      <div key={k} className="flex justify-between gap-4">
+                        <p className="label">{k}</p>
+                        <p className="text-sm text-ink-soft">{v}</p>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
               </div>
-              <p className="text-sm text-ink-soft font-light leading-relaxed max-w-reading mt-10">
-                Short motion pieces like this ship alongside a brand or storefront
-                build, so the launch does not go out silent.
-              </p>
-            </div>
-            <div className="md:col-span-5 flex md:justify-end">
-              <div className="panel overflow-hidden w-full max-w-[340px] mx-auto md:mx-0">
-                {/* WebM first: smaller, and it plays on Chromium builds that
-                    ship without h264. Safari falls through to the mp4. */}
-                <video
-                  className="w-full h-auto block"
-                  poster="/assets/vice-city-reel-poster.jpg"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  controls
-                  preload="metadata"
-                  aria-label="Vice City Property Runs promo reel: can't make a property appointment? Property runs across South Florida, open seven days a week, same day service."
-                >
-                  <source src="/assets/vice-city-reel.webm" type="video/webm" />
-                  <source src="/assets/vice-city-reel.mp4" type="video/mp4" />
-                </video>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
