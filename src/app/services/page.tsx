@@ -191,6 +191,11 @@ export default function Services() {
                 takes: "Starts the day you say go",
                 from: "From $500",
                 right: "You are launching, or your business has outgrown a logo you made in a hurry.",
+                small: [
+                  ["One-off design — flyer, post or cover", "$50"],
+                  ["Promo reel, cut for sound-off feeds", "$150"],
+                  ["Logo-only refresh", "$150"],
+                ],
               },
               {
                 icon: "\u{1F310}",
@@ -208,6 +213,11 @@ export default function Services() {
                 takes: "Starts the day you say go",
                 from: "From $500",
                 right: "People are already finding you and the site is doing nothing to help.",
+                small: [
+                  ["Booking or contact form, wired to your email", "$100"],
+                  ["One new page or landing page", "$150"],
+                  ["Speed and mobile fix pass", "$150"],
+                ],
               },
               {
                 icon: "\u{1F6D2}",
@@ -264,6 +274,23 @@ export default function Services() {
                     </li>
                   ))}
                 </ul>
+
+                {"small" in b && (
+                  <div className="border-t border-rule pt-5 mb-7">
+                    <p className="label mb-4">Just need a piece?</p>
+                    <ul className="space-y-2.5">
+                      {(b as any).small.map(([w, price]: [string, string]) => (
+                        <li key={w} className="text-sm font-light flex justify-between gap-4 leading-relaxed">
+                          <span className="text-ink-soft">{w}</span>
+                          <span className="text-ink whitespace-nowrap">{price}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <Link href="/intake?build=small" className="inline-block text-sm text-accent hover:underline mt-4">
+                      Start a small job →
+                    </Link>
+                  </div>
+                )}
 
                 <div className="mt-auto border-t border-rule pt-5 grid grid-cols-2 gap-4">
                   <div>

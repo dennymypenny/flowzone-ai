@@ -66,6 +66,14 @@ const builds: Build[] = [
     from: "From $500",
     amount: 500,
   },
+  {
+    key: "small",
+    emoji: "\u{2702}\u{FE0F}",
+    c: "#FBBF24",
+    name: "A Small Job",
+    one: "A reel, a logo, a design, a page, a form, a fix. From $50.",
+    from: "From $50",
+  },
 ];
 
 const NOT_SURE = "Not sure yet";
