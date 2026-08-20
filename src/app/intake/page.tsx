@@ -4,26 +4,89 @@ import { useSearchParams } from "next/navigation";
 import { SITE } from "@/lib/site";
 import Icon from "@/components/Icon";
 
-const services = [
-  "Starter — $600",
-  "Growth — $2,497",
-  "Scale — custom quote",
-  "Not sure yet",
+/**
+ * The intake is a ticket with four options: the four builds. The visitor picks
+ * the build, tells us the idea, submits. Same API, same fallback mailto, same
+ * honest success screen. Legacy ?service= links from /pricing still preselect.
+ */
+
+type Build = {
+  key: string;
+  emoji: string;
+  c: string;
+  name: string;
+  one: string;
+  from: string;
+  amount?: number;
+};
+
+const builds: Build[] = [
+  {
+    key: "identity",
+    emoji: "\u{1F3A8}",
+    c: "#4C7BE8",
+    name: "The Identity Build",
+    one: "Everything people recognize you by.",
+    from: "From $600",
+    amount: 600,
+  },
+  {
+    key: "site",
+    emoji: "\u{1F310}",
+    c: "#5B9BF9",
+    name: "The Site Build",
+    one: "A site that explains you and asks for the sale.",
+    from: "From $600",
+    amount: 600,
+  },
+  {
+    key: "storefront",
+    emoji: "\u{1F6D2}",
+    c: "#F0845F",
+    name: "The Storefront Build",
+    one: "A real shop. Cart, checkout, money in your account.",
+    from: "From $2,497",
+    amount: 2497,
+  },
+  {
+    key: "engine",
+    emoji: "\u{2699}\u{FE0F}",
+    c: "#34D399",
+    name: "The Engine Build",
+    one: "The machinery, so it runs without you.",
+    from: "From $600",
+    amount: 600,
+  },
 ];
 
-const venmoAmounts: Record<string, number> = {
-  "Starter — $600": 600,
-  "Growth — $2,497": 2497,
+const NOT_SURE = "Not sure yet";
+
+const venmoAmounts: Record<string, number> = Object.fromEntries(
+  builds.filter((b) => b.amount).map((b) => [b.name, b.amount as number])
+);
+
+/** Legacy pricing-page links: /intake?service=Starter|Growth|Scale|Not sure. */
+const legacyMap: Record<string, string> = {
+  starter: "The Site Build",
+  growth: "The Storefront Build",
+  scale: NOT_SURE,
+  "not sure": NOT_SURE,
 };
 
 function IntakeForm() {
   const searchParams = useSearchParams();
-  const rawService = searchParams.get("service") || "";
-  // Pricing page links through as "Starter" / "Growth" / "Scale"; match those to the full option labels.
-  const key = rawService.trim().toLowerCase();
-  const preselected = key
-    ? services.find((s) => s.toLowerCase().startsWith(key)) ?? ""
-    : "";
+  const rawBuild = (searchParams.get("build") || "").trim().toLowerCase();
+  const rawService = (searchParams.get("service") || "").trim().toLowerCase();
+
+  const fromBuild = builds.find(
+    (b) => b.key === rawBuild || b.name.toLowerCase() === rawBuild
+  )?.name;
+  const fromLegacy = rawService
+    ? legacyMap[
+        Object.keys(legacyMap).find((k) => rawService.startsWith(k)) ?? ""
+      ]
+    : undefined;
+  const preselected = fromBuild ?? fromLegacy ?? "";
 
   const [form, setForm] = useState({
     name: "",
@@ -43,13 +106,18 @@ function IntakeForm() {
   const fallbackMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(
     `New project for FlowZone — ${form.service || "not sure yet"}`
   )}&body=${encodeURIComponent(
-    `Hi FlowZone,\n\nName: ${form.name}\nEmail: ${form.email}\nBusiness: ${form.business}\nPackage: ${
+    `Hi FlowZone,\n\nName: ${form.name}\nEmail: ${form.email}\nBusiness: ${form.business}\nBuild: ${
       form.service
     }\n\nWhat I want built:\n${form.description}\n\nThanks,\n${form.name}`
   )}`;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.service) {
+      setState("error");
+      setError("Pick one of the four builds, or choose not sure yet.");
+      return;
+    }
     setState("sending");
     setError("");
     try {
@@ -79,7 +147,7 @@ function IntakeForm() {
           <div className="flex justify-center mb-4">
             <Icon name="sparkle" size={32} color="#5B8CFF" />
           </div>
-          <h2 className="text-2xl font-display font-normal text-ink mb-3">You&apos;re all set!</h2>
+          <h2 className="text-2xl font-display font-normal text-ink mb-3">Ticket received.</h2>
           {amount ? (
             <>
               <p className="text-ink-mute mb-8 leading-relaxed">
@@ -100,8 +168,8 @@ function IntakeForm() {
           ) : (
             <>
               <p className="text-ink-mute mb-6 leading-relaxed">
-                We got your project details. Since this one needs a custom scope, we will read it properly and come
-                back with a flat quote and a delivery date.
+                We got your project details. Since this one needs a proper read first, we will come back
+                with the right build, a flat quote and a delivery date.
               </p>
               <p className="text-sm text-ink-mute mb-8">
                 Expect an email within 24 hours. Nothing to pay until you have the quote.
@@ -125,10 +193,56 @@ function IntakeForm() {
         <div className="text-center mb-10">
           <p className="text-accent font-semibold text-sm uppercase tracking-wider mb-3">Get Started</p>
           <h1 className="text-4xl font-display font-normal text-ink mb-3">Start Your Project</h1>
-          <p className="text-ink-mute">Tell us what you want built. You get a scope, a price and a date back, usually the same day.</p>
+          <p className="text-ink-mute">
+            Pick the build, tell us the idea. You get a scope, a price and a date back, usually the same day.
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-paper rounded-xl border border-rule p-8 space-y-5">
+          <div>
+            <label className="block text-sm font-semibold text-ink-soft mb-1.5">Which build is this for?</label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3" role="radiogroup" aria-label="Pick a build">
+              {builds.map((b) => {
+                const on = form.service === b.name;
+                return (
+                  <button
+                    key={b.key}
+                    type="button"
+                    role="radio"
+                    aria-checked={on}
+                    onClick={() => set("service", b.name)}
+                    className={`text-left rounded-lg border px-4 py-3.5 transition-colors bg-paper-deep ${
+                      on ? "border-transparent" : "border-rule hover:border-ink-mute"
+                    }`}
+                    style={on ? { boxShadow: `inset 0 0 0 2px ${b.c}` } : undefined}
+                  >
+                    <span className="flex items-start gap-3">
+                      <span className="text-xl leading-none mt-0.5">{b.emoji}</span>
+                      <span>
+                        <span className="block text-sm font-semibold text-ink">{b.name}</span>
+                        <span className="block text-xs text-ink-mute mt-1 leading-relaxed">{b.one}</span>
+                        <span className="block text-xs mt-1.5 font-medium" style={{ color: b.c }}>
+                          {b.from}
+                        </span>
+                      </span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+            <button
+              type="button"
+              onClick={() => set("service", NOT_SURE)}
+              className={`mt-3 text-xs transition-colors ${
+                form.service === NOT_SURE
+                  ? "text-ink underline underline-offset-4"
+                  : "text-ink-mute hover:text-ink"
+              }`}
+            >
+              Not sure which one? Pick this and just describe the idea. We will tell you which build it is.
+            </button>
+          </div>
+
           <div>
             <label className="block text-sm font-semibold text-ink-soft mb-1.5">Full Name</label>
             <input
@@ -163,21 +277,6 @@ function IntakeForm() {
               className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent"
               placeholder="Acme Co."
             />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-ink-soft mb-1.5">Package</label>
-            <select
-              required
-              value={form.service}
-              onChange={(e) => set("service", e.target.value)}
-              className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent bg-paper"
-            >
-              <option value="">Select a package...</option>
-              {services.map((s) => (
-                <option key={s} value={s}>{s}</option>
-              ))}
-            </select>
           </div>
 
           <div>

@@ -178,6 +178,7 @@ export default function Services() {
               {
                 icon: "\u{1F3A8}",
                 c: "#4C7BE8",
+                k: "identity",
                 name: "The Identity Build",
                 one: "Everything people recognize you by, and the rules that keep it that way.",
                 what: [
@@ -194,6 +195,7 @@ export default function Services() {
               {
                 icon: "\u{1F310}",
                 c: "#5B9BF9",
+                k: "site",
                 name: "The Site Build",
                 one: "A marketing site that explains you properly and asks for the sale.",
                 what: [
@@ -210,6 +212,7 @@ export default function Services() {
               {
                 icon: "\u{1F6D2}",
                 c: "#F0845F",
+                k: "storefront",
                 name: "The Storefront Build",
                 one: "A real shop. Products, cart, checkout, money in your account.",
                 what: [
@@ -226,6 +229,7 @@ export default function Services() {
               {
                 icon: "\u{2699}\u{FE0F}",
                 c: "#34D399",
+                k: "engine",
                 name: "The Engine Build",
                 one: "The machinery behind the site, so the business runs without you doing it by hand.",
                 what: [
@@ -276,6 +280,14 @@ export default function Services() {
                       {b.right}
                     </p>
                   </div>
+                  <div className="col-span-2 pt-1">
+                    <Link
+                      href={`/intake?build=${b.k}`}
+                      className="btn-primary w-full justify-center"
+                    >
+                      Start this build <span className="arrow">→</span>
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}
@@ -292,9 +304,9 @@ export default function Services() {
               </p>
             </div>
             <div className="md:col-span-4 md:text-right">
-              <a href={SITE.mailto} className="btn-primary">
+              <Link href="/intake" className="btn-primary">
                 Ask which one fits <span className="arrow">→</span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -322,9 +334,9 @@ export default function Services() {
               so you can see the whole shape of the work before you commit to any of it.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 mt-10">
-              <a href={SITE.mailto} className="btn-primary">
-                Start an email <span className="arrow">→</span>
-              </a>
+              <Link href="/intake" className="btn-primary">
+                Start a ticket <span className="arrow">→</span>
+              </Link>
               <a href={`mailto:${SITE.email}`} className="btn-ghost">
                 {SITE.email}
               </a>
