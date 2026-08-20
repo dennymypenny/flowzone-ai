@@ -187,14 +187,12 @@ export default function Home() {
                 <p className="text-sm text-ink-soft font-light leading-relaxed mb-8">
                   {b.one}
                 </p>
-                <div className="mt-auto border-t border-rule pt-4 flex items-baseline justify-between">
+                <div className="mt-auto border-t border-rule pt-4 flex items-center justify-between gap-3">
                   <span className="font-display text-2xl">
                     {b.from.replace("From ", "")}
                     <span className="text-[11px] font-sans font-medium uppercase tracking-label text-ink-mute ml-2">from</span>
                   </span>
-                  <span className="text-sm text-accent font-medium">
-                    Start <span className="arrow">→</span>
-                  </span>
+                  <AddToCart id={b.k} showPrice={false} />
                 </div>
               </Link>
             ))}

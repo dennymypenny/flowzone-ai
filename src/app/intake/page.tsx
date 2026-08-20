@@ -126,11 +126,20 @@ function IntakeForm() {
     if (!cameFromCart) return;
     const items = readCart();
     if (items.length === 0) return;
-    const lines = items.map((i) => `- ${i.name} — ${money(i.price)}`).join("\n");
-    const summary = `From my cart:\n${lines}\nTotal: ${money(cartTotal(items))}`;
+    const lines = items
+      .map((i) => `- ${i.name} — ${i.from ? "from " : ""}${money(i.price)}`)
+      .join("\n");
+    const approx = items.some((i) => i.from) ? "from " : "";
+    const summary = `From my cart:\n${lines}\nTotal: ${approx}${money(cartTotal(items))}`;
+    // If a build is in the cart, that build is the ticket. Small jobs alone
+    // land under A Small Job.
+    const buildInCart = [...items]
+      .sort((a, b) => b.price - a.price)
+      .map((i) => builds.find((x) => x.key === i.id)?.name)
+      .find(Boolean);
     setForm((f) => ({
       ...f,
-      service: f.service || "A Small Job",
+      service: f.service || buildInCart || "A Small Job",
       description: f.description ? f.description : summary,
     }));
     // eslint-disable-next-line react-hooks/exhaustive-deps

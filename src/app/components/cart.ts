@@ -6,7 +6,13 @@
  * items in it, and payment happens after a human replies.
  */
 
-export type CartItem = { id: string; name: string; price: number };
+export type CartItem = {
+  id: string;
+  name: string;
+  price: number;
+  /** True when the price is a starting point that gets quoted flat. */
+  from?: boolean;
+};
 
 /** The one price list. Every surface renders from this. Cents, not floats. */
 export const SMALL_JOBS: CartItem[] = [
@@ -18,7 +24,21 @@ export const SMALL_JOBS: CartItem[] = [
   { id: "page", name: "One new page or landing page", price: 9999 },
 ];
 
-export const money = (cents: number) => `$${(cents / 100).toFixed(2)}`;
+/** The four builds plus the bundle, addable like anything else. */
+export const BUILDS: CartItem[] = [
+  { id: "identity", name: "The Identity Build", price: 50000, from: true },
+  { id: "site", name: "The Site Build", price: 50000, from: true },
+  { id: "engine", name: "The Engine Build", price: 50000, from: true },
+  { id: "full", name: "The Full Build", price: 150000 },
+  { id: "storefront", name: "The Storefront Build", price: 250000, from: true },
+];
+
+export const CATALOG: CartItem[] = [...SMALL_JOBS, ...BUILDS];
+
+export const money = (cents: number) =>
+  Number.isInteger(cents / 100)
+    ? `$${(cents / 100).toLocaleString("en-US")}`
+    : `$${(cents / 100).toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
 
 const KEY = "fz-cart";
 

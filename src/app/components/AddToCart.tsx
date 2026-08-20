@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { addToCart, money, SMALL_JOBS } from "@/app/components/cart";
+import { addToCart, money, CATALOG } from "@/app/components/cart";
 
 /** A small "+ Add" control for one small job, by id from SMALL_JOBS. */
 export default function AddToCart({
@@ -12,14 +12,17 @@ export default function AddToCart({
   showPrice?: boolean;
   className?: string;
 }) {
-  const item = SMALL_JOBS.find((i) => i.id === id);
+  const item = CATALOG.find((i) => i.id === id);
   const [added, setAdded] = useState(false);
   if (!item) return null;
 
   return (
     <button
       type="button"
-      onClick={() => {
+      onClick={(e) => {
+        // Usable inside a Link without navigating.
+        e.preventDefault();
+        e.stopPropagation();
         addToCart(item);
         setAdded(true);
         window.setTimeout(() => setAdded(false), 1200);
@@ -31,7 +34,7 @@ export default function AddToCart({
       } ${className}`}
       aria-label={`Add ${item.name} to cart, ${money(item.price)}`}
     >
-      {added ? "Added ✓" : showPrice ? `+ Add · ${money(item.price)}` : "+ Add"}
+      {added ? "Added ✓" : showPrice ? `${item.from ? "+ Add · from " : "+ Add · "}${money(item.price)}` : "+ Add"}
     </button>
   );
 }

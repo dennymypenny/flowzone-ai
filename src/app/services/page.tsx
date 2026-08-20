@@ -311,13 +311,14 @@ export default function Services() {
                       {b.right}
                     </p>
                   </div>
-                  <div className="col-span-2 pt-1">
+                  <div className="col-span-2 pt-1 flex flex-col sm:flex-row gap-3 items-center">
                     <Link
                       href={`/intake?build=${b.k}`}
-                      className="btn-primary w-full justify-center"
+                      className="btn-primary flex-1 w-full justify-center"
                     >
                       Start this build <span className="arrow">→</span>
                     </Link>
+                    <AddToCart id={b.k} showPrice={false} className="!px-4 !py-2.5" />
                   </div>
                 </div>
               </div>

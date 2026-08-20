@@ -63,7 +63,7 @@ export default function CartWidget() {
           />
           <aside className="absolute right-0 top-0 h-full w-full max-w-sm bg-paper border-l border-rule p-6 flex flex-col overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
-              <p className="font-display text-2xl">Your small jobs</p>
+              <p className="font-display text-2xl">Your cart</p>
               <button
                 type="button"
                 className="p-2 text-ink-soft hover:text-ink"
@@ -76,7 +76,7 @@ export default function CartWidget() {
 
             {items.length === 0 ? (
               <p className="text-sm text-ink-soft font-light">
-                Nothing in here yet. Add a small job from any page.
+                Nothing in here yet. Add a build or a small job from any page.
               </p>
             ) : (
               <>
@@ -85,7 +85,10 @@ export default function CartWidget() {
                     <li key={`${i.id}-${idx}`} className="flex items-start justify-between gap-3 border-b border-rule pb-4">
                       <div>
                         <p className="text-sm text-ink font-light leading-snug">{i.name}</p>
-                        <p className="text-sm text-ink-soft mt-1">{money(i.price)}</p>
+                        <p className="text-sm text-ink-soft mt-1">
+                          {i.from ? "from " : ""}
+                          {money(i.price)}
+                        </p>
                       </div>
                       <button
                         type="button"
@@ -100,7 +103,10 @@ export default function CartWidget() {
                 </ul>
                 <div className="flex items-baseline justify-between mb-6">
                   <p className="label">Total</p>
-                  <p className="font-display text-3xl">{money(cartTotal(items))}</p>
+                  <p className="font-display text-3xl">
+                    {items.some((i) => i.from) ? "from " : ""}
+                    {money(cartTotal(items))}
+                  </p>
                 </div>
                 <Link
                   href="/intake?cart=1"
