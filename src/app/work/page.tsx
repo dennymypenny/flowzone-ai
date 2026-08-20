@@ -148,9 +148,10 @@ This is where the studio starts, and it started from something we
             </div>
             <div className="md:col-span-5 flex md:justify-end">
               <div className="panel overflow-hidden w-full max-w-[340px] mx-auto md:mx-0">
+                {/* WebM first: smaller, and it plays on Chromium builds that
+                    ship without h264. Safari falls through to the mp4. */}
                 <video
                   className="w-full h-auto block"
-                  src="/assets/vice-city-reel.mp4"
                   poster="/assets/vice-city-reel-poster.jpg"
                   autoPlay
                   muted
@@ -159,7 +160,10 @@ This is where the studio starts, and it started from something we
                   controls
                   preload="metadata"
                   aria-label="Vice City Property Runs promo reel: can't make a property appointment? Property runs across South Florida, open seven days a week, same day service."
-                />
+                >
+                  <source src="/assets/vice-city-reel.webm" type="video/webm" />
+                  <source src="/assets/vice-city-reel.mp4" type="video/mp4" />
+                </video>
               </div>
             </div>
           </div>
