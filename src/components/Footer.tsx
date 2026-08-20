@@ -31,8 +31,6 @@ export default function Footer() {
             <p className="label mb-5">Start</p>
             <ul className="space-y-3">
               <li><Link href="/book" className="text-sm text-ink-soft hover:text-ink transition-colors">Talk To Us</Link></li>
-              <li><Link href="/try" className="text-sm text-ink-soft hover:text-ink transition-colors">Flow Mode</Link></li>
-              <li><Link href="/try#scan" className="text-sm text-ink-soft hover:text-ink transition-colors">Free Scan</Link></li>
               <li><Link href="/pricing" className="text-sm text-ink-soft hover:text-ink transition-colors">Pricing</Link></li>
               <li><Link href="/intake" className="text-sm text-ink-soft hover:text-ink transition-colors">Start a Ticket</Link></li>
               <li><Link href="/ai-news" className="text-sm text-ink-soft hover:text-ink transition-colors">AI News</Link></li>

@@ -5,7 +5,6 @@ import type { Metadata } from "next";
 import ChatWidget from "@/app/components/ChatWidget";
 import WorkSession from "@/app/components/WorkSession";
 import MessageUs from "@/components/MessageUs";
-import FlowRide from "@/app/components/FlowRide";
 import { SITE, PILLARS } from "@/lib/site";
 import NodeWeb from "@/app/components/NodeWeb";
 import FlowField from "@/app/components/FlowField";
@@ -87,7 +86,6 @@ export default function Home() {
 
           <div className="flex flex-col sm:flex-row gap-3 mt-8">
             <MessageUs className="btn-primary shine" />
-            <FlowRide />
           </div>
 
           {/* The number is here for anybody who wants it, but it is not the
@@ -339,14 +337,14 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3">
-            <Link href="/try" className="btn-primary shine">
-              Find out which ones you are missing <span className="arrow">&rarr;</span>
+            <Link href="/intake" className="btn-primary shine">
+              Start a Ticket <span className="arrow">&rarr;</span>
             </Link>
             <MessageUs className="btn-ghost" label="Or just tell us the idea" />
           </div>
           <p className="text-[13px] text-ink-mute mt-4">
-            Flow Mode asks six questions and tells you which move comes first.
-            Free, no signup, nothing is uploaded.
+            Four questions, no meeting. You get a scope, a price and a date
+            back, usually the same day.
           </p>
         </div>
       </section>

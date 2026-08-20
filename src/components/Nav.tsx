@@ -10,7 +10,6 @@ import CartWidget from "@/app/components/CartWidget";
 const LINKS = [
   { href: "/work", label: "Work" },
   { href: "/services", label: "What We Build" },
-  { href: "/try", label: "Try It" },
 ];
 
 export default function Nav() {
