@@ -60,6 +60,10 @@ button {
 
   .display {
     @apply font-display leading-[1] text-ink;
+    /* The sleek read comes from weight and tracking, not a new family.
+       500 at display sizes, 600 stays for small headings via .font-display. */
+    font-weight: 500;
+    letter-spacing: -0.028em;
   }
 
   .lede {

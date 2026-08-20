@@ -71,7 +71,7 @@ export default function ScanPage() {
         </div>
       </section>
 
-      <section className="px-6 py-16 border-t border-rule">
+      <section className="band-light px-6 py-16">
         <div className="max-w-6xl mx-auto">
           <p className="label mb-10">What gets graded</p>
           <div className="grid md:grid-cols-3 gap-6">

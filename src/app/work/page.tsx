@@ -110,8 +110,9 @@ This is where the studio starts, and it started from something we
       </section>
 
       {/* Motion sample: the Vice City reel. A sample, and labeled as one,
-          because the rule on this page is that nothing pretends. */}
-      <section data-flow className="px-6 pb-24">
+          because the rule on this page is that nothing pretends. On white,
+          because the reel itself is dark neon and needs the contrast. */}
+      <section data-flow className="band-light px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <div className="border-t border-rule pt-10 grid md:grid-cols-12 gap-10 items-start">
             <div className="md:col-span-7">

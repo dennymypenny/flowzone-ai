@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 const TOOLS = [
   {
     num: "01",
-    color: "#5B9BF9",
+    color: "#155E9C",
     name: "Flow Mode",
     href: "/start",
     line: "Bring the idea you keep meaning to start.",
@@ -36,7 +36,7 @@ const TOOLS = [
   },
   {
     num: "02",
-    color: "#C6E4F8",
+    color: "#1E3A8A",
     name: "Free Site Scan",
     href: "/scan",
     line: "Paste your link. See what it is costing you.",
@@ -72,7 +72,7 @@ export default function TryIt() {
       </section>
 
       {/* The tools */}
-      <section data-flow className="px-6 pb-24">
+      <section data-flow className="band-light px-6 py-20">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-6">
           {TOOLS.map((t) => (
             <Link

@@ -580,7 +580,7 @@ export default function Home() {
       </section>
 
       {/* ---------- The obvious question ---------- */}
-      <section data-flow className="border-t border-rule px-6 py-16 md:py-20">
+      <section data-flow className="band-light px-6 py-16 md:py-20">
         <div className="max-w-6xl mx-auto">
           <p className="label mb-4">The obvious question</p>
           <div className="grid md:grid-cols-12 gap-6 mb-10">
@@ -604,19 +604,19 @@ export default function Home() {
               },
               {
                 n: "02",
-                c: "#5B9BF9",
+                c: "#155E9C",
                 t: "One logo is easy, fifty agreeing decisions are not",
                 b: "Each piece takes ten minutes. Making them all look and sound like the same company is the whole job.",
               },
               {
                 n: "03",
-                c: "#FBBF24",
+                c: "#8A5100",
                 t: "The last ten percent is where projects die",
                 b: "Projects do not die at the start. They die at ninety percent, six weeks in, at one in the morning.",
               },
               {
                 n: "04",
-                c: "#34D399",
+                c: "#0F6B4F",
                 t: "Nobody is accountable to a chat window",
                 b: "You are hiring a person who is on the hook for the result, and who you can reply to.",
               },
