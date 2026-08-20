@@ -95,7 +95,7 @@ export default function Talk() {
               of it building beside you as you answer. Send it when it is ready.
             </p>
             <div className="mt-auto">
-              <Link href="/start" className="btn-ghost w-full">
+              <Link href="/try" className="btn-ghost w-full">
                 Open a work session <span className="arrow">→</span>
               </Link>
             </div>

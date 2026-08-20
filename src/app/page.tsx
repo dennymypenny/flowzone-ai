@@ -269,7 +269,7 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3">
-            <Link href="/start" className="btn-primary shine">
+            <Link href="/try" className="btn-primary shine">
               Find out which ones you are missing <span className="arrow">&rarr;</span>
             </Link>
             <MessageUs className="btn-ghost" label="Or just tell us the idea" />
