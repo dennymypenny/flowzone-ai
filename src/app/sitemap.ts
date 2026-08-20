@@ -23,12 +23,13 @@ type Route = {
 const ROUTES: Route[] = [
   { path: "", priority: 1.0, changeFrequency: "monthly", lastModified: "2026-08-17" },
   { path: "/start", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-08-17" },
-  { path: "/work", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-08-17" },
+  { path: "/work", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-08-20" },
   { path: "/services", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-08-17" },
   { path: "/pricing", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-08-17" },
   { path: "/book", priority: 0.85, changeFrequency: "monthly", lastModified: "2026-08-17" },
   { path: "/how-we-work", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-08-17" },
   { path: "/scan", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-08-18" },
+  { path: "/try", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-08-20" },
   { path: "/about", priority: 0.7, changeFrequency: "monthly", lastModified: "2026-08-17" },
   { path: "/intake", priority: 0.4, changeFrequency: "yearly", lastModified: "2026-08-17" },
   // Legal pages carry their own effective dates in the copy. Keep these two

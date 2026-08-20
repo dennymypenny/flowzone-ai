@@ -3,16 +3,13 @@ import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Wordmark from "@/components/Wordmark";
-import { SITE } from "@/lib/site";
 
+// Four doors, one button. Everything else lives in the footer or inside
+// these pages. Pricing sits on What We Build, the hooks live behind Try It.
 const LINKS = [
-  { href: "/start", label: "Flow Mode" },
   { href: "/work", label: "Work" },
   { href: "/services", label: "What We Build" },
-  { href: "/how-we-work", label: "How We Work" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/scan", label: "Free Scan" },
-  { href: "/book", label: "Talk To Us" },
+  { href: "/try", label: "Try It" },
 ];
 
 export default function Nav() {
@@ -50,9 +47,9 @@ export default function Nav() {
               </Link>
             );
           })}
-          <a href={SITE.mailto} className="btn-primary !px-5 !py-2.5">
-            Start an email
-          </a>
+          <Link href="/intake" className="btn-primary !px-5 !py-2.5">
+            Start a Ticket
+          </Link>
         </div>
 
         <button
@@ -77,9 +74,9 @@ export default function Nav() {
               {l.label}
             </Link>
           ))}
-          <a href={SITE.mailto} className="btn-primary w-full" onClick={() => setOpen(false)}>
-            Start an email
-          </a>
+          <Link href="/intake" className="btn-primary w-full text-center" onClick={() => setOpen(false)}>
+            Start a Ticket
+          </Link>
         </div>
       )}
     </nav>

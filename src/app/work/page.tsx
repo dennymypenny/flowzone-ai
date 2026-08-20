@@ -109,6 +109,63 @@ This is where the studio starts, and it started from something we
         </div>
       </section>
 
+      {/* Motion sample: the Vice City reel. A sample, and labeled as one,
+          because the rule on this page is that nothing pretends. */}
+      <section data-flow className="px-6 pb-24">
+        <div className="max-w-6xl mx-auto">
+          <div className="border-t border-rule pt-10 grid md:grid-cols-12 gap-10 items-start">
+            <div className="md:col-span-7">
+              <p className="label mb-4">02 · Motion</p>
+              <h2 className="font-display text-5xl leading-none mb-4">
+                Vice City Property Runs
+              </h2>
+              <p className="text-ink-soft leading-relaxed max-w-reading">
+                A sample reel cut in the studio for Vice City Property Runs, a South
+                Florida property appointment service. Fourteen seconds, vertical,
+                built for the place it actually lives: a phone, in a feed, sound off.
+              </p>
+              <p className="text-ink-soft leading-relaxed max-w-reading mt-4">
+                The whole pitch is on screen in under fifteen seconds: the problem,
+                the coverage, the hours, the handle. That discipline is the work.
+                A reel that needs sound or a second watch is a reel nobody saw.
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 mt-10 border-t border-rule pt-6">
+                {[
+                  ["Format", "9:16 vertical reel"],
+                  ["Length", "14 seconds"],
+                  ["Made for", "Instagram and TikTok"],
+                ].map(([k, v]) => (
+                  <div key={k}>
+                    <p className="label mb-1.5">{k}</p>
+                    <p className="text-sm text-ink-soft">{v}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="text-sm text-ink-soft font-light leading-relaxed max-w-reading mt-10">
+                Short motion pieces like this ship alongside a brand or storefront
+                build, so the launch does not go out silent.
+              </p>
+            </div>
+            <div className="md:col-span-5 flex md:justify-end">
+              <div className="panel overflow-hidden w-full max-w-[340px] mx-auto md:mx-0">
+                <video
+                  className="w-full h-auto block"
+                  src="/assets/vice-city-reel.mp4"
+                  poster="/assets/vice-city-reel-poster.jpg"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  controls
+                  preload="metadata"
+                  aria-label="Vice City Property Runs promo reel: can't make a property appointment? Property runs across South Florida, open seven days a week, same day service."
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ---------- Walkthrough: the thinking behind the mark, on white ----------
           The longest read on the site, so it gets the light band. Every step
           carries a signal colour, and none of the dark-theme values survive on
