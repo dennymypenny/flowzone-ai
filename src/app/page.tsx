@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Icon from "@/components/Icon";
 import type { Metadata } from "next";
 import ChatWidget from "@/app/components/ChatWidget";
 import WorkSession from "@/app/components/WorkSession";
@@ -126,6 +127,7 @@ export default function Home() {
             {[
               {
                 k: "identity",
+                icon: "palette",
                 c: "#2B57C4",
                 n: "01",
                 name: "The Identity Build",
@@ -134,6 +136,7 @@ export default function Home() {
               },
               {
                 k: "site",
+                icon: "compass",
                 c: "#155E9C",
                 n: "02",
                 name: "The Site Build",
@@ -142,6 +145,7 @@ export default function Home() {
               },
               {
                 k: "storefront",
+                icon: "banknote",
                 c: "#A03D14",
                 n: "03",
                 name: "The Storefront Build",
@@ -150,6 +154,7 @@ export default function Home() {
               },
               {
                 k: "engine",
+                icon: "bolt",
                 c: "#0F6B4F",
                 n: "04",
                 name: "The Engine Build",
@@ -160,22 +165,33 @@ export default function Home() {
               <Link
                 key={b.k}
                 href={`/intake?build=${b.k}`}
-                className="panel p-6 flex flex-col group border-t-2 hover:border-accent transition-colors"
+                className="panel panel-lift p-6 flex flex-col group border-t-2 transition-all"
                 style={{ borderTopColor: b.c }}
               >
-                <p
-                  className="text-[11px] font-medium uppercase tracking-label mb-4"
-                  style={{ color: b.c }}
-                >
-                  {b.n}
-                </p>
+                <div className="flex items-center justify-between mb-5">
+                  <span
+                    className="inline-flex items-center justify-center w-10 h-10 rounded-full"
+                    style={{ background: `${b.c}14`, color: b.c }}
+                  >
+                    <Icon name={b.icon} className="w-5 h-5" />
+                  </span>
+                  <p
+                    className="text-[11px] font-medium uppercase tracking-label"
+                    style={{ color: b.c }}
+                  >
+                    {b.n}
+                  </p>
+                </div>
                 <h3 className="font-display text-xl leading-snug mb-2">{b.name}</h3>
-                <p className="text-sm text-ink-soft font-light leading-relaxed mb-6">
+                <p className="text-sm text-ink-soft font-light leading-relaxed mb-8">
                   {b.one}
                 </p>
-                <div className="mt-auto flex items-center justify-between">
-                  <span className="text-sm text-ink-soft">{b.from}</span>
-                  <span className="text-sm text-accent">
+                <div className="mt-auto border-t border-rule pt-4 flex items-baseline justify-between">
+                  <span className="font-display text-2xl">
+                    {b.from.replace("From ", "")}
+                    <span className="text-[11px] font-sans font-medium uppercase tracking-label text-ink-mute ml-2">from</span>
+                  </span>
+                  <span className="text-sm text-accent font-medium">
                     Start <span className="arrow">→</span>
                   </span>
                 </div>
