@@ -103,6 +103,89 @@ export default function Home() {
         </div>
       </section>
 
+      {/* The four builds, front and center. Click one, land in the ticket
+          with it preselected. Colors are the on-white pairs. */}
+      <section data-flow className="band-light px-6 py-16 md:py-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-12 gap-6 mb-10">
+            <div className="md:col-span-7">
+              <p className="label mb-4">Pick your build</p>
+              <h2 className="display text-4xl md:text-5xl">
+                Four builds.
+                <br />
+                One ticket.
+              </h2>
+            </div>
+            <p className="md:col-span-5 text-ink-soft font-light leading-relaxed self-end max-w-reading">
+              Pick the one that sounds like your problem and open a ticket. Four
+              questions, no meeting. Not sure which? The ticket has a lane for that
+              too.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              {
+                k: "identity",
+                c: "#2B57C4",
+                n: "01",
+                name: "The Identity Build",
+                one: "Everything people recognize you by.",
+                from: "From $600",
+              },
+              {
+                k: "site",
+                c: "#155E9C",
+                n: "02",
+                name: "The Site Build",
+                one: "A site that explains you and asks for the sale.",
+                from: "From $600",
+              },
+              {
+                k: "storefront",
+                c: "#A03D14",
+                n: "03",
+                name: "The Storefront Build",
+                one: "A real shop. Cart, checkout, money in your account.",
+                from: "From $2,497",
+              },
+              {
+                k: "engine",
+                c: "#0F6B4F",
+                n: "04",
+                name: "The Engine Build",
+                one: "The machinery, so it runs without you.",
+                from: "From $600",
+              },
+            ].map((b) => (
+              <Link
+                key={b.k}
+                href={`/intake?build=${b.k}`}
+                className="panel p-6 flex flex-col group border-t-2 hover:border-accent transition-colors"
+                style={{ borderTopColor: b.c }}
+              >
+                <p
+                  className="text-[11px] font-medium uppercase tracking-label mb-4"
+                  style={{ color: b.c }}
+                >
+                  {b.n}
+                </p>
+                <h3 className="font-display text-xl leading-snug mb-2">{b.name}</h3>
+                <p className="text-sm text-ink-soft font-light leading-relaxed mb-6">
+                  {b.one}
+                </p>
+                <div className="mt-auto flex items-center justify-between">
+                  <span className="text-sm text-ink-soft">{b.from}</span>
+                  <span className="text-sm text-accent">
+                    Start <span className="arrow">→</span>
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
 
 
       {/* ---------- How close it already is ----------
