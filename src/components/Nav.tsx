@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Wordmark from "@/components/Wordmark";
+import CartWidget from "@/app/components/CartWidget";
 
 // Four doors, one button. Everything else lives in the footer or inside
 // these pages. Pricing sits on What We Build, the hooks live behind Try It.
@@ -47,13 +48,16 @@ export default function Nav() {
               </Link>
             );
           })}
+          <CartWidget />
           <Link href="/intake" className="btn-primary !px-5 !py-2.5">
             Start a Ticket
           </Link>
         </div>
 
+        <div className="md:hidden flex items-center">
+        <CartWidget />
         <button
-          className="md:hidden p-2 text-ink"
+          className="p-2 text-ink"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
@@ -65,6 +69,7 @@ export default function Nav() {
             )}
           </svg>
         </button>
+        </div>
       </div>
 
       {open && (

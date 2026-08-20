@@ -1,6 +1,7 @@
 "use client";
-import { useState, Suspense } from "react";
+import { useState, Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import { readCart, clearCart, cartTotal, money } from "@/app/components/cart";
 import { SITE } from "@/lib/site";
 import Icon from "@/components/Icon";
 
@@ -118,6 +119,23 @@ function IntakeForm() {
 
   const set = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
 
+  // Arriving from the cart: preselect A Small Job and write the items into
+  // the description, once, without clobbering anything the visitor typed.
+  const cameFromCart = searchParams.get("cart") === "1";
+  useEffect(() => {
+    if (!cameFromCart) return;
+    const items = readCart();
+    if (items.length === 0) return;
+    const lines = items.map((i) => `- ${i.name} — ${money(i.price)}`).join("\n");
+    const summary = `From my cart:\n${lines}\nTotal: ${money(cartTotal(items))}`;
+    setForm((f) => ({
+      ...f,
+      service: f.service || "A Small Job",
+      description: f.description ? f.description : summary,
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cameFromCart]);
+
   // The lead in their own mail app, ready to send. This is what saves the
   // project when our email is down, so it carries every answer they typed.
   const fallbackMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(
@@ -148,6 +166,7 @@ function IntakeForm() {
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data?.ok) throw new Error(data?.error || "That did not send.");
       setState("done");
+      if (cameFromCart) clearCart();
     } catch (err) {
       setState("error");
       setError(err instanceof Error ? err.message : "That did not send.");

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { SITE } from "@/lib/site";
 import NodeWeb from "@/app/components/NodeWeb";
+import AddToCart from "@/app/components/AddToCart";
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -164,16 +165,18 @@ export default function Pricing() {
           </div>
           <div className="md:col-span-8 grid sm:grid-cols-2 gap-x-10 gap-y-3 self-center">
             {[
-              ["One-off design — flyer, post or cover", "$49.99"],
-              ["Booking or contact form, wired to your email", "$49.99"],
-              ["Promo reel, cut for sound-off feeds", "$74.99"],
-              ["One new page or landing page", "$99.99"],
-              ["Logo-only refresh", "$49.99"],
-              ["Speed and mobile fix pass", "$49.99"],
-            ].map(([w, price]) => (
-              <div key={w} className="flex justify-between gap-4 border-b border-rule pb-3">
-                <span className="text-sm text-ink-soft font-light">{w}</span>
-                <span className="text-sm text-ink whitespace-nowrap">{price}</span>
+              ["flyer", "One-off design — flyer, post or cover", "$49.99"],
+              ["form", "Booking or contact form, wired to your email", "$49.99"],
+              ["reel", "Promo reel, cut for sound-off feeds", "$74.99"],
+              ["page", "One new page or landing page", "$99.99"],
+              ["logo", "Logo-only refresh", "$49.99"],
+              ["fix", "Speed and mobile fix pass", "$49.99"],
+            ].map(([id, w, price]) => (
+              <div key={id} className="flex items-center justify-between gap-4 border-b border-rule pb-3">
+                <span className="text-sm text-ink-soft font-light">
+                  {w} <span className="text-ink whitespace-nowrap">{price}</span>
+                </span>
+                <AddToCart id={id} showPrice={false} />
               </div>
             ))}
           </div>

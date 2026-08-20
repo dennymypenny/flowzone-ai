@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Icon from "@/components/Icon";
+import AddToCart from "@/app/components/AddToCart";
 import type { Metadata } from "next";
 import ChatWidget from "@/app/components/ChatWidget";
 import WorkSession from "@/app/components/WorkSession";
@@ -222,30 +223,31 @@ export default function Home() {
               </h3>
               <div className="flex flex-wrap gap-2">
                 {[
-                  ["A flyer or post", "$49.99"],
-                  ["A form, wired in", "$49.99"],
-                  ["A logo refresh", "$49.99"],
-                  ["A fix pass", "$49.99"],
-                  ["A promo reel", "$74.99"],
-                  ["A new page", "$99.99"],
-                ].map(([w, price]) => (
+                  ["flyer", "A flyer or post", "$49.99"],
+                  ["form", "A form, wired in", "$49.99"],
+                  ["logo", "A logo refresh", "$49.99"],
+                  ["fix", "A fix pass", "$49.99"],
+                  ["reel", "A promo reel", "$74.99"],
+                  ["page", "A new page", "$99.99"],
+                ].map(([id, w, price]) => (
                   <span
-                    key={w}
-                    className="inline-flex items-center gap-2 text-sm font-light rounded-full px-4 py-1.5 bg-white/85 border"
+                    key={id}
+                    className="inline-flex items-center gap-2.5 text-sm font-light rounded-full pl-4 pr-1.5 py-1 bg-white/85 border"
                     style={{ borderColor: "#0F6B4F26" }}
                   >
                     <span className="text-ink-soft">{w}</span>
                     <span className="font-medium" style={{ color: "#0F6B4F" }}>
                       {price}
                     </span>
+                    <AddToCart id={id} showPrice={false} />
                   </span>
                 ))}
               </div>
             </div>
             <div className="md:col-span-5 md:text-right">
               <p className="text-sm text-ink-soft font-light leading-relaxed mb-5 md:ml-auto max-w-xs">
-                Same studio, same taste, one small thing. Done in days, not
-                weeks.
+                Add what you need to the cart and send it as one ticket. Same
+                studio, same taste. Done in days, not weeks.
               </p>
               <Link href="/intake?build=small" className="btn-primary">
                 Start a small job <span className="arrow">→</span>

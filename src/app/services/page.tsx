@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { SITE } from "@/lib/site";
 import NodeWeb from "@/app/components/NodeWeb";
+import AddToCart from "@/app/components/AddToCart";
 
 export const metadata: Metadata = {
   title: "What We Build",
@@ -192,9 +193,9 @@ export default function Services() {
                 from: "From $500",
                 right: "You are launching, or your business has outgrown a logo you made in a hurry.",
                 small: [
-                  ["One-off design — flyer, post or cover", "$49.99"],
-                  ["Promo reel, cut for sound-off feeds", "$74.99"],
-                  ["Logo-only refresh", "$49.99"],
+                  ["flyer", "One-off design — flyer, post or cover", "$49.99"],
+                  ["reel", "Promo reel, cut for sound-off feeds", "$74.99"],
+                  ["logo", "Logo-only refresh", "$49.99"],
                 ],
               },
               {
@@ -214,9 +215,9 @@ export default function Services() {
                 from: "From $500",
                 right: "People are already finding you and the site is doing nothing to help.",
                 small: [
-                  ["Booking or contact form, wired to your email", "$49.99"],
-                  ["One new page or landing page", "$99.99"],
-                  ["Speed and mobile fix pass", "$49.99"],
+                  ["form", "Booking or contact form, wired to your email", "$49.99"],
+                  ["page", "One new page or landing page", "$99.99"],
+                  ["fix", "Speed and mobile fix pass", "$49.99"],
                 ],
               },
               {
@@ -279,16 +280,19 @@ export default function Services() {
                   <div className="border-t border-rule pt-5 mb-7">
                     <p className="label mb-4">Just need a piece?</p>
                     <ul className="space-y-2.5">
-                      {(b as any).small.map(([w, price]: [string, string]) => (
-                        <li key={w} className="text-sm font-light flex justify-between gap-4 leading-relaxed">
-                          <span className="text-ink-soft">{w}</span>
-                          <span className="text-ink whitespace-nowrap">{price}</span>
+                      {(b as any).small.map(([id, w, price]: [string, string, string]) => (
+                        <li key={id} className="text-sm font-light flex items-center justify-between gap-4 leading-relaxed">
+                          <span className="text-ink-soft">
+                            {w} <span className="text-ink">{price}</span>
+                          </span>
+                          <AddToCart id={id} showPrice={false} />
                         </li>
                       ))}
                     </ul>
-                    <Link href="/intake?build=small" className="inline-block text-sm text-accent hover:underline mt-4">
-                      Start a small job →
-                    </Link>
+                    <p className="text-xs text-ink-mute font-light mt-4">
+                      Add to the cart, then send it all as one ticket from the
+                      cart in the corner.
+                    </p>
                   </div>
                 )}
 
