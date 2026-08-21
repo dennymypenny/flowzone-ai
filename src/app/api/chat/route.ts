@@ -40,7 +40,7 @@ function keywordFallback(message: string): string {
     return `Site is part two, custom designed against your brand rather than a theme, and live on your own domain. Send me the details at ${E} and a person comes back with scope and a date.`;
 
   if (m.includes("lead") || m.includes("crm") || m.includes("follow") || m.includes("intake"))
-    return `That is a System, part three. Lead intake that captures, sorts and answers every enquiry without you touching it. Send me the details at ${E} and a person comes back with scope and a date.`;
+    return `That is a System, part three. Lead intake that captures, sorts and answers every inquiry without you touching it. Send me the details at ${E} and a person comes back with scope and a date.`;
 
   if (m.includes("booking") || m.includes("appointment") || m.includes("schedul") || m.includes("calendar"))
     return `Booking, confirmations and reminders is a System build, wired into your site so the calendar runs itself. Send me the details at ${E} and a person comes back with scope and a date.`;

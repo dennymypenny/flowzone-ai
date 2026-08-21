@@ -209,7 +209,7 @@ export default function Services() {
                 what: [
                   "Up to six pages, custom designed against your brand",
                   "Every word written for you, not a template you fill in",
-                  "Contact and enquiry forms landing in your inbox",
+                  "Contact and inquiry forms landing in your inbox",
                   "Fast on a phone, tested before it ships",
                   "Live on your own domain, and you own the code",
                 ],

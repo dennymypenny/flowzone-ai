@@ -335,6 +335,83 @@ This is where the studio starts, and it started from something we
         </div>
       </section>
 
+      {/* The SlipFolio piece is landscape and explains a product, so it does
+          not belong in the vertical reel grid. It gets the full width and the
+          write-up sits under it. */}
+      <section data-flow className="px-6 py-24 border-t border-rule">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-12 gap-10 mb-10">
+            <div className="md:col-span-6">
+              <p className="label mb-4">03 · Product animation</p>
+              <h2 className="font-display text-5xl leading-none mb-4">
+                Explaining the thing
+                <br />
+                the screenshot cannot.
+              </h2>
+            </div>
+            <p className="md:col-span-6 text-ink-soft leading-relaxed self-end max-w-reading">
+              Some products only make sense in motion. Twelve seconds showing
+              the actual mechanic beats a paragraph trying to describe it, and
+              it works on a landing page, in an ad and in a pitch deck without
+              being recut.
+            </p>
+          </div>
+
+          <div className="panel overflow-hidden">
+            <video
+              className="w-full h-auto block"
+              poster="/assets/slipfolio-hype-poster.jpg"
+              autoPlay
+              muted
+              loop
+              playsInline
+              controls
+              preload="metadata"
+              aria-label="SlipFolio product animation: a fifty dollar bet slip on Lakers minus four and a half, with a slice of the stake investing automatically, win or lose. Every bet builds a portfolio."
+            >
+              <source src="/assets/slipfolio-hype.webm" type="video/webm" />
+              <source src="/assets/slipfolio-hype.mp4" type="video/mp4" />
+            </video>
+          </div>
+
+          <div className="grid md:grid-cols-12 gap-10 mt-8">
+            <div className="md:col-span-5">
+              <p className="label mb-3">Client work</p>
+              <h3 className="font-display text-3xl leading-none mb-2">SlipFolio</h3>
+              <a
+                href="https://slip-folio.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-accent hover:underline"
+              >
+                slip-folio.com ↗
+              </a>
+            </div>
+            <div className="md:col-span-7">
+              <p className="text-ink-soft font-light leading-relaxed max-w-reading">
+                SlipFolio turns a bet slip into an investment: a slice of every
+                stake goes into a portfolio, win or lose. That is one sentence
+                to read and a hard idea to picture, so the animation shows it
+                happening on the slip itself, then lands the line.
+              </p>
+              <div className="border-t border-rule mt-6 pt-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {[
+                  ["Length", "12 seconds"],
+                  ["Format", "16:9 landscape"],
+                  ["Made for", "Site and ads"],
+                  ["Audio", "None needed"],
+                ].map(([k, v]) => (
+                  <div key={k}>
+                    <p className="label mb-1.5">{k}</p>
+                    <p className="text-sm text-ink-soft">{v}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ---------- Walkthrough: the thinking behind the mark, on white ----------
           The longest read on the site, so it gets the light band. Every step
           carries a signal colour, and none of the dark-theme values survive on
@@ -388,7 +465,7 @@ This is where the studio starts, and it started from something we
                   c: "#FF3D9A",
                   cl: "#A8175E",
                   t: "Two accents, not five",
-                  b: "Teal and magenta, and nothing else fighting them. Card culture is visually loud, so the mark had to hold its own against a photo of forty foil packs without joining the noise. Two colours far apart on the wheel do that. Five would have turned into mush at the size it actually gets used.",
+                  b: "Teal and magenta, and nothing else fighting them. Card culture is visually loud, so the mark had to hold its own against a photo of forty foil packs without joining the noise. Two colors far apart on the wheel do that. Five would have turned into mush at the size it actually gets used.",
                 },
                 {
                   n: "03",
@@ -402,7 +479,7 @@ This is where the studio starts, and it started from something we
                   c: "#FBBF24",
                   cl: "#8A5100",
                   t: "Chrome that survives being shrunk",
-                  b: "The bevel and the inner glow read as premium at full size, but the mark spends its life at forty pixels in a browser tab. So the silhouette had to work in one flat colour first, and the shine got added on top. Build it the other way around and you get a logo that dies the moment it is small.",
+                  b: "The bevel and the inner glow read as premium at full size, but the mark spends its life at forty pixels in a browser tab. So the silhouette had to work in one flat color first, and the shine got added on top. Build it the other way around and you get a logo that dies the moment it is small.",
                 },
                 {
                   n: "05",

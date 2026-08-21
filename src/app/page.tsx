@@ -118,8 +118,8 @@ export default function Home() {
                 n: "01",
                 c: "#2B57C4",
                 k: "Brand",
-                b: "What people recognise you by.",
-                d: "The mark, the colours, the words. The part that makes you look like you meant it.",
+                b: "What people recognize you by.",
+                d: "The mark, the colors, the words. The part that makes you look like you meant it.",
               },
               {
                 n: "02",
@@ -161,7 +161,7 @@ export default function Home() {
       <section data-flow className="relative overflow-hidden border-t border-rule">
         <img
           src="/assets/constellation.jpg"
-          alt="A person standing at the centre of wide concentric rings, under a night sky of connected points"
+          alt="A person standing at the center of wide concentric rings, under a night sky of connected points"
           className="w-full h-[68vh] min-h-[420px] max-h-[760px] object-cover object-[center_42%] block"
           loading="lazy"
           decoding="async"
@@ -439,7 +439,7 @@ export default function Home() {
                 What that covers
               </p>
               <p className="text-sm text-[#49566E] font-light leading-relaxed">
-                Naming and name treatment, logo and wordmark, colour and type systems,
+                Naming and name treatment, logo and wordmark, color and type systems,
                 verbal identity and tone, positioning and messaging hierarchy, launch
                 copy, and the usage guide that keeps it all intact after we hand it
                 over.
