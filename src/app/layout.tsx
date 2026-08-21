@@ -3,7 +3,6 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Flow from "@/components/Flow";
-import SavePrompt from "@/components/SavePrompt";
 import StructuredData from "@/components/StructuredData";
 import { Analytics } from "@vercel/analytics/react";
 import { SITE } from "@/lib/site";
@@ -74,7 +73,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="pt-16">{children}</main>
         <Footer />
         <Flow />
-        <SavePrompt />
         <Analytics />
       </body>
     </html>

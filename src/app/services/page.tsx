@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { SITE } from "@/lib/site";
 import NodeWeb from "@/app/components/NodeWeb";
 import AddToCart from "@/app/components/AddToCart";
+import Icon from "@/components/Icon";
 
 export const metadata: Metadata = {
   title: "What We Build",
@@ -177,7 +178,7 @@ export default function Services() {
           <div className="grid md:grid-cols-2 gap-4">
             {[
               {
-                icon: "\u{1F3A8}",
+                icon: "palette",
                 c: "#4C7BE8",
                 k: "identity",
                 name: "The Identity Build",
@@ -199,7 +200,7 @@ export default function Services() {
                 ],
               },
               {
-                icon: "\u{1F310}",
+                icon: "compass",
                 c: "#5B9BF9",
                 k: "site",
                 name: "The Site Build",
@@ -221,7 +222,7 @@ export default function Services() {
                 ],
               },
               {
-                icon: "\u{1F6D2}",
+                icon: "banknote",
                 c: "#F0845F",
                 k: "storefront",
                 name: "The Storefront Build",
@@ -238,7 +239,7 @@ export default function Services() {
                 right: "You are selling through DMs, a marketplace, or nothing at all yet.",
               },
               {
-                icon: "\u{2699}\u{FE0F}",
+                icon: "bolt",
                 c: "#34D399",
                 k: "engine",
                 name: "The Engine Build",
@@ -255,12 +256,31 @@ export default function Services() {
                 right: "Launch went fine and now you do the same three jobs by hand every day.",
               },
             ].map((b) => (
-              <div key={b.name} className="panel p-8 flex flex-col relative overflow-hidden">
+              <div
+                key={b.name}
+                className="panel p-8 flex flex-col relative overflow-hidden"
+                style={{
+                  background: `linear-gradient(180deg, ${b.c}14 0%, transparent 34%)`,
+                }}
+              >
                 <span
                   className="absolute top-0 left-0 h-[3px] w-full"
                   style={{ background: b.c }}
                 />
-                <span className="block text-2xl mb-5 mt-1 leading-none">{b.icon}</span>
+                <div className="flex items-center justify-between mb-6 mt-1">
+                  <span
+                    className="inline-flex items-center justify-center w-11 h-11 rounded-full"
+                    style={{ background: `${b.c}1F`, color: b.c }}
+                  >
+                    <Icon name={b.icon} className="w-5 h-5" />
+                  </span>
+                  <span
+                    className="text-[11px] font-medium uppercase tracking-label px-3 py-1.5 rounded-full border"
+                    style={{ color: b.c, borderColor: `${b.c}55` }}
+                  >
+                    {b.from}
+                  </span>
+                </div>
                 <h3 className="font-display text-3xl mb-2">{b.name}</h3>
                 <p className="text-sm mb-6" style={{ color: b.c }}>
                   {b.one}

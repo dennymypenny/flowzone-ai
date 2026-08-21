@@ -3,7 +3,6 @@ import Icon from "@/components/Icon";
 import AddToCart from "@/app/components/AddToCart";
 import type { Metadata } from "next";
 import ChatWidget from "@/app/components/ChatWidget";
-import WorkSession from "@/app/components/WorkSession";
 import MessageUs from "@/components/MessageUs";
 import { SITE, PILLARS } from "@/lib/site";
 import NodeWeb from "@/app/components/NodeWeb";
@@ -36,42 +35,28 @@ export default function Home() {
         <div className="absolute inset-0 gridlight pointer-events-none" />
         {/* The mark, explained: points scatter, connect, resolve, then flow on. */}
 
-        <div className="relative max-w-6xl mx-auto px-6 pt-20 pb-14 md:pt-28 md:pb-20">
-
-          {/* The mark, spelled out: each dot is a word */}
-          <div className="flex items-center flex-wrap gap-y-2 mb-6" aria-label="Brand, site and system, one studio">
-            {[
-              { w: "Brand", c: "#4C7BE8", pulse: "pulse-1" },
-              { w: "Site", c: "#5B9BF9", pulse: "pulse-2" },
-              { w: "System", c: "#C6E4F8", pulse: "pulse-3" },
-            ].map((d, i) => (
-              <span key={d.w} className="flex items-center">
-                {i > 0 && (
-                  <span
-                    className="block w-7 h-px mx-3"
-                    style={{ background: "linear-gradient(90deg, transparent, rgba(221,238,251,0.45), transparent)" }}
-                    aria-hidden
-                  />
-                )}
-                <span className="flex items-center gap-2">
-                  <span
-                    className={`block w-2.5 h-2.5 rounded-full ${d.pulse}`}
-                    style={{ background: d.c, boxShadow: `0 0 12px ${d.c}66` }}
-                    aria-hidden
-                  />
-                  <span
-                    className="text-[11px] font-medium uppercase tracking-label"
-                    style={{ color: d.c }}
-                  >
-                    {d.w}
-                  </span>
-                </span>
-              </span>
-            ))}
-            <span className="text-[11px] font-medium uppercase tracking-label text-ink-mute ml-3">
-              · one studio
-            </span>
+        {/* The reel opens the page. It says the three parts out loud, which
+            is why the dot row that used to sit here is gone: the film does
+            that job better than a caption can. */}
+        <div className="relative max-w-6xl mx-auto px-6 pt-10 md:pt-14">
+          <div className="rounded-2xl overflow-hidden border border-rule bg-black shadow-[0_40px_90px_-40px_rgba(0,0,0,0.75)]">
+            <video
+              className="w-full h-auto block"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster="/assets/studio-reel-poster.jpg"
+              aria-label="FlowZone studio reel: you bring the idea, we build the brand, the site and the system"
+            >
+              <source src="/assets/studio-reel.webm" type="video/webm" />
+              <source src="/assets/studio-reel.mp4" type="video/mp4" />
+            </video>
           </div>
+        </div>
+
+        <div className="relative max-w-6xl mx-auto px-6 pt-8 pb-14 md:pt-10 md:pb-20">
 
           <h1 className="display text-[3rem] sm:text-6xl md:text-[5.25rem] max-w-4xl">
             <span className="text-gradient-white">You imagine it.</span>
@@ -100,6 +85,37 @@ export default function Home() {
             </Link>
           </p>
 
+        </div>
+      </section>
+
+      {/* One picture doing the work of a paragraph: the constellation is
+          already overhead and the person is standing inside it. The line is
+          the distance argument, which lands harder than any promise. */}
+      <section data-flow className="relative overflow-hidden border-t border-rule">
+        <img
+          src="/assets/constellation.jpg"
+          alt="A person standing at the centre of wide concentric rings, under a night sky of connected points"
+          className="w-full h-[58vh] min-h-[340px] max-h-[640px] object-cover object-[center_40%] block"
+          loading="lazy"
+          decoding="async"
+        />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(6,12,28,0.82) 0%, rgba(6,12,28,0.45) 34%, rgba(6,12,28,0.06) 60%, rgba(6,12,28,0.35) 100%)",
+          }}
+        />
+        <div className="absolute inset-x-0 top-0 px-6 pt-10 md:pt-14">
+          <div className="max-w-6xl mx-auto">
+            <p className="text-[11px] font-medium uppercase tracking-label text-[#9FC4E8] mb-3">
+              The distance
+            </p>
+            <h2 className="font-display text-3xl md:text-5xl leading-[1.05] text-white max-w-[20ch]">
+              You are not starting from nothing. You are two or three moves
+              from live.
+            </h2>
+          </div>
         </div>
       </section>
 
@@ -537,6 +553,100 @@ export default function Home() {
             </div>
           </Link>
 
+          {/* Receipts, not vibes. These are CardsRG's own Instagram numbers
+              for the ninety days around the launch. We did not make the
+              audience. We gave it somewhere to land. */}
+          <div className="mt-8 rounded-2xl border border-[#DCE5F2] bg-white p-6 md:p-8">
+            <div className="flex flex-wrap items-baseline justify-between gap-3 mb-7">
+              <p className="text-[11px] font-medium uppercase tracking-label text-[#3D6FE8]">
+                Where the traffic comes from
+              </p>
+              <p className="text-[11px] font-medium uppercase tracking-label text-[#647089]">
+                Instagram · last 90 days
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+              {[
+                { n: "89,212", k: "Views", c: "#2B57C4" },
+                { n: "28,027", k: "People reached", c: "#155E9C" },
+                { n: "4,743", k: "Interactions", c: "#3D6FE8" },
+                { n: "+998", k: "Net new followers", c: "#0F6B4F" },
+              ].map((m) => (
+                <div key={m.k}>
+                  <p
+                    className="font-display text-3xl md:text-4xl leading-none"
+                    style={{ color: m.c }}
+                  >
+                    {m.n}
+                  </p>
+                  <p className="text-[11px] font-medium uppercase tracking-label text-[#647089] mt-2">
+                    {m.k}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="rounded-xl border border-[#E8EEF7] bg-[#F6F9FE] p-4 md:p-5">
+              <svg
+                viewBox="0 0 640 150"
+                className="w-full h-[110px] md:h-[150px] block"
+                preserveAspectRatio="none"
+                role="img"
+                aria-label="Daily views: flat through late May, climbing from early July, spiking to sixteen thousand in the week of August 19"
+              >
+                <defs>
+                  <linearGradient id="crgLine" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#9FC4E8" />
+                    <stop offset="55%" stopColor="#5B9BF9" />
+                    <stop offset="100%" stopColor="#2B57C4" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M 0.0,146.7 L 7.9,146.6 L 15.8,146.7 L 23.7,146.5 L 31.6,146.6 L 39.5,146.7 L 47.4,146.4 L 55.3,146.6 L 63.2,146.7 L 71.1,146.5 L 79.0,146.6 L 86.9,146.7 L 94.8,146.6 L 102.7,146.4 L 110.6,146.6 L 118.5,146.7 L 126.4,146.5 L 134.3,146.6 L 142.2,146.7 L 150.1,146.6 L 158.0,146.5 L 165.9,146.7 L 173.8,146.6 L 181.7,146.4 L 189.6,146.6 L 197.5,146.7 L 205.4,146.5 L 213.3,146.6 L 221.2,146.7 L 229.1,146.6 L 237.0,130.9 L 244.9,120.1 L 252.8,128.2 L 260.7,117.4 L 268.6,130.0 L 276.5,121.9 L 284.4,129.1 L 292.3,133.6 L 300.2,126.4 L 308.1,131.8 L 316.0,124.6 L 324.0,130.0 L 331.9,127.3 L 339.8,132.7 L 347.7,115.6 L 355.6,126.4 L 363.5,121.0 L 371.4,128.2 L 379.3,122.8 L 387.2,130.0 L 395.1,134.5 L 403.0,123.7 L 410.9,129.1 L 418.8,119.2 L 426.7,126.4 L 434.6,112.9 L 442.5,124.6 L 450.4,117.4 L 458.3,125.5 L 466.2,108.4 L 474.1,121.0 L 482.0,103.9 L 489.9,115.6 L 497.8,110.2 L 505.7,117.4 L 513.6,97.6 L 521.5,113.8 L 529.4,103.0 L 537.3,111.1 L 545.2,92.2 L 553.1,106.6 L 561.0,99.4 L 568.9,110.2 L 576.8,84.1 L 584.7,103.0 L 592.6,4.0 L 600.5,65.2 L 608.4,90.4 L 616.3,79.6 L 624.2,103.0 L 632.1,128.2 L 640.0,133.6"
+                  fill="none"
+                  stroke="url(#crgLine)"
+                  strokeWidth="2.5"
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                  vectorEffect="non-scaling-stroke"
+                />
+              </svg>
+              <div className="flex justify-between text-[11px] font-medium uppercase tracking-label text-[#647089] mt-2">
+                <span>May 22</span>
+                <span>Jul 5</span>
+                <span>Aug 19</span>
+              </div>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-5 mt-6">
+              {[
+                { k: "Reels", v: "42K", w: "93%", c: "#2B57C4" },
+                { k: "Posts", v: "30K", w: "67%", c: "#5B9BF9" },
+              ].map((b) => (
+                <div key={b.k}>
+                  <div className="flex items-baseline justify-between mb-2">
+                    <p className="text-sm text-[#0B1322]">{b.k}</p>
+                    <p className="text-sm font-medium" style={{ color: b.c }}>
+                      {b.v} views
+                    </p>
+                  </div>
+                  <div className="h-1.5 rounded-full bg-[#E8EEF7] overflow-hidden">
+                    <span
+                      className="block h-full rounded-full"
+                      style={{ width: b.w, background: b.c }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-sm text-[#647089] font-light leading-relaxed mt-7 max-w-reading">
+              The audience was already there. It had nowhere to go but a DM.
+              The storefront is what it points at now.
+            </p>
+          </div>
+
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/work"
@@ -564,10 +674,6 @@ export default function Home() {
             of the three parts it needs.
           </p>
           <ChatWidget />
-
-          <div className="mt-4">
-            <WorkSession />
-          </div>
         </div>
       </section>
 

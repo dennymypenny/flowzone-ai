@@ -24,6 +24,7 @@ export const metadata: Metadata = {
 
 const tiers = [
   {
+    c: "#155E9C",
     link: "/intake",
     name: "One Build",
     price: "$500",
@@ -40,6 +41,7 @@ const tiers = [
     cta: "Start with one",
   },
   {
+    c: "#2B57C4",
     link: "/intake?build=full",
     name: "The Full Build",
     price: "$1,500",
@@ -56,6 +58,7 @@ const tiers = [
     cta: "Start the Full Build",
   },
   {
+    c: "#A03D14",
     link: "/intake?build=storefront",
     name: "The Storefront",
     price: "From $2,500",
@@ -104,23 +107,31 @@ export default function Pricing() {
           {tiers.map((t) => (
             <div
               key={t.name}
-              className="panel p-8 flex flex-col relative"
+              className={`panel p-8 flex flex-col relative border-t-2 ${t.best ? "lg:-mt-4 lg:mb-[-1rem] lg:py-10" : ""}`}
               // On white the raised fill and the glow that marked the popular
               // tier both disappear, so the ring carries it instead. #2B57C4 is
               // 6.44:1 on white, the same blue the light band gives text-accent.
-              style={
-                t.best
+              style={{
+                borderTopColor: t.c,
+                ...(t.best
                   ? {
                       borderColor: "#2B57C4",
+                      borderTopColor: t.c,
                       boxShadow:
-                        "0 0 0 1px #2B57C4, 0 24px 50px -26px rgba(11, 19, 34, 0.45)",
+                        "0 0 0 1px #2B57C4, 0 30px 60px -28px rgba(11, 19, 34, 0.5)",
+                      background:
+                        "linear-gradient(180deg, rgba(43, 87, 196, 0.06) 0%, transparent 40%)",
                     }
-                  : undefined
-              }
+                  : {}),
+              }}
             >
               <div className="flex items-baseline justify-between mb-6">
                 <p className="label">{t.name}</p>
-                {t.best && <p className="text-[11px] font-medium uppercase tracking-label text-accent">Best value</p>}
+                {t.best && (
+                  <p className="text-[11px] font-semibold uppercase tracking-label text-white bg-accent rounded-full px-3 py-1">
+                    Best value
+                  </p>
+                )}
               </div>
 
               <p className="font-display text-5xl leading-none mb-3 text-ink">{t.price}</p>
@@ -131,7 +142,16 @@ export default function Pricing() {
               <ul className="space-y-3 mb-10 flex-1 border-t border-rule pt-6">
                 {t.includes.map((line) => (
                   <li key={line} className="flex gap-3 text-sm leading-relaxed text-ink-soft font-light">
-                    <span className="text-accent shrink-0">/</span>
+                    <svg
+                      className="w-4 h-4 shrink-0 mt-0.5"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      stroke={t.c}
+                      strokeWidth="1.8"
+                      aria-hidden
+                    >
+                      <path d="M3 8.5l3.2 3.2L13 4.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
                     <span>{line}</span>
                   </li>
                 ))}
