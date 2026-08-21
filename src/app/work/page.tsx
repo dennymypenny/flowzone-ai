@@ -6,14 +6,14 @@ import NodeWeb from "@/app/components/NodeWeb";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Some of the work FlowZone has shipped. A storefront built end to end, the reels that launched it and a product animation for a client, all of it live.",
+    "Some of the work FlowZone has shipped. A storefront built end to end, three reels cut for sound-off feeds and a product animation for a client, all of it live.",
   alternates: { canonical: "/work" },
   // Set in full because metadata merging is shallow. A page that declares
   // openGraph replaces the layout block outright, so anything omitted is gone.
   openGraph: {
     title: "Work | FlowZone",
     description:
-      "Some of our work, and we are always looking for the next one. A storefront built end to end, the reels that launched it and a product animation for a client.",
+      "Some of our work, and we are always looking for the next one. A storefront built end to end, three reels cut for sound-off feeds and a product animation for a client.",
     url: `${SITE.url}/work`,
     siteName: "FlowZone",
     type: "website",
@@ -41,9 +41,10 @@ export default function Work() {
             Always looking for more.
           </h1>
           <p className="lede max-w-reading mt-10">
-            A storefront built end to end, the reels that launched it and a
-            product animation for a client. Everything here is live and every
-            piece of it was made by us. If you have something you want built,{" "}
+            A storefront built end to end, three reels cut for sound-off feeds
+            and a product animation for a client. Everything here is live and
+            every piece of it was made by us. If you have something you want
+            built,{" "}
             <Link
               href="/intake"
               className="underline decoration-rule underline-offset-4 hover:text-ink transition-colors"
@@ -252,9 +253,10 @@ export default function Work() {
         </div>
       </section>
 
-      {/* Motion: two reels, on white because both are dark neon. One is
-          client work, one is a studio sample, and each says which it is,
-          because the rule on this page is that nothing pretends. */}
+      {/* Motion: three reels, on white. Two are client work and one is a
+          studio sample, and each says which it is, because the rule on this
+          page is that nothing pretends. Three across with the write-up under
+          each, so a fourth drops in without a relayout. */}
       <section data-flow className="band-light px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <div className="border-t border-rule pt-10 mb-12">
@@ -273,7 +275,7 @@ export default function Work() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-10">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
                 name: "Shutters Depot",
@@ -281,9 +283,19 @@ export default function Work() {
                 base: "shutters-depot-reel",
                 aria: "Shutters Depot promo reel: Miami, hurricane season does not wait. Accordion shutters, hurricane panels, impact doors and windows.",
                 blurb:
-                  "Cut for Shutters Depot, a hurricane protection company in Hialeah. Twenty-five seconds that walk the product line — accordion shutters, panels, impact windows — with the urgency Miami actually feels every June.",
+                  "Cut for a hurricane protection company in Hialeah. Twenty-five seconds that walk the product line, accordion shutters, panels and impact windows, with the urgency Miami actually feels every June.",
                 link: { href: "https://shutters-depot.com", label: "shutters-depot.com ↗" },
-                facts: [["Length", "25 seconds"], ["Format", "9:16 vertical"], ["Made for", "Instagram and TikTok"]],
+                facts: [["Length", "25 seconds"], ["Made for", "Instagram and TikTok"]],
+              },
+              {
+                name: "ABC Capital Group",
+                kind: "Client work",
+                base: "abc-capital-reel",
+                aria: "ABC Capital Group reel: selling a house in South Florida should not be this hard. Over one hundred million bought and sold across Miami-Dade, Broward and Palm Beach, and a four step process ending in a fair all-cash offer.",
+                blurb:
+                  "A cash home buyer working Miami-Dade, Broward and Palm Beach. Calm and editorial on purpose, because the audience is somebody under pressure to sell and loud would have read as a scam.",
+                link: { href: "https://www.abccapitalgroupusa.com/", label: "abccapitalgroupusa.com ↗" },
+                facts: [["Length", "21 seconds"], ["Made for", "Instagram and TikTok"]],
               },
               {
                 name: "Vice City Property Runs",
@@ -293,10 +305,10 @@ export default function Work() {
                 blurb:
                   "A sample cut in the studio for a South Florida property appointment service. The whole pitch in fourteen seconds: the problem, the coverage, the hours, the handle.",
                 link: null,
-                facts: [["Length", "14 seconds"], ["Format", "9:16 vertical"], ["Made for", "Instagram and TikTok"]],
+                facts: [["Length", "14 seconds"], ["Made for", "Instagram and TikTok"]],
               },
             ].map((r) => (
-              <div key={r.base} className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
+              <div key={r.base} className="flex flex-col">
                 <div className="panel overflow-hidden">
                   <video
                     className="w-full h-auto block"
@@ -313,9 +325,9 @@ export default function Work() {
                     <source src={`/assets/${r.base}.mp4`} type="video/mp4" />
                   </video>
                 </div>
-                <div>
+                <div className="mt-6 flex flex-col flex-1">
                   <p className="label mb-3">{r.kind}</p>
-                  <h3 className="font-display text-3xl leading-none mb-2">{r.name}</h3>
+                  <h3 className="font-display text-2xl leading-tight mb-2">{r.name}</h3>
                   {r.link && (
                     <a
                       href={r.link.href}
@@ -329,7 +341,7 @@ export default function Work() {
                   <p className="text-sm text-ink-soft font-light leading-relaxed mt-4">
                     {r.blurb}
                   </p>
-                  <div className="border-t border-rule mt-6 pt-4 space-y-3">
+                  <div className="border-t border-rule mt-auto pt-4 space-y-2.5">
                     {r.facts.map(([k, v]) => (
                       <div key={k} className="flex justify-between gap-4">
                         <p className="label">{k}</p>
