@@ -8,11 +8,12 @@ type ApiMsg = { role: Role; content: string };
 type DisplayMsg = { role: "user" | "bot"; text: string };
 
 const CHIPS = [
+  "I just need one graphic",
+  "Can you make a menu or a flyer?",
   "I need a brand and a site",
   "I'm launching a storefront",
   "My site looks like a template",
   "I have a site, I need the system behind it",
-  "Something else",
 ];
 
 export default function ChatWidget({ className = "" }: { className?: string }) {
@@ -77,9 +78,10 @@ export default function ChatWidget({ className = "" }: { className?: string }) {
         {isEmpty && (
           <div className="flex flex-col items-start gap-5">
             <p className="text-ink-soft leading-relaxed max-w-md">
-              Tell me what you are trying to get moving and I will tell you which of
-              the three parts you actually need, roughly what it costs and how long it
-              takes. Then send it over in an email and a person picks it up.
+              Hey. Tell me what you are trying to get moving and I will tell you
+              what it needs, what it roughly costs and how long it takes. A whole
+              business or a single graphic, both are fair game, and no question
+              here is too small.
             </p>
             <div className="flex flex-wrap gap-2">
               {CHIPS.map((chip) => (
@@ -129,7 +131,7 @@ export default function ChatWidget({ className = "" }: { className?: string }) {
       {/* Nudge to a real person */}
       <div className="border-t border-rule px-6 py-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:justify-between bg-paper-deep">
         <p className="text-sm text-ink-soft font-light">
-          Answers here are quick. Real scope and a date come by email.
+          Answers here are quick. A real price and a date come from a person.
         </p>
         <a href={SITE.mailto} className="btn-primary !px-4 !py-2.5 shrink-0">
           Send us the details <span className="arrow">→</span>

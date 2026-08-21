@@ -306,8 +306,11 @@ export default function Home() {
               <div className="flex flex-wrap gap-2">
                 {[
                   ["flyer", "A flyer or post", "$49.99"],
-                  ["form", "A form, wired in", "$49.99"],
+                  ["socialpack", "A social post pack", "$49.99"],
+                  ["channelart", "Channel art", "$49.99"],
+                  ["deck", "A presentation deck", "$49.99"],
                   ["logo", "A logo refresh", "$49.99"],
+                  ["form", "A form, wired in", "$49.99"],
                   ["fix", "A fix pass", "$49.99"],
                   ["reel", "A promo reel", "$74.99"],
                   ["page", "A new page", "$99.99"],
@@ -328,8 +331,9 @@ export default function Home() {
             </div>
             <div className="md:col-span-5 md:text-right">
               <p className="text-sm text-ink-soft font-light leading-relaxed mb-5 md:ml-auto max-w-xs">
-                Add what you need to the cart and send it as one ticket. Same
-                studio, same taste. Done in days, not weeks.
+                Any single graphic is $49.99, and the list is examples rather
+                than limits. Add what you need to the cart and send it as one
+                ticket. Same studio, same taste, done in days.
               </p>
               <Link href="/intake?build=small" className="btn-primary">
                 Start a small job <span className="arrow">→</span>

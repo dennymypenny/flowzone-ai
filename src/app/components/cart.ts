@@ -6,39 +6,17 @@
  * items in it, and payment happens after a human replies.
  */
 
-export type CartItem = {
-  id: string;
-  name: string;
-  price: number;
-  /** True when the price is a starting point that gets quoted flat. */
-  from?: boolean;
-};
+export type { CartItem } from "@/lib/catalog";
+export {
+  GRAPHICS,
+  QUICK_JOBS,
+  SMALL_JOBS,
+  BUILDS,
+  CATALOG,
+  money,
+} from "@/lib/catalog";
 
-/** The one price list. Every surface renders from this. Cents, not floats. */
-export const SMALL_JOBS: CartItem[] = [
-  { id: "flyer", name: "One-off design — flyer, post or cover", price: 4999 },
-  { id: "form", name: "Booking or contact form, wired to your email", price: 4999 },
-  { id: "logo", name: "Logo-only refresh", price: 4999 },
-  { id: "fix", name: "Speed and mobile fix pass", price: 4999 },
-  { id: "reel", name: "Promo reel, cut for sound-off feeds", price: 7499 },
-  { id: "page", name: "One new page or landing page", price: 9999 },
-];
-
-/** The four builds plus the bundle, addable like anything else. */
-export const BUILDS: CartItem[] = [
-  { id: "identity", name: "The Identity Build", price: 50000, from: true },
-  { id: "site", name: "The Site Build", price: 50000, from: true },
-  { id: "engine", name: "The Engine Build", price: 50000, from: true },
-  { id: "full", name: "The Full Build", price: 150000 },
-  { id: "storefront", name: "The Storefront Build", price: 250000, from: true },
-];
-
-export const CATALOG: CartItem[] = [...SMALL_JOBS, ...BUILDS];
-
-export const money = (cents: number) =>
-  Number.isInteger(cents / 100)
-    ? `$${(cents / 100).toLocaleString("en-US")}`
-    : `$${(cents / 100).toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
+import type { CartItem } from "@/lib/catalog";
 
 const KEY = "fz-cart";
 

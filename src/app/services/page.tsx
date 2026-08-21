@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { SITE } from "@/lib/site";
 import NodeWeb from "@/app/components/NodeWeb";
 import AddToCart from "@/app/components/AddToCart";
+import { GRAPHICS, money } from "@/lib/catalog";
 import Icon from "@/components/Icon";
 
 export const metadata: Metadata = {
@@ -194,8 +195,8 @@ export default function Services() {
                 from: "From $500",
                 right: "You are launching, or your business has outgrown a logo you made in a hurry.",
                 small: [
-                  ["flyer", "One-off design — flyer, post or cover", "$49.99"],
-                  ["reel", "Promo reel, cut for sound-off feeds", "$74.99"],
+                  ["flyer", "Flyer, post or cover", "$49.99"],
+                  ["channelart", "Channel art, banner and avatar", "$49.99"],
                   ["logo", "Logo-only refresh", "$49.99"],
                 ],
               },
@@ -358,6 +359,76 @@ export default function Services() {
             <div className="md:col-span-4 md:text-right">
               <Link href="/intake" className="btn-primary">
                 Ask which one fits <span className="arrow">→</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Simple graphics. People kept asking whether we would do "just a
+          graphic" and the answer is yes, always, at one price. The list is
+          examples, not limits, which is why the last line matters most. */}
+      <section data-flow className="band-light px-6 py-24">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-[11px] font-medium uppercase tracking-label text-[#0F6B4F] mb-6">
+            Simple graphics
+          </p>
+          <div className="grid md:grid-cols-12 gap-6 mb-10">
+            <h2 className="md:col-span-6 font-display text-4xl md:text-5xl leading-[1.05] text-[#0B1322]">
+              Need one graphic?
+              <br />
+              We will make it.{" "}
+              <span style={{ color: "#0F6B4F" }}>$49.99.</span>
+            </h2>
+            <p className="md:col-span-6 text-[#49566E] font-light leading-relaxed self-end max-w-reading">
+              You do not have to buy a build to work with us. Anything that is a
+              single piece of design is one flat price, made by the same people,
+              in the same taste, usually in a couple of days. Add what you need
+              and send it as one ticket.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {GRAPHICS.map((g) => (
+              <div
+                key={g.id}
+                className="flex items-center justify-between gap-4 rounded-xl border bg-white px-5 py-4"
+                style={{ borderColor: "#0F6B4F26" }}
+              >
+                <span className="text-sm text-[#0B1322] font-light leading-snug">
+                  {g.name}
+                </span>
+                <span className="flex items-center gap-3 shrink-0">
+                  <span className="font-medium text-sm" style={{ color: "#0F6B4F" }}>
+                    {money(g.price)}
+                  </span>
+                  <AddToCart id={g.id} showPrice={false} />
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div
+            className="mt-6 rounded-[18px] p-8 md:p-10 grid md:grid-cols-12 gap-8 items-center border"
+            style={{
+              background: "linear-gradient(120deg, #EDFBF4 0%, #DDF6E9 55%, #CBF1DD 100%)",
+              borderColor: "#0F6B4F2E",
+            }}
+          >
+            <div className="md:col-span-8">
+              <h3 className="font-display text-3xl md:text-4xl leading-tight text-[#0B1322] mb-3">
+                Not on the list? It is still yes.
+              </h3>
+              <p className="text-[#49566E] font-light leading-relaxed max-w-reading">
+                Menus, business cards, signage, labels, merch, a birthday
+                invite for that matter. If it is a graphic, we can make it.
+                Describe it in a ticket and you get a price back before
+                anything starts.
+              </p>
+            </div>
+            <div className="md:col-span-4 md:text-right">
+              <Link href="/intake?build=small" className="btn-primary">
+                Ask for something else <span className="arrow">→</span>
               </Link>
             </div>
           </div>

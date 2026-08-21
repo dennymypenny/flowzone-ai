@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import { addToCart, money, CATALOG } from "@/app/components/cart";
+import { addToCart } from "@/app/components/cart";
+import { money, CATALOG } from "@/lib/catalog";
 
 /** A small "+ Add" control for one small job, by id from SMALL_JOBS. */
 export default function AddToCart({
