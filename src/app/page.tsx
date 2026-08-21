@@ -40,7 +40,7 @@ export default function Home() {
             disappear and the film read as part of the page. */}
         <div className="relative w-full">
           <video
-            className="w-full h-auto md:h-[56vh] md:min-h-[320px] md:max-h-[620px] md:object-cover block"
+            className="w-full h-auto md:h-[66vh] md:min-h-[360px] md:max-h-[700px] md:object-cover block"
             autoPlay
             muted
             loop
@@ -53,10 +53,27 @@ export default function Home() {
             <source src="/assets/studio-reel.mp4" type="video/mp4" />
           </video>
           <div
-            className="absolute inset-x-0 bottom-0 h-24 md:h-40 pointer-events-none"
+            className="absolute inset-x-0 bottom-0 h-32 md:h-56 pointer-events-none"
             style={{
               background:
-                "linear-gradient(180deg, rgba(12,20,36,0) 0%, rgba(12,20,36,0.75) 55%, #0C1424 100%)",
+                "linear-gradient(180deg, rgba(12,20,36,0) 0%, rgba(12,20,36,0.42) 42%, rgba(12,20,36,0.88) 78%, #0C1424 100%)",
+            }}
+          />
+          {/* The hairline is the handoff. Without it the film just stops and
+              the eye reads the join as a mistake, with it the join is the
+              point. Two pixels, bright in the middle, gone at the edges. */}
+          <div
+            className="absolute inset-x-0 bottom-0 h-px pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(198,228,248,0) 0%, rgba(198,228,248,0.55) 50%, rgba(198,228,248,0) 100%)",
+            }}
+          />
+          <div
+            className="absolute inset-x-0 bottom-0 h-16 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(60% 100% at 50% 100%, rgba(139,180,255,0.20) 0%, rgba(139,180,255,0) 70%)",
             }}
           />
           <div
@@ -75,7 +92,7 @@ export default function Home() {
           />
         </div>
 
-        <div className="relative max-w-6xl mx-auto px-6 pt-8 pb-14 md:pt-10 md:pb-20">
+        <div className="relative max-w-6xl mx-auto px-6 pt-10 pb-14 md:pt-16 md:pb-20">
 
           <h1 className="display text-[3rem] sm:text-6xl md:text-[5.25rem] max-w-4xl">
             <span className="text-gradient-white">You imagine it.</span>
@@ -105,6 +122,25 @@ export default function Home() {
           </p>
 
         </div>
+
+        {/* The hero used to butt straight into the white band below and the
+            cut read as two pages stapled together. This is light spilling up
+            from the next section, plus the same hairline the film gets, so
+            the eye is told white is coming before it arrives. */}
+        <div
+          className="absolute inset-x-0 bottom-0 h-24 md:h-36 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(198,228,248,0) 0%, rgba(198,228,248,0.05) 50%, rgba(232,241,253,0.16) 85%, rgba(244,247,252,0.28) 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-x-0 bottom-0 h-px pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(244,247,252,0) 0%, rgba(244,247,252,0.6) 50%, rgba(244,247,252,0) 100%)",
+          }}
+        />
       </section>
 
       {/* White, on purpose. The page was three dark bands in a row and
