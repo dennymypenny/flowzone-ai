@@ -6,7 +6,7 @@ import NodeWeb from "@/app/components/NodeWeb";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "FlowZone is a small creative studio. AI gives us the speed, humans give it the taste.",
+    "FlowZone is a small creative studio. Brand, site and system, built by people who make the calls.",
   alternates: { canonical: "/about" },
   // Set in full because metadata merging is shallow. A page that declares
   // openGraph replaces the layout block outright, so anything omitted is gone.
@@ -42,8 +42,8 @@ export default function About() {
             FlowZone is a creative studio built on one belief. Every idea worth
             starting deserves a real brand, a real site and real systems behind it.
             Brand identity is the part we are best at, the mark and the words and the
-            feel, and we carry it through everything else we build. AI gives us the
-            speed. A person gives it the taste, the judgment and the finish.
+            feel, and we carry it through everything else we build. A person makes the
+            calls on taste, judgment and finish, start to end.
           </p>
         </div>
       </section>

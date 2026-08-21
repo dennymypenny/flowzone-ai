@@ -54,9 +54,9 @@ const days = [
 
 const principles = [
   {
-    title: "AI for speed, a person for taste",
+    title: "A person makes every call",
     body:
-      "AI is why a build takes a week instead of two months. A person is why it does not look like everyone else's AI site. Every layout, headline and color decision gets looked at by a human before it ships.",
+      "A build takes a week instead of two months because the studio is small and the process is tight, not because anything is left on autopilot. Every layout, headline and color decision gets looked at by a person before it ships.",
   },
   {
     title: "Flat price, agreed up front",

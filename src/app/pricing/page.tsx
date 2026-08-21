@@ -213,7 +213,7 @@ export default function Pricing() {
             {[
               {
                 t: "A person on it",
-                b: "AI gives us the speed. A human makes the calls on taste, layout and what actually reads well before anything ships.",
+                b: "A human makes the calls on taste, layout and what actually reads well before anything ships. Nothing goes out unlooked at.",
               },
               {
                 t: "You own everything",

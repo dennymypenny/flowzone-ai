@@ -2,7 +2,6 @@ import Link from "next/link";
 import Icon from "@/components/Icon";
 import AddToCart from "@/app/components/AddToCart";
 import type { Metadata } from "next";
-import ChatWidget from "@/app/components/ChatWidget";
 import MessageUs from "@/components/MessageUs";
 import { SITE, PILLARS } from "@/lib/site";
 import NodeWeb from "@/app/components/NodeWeb";
@@ -35,25 +34,45 @@ export default function Home() {
         <div className="absolute inset-0 gridlight pointer-events-none" />
         {/* The mark, explained: points scatter, connect, resolve, then flow on. */}
 
-        {/* The reel opens the page. It says the three parts out loud, which
-            is why the dot row that used to sit here is gone: the film does
-            that job better than a caption can. */}
-        <div className="relative max-w-6xl mx-auto px-6 pt-10 md:pt-14">
-          <div className="rounded-2xl overflow-hidden border border-rule bg-black shadow-[0_40px_90px_-40px_rgba(0,0,0,0.75)]">
-            <video
-              className="w-full h-auto block"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              poster="/assets/studio-reel-poster.jpg"
-              aria-label="FlowZone studio reel: you bring the idea, we build the brand, the site and the system"
-            >
-              <source src="/assets/studio-reel.webm" type="video/webm" />
-              <source src="/assets/studio-reel.mp4" type="video/mp4" />
-            </video>
-          </div>
+        {/* The reel opens the page, edge to edge and unframed. Its own
+            background is #060B1F against the page's #0C1424, six levels
+            apart, so a fade at the bottom is all it takes to make the seam
+            disappear and the film read as part of the page. */}
+        <div className="relative w-full">
+          <video
+            className="w-full h-auto md:h-[56vh] md:min-h-[320px] md:max-h-[620px] md:object-cover block"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster="/assets/studio-reel-poster.jpg"
+            aria-label="FlowZone studio reel: you bring the idea, we build the brand, the site and the system"
+          >
+            <source src="/assets/studio-reel.webm" type="video/webm" />
+            <source src="/assets/studio-reel.mp4" type="video/mp4" />
+          </video>
+          <div
+            className="absolute inset-x-0 bottom-0 h-24 md:h-40 pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(12,20,36,0) 0%, rgba(12,20,36,0.75) 55%, #0C1424 100%)",
+            }}
+          />
+          <div
+            className="absolute inset-y-0 left-0 w-16 md:w-28 pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(90deg, #0C1424 0%, rgba(12,20,36,0) 100%)",
+            }}
+          />
+          <div
+            className="absolute inset-y-0 right-0 w-16 md:w-28 pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(270deg, #0C1424 0%, rgba(12,20,36,0) 100%)",
+            }}
+          />
         </div>
 
         <div className="relative max-w-6xl mx-auto px-6 pt-8 pb-14 md:pt-10 md:pb-20">
@@ -88,6 +107,54 @@ export default function Home() {
         </div>
       </section>
 
+      {/* White, on purpose. The page was three dark bands in a row and
+          nothing popped. This is also where the three parts finally get
+          named in words, using the same lines the film uses. */}
+      <section data-flow className="band-light px-6 py-14 md:py-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 md:gap-6">
+            {[
+              {
+                n: "01",
+                c: "#2B57C4",
+                k: "Brand",
+                b: "What people recognise you by.",
+                d: "The mark, the colours, the words. The part that makes you look like you meant it.",
+              },
+              {
+                n: "02",
+                c: "#155E9C",
+                k: "Site",
+                b: "Where people go to decide.",
+                d: "A page that answers the question and asks for the next step, instead of a profile and a DM.",
+              },
+              {
+                n: "03",
+                c: "#0F6B4F",
+                k: "System",
+                b: "What runs it behind the scenes.",
+                d: "Booking, checkout, follow-up. The parts nobody sees and everybody feels.",
+              },
+            ].map((x) => (
+              <div key={x.k} className="border-t-2 pt-5" style={{ borderTopColor: x.c }}>
+                <p
+                  className="text-[11px] font-medium uppercase tracking-label mb-3"
+                  style={{ color: x.c }}
+                >
+                  {x.n} · {x.k}
+                </p>
+                <p className="font-display text-2xl md:text-[1.75rem] leading-snug text-[#0B1322] mb-3">
+                  {x.b}
+                </p>
+                <p className="text-sm text-[#49566E] font-light leading-relaxed max-w-reading">
+                  {x.d}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* One picture doing the work of a paragraph: the constellation is
           already overhead and the person is standing inside it. The line is
           the distance argument, which lands harder than any promise. */}
@@ -95,7 +162,7 @@ export default function Home() {
         <img
           src="/assets/constellation.jpg"
           alt="A person standing at the centre of wide concentric rings, under a night sky of connected points"
-          className="w-full h-[58vh] min-h-[340px] max-h-[640px] object-cover object-[center_40%] block"
+          className="w-full h-[68vh] min-h-[420px] max-h-[760px] object-cover object-[center_42%] block"
           loading="lazy"
           decoding="async"
         />
@@ -108,10 +175,13 @@ export default function Home() {
         />
         <div className="absolute inset-x-0 top-0 px-6 pt-10 md:pt-14">
           <div className="max-w-6xl mx-auto">
-            <p className="text-[11px] font-medium uppercase tracking-label text-[#9FC4E8] mb-3">
+            <p className="text-[11px] font-medium uppercase tracking-label text-[#9FC4E8] mb-4">
               The distance
             </p>
-            <h2 className="font-display text-3xl md:text-5xl leading-[1.05] text-white max-w-[20ch]">
+            <h2
+              className="font-display text-[2.5rem] sm:text-6xl md:text-7xl leading-[0.98] text-white max-w-[16ch]"
+              style={{ textShadow: "0 2px 30px rgba(6,12,28,0.6)" }}
+            >
               You are not starting from nothing. You are two or three moves
               from live.
             </h2>
@@ -383,107 +453,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------- How it works, in four steps ---------- */}
-      <section data-flow className="border-t border-rule px-6 py-16 md:py-20">
-        <div className="max-w-6xl mx-auto">
-          <p className="label mb-4">How it works</p>
-          <h2 className="display text-4xl md:text-5xl max-w-3xl mb-10">
-            Four levels, and you are busy for about twenty minutes of it.
-          </h2>
-
-          <div className="hidden lg:block relative h-px mb-4 mx-[12.5%]">
-            <span className="flowline absolute inset-0 block" />
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              {
-                i: "pencil",
-                e: "✍️",
-                c: "#5B9BF9",
-                step: "Level 1",
-                day: "The spark",
-                t: "Send the intention",
-                b: "One short form. A few sentences about what you want to exist. No discovery call, no brief, no deck. You get back a scope, a price and a date we work to.",
-                you: "15 minutes",
-              },
-              {
-                i: "eye",
-                e: "👀",
-                c: "#F0845F",
-                step: "Level 2",
-                day: "First look",
-                t: "See a real direction",
-                b: "Not a mood board. An actual first pass in a browser, with your words and your colors in it, while the idea still has heat on it.",
-                you: "One reply",
-              },
-              {
-                i: "hammer",
-                e: "🔨",
-                c: "#FBBF24",
-                step: "Level 3",
-                day: "The build",
-                t: "We build it all",
-                b: "Real pages, real copy, real payments, real forms. The system gets wired in and tested with live data.",
-                you: "Nothing",
-              },
-              {
-                i: "rocket",
-                e: "🚀",
-                c: "#34D399",
-                step: "Level 4",
-                day: "Live",
-                t: "It goes live and it is yours",
-                b: "On your domain, tested on a phone, handed over with docs.",
-                you: "Approve it",
-              },
-            ].map((x, gi) => (
-              <div key={x.step} className="panel panel-lift p-5 flex flex-col">
-                <span className="block text-xl leading-none mb-3" aria-hidden>{x.e}</span>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <p
-                    className="text-[11px] font-medium uppercase tracking-label"
-                    style={{ color: x.c }}
-                  >
-                    {x.step}
-                  </p>
-                  <p className="label">· {x.day}</p>
-                </div>
-                {/* Level meter, filled to here */}
-                <div className="flex gap-1.5 mb-3" aria-hidden>
-                  {[0, 1, 2, 3].map((seg) => (
-                    <span
-                      key={seg}
-                      className="h-[3px] flex-1 rounded-full"
-                      style={{
-                        background: seg <= gi ? x.c : "#26355A",
-                        opacity: seg <= gi ? 0.9 : 1,
-                      }}
-                    />
-                  ))}
-                </div>
-                <h3 className="font-display text-lg leading-snug mb-2">{x.t}</h3>
-                <p className="text-sm text-ink-soft font-light leading-relaxed mb-4">
-                  {x.b}
-                </p>
-                <div className="mt-auto border-t border-rule pt-3">
-                  <p className="label mb-1">Your time</p>
-                  <p className="text-sm" style={{ color: x.c }}>
-                    {x.you}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6">
-            <Link href="/how-we-work" className="btn-ghost">
-              The long version, including the awkward questions
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* ---------- Work ---------- */}
       <section data-flow className="band-light px-6 py-16 md:py-20">
         <div className="max-w-6xl mx-auto">
@@ -553,20 +522,20 @@ export default function Home() {
             </div>
           </Link>
 
-          {/* Receipts, not vibes. These are CardsRG's own Instagram numbers
-              for the ninety days around the launch. We did not make the
-              audience. We gave it somewhere to land. */}
+          {/* The headline numbers only. The trend line, the content split
+              and the before and after live on /work, where somebody who
+              cares enough to click can read the whole thing. */}
           <div className="mt-8 rounded-2xl border border-[#DCE5F2] bg-white p-6 md:p-8">
             <div className="flex flex-wrap items-baseline justify-between gap-3 mb-7">
               <p className="text-[11px] font-medium uppercase tracking-label text-[#3D6FE8]">
-                Where the traffic comes from
+                What it plugged into
               </p>
               <p className="text-[11px] font-medium uppercase tracking-label text-[#647089]">
                 Instagram · last 90 days
               </p>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
                 { n: "89,212", k: "Views", c: "#2B57C4" },
                 { n: "28,027", k: "People reached", c: "#155E9C" },
@@ -583,60 +552,6 @@ export default function Home() {
                   <p className="text-[11px] font-medium uppercase tracking-label text-[#647089] mt-2">
                     {m.k}
                   </p>
-                </div>
-              ))}
-            </div>
-
-            <div className="rounded-xl border border-[#E8EEF7] bg-[#F6F9FE] p-4 md:p-5">
-              <svg
-                viewBox="0 0 640 150"
-                className="w-full h-[110px] md:h-[150px] block"
-                preserveAspectRatio="none"
-                role="img"
-                aria-label="Daily views: flat through late May, climbing from early July, spiking to sixteen thousand in the week of August 19"
-              >
-                <defs>
-                  <linearGradient id="crgLine" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#9FC4E8" />
-                    <stop offset="55%" stopColor="#5B9BF9" />
-                    <stop offset="100%" stopColor="#2B57C4" />
-                  </linearGradient>
-                </defs>
-                <path
-                  d="M 0.0,146.7 L 7.9,146.6 L 15.8,146.7 L 23.7,146.5 L 31.6,146.6 L 39.5,146.7 L 47.4,146.4 L 55.3,146.6 L 63.2,146.7 L 71.1,146.5 L 79.0,146.6 L 86.9,146.7 L 94.8,146.6 L 102.7,146.4 L 110.6,146.6 L 118.5,146.7 L 126.4,146.5 L 134.3,146.6 L 142.2,146.7 L 150.1,146.6 L 158.0,146.5 L 165.9,146.7 L 173.8,146.6 L 181.7,146.4 L 189.6,146.6 L 197.5,146.7 L 205.4,146.5 L 213.3,146.6 L 221.2,146.7 L 229.1,146.6 L 237.0,130.9 L 244.9,120.1 L 252.8,128.2 L 260.7,117.4 L 268.6,130.0 L 276.5,121.9 L 284.4,129.1 L 292.3,133.6 L 300.2,126.4 L 308.1,131.8 L 316.0,124.6 L 324.0,130.0 L 331.9,127.3 L 339.8,132.7 L 347.7,115.6 L 355.6,126.4 L 363.5,121.0 L 371.4,128.2 L 379.3,122.8 L 387.2,130.0 L 395.1,134.5 L 403.0,123.7 L 410.9,129.1 L 418.8,119.2 L 426.7,126.4 L 434.6,112.9 L 442.5,124.6 L 450.4,117.4 L 458.3,125.5 L 466.2,108.4 L 474.1,121.0 L 482.0,103.9 L 489.9,115.6 L 497.8,110.2 L 505.7,117.4 L 513.6,97.6 L 521.5,113.8 L 529.4,103.0 L 537.3,111.1 L 545.2,92.2 L 553.1,106.6 L 561.0,99.4 L 568.9,110.2 L 576.8,84.1 L 584.7,103.0 L 592.6,4.0 L 600.5,65.2 L 608.4,90.4 L 616.3,79.6 L 624.2,103.0 L 632.1,128.2 L 640.0,133.6"
-                  fill="none"
-                  stroke="url(#crgLine)"
-                  strokeWidth="2.5"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  vectorEffect="non-scaling-stroke"
-                />
-              </svg>
-              <div className="flex justify-between text-[11px] font-medium uppercase tracking-label text-[#647089] mt-2">
-                <span>May 22</span>
-                <span>Jul 5</span>
-                <span>Aug 19</span>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-5 mt-6">
-              {[
-                { k: "Reels", v: "42K", w: "93%", c: "#2B57C4" },
-                { k: "Posts", v: "30K", w: "67%", c: "#5B9BF9" },
-              ].map((b) => (
-                <div key={b.k}>
-                  <div className="flex items-baseline justify-between mb-2">
-                    <p className="text-sm text-[#0B1322]">{b.k}</p>
-                    <p className="text-sm font-medium" style={{ color: b.c }}>
-                      {b.v} views
-                    </p>
-                  </div>
-                  <div className="h-1.5 rounded-full bg-[#E8EEF7] overflow-hidden">
-                    <span
-                      className="block h-full rounded-full"
-                      style={{ width: b.w, background: b.c }}
-                    />
-                  </div>
                 </div>
               ))}
             </div>
@@ -661,21 +576,6 @@ export default function Home() {
         </div>
       </section>
 
-
-      {/* ---------- Chat ---------- */}
-      <section data-flow className="border-t border-rule px-6 py-16 md:py-20">
-        <div className="max-w-4xl mx-auto">
-          <p className="label mb-4">Ask first</p>
-          <h2 className="display text-4xl md:text-5xl mb-3 max-w-2xl">
-            Not sure what you actually need?
-          </h2>
-          <p className="text-ink-soft font-light mb-6 max-w-reading">
-            Describe the thing you are launching and get a straight answer about which
-            of the three parts it needs.
-          </p>
-          <ChatWidget />
-        </div>
-      </section>
 
       {/* ---------- CTA ---------- */}
       <section data-flow className="bg-paper-deep glow border-t border-rule px-6 py-20">

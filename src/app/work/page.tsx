@@ -106,6 +106,140 @@ This is where the studio starts, and it started from something we
               />
             </div>
           </div>
+
+          {/* The channel art, before and after. Same shop, same logo, and
+              the second one tells you where to buy something. */}
+          <div className="border-t border-rule pt-10 mt-16">
+            <p className="label mb-4">Before and after</p>
+            <h3 className="font-display text-3xl md:text-4xl leading-tight mb-3 max-w-2xl">
+              The channel had the audience. It did not have a door.
+            </h3>
+            <p className="text-ink-soft font-light leading-relaxed max-w-reading mb-8">
+              The old banner was a poster. The new one is a directory: what
+              they sell, where to buy it, and the shop address, on the first
+              screen anybody lands on.
+            </p>
+            <div className="grid md:grid-cols-2 gap-4">
+              {[
+                {
+                  src: "/assets/crg-yt-before.jpg",
+                  tag: "Before",
+                  c: "#93A2BC",
+                  note: "A logo on lightning. Nothing to do next.",
+                  alt: "The old CardsRG channel banner: the CRG shield on a white lightning background with a subscribe button",
+                },
+                {
+                  src: "/assets/crg-yt-after.jpg",
+                  tag: "After",
+                  c: "#5B8CFF",
+                  note: "What they sell, and four ways to buy it.",
+                  alt: "The new CardsRG channel banner in shop pink, listing Pokemon, One Piece, sports, slabs and sealed, with Instagram, eBay, cardsrg.com and email",
+                },
+              ].map((x) => (
+                <figure key={x.tag} className="panel overflow-hidden flex flex-col">
+                  <img src={x.src} alt={x.alt} className="w-full h-auto block" loading="lazy" />
+                  <figcaption className="px-5 py-4 border-t border-rule flex items-baseline gap-3">
+                    <span
+                      className="text-[11px] font-medium uppercase tracking-label shrink-0"
+                      style={{ color: x.c }}
+                    >
+                      {x.tag}
+                    </span>
+                    <span className="text-sm text-ink-soft font-light">{x.note}</span>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+
+          {/* The receipts. These are CardsRG's own Instagram numbers, not
+              something the build caused. We claim the destination, never the
+              reach. */}
+          <div className="border-t border-rule pt-10 mt-16">
+            <div className="flex flex-wrap items-baseline justify-between gap-3 mb-8">
+              <p className="label">The audience it plugged into</p>
+              <p className="label">Instagram · last 90 days</p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+              {[
+                { n: "89,212", k: "Views", c: "#A8C4FF" },
+                { n: "28,027", k: "People reached", c: "#5B8CFF" },
+                { n: "4,743", k: "Interactions", c: "#C6E4F8" },
+                { n: "+998", k: "Net new followers", c: "#34D399" },
+              ].map((m) => (
+                <div key={m.k}>
+                  <p
+                    className="font-display text-4xl md:text-5xl leading-none"
+                    style={{ color: m.c }}
+                  >
+                    {m.n}
+                  </p>
+                  <p className="label mt-2">{m.k}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="panel p-5 md:p-6">
+              <svg
+                viewBox="0 0 640 150"
+                className="w-full h-[130px] md:h-[170px] block"
+                preserveAspectRatio="none"
+                role="img"
+                aria-label="Daily views: flat through late May, climbing from early July, spiking to sixteen thousand in the week of August 19"
+              >
+                <defs>
+                  <linearGradient id="crgWorkLine" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#7E9FD8" />
+                    <stop offset="55%" stopColor="#C6E4F8" />
+                    <stop offset="100%" stopColor="#FFFFFF" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M 0.0,146.7 L 7.9,146.6 L 15.8,146.7 L 23.7,146.5 L 31.6,146.6 L 39.5,146.7 L 47.4,146.4 L 55.3,146.6 L 63.2,146.7 L 71.1,146.5 L 79.0,146.6 L 86.9,146.7 L 94.8,146.6 L 102.7,146.4 L 110.6,146.6 L 118.5,146.7 L 126.4,146.5 L 134.3,146.6 L 142.2,146.7 L 150.1,146.6 L 158.0,146.5 L 165.9,146.7 L 173.8,146.6 L 181.7,146.4 L 189.6,146.6 L 197.5,146.7 L 205.4,146.5 L 213.3,146.6 L 221.2,146.7 L 229.1,146.6 L 237.0,130.9 L 244.9,120.1 L 252.8,128.2 L 260.7,117.4 L 268.6,130.0 L 276.5,121.9 L 284.4,129.1 L 292.3,133.6 L 300.2,126.4 L 308.1,131.8 L 316.0,124.6 L 324.0,130.0 L 331.9,127.3 L 339.8,132.7 L 347.7,115.6 L 355.6,126.4 L 363.5,121.0 L 371.4,128.2 L 379.3,122.8 L 387.2,130.0 L 395.1,134.5 L 403.0,123.7 L 410.9,129.1 L 418.8,119.2 L 426.7,126.4 L 434.6,112.9 L 442.5,124.6 L 450.4,117.4 L 458.3,125.5 L 466.2,108.4 L 474.1,121.0 L 482.0,103.9 L 489.9,115.6 L 497.8,110.2 L 505.7,117.4 L 513.6,97.6 L 521.5,113.8 L 529.4,103.0 L 537.3,111.1 L 545.2,92.2 L 553.1,106.6 L 561.0,99.4 L 568.9,110.2 L 576.8,84.1 L 584.7,103.0 L 592.6,4.0 L 600.5,65.2 L 608.4,90.4 L 616.3,79.6 L 624.2,103.0 L 632.1,128.2 L 640.0,133.6"
+                  fill="none"
+                  stroke="url(#crgWorkLine)"
+                  strokeWidth="3"
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                  vectorEffect="non-scaling-stroke"
+                />
+              </svg>
+              <div className="flex justify-between mt-3">
+                <span className="label">May 22</span>
+                <span className="label">Jul 5</span>
+                <span className="label">Aug 19</span>
+              </div>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-5 mt-6">
+              {[
+                { k: "Reels", v: "42K", w: "93%", c: "#5B8CFF" },
+                { k: "Posts", v: "30K", w: "67%", c: "#A8C4FF" },
+              ].map((b) => (
+                <div key={b.k}>
+                  <div className="flex items-baseline justify-between mb-2">
+                    <p className="text-sm text-ink">{b.k}</p>
+                    <p className="text-sm" style={{ color: b.c }}>
+                      {b.v} views
+                    </p>
+                  </div>
+                  <div className="h-1.5 rounded-full bg-rule overflow-hidden">
+                    <span
+                      className="block h-full rounded-full"
+                      style={{ width: b.w, background: b.c }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-ink-soft font-light leading-relaxed mt-8 max-w-reading">
+              None of this reach is ours. CardsRG built that audience post by
+              post, and it had nowhere to go but a DM. What we built is the
+              place it points at now.
+            </p>
+          </div>
         </div>
       </section>
 

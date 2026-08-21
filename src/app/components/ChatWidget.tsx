@@ -15,7 +15,7 @@ const CHIPS = [
   "Something else",
 ];
 
-export default function ChatWidget() {
+export default function ChatWidget({ className = "" }: { className?: string }) {
   const [display, setDisplay] = useState<DisplayMsg[]>([]);
   const [history, setHistory] = useState<ApiMsg[]>([]);
   const [input, setInput] = useState("");
@@ -64,9 +64,10 @@ export default function ChatWidget() {
   };
 
   return (
-    <div className="flex flex-col panel overflow-hidden" style={{ minHeight: "440px" }}>
+    <div className={`flex flex-col panel overflow-hidden min-h-[440px] ${className}`}>
       {/* Header */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-rule">
+      {/* pr-14 keeps the label clear of the dock close button. */}
+      <div className="flex items-center justify-between pl-6 pr-14 py-4 border-b border-rule">
         <Wordmark tone="dark" size={16} />
         <p className="label">Studio assistant</p>
       </div>
