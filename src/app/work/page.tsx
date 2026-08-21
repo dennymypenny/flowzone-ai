@@ -6,14 +6,14 @@ import NodeWeb from "@/app/components/NodeWeb";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Real work shipped by FlowZone. CardsRG, a collector trading card storefront taken from an idea to a live shop.",
+    "Some of the work FlowZone has shipped. A storefront built end to end, the reels that launched it and a product animation for a client, all of it live.",
   alternates: { canonical: "/work" },
   // Set in full because metadata merging is shallow. A page that declares
   // openGraph replaces the layout block outright, so anything omitted is gone.
   openGraph: {
     title: "Work | FlowZone",
     description:
-      "A short list, on purpose. CardsRG, a collector trading card storefront taken from an idea to a live shop.",
+      "Some of our work, and we are always looking for the next one. A storefront built end to end, the reels that launched it and a product animation for a client.",
     url: `${SITE.url}/work`,
     siteName: "FlowZone",
     type: "website",
@@ -33,15 +33,24 @@ export default function Work() {
             <p className="label">Work</p>
             <p className="label">Everything here is real and live</p>
           </div>
+          {/* Not "a short list, on purpose". That apologised for the count
+              before anybody saw the work. This is an invitation instead. */}
           <h1 className="display text-5xl md:text-8xl max-w-4xl">
-            A short list,
+            Some of our work.
             <br />
-            on purpose.
+            Always looking for more.
           </h1>
           <p className="lede max-w-reading mt-10">
-This is where the studio starts, and it started from something we
-            actually care about. One shop, built end to end, by people who wanted it
-            to be good more than they wanted it to be finished.
+            A storefront built end to end, the reels that launched it and a
+            product animation for a client. Everything here is live and every
+            piece of it was made by us. If you have something you want built,{" "}
+            <Link
+              href="/intake"
+              className="underline decoration-rule underline-offset-4 hover:text-ink transition-colors"
+            >
+              tell us about it
+            </Link>
+            .
           </p>
         </div>
       </section>

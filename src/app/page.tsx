@@ -40,7 +40,7 @@ export default function Home() {
             disappear and the film read as part of the page. */}
         <div className="relative w-full">
           <video
-            className="w-full h-auto md:h-[66vh] md:min-h-[360px] md:max-h-[700px] md:object-cover block"
+            className="w-full h-auto md:h-[74vh] md:min-h-[400px] md:max-h-[780px] md:object-cover md:object-[center_62%] block"
             autoPlay
             muted
             loop
@@ -144,45 +144,97 @@ export default function Home() {
       </section>
 
       {/* White, on purpose. The page was three dark bands in a row and
-          nothing popped. This is also where the three parts finally get
-          named in words, using the same lines the film uses. */}
-      <section data-flow className="band-light px-6 py-14 md:py-20">
+          nothing popped. Cards rather than columns, because the three parts
+          are the whole offer and a hairline border was not carrying that.
+          Each card is tinted with its own part colour so the three read as a
+          set before a single word is read. */}
+      <section data-flow className="band-light px-6 py-16 md:py-24">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 md:gap-6">
+          <div className="flex items-center flex-wrap gap-y-2 mb-10">
+            {[
+              { c: "#2B57C4", w: "Brand" },
+              { c: "#155E9C", w: "Site" },
+              { c: "#0F6B4F", w: "System" },
+            ].map((d, i) => (
+              <span key={d.w} className="flex items-center">
+                {i > 0 && (
+                  <span
+                    className="block w-6 h-px mx-2.5"
+                    style={{ background: "#C9D6EA" }}
+                    aria-hidden
+                  />
+                )}
+                <span
+                  className="block w-2 h-2 rounded-full"
+                  style={{ background: d.c }}
+                  aria-hidden
+                />
+              </span>
+            ))}
+            <span className="text-[11px] font-medium uppercase tracking-label text-[#647089] ml-4">
+              Three parts, one studio
+            </span>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-5">
             {[
               {
                 n: "01",
-                c: "#2B57C4",
                 k: "Brand",
+                icon: "palette",
+                c: "#2B57C4",
                 b: "What people recognize you by.",
                 d: "The mark, the colors, the words. The part that makes you look like you meant it.",
               },
               {
                 n: "02",
-                c: "#155E9C",
                 k: "Site",
+                icon: "compass",
+                c: "#155E9C",
                 b: "Where people go to decide.",
                 d: "A page that answers the question and asks for the next step, instead of a profile and a DM.",
               },
               {
                 n: "03",
-                c: "#0F6B4F",
                 k: "System",
+                icon: "bolt",
+                c: "#0F6B4F",
                 b: "What runs it behind the scenes.",
                 d: "Booking, checkout, follow-up. The parts nobody sees and everybody feels.",
               },
             ].map((x) => (
-              <div key={x.k} className="border-t-2 pt-5" style={{ borderTopColor: x.c }}>
-                <p
-                  className="text-[11px] font-medium uppercase tracking-label mb-3"
-                  style={{ color: x.c }}
-                >
-                  {x.n} · {x.k}
-                </p>
-                <p className="font-display text-2xl md:text-[1.75rem] leading-snug text-[#0B1322] mb-3">
+              <div
+                key={x.k}
+                className="relative rounded-[18px] border bg-white p-7 md:p-8 flex flex-col overflow-hidden transition-transform duration-300 hover:-translate-y-1"
+                style={{
+                  borderColor: `${x.c}2E`,
+                  backgroundImage: `linear-gradient(180deg, ${x.c}0F 0%, rgba(255,255,255,0) 42%)`,
+                  boxShadow: `0 24px 48px -30px ${x.c}66`,
+                }}
+              >
+                <span
+                  className="absolute top-0 left-0 h-[3px] w-full"
+                  style={{ background: x.c }}
+                  aria-hidden
+                />
+                <div className="flex items-center justify-between mb-6 mt-1">
+                  <span
+                    className="inline-flex items-center justify-center w-12 h-12 rounded-full"
+                    style={{ background: `${x.c}1A`, color: x.c }}
+                  >
+                    <Icon name={x.icon} className="w-6 h-6" />
+                  </span>
+                  <span
+                    className="text-[11px] font-medium uppercase tracking-label"
+                    style={{ color: x.c }}
+                  >
+                    {x.n} · {x.k}
+                  </span>
+                </div>
+                <p className="font-display text-[1.6rem] md:text-3xl leading-[1.12] text-[#0B1322] mb-3">
                   {x.b}
                 </p>
-                <p className="text-sm text-[#49566E] font-light leading-relaxed max-w-reading">
+                <p className="text-sm text-[#49566E] font-light leading-relaxed">
                   {x.d}
                 </p>
               </div>
