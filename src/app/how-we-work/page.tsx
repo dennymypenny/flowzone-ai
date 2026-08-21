@@ -33,7 +33,7 @@ const days = [
     tag: "First look",
     title: "We come back with a direction",
     body:
-      "Not a mood board. An actual first pass you can look at, in a browser, with your words and your colors in it. This is the fastest part because AI does the heavy lifting on structure and first drafts. It is also where a human matters most, because taste is the part a model still gets wrong.",
+      "Not a mood board. An actual first pass you can look at, in a browser, with your words and your colors in it, while the idea still has heat on it. This is where taste matters most, so it is the part a person spends the longest on.",
     you: "One reply. Thumbs up or tell us what is off",
   },
   {

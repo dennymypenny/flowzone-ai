@@ -38,15 +38,15 @@ export default function TermsPage() {
         <section className="mb-10">
           <h2 className="text-2xl font-bold text-ink mb-4">2. Description of Services</h2>
           <p className="text-ink-soft leading-relaxed mb-3">
-            FlowZone provides AI-powered business systems services, including but not limited to:
+            FlowZone provides creative studio services, including but not limited to:
           </p>
           <ul className="list-disc list-inside text-ink-soft space-y-2 leading-relaxed">
-            <li>Lead follow-up systems</li>
-            <li>Invoicing and billing systems</li>
-            <li>Appointment scheduling systems</li>
-            <li>Reporting and analytics dashboards</li>
-            <li>Client onboarding systems</li>
-            <li>Data entry and synchronization solutions</li>
+            <li>Brand identity, including naming, logo, palette, type and voice</li>
+            <li>Websites, landing pages and online storefronts</li>
+            <li>Cart, checkout and payment setup</li>
+            <li>Lead intake, booking and follow-up systems</li>
+            <li>Invoicing, reporting and client onboarding systems</li>
+            <li>Promotional video and social content</li>
           </ul>
           <p className="text-ink-soft leading-relaxed mt-3">
             We reserve the right to modify, suspend, or discontinue any part of our services at any time with or without notice.
@@ -137,7 +137,7 @@ export default function TermsPage() {
         <section className="mb-10">
           <h2 className="text-2xl font-bold text-ink mb-4">10. Limitation of Liability</h2>
           <p className="text-ink-soft leading-relaxed">
-            TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, FLOWZONE AI SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING LOST PROFITS, LOST DATA, OR BUSINESS INTERRUPTION, ARISING OUT OF OR RELATED TO YOUR USE OF OUR SERVICES. OUR TOTAL LIABILITY FOR ANY CLAIMS UNDER THESE TERMS SHALL NOT EXCEED THE AMOUNT YOU PAID US IN THE THREE (3) MONTHS PRECEDING THE CLAIM.
+            TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, FLOWZONE SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING LOST PROFITS, LOST DATA, OR BUSINESS INTERRUPTION, ARISING OUT OF OR RELATED TO YOUR USE OF OUR SERVICES. OUR TOTAL LIABILITY FOR ANY CLAIMS UNDER THESE TERMS SHALL NOT EXCEED THE AMOUNT YOU PAID US IN THE THREE (3) MONTHS PRECEDING THE CLAIM.
           </p>
         </section>
 

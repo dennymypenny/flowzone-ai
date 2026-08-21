@@ -33,7 +33,6 @@ export default function Footer() {
               <li><Link href="/book" className="text-sm text-ink-soft hover:text-ink transition-colors">Talk To Us</Link></li>
               <li><Link href="/pricing" className="text-sm text-ink-soft hover:text-ink transition-colors">Pricing</Link></li>
               <li><Link href="/intake" className="text-sm text-ink-soft hover:text-ink transition-colors">Start a Ticket</Link></li>
-              <li><Link href="/ai-news" className="text-sm text-ink-soft hover:text-ink transition-colors">AI News</Link></li>
             </ul>
           </div>
 

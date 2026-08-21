@@ -6,7 +6,7 @@ export const SITE = {
   fullName: "FlowZone",
 
   // The one positioning line. Do not run a second one anywhere.
-  line: "AI gives us the speed. Humans give it the taste.",
+  line: "Brand, site and system. One studio.",
 
   // The one descriptor. Used in nav, footer, metadata and the chat.
   descriptor:

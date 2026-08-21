@@ -30,10 +30,10 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="text-xl font-bold text-ink mb-3">1. Who We Are</h2>
             <p>
-              FlowZone (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) is a done-for-you AI systems
-              agency operating at <a href="https://flowzone.dev" className="text-accent hover:underline">flowzone.dev</a>.
-              We build custom workflow systems for small and mid-size businesses using tools such as Make.com,
-              Zapier, Airtable, and other no-code/low-code platforms. This Privacy Policy explains how we collect,
+              FlowZone (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) is a creative studio operating at
+              <a href="https://flowzone.dev" className="text-accent hover:underline">flowzone.dev</a>.
+              We build brand identities, websites and storefronts, and the systems that keep running behind
+              them, for small and mid-size businesses. This Privacy Policy explains how we collect,
               use, disclose, and protect information when you visit our website or engage our services.
             </p>
           </section>
@@ -42,7 +42,7 @@ export default function PrivacyPolicy() {
             <h2 className="text-xl font-bold text-ink mb-3">2. Information We Collect</h2>
             <p className="mb-3"><strong>Information you provide directly:</strong></p>
             <ul className="list-disc pl-6 space-y-2 mb-4">
-              <li>Name and email address when you submit our contact or intake form, or book a free AI Audit.</li>
+              <li>Name and email address when you submit our contact form or open a build ticket.</li>
               <li>Business name, website URL, and workflow details you share during onboarding or discovery calls.</li>
               <li>Payment information processed through our third-party payment processor (Stripe). We do not store your full card details.</li>
               <li>Any communications you send us by email or through our website.</li>
