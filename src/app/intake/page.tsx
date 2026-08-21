@@ -79,10 +79,6 @@ const builds: Build[] = [
 
 const NOT_SURE = "Not sure yet";
 
-const venmoAmounts: Record<string, number> = Object.fromEntries(
-  builds.filter((b) => b.amount).map((b) => [b.name, b.amount as number])
-);
-
 /** Legacy pricing-page links: /intake?service=Starter|Growth|Scale|Not sure. */
 const legacyMap: Record<string, string> = {
   starter: "The Site Build",
@@ -170,8 +166,8 @@ function IntakeForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      // The success screen shows a payment link, so it only ever runs when the
-      // server says the details really landed. No body, no promise.
+      // The success screen only ever runs when the server says the details
+      // really landed. No body, no promise.
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data?.ok) throw new Error(data?.error || "That did not send.");
       setState("done");
@@ -183,9 +179,6 @@ function IntakeForm() {
   };
 
   if (state === "done") {
-    const amount = venmoAmounts[form.service];
-    const note = encodeURIComponent(`FlowZone – ${form.service}`);
-    const venmoUrl = `https://venmo.com/u/flowzoneautomation?txn=pay&amount=${amount}&note=${note}`;
     return (
       <div className="min-h-screen bg-paper-deep flex items-center justify-center px-6">
         <div className="max-w-md w-full bg-paper rounded-xl border border-rule p-10 text-center">
@@ -193,40 +186,18 @@ function IntakeForm() {
             <Icon name="sparkle" size={32} color="#5B8CFF" />
           </div>
           <h2 className="text-2xl font-display font-normal text-ink mb-3">Ticket received.</h2>
-          {amount ? (
-            <>
-              <p className="text-ink-mute mb-8 leading-relaxed">
-                We got your project details. Lock in your spot below and we will start on it right away.
-              </p>
-              <a
-                href={venmoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full bg-accent text-white font-medium py-4 rounded-xl hover:bg-accent-deep transition-colors text-lg mb-4"
-              >
-                Pay with Venmo →
-              </a>
-              <p className="text-xs text-ink-mute">
-                You&apos;ll receive a confirmation email within 24 hours of payment.
-              </p>
-            </>
-          ) : (
-            <>
-              <p className="text-ink-mute mb-6 leading-relaxed">
-                We got your project details. Since this one needs a proper read first, we will come back
-                with the right build, a flat quote and a delivery date.
-              </p>
-              <p className="text-sm text-ink-mute mb-8">
-                Expect an email within 24 hours. Nothing to pay until you have the quote.
-              </p>
-              <a
-                href={`mailto:${SITE.email}`}
-                className="block w-full bg-accent text-white font-medium py-4 rounded-xl hover:bg-accent-deep transition-colors text-lg"
-              >
-                Email Us Directly →
-              </a>
-            </>
-          )}
+          <p className="text-ink-mute mb-6 leading-relaxed">
+            We will message you about the details and payment.
+          </p>
+          <p className="text-ink-mute leading-relaxed">
+            Thank you for believing in us and yourself.
+          </p>
+          <p className="text-xs text-ink-mute mt-8">
+            Need us sooner?{" "}
+            <a href={`mailto:${SITE.email}`} className="text-accent hover:underline">
+              {SITE.email}
+            </a>
+          </p>
         </div>
       </div>
     );

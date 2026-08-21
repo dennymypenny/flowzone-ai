@@ -4,7 +4,7 @@ import { SITE } from "@/lib/site";
 /**
  * The intake form.
  *
- * This one takes money. Somebody fills it in, sees a Venmo link and pays $600,
+ * This one takes money. Somebody fills it in, we message them about details and payment,
  * so the only honest thing this route can return is whether the details really
  * landed in the inbox. A 200 here is a promise. If the send fails, or the key
  * is missing, it says so with a non-200 and the page keeps the lead alive with
