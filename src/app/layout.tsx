@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -14,6 +14,9 @@ export const metadata: Metadata = {
     template: "%s | FlowZone",
   },
   applicationName: "FlowZone",
+  // Saved to a phone home screen it is called FlowZone and wears the same
+  // three-dot mark as the X avatar (apple-icon.png, manifest.ts, icon.svg).
+  appleWebApp: { title: "FlowZone", capable: true, statusBarStyle: "black-translucent" },
   // No alternates here on purpose. App Router inherits alternates into every
   // child segment, so a canonical set at the root made every page claim to be
   // a duplicate of the homepage. Each page declares its own canonical instead.
@@ -54,6 +57,10 @@ export const metadata: Metadata = {
     "ecommerce storefront design",
     "done for you brand and website",
   ],
+};
+
+export const viewport: Viewport = {
+  themeColor: "#080D18",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
