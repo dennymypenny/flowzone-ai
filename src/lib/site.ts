@@ -22,12 +22,17 @@ export const SITE = {
   // LinkedIn is the only social the studio actually works. Keep it visible.
   linkedin: "https://www.linkedin.com/company/116623924/",
   linkedinFounder: "https://www.linkedin.com/in/dennisvaldesjr/",
+  // The studio account on X. Priority channel since Aug 2026.
+  x: "https://x.com/flowzonedev",
 
   // Prefilled mailto used by every primary CTA
   mailto:
     "mailto:heyflowzone@gmail.com?subject=New%20project%20for%20FlowZone&body=Hi%20FlowZone%2C%0A%0AHere%20is%20what%20I%20want%20to%20get%20moving%3A%0A%0A%0AWhat%20I%20already%20have%20(brand%2C%20site%2C%20anything)%3A%0A%0A%0AWhen%20I%20want%20it%20live%3A%0A%0A%0AThanks%2C%0A",
 
-  url: "https://flowzone.dev",
+  // www is the host the site serves (the apex 307s to it). Every canonical,
+  // sitemap entry and og:url derives from this, so it must match or Google
+  // is told the canonical lives at a URL that redirects away from itself.
+  url: "https://www.flowzone.dev",
 } as const;
 
 export const PILLARS = [

@@ -14,7 +14,7 @@ export default function StructuredData() {
         "@id": `${SITE.url}/#organization`,
         name: "FlowZone",
         // Only real alternates. Repeating the name here says nothing.
-        alternateName: ["FlowZone Studio", "flowzone.dev"],
+        alternateName: ["FlowZone Studio", "FlowZone Dev", "flowzone.dev"],
         url: SITE.url,
         email: SITE.email,
         contactPoint: [
@@ -39,7 +39,7 @@ export default function StructuredData() {
         },
         image: `${SITE.url}/opengraph-image.png`,
         foundingDate: "2026",
-        sameAs: [SITE.linkedin, SITE.linkedinFounder],
+        sameAs: [SITE.linkedin, SITE.linkedinFounder, SITE.x],
         // The Person node is already in this graph. Point at it so Google
         // connects the studio to the person who runs it.
         founder: { "@id": `${SITE.url}/#founder` },
@@ -83,7 +83,8 @@ export default function StructuredData() {
         "@type": "WebSite",
         "@id": `${SITE.url}/#website`,
         url: SITE.url,
-        name: "FlowZone",
+        name: "FlowZone Studio",
+        alternateName: "FlowZone",
         description: SITE.descriptor,
         publisher: { "@id": `${SITE.url}/#organization` },
         inLanguage: "en-US",
@@ -94,7 +95,7 @@ export default function StructuredData() {
         name: "Dennis Valdes",
         jobTitle: "Founder",
         worksFor: { "@id": `${SITE.url}/#organization` },
-        sameAs: [SITE.linkedinFounder],
+        sameAs: [SITE.linkedinFounder, SITE.x],
       },
     ],
   };

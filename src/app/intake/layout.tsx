@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     title: "Start a project with FlowZone",
     description:
       "Tell us what you are building and which part you want first. You see the number before anything starts.",
-    url: "https://flowzone.dev/intake",
+    url: "https://www.flowzone.dev/intake",
   },
 };
 

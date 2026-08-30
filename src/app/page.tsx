@@ -8,14 +8,14 @@ import NodeWeb from "@/app/components/NodeWeb";
 import FlowField from "@/app/components/FlowField";
 
 export const metadata: Metadata = {
-  title: "FlowZone | Creative Studio",
+  title: "FlowZone Studio | Brand, Website and Storefront Design",
   description: `${SITE.line} ${SITE.descriptor}`,
   alternates: { canonical: "/" },
   // openGraph merging is shallow, so siteName, type and locale get repeated on
   // every page. The card image is not repeated because app/opengraph-image.png
   // is file based metadata, which every route inherits on its own.
   openGraph: {
-    title: "FlowZone | Creative Studio",
+    title: "FlowZone Studio | Brand, Website and Storefront Design",
     description: `${SITE.line} ${SITE.descriptor}`,
     url: SITE.url,
     siteName: "FlowZone",

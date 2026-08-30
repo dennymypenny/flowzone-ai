@@ -10,8 +10,8 @@ import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: {
-    default: "FlowZone | Brand, Site and Systems Studio",
-    template: "%s | FlowZone",
+    default: "FlowZone Studio | Brand, Website and Storefront Design",
+    template: "%s | FlowZone Studio",
   },
   applicationName: "FlowZone",
   // Saved to a phone home screen it is called FlowZone and wears the same
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     siteName: "FlowZone",
     type: "website",
-    title: "FlowZone, a creative studio",
+    title: "FlowZone Studio, brand, website and storefront design",
     description: SITE.descriptor,
     url: SITE.url,
     locale: "en_US",
