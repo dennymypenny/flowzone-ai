@@ -12,7 +12,9 @@ const config: Config = {
         // Figtree. Geometric like Poppins was, but with a tighter, less circular
         // bowl, so it reads as a studio rather than as a template.
         sans: ["Figtree", "system-ui", "sans-serif"],
-        display: ["Figtree", "system-ui", "sans-serif"],
+        // Space Grotesk for display: geometric and a little technical,
+        // so the headlines stop reading as default. Body stays Figtree.
+        display: ["Space Grotesk", "Figtree", "system-ui", "sans-serif"],
         mono: ["Figtree", "system-ui", "sans-serif"],
       },
       colors: {
