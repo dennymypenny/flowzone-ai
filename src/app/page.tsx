@@ -243,31 +243,96 @@ export default function Home() {
       {/* The distance argument, as type. The picture that used to sit here
           was stock, and a design studio's site cannot carry an image that is
           not work. The line lands on its own. */}
-      <section data-flow className="relative border-t border-rule px-6 py-24 md:py-40 overflow-hidden">
+      <section data-flow className="relative border-t border-rule px-6 py-28 md:py-44 overflow-hidden bg-black">
         <img
-          src="/assets/sea-distance.jpg"
+          src="/assets/space-distance.jpg"
           alt=""
           aria-hidden
           className="absolute inset-0 w-full h-full object-cover"
         />
+        {/* A soft blue nebula glow behind the words so the type feels lit
+            from inside the sky rather than pasted on it. */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "linear-gradient(180deg, rgba(6,11,31,0.66) 0%, rgba(6,11,31,0.34) 55%, rgba(6,11,31,0.58) 100%)",
+              "radial-gradient(55% 60% at 38% 50%, rgba(91,155,249,0.18) 0%, rgba(6,11,31,0) 70%)",
           }}
         />
+        {/* The game layer: a little ship runs the node route, the same
+            three-dot mark the studio uses, played as a course. Pure SVG
+            SMIL, no JS, pointer-events off. */}
+        <svg
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          viewBox="0 0 1200 520"
+          preserveAspectRatio="xMidYMid slice"
+          aria-hidden
+        >
+          <path
+            id="fz-course"
+            d="M60,430 C220,300 260,180 420,190 C560,200 600,360 760,340 C900,322 950,170 1140,120"
+            fill="none"
+            stroke="rgba(159,196,232,0.22)"
+            strokeWidth="1.4"
+            strokeDasharray="3 7"
+          />
+          {[
+            [60, 430, "#1E3A8A"],
+            [420, 190, "#5B9BF9"],
+            [760, 340, "#5B9BF9"],
+            [1140, 120, "#C6E4F8"],
+          ].map(([x, y, c], i) => (
+            <circle key={i} cx={x as number} cy={y as number} r="5" fill={c as string} opacity="0.9">
+              <animate
+                attributeName="r"
+                values="4;6.5;4"
+                dur="3.2s"
+                begin={`${i * 0.8}s`}
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="opacity"
+                values="0.55;1;0.55"
+                dur="3.2s"
+                begin={`${i * 0.8}s`}
+                repeatCount="indefinite"
+              />
+            </circle>
+          ))}
+          <g>
+            <path d="M0,0 L-14,6 L-10,0 L-14,-6 Z" fill="#E8F1FD" />
+            <circle cx="-16" cy="0" r="2.6" fill="#5B9BF9" opacity="0.85">
+              <animate attributeName="opacity" values="0.85;0.25;0.85" dur="0.5s" repeatCount="indefinite" />
+            </circle>
+            <animateMotion dur="16s" repeatCount="indefinite" rotate="auto">
+              <mpath href="#fz-course" />
+            </animateMotion>
+          </g>
+        </svg>
+
         <div className="relative max-w-6xl mx-auto">
-          <p className="text-[11px] font-medium uppercase tracking-label text-[#C6E4F8] mb-4">
+          <p className="text-[11px] font-medium uppercase tracking-label text-[#9FC4E8] mb-5">
             The distance
           </p>
           <h2
-            className="font-display text-[2.5rem] sm:text-6xl md:text-7xl leading-[0.98] max-w-[16ch] text-white"
-            style={{ textShadow: "0 2px 24px rgba(6,11,31,0.55)" }}
+            className="font-display text-[2.5rem] sm:text-6xl md:text-7xl leading-[1.02] max-w-[16ch]"
+            style={{
+              backgroundImage:
+                "linear-gradient(115deg, #FFFFFF 0%, #E8F1FD 38%, #9FC4E8 68%, #5B9BF9 100%)",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              color: "#E8F1FD",
+              filter: "drop-shadow(0 0 26px rgba(91,155,249,0.35))",
+            }}
           >
             You are not starting from nothing. You are two or three moves
             from live.
           </h2>
+          <p className="text-sm text-[#9AA7BE] font-light mt-6 max-w-reading">
+            The gap between your idea and a live brand is smaller than it
+            looks from where you stand.
+          </p>
         </div>
       </section>
 
