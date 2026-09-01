@@ -79,6 +79,48 @@ const builds: Build[] = [
 
 const NOT_SURE = "Not sure yet";
 
+/* The opener question. It pops up before the form for anyone who arrives
+   cold, requires an answer, and uses it to pick the build. The visitor
+   lands on a ticket that is already half filled in, which is the close. */
+const OPENERS = [
+  {
+    said: "People don\u2019t get what we do.",
+    build: "The Identity Build",
+    c: "#4C7BE8",
+    line: "That is a brand problem, not a you problem. The Identity Build fixes the first impression once, and everything after it compounds.",
+  },
+  {
+    said: "Our website is embarrassing. Or missing.",
+    build: "The Site Build",
+    c: "#5B9BF9",
+    line: "People check the link before they trust you. The Site Build is one page that answers the question and asks for the next step.",
+  },
+  {
+    said: "People buy through our DMs.",
+    build: "The Storefront Build",
+    c: "#F0845F",
+    line: "You are the checkout, and that is the bottleneck. The Storefront Build gives your buyers cart, checkout and a receipt while you sleep.",
+  },
+  {
+    said: "I do everything by hand.",
+    build: "The Engine Build",
+    c: "#34D399",
+    line: "The busywork is the growth cap. The Engine Build wires follow-ups, booking and invoicing to run on their own.",
+  },
+  {
+    said: "I want the whole thing.",
+    build: "The Full Build",
+    c: "#5B8CFF",
+    line: "Brand, site and system in one pass, so it launches coherent instead of stitched together.",
+  },
+  {
+    said: "None of these. I just have an idea.",
+    build: NOT_SURE,
+    c: "#5B8CFF",
+    line: "Then you are the easy case. Describe the idea below and we will tell you which build it is and what it costs, before you pay anything.",
+  },
+];
+
 /** Legacy pricing-page links: /intake?service=Starter|Growth|Scale|Not sure. */
 const legacyMap: Record<string, string> = {
   starter: "The Site Build",
@@ -110,6 +152,12 @@ function IntakeForm() {
     description: "",
   });
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
+  // The opener pops up only for cold arrivals. A preselected build or a
+  // cart handoff already answered the question somewhere else.
+  const [asked, setAsked] = useState(
+    Boolean(preselected) || searchParams.get("cart") === "1"
+  );
+  const [opener, setOpener] = useState<(typeof OPENERS)[number] | null>(null);
   const [error, setError] = useState("");
   const loading = state === "sending";
 
@@ -206,6 +254,44 @@ function IntakeForm() {
   return (
     <div className="min-h-screen bg-paper-deep py-20 px-6">
       <div className="max-w-xl mx-auto">
+
+        {!asked && (
+          <div
+            className="fixed inset-0 z-50 bg-[#060B1F]/85 backdrop-blur-sm flex items-center justify-center px-6"
+            role="dialog"
+            aria-modal="true"
+            aria-label="One question before the ticket"
+          >
+            <div className="max-w-md w-full bg-paper rounded-xl border border-rule p-8">
+              <p className="text-accent font-semibold text-sm uppercase tracking-wider mb-2">
+                One question first
+              </p>
+              <h2 className="text-2xl font-display font-normal text-ink mb-2">
+                Which one have you said out loud?
+              </h2>
+              <p className="text-sm text-ink-mute leading-relaxed mb-5">
+                Pick the one that sounds like you. It picks the right build and
+                leaves you four answers from a price.
+              </p>
+              <div className="space-y-2">
+                {OPENERS.map((o) => (
+                  <button
+                    key={o.said}
+                    type="button"
+                    onClick={() => {
+                      setOpener(o);
+                      setAsked(true);
+                      set("service", o.build);
+                    }}
+                    className="w-full text-left rounded-lg border border-rule bg-paper-deep px-4 py-3 text-sm text-ink hover:border-ink-mute transition-colors"
+                  >
+                    &ldquo;{o.said}&rdquo;
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
         <div className="text-center mb-10">
           <p className="text-accent font-semibold text-sm uppercase tracking-wider mb-3">Get Started</p>
           <h1 className="text-4xl font-display font-normal text-ink mb-3">Start Your Project</h1>
@@ -214,7 +300,21 @@ function IntakeForm() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-paper rounded-xl border border-rule p-8 space-y-5">
+        {opener && (
+          <div className="bg-paper rounded-xl border border-rule p-5 mb-6">
+            <p className="text-xs text-ink-mute mb-1.5">
+              You said &ldquo;{opener.said}&rdquo;
+            </p>
+            <p className="text-sm text-ink-soft leading-relaxed">{opener.line}</p>
+            <p className="text-xs mt-2.5 font-medium" style={{ color: opener.c }}>
+              {opener.build === NOT_SURE
+                ? "We will name the build for you. Just describe the idea."
+                : `${opener.build} is already picked below. Four answers and you get a price.`}
+            </p>
+          </div>
+        )}
+
+                <form onSubmit={handleSubmit} className="bg-paper rounded-xl border border-rule p-8 space-y-5">
           <div>
             <label className="block text-sm font-semibold text-ink-soft mb-1.5">Which build is this for?</label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3" role="radiogroup" aria-label="Pick a build">

@@ -5,8 +5,7 @@ import type { Metadata } from "next";
 import MessageUs, { TicketNote } from "@/components/MessageUs";
 import Testimonials from "@/components/Testimonials";
 import { SITE } from "@/lib/site";
-import NodeWeb from "@/app/components/NodeWeb";
-import FlowField from "@/app/components/FlowField";
+import PitchPath from "@/app/components/PitchPath";
 
 export const metadata: Metadata = {
   title: "FlowZone Studio | Brand, Website and Storefront Design",
@@ -29,115 +28,79 @@ export default function Home() {
   return (
     <>
       {/* ---------- 1 · Hero ---------- */}
-      <section className="relative overflow-hidden">
-        <NodeWeb className="opacity-90" />
-        <FlowField />
-        <div className="absolute inset-0 gridlight pointer-events-none" />
-        {/* The mark, explained: points scatter, connect, resolve, then flow on. */}
+      {/* Light, centered and type-first. The reel sits framed inside the
+          hero instead of running full bleed, so the page opens calm and
+          premium and the film reads as the work, not the wallpaper. The
+          warm paper eases into the cool light band below by the last stop
+          of the background gradient. */}
+      <section
+        className="band-light relative overflow-hidden px-6"
+        style={{
+          background:
+            "linear-gradient(180deg, #FDFBF6 0%, #F9F6EE 55%, #F4F7FC 100%)",
+        }}
+      >
+        <div className="relative max-w-6xl mx-auto pt-20 pb-16 md:pt-28 md:pb-24 text-center">
+          <p className="text-[11px] font-medium uppercase tracking-label text-[#647089] mb-6">
+            FlowZone Studio · Brand, site and system
+          </p>
 
-        {/* The reel opens the page, edge to edge and unframed. Its own
-            background is #060B1F against the page's #0C1424, six levels
-            apart, so a fade at the bottom is all it takes to make the seam
-            disappear and the film read as part of the page. */}
-        <div className="relative w-full">
-          <video
-            className="w-full h-auto md:h-[74vh] md:min-h-[400px] md:max-h-[780px] md:object-cover md:object-[center_62%] block"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            poster="/assets/studio-reel-poster.jpg"
-            aria-label="FlowZone studio reel: you bring the idea, we build the brand, the site and the system"
-          >
-            <source src="/assets/studio-reel.webm" type="video/webm" />
-            <source src="/assets/studio-reel.mp4" type="video/mp4" />
-          </video>
-          <div
-            className="absolute inset-x-0 bottom-0 h-32 md:h-56 pointer-events-none"
-            style={{
-              background:
-                "linear-gradient(180deg, rgba(12,20,36,0) 0%, rgba(12,20,36,0.42) 42%, rgba(12,20,36,0.88) 78%, #0C1424 100%)",
-            }}
-          />
-          {/* The hairline is the handoff. Without it the film just stops and
-              the eye reads the join as a mistake, with it the join is the
-              point. Two pixels, bright in the middle, gone at the edges. */}
-          <div
-            className="absolute inset-x-0 bottom-0 h-px pointer-events-none"
-            style={{
-              background:
-                "linear-gradient(90deg, rgba(198,228,248,0) 0%, rgba(198,228,248,0.55) 50%, rgba(198,228,248,0) 100%)",
-            }}
-          />
-          <div
-            className="absolute inset-x-0 bottom-0 h-16 pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(60% 100% at 50% 100%, rgba(139,180,255,0.20) 0%, rgba(139,180,255,0) 70%)",
-            }}
-          />
-          <div
-            className="absolute inset-y-0 left-0 w-16 md:w-28 pointer-events-none"
-            style={{
-              background:
-                "linear-gradient(90deg, #0C1424 0%, rgba(12,20,36,0) 100%)",
-            }}
-          />
-          <div
-            className="absolute inset-y-0 right-0 w-16 md:w-28 pointer-events-none"
-            style={{
-              background:
-                "linear-gradient(270deg, #0C1424 0%, rgba(12,20,36,0) 100%)",
-            }}
-          />
-        </div>
-
-        <div className="relative max-w-6xl mx-auto px-6 pt-10 pb-14 md:pt-16 md:pb-20">
-
-          <h1 className="display text-[3rem] sm:text-6xl md:text-[5.25rem] max-w-4xl">
-            <span className="text-gradient-white">You imagine it.</span>
+          <h1 className="display text-[3rem] sm:text-6xl md:text-[5.25rem] max-w-4xl mx-auto">
+            You imagine it.
             <br />
             We get it <span className="text-gradient">moving</span>.
           </h1>
 
-          <p className="text-xl md:text-2xl text-ink leading-snug max-w-2xl mt-6 font-light">
-            The idea was never the problem. The design, the words, the build
-            and the plumbing were.
+          <p className="text-xl md:text-2xl text-[#49566E] leading-snug max-w-2xl mx-auto mt-6 font-light">
+            The idea was never the problem. We point the best technology and
+            the best practices working today at the design, the words, the
+            build and the plumbing.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-3 mt-8">
+          <div className="flex flex-col sm:flex-row gap-3 mt-8 justify-center">
             <MessageUs className="btn-primary shine" />
           </div>
-          <TicketNote />
+          <TicketNote className="text-center" />
 
-          <p className="mt-6 text-sm text-ink-mute font-light">
+          <p className="mt-5 text-sm text-[#647089] font-light">
             Builds are flat and paid once, no hourly billing.{" "}
-            <Link href="/pricing" className="text-ink-soft hover:text-ink transition-colors underline decoration-rule underline-offset-4">
+            <Link
+              href="/pricing"
+              className="text-[#49566E] hover:text-[#0B1322] transition-colors underline decoration-[#C9D6EA] underline-offset-4"
+            >
               See the prices
             </Link>
           </p>
 
+          <div className="relative mt-12 md:mt-16 max-w-5xl mx-auto">
+            <div
+              className="relative overflow-hidden rounded-[20px] border border-[#E7E2D6] bg-[#060B1F]"
+              style={{
+                boxShadow:
+                  "0 48px 100px -44px rgba(11,19,34,0.5), 0 20px 44px -30px rgba(11,19,34,0.35)",
+              }}
+            >
+              <span
+                className="absolute top-0 left-0 h-[3px] w-full z-10"
+                style={{ background: "#4C7BE8" }}
+                aria-hidden
+              />
+              <video
+                className="w-full h-auto block"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster="/assets/studio-reel-poster.jpg"
+                aria-label="FlowZone studio reel: you bring the idea, we build the brand, the site and the system"
+              >
+                <source src="/assets/studio-reel.webm" type="video/webm" />
+                <source src="/assets/studio-reel.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
         </div>
-
-        {/* The hero used to butt straight into the white band below and the
-            cut read as two pages stapled together. This is light spilling up
-            from the next section, plus the same hairline the film gets, so
-            the eye is told white is coming before it arrives. */}
-        <div
-          className="absolute inset-x-0 bottom-0 h-24 md:h-36 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(198,228,248,0) 0%, rgba(198,228,248,0.05) 50%, rgba(232,241,253,0.16) 85%, rgba(244,247,252,0.28) 100%)",
-          }}
-        />
-        <div
-          className="absolute inset-x-0 bottom-0 h-px pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(90deg, rgba(244,247,252,0) 0%, rgba(244,247,252,0.6) 50%, rgba(244,247,252,0) 100%)",
-          }}
-        />
       </section>
 
       {/* ---------- 2 · The name as a verb ---------- */}
@@ -291,6 +254,11 @@ export default function Home() {
           </h2>
         </div>
       </section>
+
+      {/* ---------- 3.5 · Start the conversation ---------- */}
+      {/* The pitch, worked as a conversation: pick the sentence you have
+          said out loud, get the build that fixes it, land in the ticket. */}
+      <PitchPath />
 
       {/* ---------- 4 · The four builds ---------- */}
       <section data-flow className="band-light px-6 py-16 md:py-20">
