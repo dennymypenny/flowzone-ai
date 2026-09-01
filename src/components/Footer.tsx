@@ -30,7 +30,6 @@ export default function Footer() {
           <div className="md:col-span-2">
             <p className="label mb-5">Start</p>
             <ul className="space-y-3">
-              <li><Link href="/book" className="text-sm text-ink-soft hover:text-ink transition-colors">Talk To Us</Link></li>
               <li><Link href="/pricing" className="text-sm text-ink-soft hover:text-ink transition-colors">Pricing</Link></li>
               <li><Link href="/intake" className="text-sm text-ink-soft hover:text-ink transition-colors">Start a Ticket</Link></li>
             </ul>

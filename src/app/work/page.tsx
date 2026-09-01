@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { SITE } from "@/lib/site";
 import NodeWeb from "@/app/components/NodeWeb";
+import MessageUs, { TicketNote } from "@/components/MessageUs";
 
 export const metadata: Metadata = {
   title: "Work",
@@ -609,13 +610,12 @@ export default function Work() {
               reflects where we are rather than where we intend to be.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 mt-10">
-              <a href={SITE.mailto} className="btn-primary">
-                Start an email <span className="arrow">→</span>
-              </a>
+              <MessageUs />
               <Link href="/how-we-work" className="btn-ghost">
                 How we work
               </Link>
             </div>
+            <TicketNote />
           </div>
         </div>
       </section>
@@ -626,9 +626,10 @@ export default function Work() {
           <h2 className="font-display text-4xl md:text-6xl leading-[0.95] mb-6">
             Want to be the next one on this page?
           </h2>
-          <a href={`mailto:${SITE.email}`} className="btn-primary mt-4">
-            {SITE.email}
-          </a>
+          <div className="mt-4 flex justify-center">
+            <MessageUs className="btn-primary" />
+          </div>
+          <TicketNote className="text-center" />
         </div>
       </section>
     </>

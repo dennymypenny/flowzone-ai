@@ -12,11 +12,12 @@ export const SITE = {
   descriptor:
     "You imagine it. We get it moving. Arrive with an intention, leave with the running thing: brand, site and system, built for you.",
 
-  // Displayed publicly. Swap to hello@flowzone.dev the day that mailbox exists.
-  // This is the ONLY place it is written down, so it is a one line change.
-  email: "heyflowzone@gmail.com",
+  // Displayed publicly. This is the ONLY place it is written down.
+  email: "hello@flowzone.dev",
 
-  // Where lead notifications are delivered. Server side only.
+  // Where lead notifications are delivered. Server side only. Still the old
+  // inbox on purpose: point it at hello@ only once that mailbox receives mail,
+  // or every lead vanishes.
   leadInbox: "heyflowzone@gmail.com",
 
   // LinkedIn is the only social the studio actually works. Keep it visible.
@@ -25,9 +26,10 @@ export const SITE = {
   // The studio account on X. Priority channel since Aug 2026.
   x: "https://x.com/flowzonedev",
 
-  // Prefilled mailto used by every primary CTA
+  // Prefilled mailto. Secondary paths only (chat nudge, save prompt, /book).
+  // Every primary CTA goes to /intake instead.
   mailto:
-    "mailto:heyflowzone@gmail.com?subject=New%20project%20for%20FlowZone&body=Hi%20FlowZone%2C%0A%0AHere%20is%20what%20I%20want%20to%20get%20moving%3A%0A%0A%0AWhat%20I%20already%20have%20(brand%2C%20site%2C%20anything)%3A%0A%0A%0AWhen%20I%20want%20it%20live%3A%0A%0A%0AThanks%2C%0A",
+    "mailto:hello@flowzone.dev?subject=New%20project%20for%20FlowZone&body=Hi%20FlowZone%2C%0A%0AHere%20is%20what%20I%20want%20to%20get%20moving%3A%0A%0A%0AWhat%20I%20already%20have%20(brand%2C%20site%2C%20anything)%3A%0A%0A%0AWhen%20I%20want%20it%20live%3A%0A%0A%0AThanks%2C%0A",
 
   // www is the host the site serves (the apex 307s to it). Every canonical,
   // sitemap entry and og:url derives from this, so it must match or Google

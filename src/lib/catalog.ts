@@ -22,7 +22,10 @@ export type CartItem = {
  */
 export const GRAPHICS: CartItem[] = [
   { id: "flyer", name: "Flyer, post or cover", price: 4999 },
-  { id: "logo", name: "Logo-only refresh", price: 4999 },
+  // Renamed from "Logo-only refresh": a refresh contradicts the studio's own
+  // point of view that a logo alone fails. This is exports, formats and
+  // lockups for a mark that already exists.
+  { id: "logo", name: "Logo file pack", price: 4999 },
   { id: "socialpack", name: "Social post pack, three graphics", price: 4999 },
   { id: "adcreative", name: "Story or ad creative", price: 4999 },
   { id: "channelart", name: "Channel art, banner and avatar", price: 4999 },

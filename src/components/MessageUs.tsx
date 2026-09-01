@@ -1,17 +1,12 @@
-import { SITE } from "@/lib/site";
+import Link from "next/link";
 
 /**
- * The primary way in.
+ * The primary way in. One action, one label, everywhere.
  *
- * This used to open a text message, which meant every enquiry landed on one
- * person's phone at whatever hour it arrived. Everything comes to the inbox
- * now, and the mailto arrives with the questions already asked, so nobody has
- * to stare at a blank message wondering what to write.
+ * This used to be a prefilled mailto. Every primary CTA now opens the ticket
+ * at /intake instead: four questions, no call, and the number arrives before
+ * anything starts. The mailto survives only as a secondary path (SITE.mailto).
  */
-
-export function messageHref() {
-  return SITE.mailto;
-}
 
 export default function MessageUs({
   className = "btn-primary",
@@ -21,8 +16,17 @@ export default function MessageUs({
   label?: string;
 }) {
   return (
-    <a href={messageHref()} className={className}>
-      {label || "Start the conversation"} <span className="arrow">→</span>
-    </a>
+    <Link href="/intake" className={className}>
+      {label || "Start a ticket"} <span className="arrow">→</span>
+    </Link>
+  );
+}
+
+/** The one line that sits under every primary CTA. Identical wording, always. */
+export function TicketNote({ className = "" }: { className?: string }) {
+  return (
+    <p className={`text-[12px] text-ink-mute mt-4 ${className}`}>
+      Four questions. No call. You see your number before anything starts.
+    </p>
   );
 }

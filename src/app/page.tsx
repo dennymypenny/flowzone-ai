@@ -2,8 +2,9 @@ import Link from "next/link";
 import Icon from "@/components/Icon";
 import AddToCart from "@/app/components/AddToCart";
 import type { Metadata } from "next";
-import MessageUs from "@/components/MessageUs";
-import { SITE, PILLARS } from "@/lib/site";
+import MessageUs, { TicketNote } from "@/components/MessageUs";
+import Testimonials from "@/components/Testimonials";
+import { SITE } from "@/lib/site";
 import NodeWeb from "@/app/components/NodeWeb";
 import FlowField from "@/app/components/FlowField";
 
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      {/* ---------- Hero ---------- */}
+      {/* ---------- 1 · Hero ---------- */}
       <section className="relative overflow-hidden">
         <NodeWeb className="opacity-90" />
         <FlowField />
@@ -101,21 +102,17 @@ export default function Home() {
           </h1>
 
           <p className="text-xl md:text-2xl text-ink leading-snug max-w-2xl mt-6 font-light">
-            Arrive with an intention. Leave with the running thing.
-            Brand, site and system, built for you.
+            The idea was never the problem. The design, the words, the build
+            and the plumbing were.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 mt-8">
             <MessageUs className="btn-primary shine" />
           </div>
+          <TicketNote />
 
-          {/* The number is here for anybody who wants it, but it is not the
-              first thing a stranger meets. Leading with a price makes people
-              brace. Leading with the free thing makes them look. */}
-          <p className="mt-8 text-sm text-ink-mute font-light">
-            Builds are flat and
-            paid once, no hourly billing, and you see your number before
-            anything starts.{" "}
+          <p className="mt-6 text-sm text-ink-mute font-light">
+            Builds are flat and paid once, no hourly billing.{" "}
             <Link href="/pricing" className="text-ink-soft hover:text-ink transition-colors underline decoration-rule underline-offset-4">
               See the prices
             </Link>
@@ -143,6 +140,38 @@ export default function Home() {
         />
       </section>
 
+      {/* ---------- 2 · The name as a verb ---------- */}
+      <section data-flow className="band-light px-6 py-16 md:py-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="panel p-6 md:p-8 grid md:grid-cols-12 gap-6">
+            <div className="md:col-span-5">
+              <p className="label mb-4">What the name means</p>
+              <p className="font-display text-5xl leading-none">
+                flow<span className="text-accent">zone</span>
+              </p>
+              <p className="text-[13px] text-ink-mute mt-3">
+                verb · flowzoned, flowzoning
+              </p>
+            </div>
+            <div className="md:col-span-7">
+              <p className="text-xl text-ink font-light leading-snug">
+                To take an intention and get it moving. To go from a thing you keep
+                meaning to start, to a thing that is live, branded and running on its
+                own.
+              </p>
+              <p className="text-ink-soft font-light leading-relaxed mt-4 max-w-reading">
+                The gap is never the idea. It is the design, the words, the build and the plumbing, all needed at once. That gap is the whole job.
+              </p>
+              <p className="text-ink-soft font-light leading-relaxed mt-4 max-w-reading">
+                We named the studio after the gap because closing it is the entire
+                service.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- 3 · Three parts ---------- */}
       {/* White, on purpose. The page was three dark bands in a row and
           nothing popped. Cards rather than columns, because the three parts
           are the whole offer and a hairline border was not carrying that.
@@ -150,7 +179,7 @@ export default function Home() {
           set before a single word is read. */}
       <section data-flow className="band-light px-6 py-16 md:py-24">
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-center flex-wrap gap-y-2 mb-10">
+          <div className="flex items-center flex-wrap gap-y-2 mb-6">
             {[
               { c: "#2B57C4", w: "Brand" },
               { c: "#155E9C", w: "Site" },
@@ -175,6 +204,11 @@ export default function Home() {
               Three parts, one studio
             </span>
           </div>
+
+          <p className="text-[#49566E] font-light leading-relaxed max-w-reading mb-10">
+            Any one of these on its own fails quietly. That&apos;s why we
+            don&apos;t sell them on their own.
+          </p>
 
           <div className="grid md:grid-cols-3 gap-5">
             {[
@@ -243,42 +277,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* One picture doing the work of a paragraph: the constellation is
-          already overhead and the person is standing inside it. The line is
-          the distance argument, which lands harder than any promise. */}
-      <section data-flow className="relative overflow-hidden border-t border-rule">
-        <img
-          src="/assets/constellation.jpg"
-          alt="A person standing at the center of wide concentric rings, under a night sky of connected points"
-          className="w-full h-[68vh] min-h-[420px] max-h-[760px] object-cover object-[center_42%] block"
-          loading="lazy"
-          decoding="async"
-        />
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(6,12,28,0.82) 0%, rgba(6,12,28,0.45) 34%, rgba(6,12,28,0.06) 60%, rgba(6,12,28,0.35) 100%)",
-          }}
-        />
-        <div className="absolute inset-x-0 top-0 px-6 pt-10 md:pt-14">
-          <div className="max-w-6xl mx-auto">
-            <p className="text-[11px] font-medium uppercase tracking-label text-[#9FC4E8] mb-4">
-              The distance
-            </p>
-            <h2
-              className="font-display text-[2.5rem] sm:text-6xl md:text-7xl leading-[0.98] text-white max-w-[16ch]"
-              style={{ textShadow: "0 2px 30px rgba(6,12,28,0.6)" }}
-            >
-              You are not starting from nothing. You are two or three moves
-              from live.
-            </h2>
-          </div>
+      {/* The distance argument, as type. The picture that used to sit here
+          was stock, and a design studio's site cannot carry an image that is
+          not work. The line lands on its own. */}
+      <section data-flow className="border-t border-rule px-6 py-16 md:py-24">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-[11px] font-medium uppercase tracking-label text-[#9FC4E8] mb-4">
+            The distance
+          </p>
+          <h2 className="font-display text-[2.5rem] sm:text-6xl md:text-7xl leading-[0.98] max-w-[16ch]">
+            You are not starting from nothing. You are two or three moves
+            from live.
+          </h2>
         </div>
       </section>
 
-      {/* The four builds, front and center. Click one, land in the ticket
-          with it preselected. Colors are the on-white pairs. */}
+      {/* ---------- 4 · The four builds ---------- */}
       <section data-flow className="band-light px-6 py-16 md:py-20">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-12 gap-6 mb-10">
@@ -360,110 +374,16 @@ export default function Home() {
                   {b.one}
                 </p>
                 <div className="mt-auto border-t border-rule pt-4 flex items-center justify-between gap-3">
-                  <span className="font-display text-2xl">
-                    {b.from.replace("From ", "")}
-                    <span className="text-[11px] font-sans font-medium uppercase tracking-label text-ink-mute ml-2">from</span>
-                  </span>
+                  <span className="font-display text-2xl">{b.from}</span>
                   <AddToCart id={b.k} showPrice={false} />
                 </div>
               </Link>
             ))}
           </div>
-
-          {/* The price-fear killer, warm and green: most small jobs land
-              under fifty dollars. #0F6B4F is 6.49:1 on white. */}
-          <div
-            className="mt-6 rounded-[18px] p-8 md:p-10 grid md:grid-cols-12 gap-8 items-center border"
-            style={{
-              background: "linear-gradient(120deg, #EDFBF4 0%, #DDF6E9 55%, #CBF1DD 100%)",
-              borderColor: "#0F6B4F2E",
-              boxShadow: "0 24px 48px -28px rgba(15, 107, 79, 0.35)",
-            }}
-          >
-            <div className="md:col-span-7">
-              <p
-                className="text-[11px] font-medium uppercase tracking-label mb-3"
-                style={{ color: "#0F6B4F" }}
-              >
-                The small job menu
-              </p>
-              <h3 className="font-display text-4xl md:text-5xl leading-[1.02] mb-4">
-                Most small jobs?{" "}
-                <span style={{ color: "#0F6B4F" }}>Under $50.</span>
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  ["flyer", "A flyer or post", "$49.99"],
-                  ["socialpack", "A social post pack", "$49.99"],
-                  ["channelart", "Channel art", "$49.99"],
-                  ["deck", "A presentation deck", "$49.99"],
-                  ["logo", "A logo refresh", "$49.99"],
-                  ["form", "A form, wired in", "$49.99"],
-                  ["fix", "A fix pass", "$49.99"],
-                  ["reel", "A promo reel", "$74.99"],
-                  ["page", "A new page", "$99.99"],
-                ].map(([id, w, price]) => (
-                  <span
-                    key={id}
-                    className="inline-flex items-center gap-2.5 text-sm font-light rounded-full pl-4 pr-1.5 py-1 bg-white/85 border"
-                    style={{ borderColor: "#0F6B4F26" }}
-                  >
-                    <span className="text-ink-soft">{w}</span>
-                    <span className="font-medium" style={{ color: "#0F6B4F" }}>
-                      {price}
-                    </span>
-                    <AddToCart id={id} showPrice={false} />
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div className="md:col-span-5 md:text-right">
-              <p className="text-sm text-ink-soft font-light leading-relaxed mb-5 md:ml-auto max-w-xs">
-                Any single graphic is $49.99, and the list is examples rather
-                than limits. Add what you need to the cart and send it as one
-                ticket. Same studio, same taste, done in days.
-              </p>
-              <Link href="/intake?build=small" className="btn-primary">
-                Start a small job <span className="arrow">→</span>
-              </Link>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* ---------- The name as a verb ---------- */}
-      <section data-flow className="band-light px-6 py-16 md:py-20">
-        <div className="max-w-6xl mx-auto">
-          <div className="panel p-6 md:p-8 grid md:grid-cols-12 gap-6">
-            <div className="md:col-span-5">
-              <p className="label mb-4">What the name means</p>
-              <p className="font-display text-5xl leading-none">
-                flow<span className="text-accent">zone</span>
-              </p>
-              <p className="text-[13px] text-ink-mute mt-3">
-                verb · flowzoned, flowzoning
-              </p>
-            </div>
-            <div className="md:col-span-7">
-              <p className="text-xl text-ink font-light leading-snug">
-                To take an intention and get it moving. To go from a thing you keep
-                meaning to start, to a thing that is live, branded and running on its
-                own.
-              </p>
-              <p className="text-ink-soft font-light leading-relaxed mt-4 max-w-reading">
-                The gap is never the idea. It is the design, the words, the build and the plumbing, all needed at once. That gap is the whole job.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-
-
-
-
-      {/* ---------- Point of view, on white for contrast ---------- */}
+      {/* ---------- 5 · Point of view, on white for contrast ---------- */}
       <section data-flow className="band-light px-6 py-16 md:py-20">
         <div className="max-w-6xl mx-auto">
           <p className="text-[11px] font-medium uppercase tracking-label text-[#3D6FE8] mb-4">
@@ -507,6 +427,12 @@ export default function Home() {
                 t: "Taste is a decision, not a vibe",
                 b: "Every choice is defensible. If we cannot explain a decision to you, it was not a decision.",
               },
+              {
+                n: "05",
+                c: "#155E9C",
+                t: "We would rather lose the job than ship the wrong fix",
+                b: "If what you're asking for won't work, we say so before you pay, not after.",
+              },
             ].map((x) => (
               <div key={x.n} className="border-t-2 pt-4" style={{ borderTopColor: x.c }}>
                 <p
@@ -545,7 +471,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------- Work ---------- */}
+      {/* ---------- 6 · CardsRG, the in-house proof ---------- */}
       <section data-flow className="band-light px-6 py-16 md:py-20">
         <div className="max-w-6xl mx-auto">
           {/* Dots and a caption, the same mark the whole studio runs on */}
@@ -558,7 +484,7 @@ export default function Home() {
               <circle className="pulse-3" cx="52" cy="9" r="5.6" fill="#9FC4E8" style={{ transformOrigin: "52px 9px" }} />
             </svg>
             <p className="text-[11px] font-medium uppercase tracking-label text-[#3D6FE8] mt-4">
-              Brand · Site · System, on one project
+              A FlowZone brand, start to finish
             </p>
             <h2 className="font-display text-4xl md:text-5xl text-[#0B1322] mt-3 max-w-3xl">
               An Instagram DM business,
@@ -566,19 +492,24 @@ export default function Home() {
               turned into a real shop.
             </h2>
             <p className="text-[#647089] font-light leading-relaxed max-w-reading mt-4">
-              CardsRG sells PSA graded cards, rare inserts and pack rips. It had an
-              audience and no storefront. It went live and it sells.
+              CardsRG is ours. We built the brand, the storefront and the content
+              engine, and we still run it. Which means this isn&apos;t a case study
+              we were handed — it&apos;s the whole job done on ourselves, with our
+              own money on the line. It went live in under two weeks and it sells.
             </p>
           </div>
 
           <Link href="/work" className="group block">
             <div className="grid md:grid-cols-12 gap-4">
-              <div className="md:col-span-8 overflow-hidden rounded-2xl border border-[#DCE5F2] shadow-[0_30px_70px_-30px_rgba(11,19,34,0.45)]">
+              <div className="md:col-span-8 relative overflow-hidden rounded-2xl border border-[#DCE5F2] shadow-[0_30px_70px_-30px_rgba(11,19,34,0.45)]">
                 <img
                   src="/assets/crg-hero.jpg"
                   alt="CardsRG storefront homepage, dark with the headline Rip. Pull. Collect."
                   className="w-full h-full object-cover block transition-transform duration-700 group-hover:scale-[1.015]"
                 />
+                <span className="absolute top-4 left-4 text-[11px] font-medium uppercase tracking-label text-white bg-[#0B1322]/80 rounded-full px-3 py-1.5">
+                  In-house build
+                </span>
               </div>
               <div className="md:col-span-4 overflow-hidden rounded-2xl border border-[#DCE5F2] shadow-[0_30px_70px_-30px_rgba(11,19,34,0.45)]">
                 <img
@@ -620,7 +551,7 @@ export default function Home() {
           <div className="mt-8 rounded-2xl border border-[#DCE5F2] bg-white p-6 md:p-8">
             <div className="flex flex-wrap items-baseline justify-between gap-3 mb-7">
               <p className="text-[11px] font-medium uppercase tracking-label text-[#3D6FE8]">
-                What it plugged into
+                What the brand did in 90 days
               </p>
               <p className="text-[11px] font-medium uppercase tracking-label text-[#647089]">
                 Instagram · last 90 days
@@ -649,27 +580,96 @@ export default function Home() {
             </div>
 
             <p className="text-sm text-[#647089] font-light leading-relaxed mt-7 max-w-reading">
-              The audience was already there. It had nowhere to go but a DM.
-              The storefront is what it points at now.
+              We built the audience and then built the thing it points at. Same
+              studio, both halves. That&apos;s the argument for hiring us instead
+              of a logo guy and a web guy.
             </p>
           </div>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              href="/work"
-              className="btn border border-[#C9D6EA] text-[#0B1322] hover:bg-[#F4F7FC]"
-            >
-              See the full build <span className="arrow">→</span>
-            </Link>
-            <a href={SITE.mailto} className="btn-primary">
-              Start yours <span className="arrow">→</span>
-            </a>
+          <div className="mt-8 flex flex-col items-center">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Link
+                href="/work"
+                className="btn border border-[#C9D6EA] text-[#0B1322] hover:bg-[#F4F7FC]"
+              >
+                See the full build <span className="arrow">→</span>
+              </Link>
+              <MessageUs />
+            </div>
+            <TicketNote className="text-center" />
           </div>
         </div>
       </section>
 
+      {/* ---------- 7 · The small job menu ---------- */}
+      {/* Four items, not nine. The POV above says a logo alone fails, so the
+          menu no longer sells one. These jobs assume the foundation exists. */}
+      <section data-flow className="band-light px-6 pb-16 md:pb-20">
+        <div className="max-w-6xl mx-auto">
+          <div
+            className="rounded-[18px] p-8 md:p-10 grid md:grid-cols-12 gap-8 items-center border"
+            style={{
+              background: "linear-gradient(120deg, #EDFBF4 0%, #DDF6E9 55%, #CBF1DD 100%)",
+              borderColor: "#0F6B4F2E",
+              boxShadow: "0 24px 48px -28px rgba(15, 107, 79, 0.35)",
+            }}
+          >
+            <div className="md:col-span-7">
+              <p
+                className="text-[11px] font-medium uppercase tracking-label mb-3"
+                style={{ color: "#0F6B4F" }}
+              >
+                The small job menu
+              </p>
+              <h3 className="font-display text-4xl md:text-5xl leading-[1.02] mb-4">
+                Already have a system?{" "}
+                <span style={{ color: "#0F6B4F" }}>Keep it fed.</span>
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  ["flyer", "A graphic", "$49.99"],
+                  ["socialpack", "A social post pack", "$49.99"],
+                  ["page", "A new page", "$99.99"],
+                  ["fix", "A fix pass", "$49.99"],
+                ].map(([id, w, price]) => (
+                  <span
+                    key={id}
+                    className="inline-flex items-center gap-2.5 text-sm font-light rounded-full pl-4 pr-1.5 py-1 bg-white/85 border"
+                    style={{ borderColor: "#0F6B4F26" }}
+                  >
+                    <span className="text-ink-soft">{w}</span>
+                    <span className="font-medium" style={{ color: "#0F6B4F" }}>
+                      {price}
+                    </span>
+                    <AddToCart id={id} showPrice={false} />
+                  </span>
+                ))}
+              </div>
+              <p className="text-sm text-ink-soft font-light mt-4">
+                Need something not listed? Ask in the ticket.
+              </p>
+            </div>
+            <div className="md:col-span-5 md:text-right">
+              <p className="text-sm text-ink-soft font-light leading-relaxed mb-5 md:ml-auto max-w-xs">
+                These are for brands that already have a foundation to work from
+                — ours or someone else&apos;s. Cheap because the hard part is
+                already decided: the colors, the type, the voice, the rules. If
+                you don&apos;t have that yet, a $49.99 graphic won&apos;t fix
+                it, and we&apos;ll tell you so. That&apos;s a build.
+              </p>
+              <Link href="/intake?build=small" className="btn-primary">
+                Start a ticket <span className="arrow">→</span>
+              </Link>
+              <TicketNote className="md:ml-auto max-w-xs" />
+            </div>
+          </div>
+        </div>
+      </section>
 
-      {/* ---------- CTA ---------- */}
+      {/* ---------- 8 · In their words (absent until real) ---------- */}
+      <Testimonials />
+
+      {/* ---------- 9 · Closing CTA ---------- */}
       <section data-flow className="bg-paper-deep glow border-t border-rule px-6 py-20">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-[11px] font-medium uppercase tracking-label text-ink-mute mb-6">
@@ -685,13 +685,8 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <MessageUs className="btn-primary shine" />
-            <a href={SITE.mailto} className="btn-ghost">
-              Start an email <span className="arrow">→</span>
-            </a>
           </div>
-          <p className="text-[12px] text-ink-mute mt-6">
-            Mail lands with a person, not in a queue.
-          </p>
+          <TicketNote className="text-center" />
         </div>
       </section>
     </>

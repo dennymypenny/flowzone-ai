@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { SITE } from "@/lib/site";
 import NodeWeb from "@/app/components/NodeWeb";
+import { TicketNote } from "@/components/MessageUs";
 import AddToCart from "@/app/components/AddToCart";
 import { GRAPHICS, money } from "@/lib/catalog";
 import Icon from "@/components/Icon";
@@ -197,7 +198,7 @@ export default function Services() {
                 small: [
                   ["flyer", "Flyer, post or cover", "$49.99"],
                   ["channelart", "Channel art, banner and avatar", "$49.99"],
-                  ["logo", "Logo-only refresh", "$49.99"],
+                  ["logo", "Logo file pack", "$49.99"],
                 ],
               },
               {
@@ -460,10 +461,8 @@ export default function Services() {
               <Link href="/intake" className="btn-primary">
                 Start a ticket <span className="arrow">→</span>
               </Link>
-              <a href={`mailto:${SITE.email}`} className="btn-ghost">
-                {SITE.email}
-              </a>
             </div>
+            <TicketNote />
           </div>
         </div>
       </section>

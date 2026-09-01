@@ -1,20 +1,20 @@
 import Link from "next/link";
 import Icon from "@/components/Icon";
 import type { Metadata } from "next";
-import MessageUs from "@/components/MessageUs";
+import MessageUs, { TicketNote } from "@/components/MessageUs";
 import ContactForm from "@/components/ContactForm";
 import { SITE } from "@/lib/site";
 import NodeWeb from "@/app/components/NodeWeb";
 
 export const metadata: Metadata = {
-  title: "Talk to us",
+  title: "Start here",
   description:
     "Text, email or work your idea out first. However you get in touch, a person reads it and answers, usually the same day.",
   alternates: { canonical: "/book" },
   // Set in full because metadata merging is shallow. A page that declares
   // openGraph replaces the layout block outright, so anything omitted is gone.
   openGraph: {
-    title: "Talk to us | FlowZone",
+    title: "Start here | FlowZone",
     description:
       "Three ways in and all of them reach a person. Text, email or work your idea out first. Usually answered the same day.",
     url: `${SITE.url}/book`,
@@ -32,7 +32,7 @@ export default function Talk() {
         <div className="absolute inset-0 gridlight pointer-events-none" />
         <div className="relative max-w-6xl mx-auto">
           <div className="flex items-center justify-between border-b border-rule pb-4 mb-12">
-            <p className="label">Talk to us</p>
+            <p className="label">Start here</p>
             <p className="label hidden sm:block">One person · usually same day</p>
           </div>
           <h1 className="display text-5xl md:text-8xl max-w-4xl">
@@ -65,7 +65,9 @@ export default function Talk() {
               finish the sentence.
             </p>
             <div className="mt-auto">
-              <MessageUs className="btn-primary w-full" label="Start it" />
+              <a href={SITE.mailto} className="btn-primary w-full">
+                Start it <span className="arrow">→</span>
+              </a>
             </div>
           </div>
 
@@ -80,7 +82,7 @@ export default function Talk() {
             </p>
             <div className="mt-auto">
               <a href={SITE.mailto} className="btn-ghost w-full">
-                Start an email <span className="arrow">→</span>
+                {SITE.email}
               </a>
             </div>
           </div>
@@ -134,6 +136,7 @@ export default function Talk() {
                 See pricing first
               </Link>
             </div>
+            <TicketNote />
           </div>
         </div>
       </section>

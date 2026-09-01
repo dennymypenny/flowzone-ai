@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { SITE } from "@/lib/site";
 import NodeWeb from "@/app/components/NodeWeb";
+import { TicketNote } from "@/components/MessageUs";
 import AddToCart from "@/app/components/AddToCart";
 
 export const metadata: Metadata = {
@@ -174,22 +175,23 @@ export default function Pricing() {
           <div className="md:col-span-4">
             <p className="label mb-4">Not ready for a build?</p>
             <h2 className="font-display text-3xl leading-snug mb-3">
-              Most small jobs? Under $50.
+              Already have a system? Keep it fed.
             </h2>
             <p className="text-sm text-ink-soft font-light leading-relaxed max-w-reading">
-              One-off pieces, priced like one-off pieces. Most of them are under fifty dollars. Open a ticket, pick A Small Job and say which one.
+              These are for brands that already have a foundation to work from — ours or someone else&apos;s. Cheap because the hard part is already decided: the colors, the type, the voice, the rules. If you don&apos;t have that yet, a $49.99 graphic won&apos;t fix it, and we&apos;ll tell you so. That&apos;s a build.
+            </p>
+            <p className="text-sm text-ink-soft font-light leading-relaxed max-w-reading mt-3">
+              Need something not listed? Ask in the ticket.
             </p>
             <Link href="/intake?build=small" className="btn-ghost mt-6">
-              Start a small job <span className="arrow">→</span>
+              Start a ticket <span className="arrow">→</span>
             </Link>
           </div>
           <div className="md:col-span-8 grid sm:grid-cols-2 gap-x-10 gap-y-3 self-center">
             {[
               ["flyer", "One-off design — flyer, post or cover", "$49.99"],
-              ["form", "Booking or contact form, wired to your email", "$49.99"],
-              ["reel", "Promo reel, cut for sound-off feeds", "$74.99"],
+              ["socialpack", "Social post pack, three graphics", "$49.99"],
               ["page", "One new page or landing page", "$99.99"],
-              ["logo", "Logo-only refresh", "$49.99"],
               ["fix", "Speed and mobile fix pass", "$49.99"],
             ].map(([id, w, price]) => (
               <div key={id} className="flex items-center justify-between gap-4 border-b border-rule pb-3">
@@ -257,15 +259,10 @@ export default function Pricing() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/intake" className="btn-primary">
-              Start a project
+              Start a ticket <span className="arrow">→</span>
             </Link>
-            <a
-              href={`mailto:${SITE.email}`}
-              className="btn border border-rule text-ink hover:bg-raised"
-            >
-              {SITE.email}
-            </a>
           </div>
+          <TicketNote className="text-center" />
         </div>
       </section>
     </>
