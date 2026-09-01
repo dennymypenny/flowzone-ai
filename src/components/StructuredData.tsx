@@ -33,11 +33,11 @@ export default function StructuredData() {
         logo: {
           "@type": "ImageObject",
           "@id": `${SITE.url}/#logo`,
-          url: `${SITE.url}/opengraph-image.png`,
+          url: `${SITE.url}/opengraph-image.jpg`,
           width: 1200,
           height: 630,
         },
-        image: `${SITE.url}/opengraph-image.png`,
+        image: `${SITE.url}/opengraph-image.jpg`,
         foundingDate: "2026",
         sameAs: [SITE.linkedin, SITE.linkedinFounder, SITE.x],
         // The Person node is already in this graph. Point at it so Google

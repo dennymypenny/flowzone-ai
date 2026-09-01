@@ -6,7 +6,6 @@ import MessageUs, { TicketNote } from "@/components/MessageUs";
 import Testimonials from "@/components/Testimonials";
 import { SITE } from "@/lib/site";
 import PitchPath from "@/app/components/PitchPath";
-import HeroWaves from "@/app/components/HeroWaves";
 
 export const metadata: Metadata = {
   title: "FlowZone Studio | Brand, Website and Storefront Design",
@@ -41,7 +40,28 @@ export default function Home() {
             "linear-gradient(180deg, #FDFBF6 0%, #F9F6EE 55%, #F4F7FC 100%)",
         }}
       >
-        <HeroWaves />
+        <div className="absolute inset-0" aria-hidden>
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster="/assets/ocean-hero-poster.jpg"
+          >
+            <source src="/assets/ocean-hero.webm" type="video/webm" />
+            <source src="/assets/ocean-hero.mp4" type="video/mp4" />
+          </video>
+          {/* Transparent white wash so the type reads and the waves stay a texture. */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(253,251,246,0.74) 0%, rgba(253,251,246,0.58) 45%, rgba(244,247,252,0.86) 100%)",
+            }}
+          />
+        </div>
         <div className="relative max-w-6xl mx-auto pt-20 pb-16 md:pt-28 md:pb-24 text-center">
           <p className="text-[11px] font-medium uppercase tracking-label text-[#647089] mb-6">
             FlowZone Studio · Brand, site and system
