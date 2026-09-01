@@ -62,7 +62,7 @@ export default function Work() {
         <div className="max-w-6xl mx-auto">
           <div className="border-t border-rule pt-10 grid md:grid-cols-12 gap-10 mb-10">
             <div className="md:col-span-4">
-              <p className="label mb-4">01 · Storefront</p>
+              <p className="label mb-4">01 · In-house build</p>
               <h2 className="font-display text-5xl leading-none mb-4">CardsRG</h2>
               <a
                 href="https://cardsrg.com"
@@ -75,15 +75,16 @@ export default function Work() {
             </div>
             <div className="md:col-span-8">
               <p className="text-ink-soft leading-relaxed max-w-reading">
-                A collector trading card shop for PSA graded cards, rare inserts and
-                pack rips. It started as an Instagram DM business and needed to look
-                like a real store without losing the energy that made people follow it
-                in the first place.
+                CardsRG is ours. A collector trading card shop for PSA graded cards,
+                rare inserts and pack rips, built by this studio and still run by it.
+                This is not a case study we were handed. It is the whole job done on
+                ourselves, with our own money on the line.
               </p>
               <p className="text-ink-soft leading-relaxed max-w-reading mt-4">
-                We built the brand mark, the whole storefront, product pages with grade
-                and set detail, cart and checkout. Dark, loud and fast, because that is
-                what the audience responds to. It went live and it sells.
+                We built the brand mark, the content engine that grew the audience,
+                the whole storefront, product pages with grade and set detail, cart
+                and checkout. Dark, loud and fast, because that is what the audience
+                responds to. It went live in under two weeks and it sells.
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-10 border-t border-rule pt-6">
                 {[
@@ -163,12 +164,11 @@ export default function Work() {
             </div>
           </div>
 
-          {/* The receipts. These are CardsRG's own Instagram numbers, not
-              something the build caused. We claim the destination, never the
-              reach. */}
+          {/* The receipts. The audience and the storefront are the same
+              studio's work, both halves of one loop, and the page says so. */}
           <div className="border-t border-rule pt-10 mt-16">
             <div className="flex flex-wrap items-baseline justify-between gap-3 mb-8">
-              <p className="label">The audience it plugged into</p>
+              <p className="label">What the brand did in 90 days</p>
               <p className="label">Instagram · last 90 days</p>
             </div>
 
@@ -246,9 +246,10 @@ export default function Work() {
             </div>
 
             <p className="text-ink-soft font-light leading-relaxed mt-8 max-w-reading">
-              None of this reach is ours. CardsRG built that audience post by
-              post, and it had nowhere to go but a DM. What we built is the
-              place it points at now.
+              This audience was built post by post, by the same studio that then
+              built the place it points at. Brand, content and storefront are one
+              loop, and these numbers are what the loop produced. That is the
+              argument for hiring us instead of a logo guy and a web guy.
             </p>
           </div>
         </div>

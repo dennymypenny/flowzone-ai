@@ -382,9 +382,11 @@ export default function Services() {
               <span style={{ color: "#0F6B4F" }}>$49.99.</span>
             </h2>
             <p className="md:col-span-6 text-[#49566E] font-light leading-relaxed self-end max-w-reading">
-              You do not have to buy a build to work with us. Anything that is a
-              single piece of design is one flat price, made by the same people,
-              in the same taste, usually in a couple of days. Add what you need
+              These are for brands that already have a foundation to work from
+              — ours or someone else&apos;s. Cheap because the hard part is
+              already decided: the colors, the type, the voice, the rules. If
+              you don&apos;t have that yet, a $49.99 graphic won&apos;t fix it,
+              and we&apos;ll tell you so. That&apos;s a build. Add what you need
               and send it as one ticket.
             </p>
           </div>
