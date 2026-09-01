@@ -243,12 +243,28 @@ export default function Home() {
       {/* The distance argument, as type. The picture that used to sit here
           was stock, and a design studio's site cannot carry an image that is
           not work. The line lands on its own. */}
-      <section data-flow className="border-t border-rule px-6 py-16 md:py-24">
-        <div className="max-w-6xl mx-auto">
-          <p className="text-[11px] font-medium uppercase tracking-label text-[#9FC4E8] mb-4">
+      <section data-flow className="relative border-t border-rule px-6 py-24 md:py-40 overflow-hidden">
+        <img
+          src="/assets/sea-distance.jpg"
+          alt=""
+          aria-hidden
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(6,11,31,0.66) 0%, rgba(6,11,31,0.34) 55%, rgba(6,11,31,0.58) 100%)",
+          }}
+        />
+        <div className="relative max-w-6xl mx-auto">
+          <p className="text-[11px] font-medium uppercase tracking-label text-[#C6E4F8] mb-4">
             The distance
           </p>
-          <h2 className="font-display text-[2.5rem] sm:text-6xl md:text-7xl leading-[0.98] max-w-[16ch]">
+          <h2
+            className="font-display text-[2.5rem] sm:text-6xl md:text-7xl leading-[0.98] max-w-[16ch] text-white"
+            style={{ textShadow: "0 2px 24px rgba(6,11,31,0.55)" }}
+          >
             You are not starting from nothing. You are two or three moves
             from live.
           </h2>
