@@ -270,45 +270,64 @@ export default function Home() {
         >
           <path
             id="fz-course"
-            d="M60,430 C220,300 260,180 420,190 C560,200 600,360 760,340 C900,322 950,170 1140,120"
+            d="M40,460 C180,340 240,200 400,220 C520,235 560,340 480,380 C370,425 375,280 500,268 C640,255 700,390 840,345 C945,310 935,180 1060,150 C1110,138 1150,110 1185,85"
             fill="none"
             stroke="rgba(159,196,232,0.22)"
             strokeWidth="1.4"
             strokeDasharray="3 7"
           />
           {[
-            [60, 430, "#1E3A8A"],
-            [420, 190, "#5B9BF9"],
-            [760, 340, "#5B9BF9"],
-            [1140, 120, "#C6E4F8"],
+            [40, 460, "#1E3A8A"],
+            [400, 220, "#5B9BF9"],
+            [840, 345, "#5B9BF9"],
+            [1160, 100, "#C6E4F8"],
           ].map(([x, y, c], i) => (
             <circle key={i} cx={x as number} cy={y as number} r="5" fill={c as string} opacity="0.9">
               <animate
                 attributeName="r"
-                values="4;6.5;4"
-                dur="3.2s"
-                begin={`${i * 0.8}s`}
+                values="4;7;4"
+                dur="2.4s"
+                begin={`${i * 0.6}s`}
                 repeatCount="indefinite"
               />
               <animate
                 attributeName="opacity"
                 values="0.55;1;0.55"
-                dur="3.2s"
-                begin={`${i * 0.8}s`}
+                dur="2.4s"
+                begin={`${i * 0.6}s`}
                 repeatCount="indefinite"
               />
             </circle>
           ))}
           <g>
-            <path d="M0,0 L-14,6 L-10,0 L-14,-6 Z" fill="#E8F1FD" />
-            <circle cx="-16" cy="0" r="2.6" fill="#5B9BF9" opacity="0.85">
-              <animate attributeName="opacity" values="0.85;0.25;0.85" dur="0.5s" repeatCount="indefinite" />
+            {/* Speed streaks behind the ship */}
+            <line x1="-26" y1="-6" x2="-44" y2="-6" stroke="#5B9BF9" strokeWidth="2" strokeLinecap="round" opacity="0.5">
+              <animate attributeName="opacity" values="0.5;0.1;0.5" dur="0.22s" repeatCount="indefinite" />
+            </line>
+            <line x1="-22" y1="0" x2="-52" y2="0" stroke="#C6E4F8" strokeWidth="2" strokeLinecap="round" opacity="0.7">
+              <animate attributeName="opacity" values="0.7;0.2;0.7" dur="0.18s" repeatCount="indefinite" />
+            </line>
+            <line x1="-26" y1="6" x2="-44" y2="6" stroke="#5B9BF9" strokeWidth="2" strokeLinecap="round" opacity="0.5">
+              <animate attributeName="opacity" values="0.5;0.1;0.5" dur="0.26s" repeatCount="indefinite" />
+            </line>
+            {/* The ship, bigger */}
+            <path d="M2,0 L-20,9 L-14,0 L-20,-9 Z" fill="#E8F1FD" />
+            <circle cx="-23" cy="0" r="3.6" fill="#5B9BF9" opacity="0.9">
+              <animate attributeName="r" values="3.6;5.2;3.6" dur="0.3s" repeatCount="indefinite" />
+              <animate attributeName="opacity" values="0.9;0.3;0.9" dur="0.3s" repeatCount="indefinite" />
             </circle>
-            <animateMotion dur="16s" repeatCount="indefinite" rotate="auto">
+            <animateMotion
+              dur="6s"
+              repeatCount="indefinite"
+              rotate="auto"
+              keyPoints="0;0.28;0.55;0.8;1"
+              keyTimes="0;0.34;0.52;0.78;1"
+              calcMode="linear"
+            >
               <mpath href="#fz-course" />
             </animateMotion>
           </g>
-        </svg>
+          </svg>
 
         <div className="relative max-w-6xl mx-auto">
           <p className="text-[11px] font-medium uppercase tracking-label text-[#9FC4E8] mb-5">
