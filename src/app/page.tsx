@@ -648,8 +648,21 @@ export default function Home() {
             <br />
             We bring the running thing.
           </h2>
+          <div className="flex flex-col items-center mb-6">
+            <img
+              src="/assets/denny-valdes.jpg"
+              alt="Denny Valdes, founder of FlowZone"
+              width={64}
+              height={64}
+              className="w-16 h-16 rounded-full object-cover border border-rule"
+            />
+            <p className="text-sm text-ink mt-3 font-medium">Denny Valdes</p>
+            <p className="text-[11px] font-medium uppercase tracking-label text-ink-mute mt-1">
+              Founder · The person reading your ticket
+            </p>
+          </div>
           <p className="text-ink-soft max-w-md mx-auto mb-8 leading-relaxed font-light">
-            A few sentences is enough. You get a real reply.
+            A few sentences is enough. You get a real reply, from me.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <MessageUs className="btn-primary shine" />
