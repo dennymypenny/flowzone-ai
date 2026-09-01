@@ -6,6 +6,7 @@ import MessageUs, { TicketNote } from "@/components/MessageUs";
 import Testimonials from "@/components/Testimonials";
 import { SITE } from "@/lib/site";
 import PitchPath from "@/app/components/PitchPath";
+import HeroWaves from "@/app/components/HeroWaves";
 
 export const metadata: Metadata = {
   title: "FlowZone Studio | Brand, Website and Storefront Design",
@@ -40,6 +41,7 @@ export default function Home() {
             "linear-gradient(180deg, #FDFBF6 0%, #F9F6EE 55%, #F4F7FC 100%)",
         }}
       >
+        <HeroWaves />
         <div className="relative max-w-6xl mx-auto pt-20 pb-16 md:pt-28 md:pb-24 text-center">
           <p className="text-[11px] font-medium uppercase tracking-label text-[#647089] mb-6">
             FlowZone Studio · Brand, site and system

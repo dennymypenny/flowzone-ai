@@ -1,0 +1,8 @@
+Flowing waves behind the hero
+
+A live canvas wave background (HeroWaves) drifts soft brand-blue ribbons
+through the warm paper hero, video-like but zero download, honoring
+prefers-reduced-motion.
+
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01BZLdyqaWRophR4jFTi3YSz
