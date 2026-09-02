@@ -47,6 +47,7 @@ export default function Home() {
             rate={1.15}
             preload="auto"
             poster="/assets/ocean-hero-poster.jpg"
+            fallback="/assets/ocean-hero-anim.webp"
             sources={[
               { src: "/assets/ocean-hero.webm", type: "video/webm" },
               { src: "/assets/ocean-hero.mp4", type: "video/mp4" },
@@ -238,6 +239,7 @@ export default function Home() {
                 className="w-full h-auto block"
                 rate={1.25}
                 poster="/assets/studio-reel-poster.jpg"
+                fallback="/assets/studio-reel-anim.webp"
                 ariaLabel="FlowZone studio reel: you bring the idea, we build the brand, the site and the system"
                 sources={[
                   { src: "/assets/studio-reel.mp4", type: "video/mp4" },

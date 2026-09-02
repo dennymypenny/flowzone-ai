@@ -599,3 +599,13 @@ button {
     animation: none !important;
   }
 }
+
+/* Never show the native play button on the ambient videos. If a phone
+   refuses autoplay, FastVideo swaps in an animated image instead. */
+.fz-video::-webkit-media-controls,
+.fz-video::-webkit-media-controls-start-playback-button,
+.fz-video::-webkit-media-controls-overlay-play-button {
+  display: none !important;
+  -webkit-appearance: none;
+  opacity: 0;
+}
