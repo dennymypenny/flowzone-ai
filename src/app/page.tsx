@@ -252,25 +252,33 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5">
+          {/* The price ladder, the same three numbers /pricing sells. */}
+          <div className="mt-8 flex flex-wrap items-stretch justify-center gap-2.5">
             {[
-              { w: "Identity", p: "from $500", c: "#2B57C4", h: "/intake?build=identity" },
-              { w: "Site", p: "from $500", c: "#155E9C", h: "/intake?build=site" },
-              { w: "Storefront", p: "from $2,500", c: "#A03D14", h: "/intake?build=storefront" },
+              { w: "One build", p: "$500", c: "#155E9C", h: "/intake", best: false },
+              { w: "The Full Build", p: "$1,500", c: "#2B57C4", h: "/intake?build=full", best: true },
+              { w: "Storefront", p: "from $2,500", c: "#A03D14", h: "/intake?build=storefront", best: false },
             ].map((x) => (
               <Link
                 key={x.w}
                 href={x.h}
-                className="inline-flex items-center gap-2 rounded-full border bg-white px-4 py-2 text-[13px] transition-colors hover:bg-[#F4F7FC]"
-                style={{ borderColor: `${x.c}55` }}
+                className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[13px] transition-colors"
+                style={
+                  x.best
+                    ? { borderColor: x.c, background: x.c, color: "#FFFFFF" }
+                    : { borderColor: `${x.c}55`, background: "#FFFFFF" }
+                }
               >
-                <span className="font-medium" style={{ color: x.c }}>{x.w}</span>
-                <span className="text-[#1C2942]">{x.p}</span>
+                <span className="font-medium" style={x.best ? undefined : { color: x.c }}>{x.w}</span>
+                <span style={x.best ? { color: "#D6E2FF" } : { color: "#1C2942" }}>{x.p}</span>
               </Link>
             ))}
           </div>
           <p className="mt-4 text-[13px] text-[#49566E]">
-            Flat, paid once. Tell us the idea and you see your number before anything starts.
+            Flat, paid once. Most people take the Full Build: brand, site and the system, wired together.{" "}
+            <Link href="/pricing" className="text-[#2B57C4] underline decoration-[#C9D6EA] underline-offset-4">
+              What each one includes
+            </Link>
           </p>
         </div>
       </section>
@@ -508,9 +516,9 @@ export default function Home() {
             <div className="md:col-span-7">
               <p className="label mb-4">Studio Services</p>
               <h2 className="display text-4xl md:text-5xl">
-                Pick what you need.
+                Take the whole thing,
                 <br />
-                We build it.
+                or pick one part.
               </h2>
             </div>
             <p className="md:col-span-5 text-ink-soft font-light leading-relaxed self-end max-w-reading">
@@ -519,6 +527,33 @@ export default function Home() {
               tell you which build fits.
             </p>
           </div>
+
+          {/* The headline offer first. It is what /pricing marks as best,
+              and it was missing from this page entirely. */}
+          <Link
+            href="/intake?build=full"
+            className="panel panel-lift group relative overflow-hidden p-6 md:p-8 mb-4 flex flex-col md:flex-row md:items-center gap-6 border-t-2 transition-all"
+            style={{ borderTopColor: "#2B57C4" }}
+          >
+            <div className="md:flex-1">
+              <p className="text-[11px] font-medium uppercase tracking-label text-accent mb-3">
+                00 · The one most people take
+              </p>
+              <h3 className="font-display text-2xl md:text-3xl leading-tight mb-2">The Full Build</h3>
+              <p className="text-sm md:text-[15px] text-ink-soft font-light leading-relaxed max-w-reading">
+                Identity, site and one working system, wired together and
+                handed over. Copy written for you, payments and forms live,
+                two rounds of revisions, 60 days of support.
+              </p>
+            </div>
+            <div className="flex items-center justify-between md:flex-col md:items-end gap-3 md:border-l md:border-rule md:pl-8">
+              <span className="font-display text-4xl">$1,500</span>
+              <span className="btn-primary">
+                Start the Full Build <span className="arrow">→</span>
+              </span>
+            </div>
+          </Link>
+
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               {
@@ -528,7 +563,7 @@ export default function Home() {
                 n: "01",
                 name: "The Identity Build",
                 one: "Your logo, colors and words. A brand people remember.",
-                from: "From $500",
+                from: "$500",
               },
               {
                 k: "site",
@@ -537,7 +572,7 @@ export default function Home() {
                 n: "02",
                 name: "The Site Build",
                 one: "A website that looks legit and turns visitors into customers.",
-                from: "From $500",
+                from: "$500",
               },
               {
                 k: "storefront",
@@ -555,7 +590,7 @@ export default function Home() {
                 n: "04",
                 name: "The Engine Build",
                 one: "Follow-ups, booking and invoicing that run themselves.",
-                from: "From $500",
+                from: "$500",
               },
             ].map((b) => (
               <Link
@@ -858,7 +893,6 @@ export default function Home() {
               </Link>
               <MessageUs />
             </div>
-            <TicketNote className="text-center" />
           </div>
         </div>
       </section>
@@ -922,7 +956,6 @@ export default function Home() {
               <Link href="/intake?build=small" className="btn-primary">
                 Start a ticket <span className="arrow">→</span>
               </Link>
-              <TicketNote className="md:ml-auto max-w-xs" />
             </div>
           </div>
         </div>

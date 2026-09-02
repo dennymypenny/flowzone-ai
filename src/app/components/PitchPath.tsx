@@ -16,7 +16,7 @@ const PATHS = [
     title: "That is a brand problem, not a you problem.",
     body: "Your work is fine. The mark, the colors and the words around it are not doing their job, so every first impression starts from zero. The Identity Build fixes the first impression once, and everything you post after it compounds.",
     build: "The Identity Build",
-    from: "From $500",
+    from: "$500",
     href: "/intake?build=identity",
   },
   {
@@ -26,7 +26,7 @@ const PATHS = [
     title: "People check the link before they trust you.",
     body: "If the link is outdated or a bio page, the decision is made before you ever hear about it. The Site Build is one page that answers the question and asks for the next step, instead of a profile and a DM.",
     build: "The Site Build",
-    from: "From $500",
+    from: "$500",
     href: "/intake?build=site",
   },
   {
@@ -46,7 +46,7 @@ const PATHS = [
     title: "The busywork is the growth cap.",
     body: "Follow-ups, booking, invoicing. Each one is small and together they eat the week. The Engine Build wires them to run on their own, so the hours go back to the work people actually pay you for.",
     build: "The Engine Build",
-    from: "From $500",
+    from: "$500",
     href: "/intake?build=engine",
   },
   {

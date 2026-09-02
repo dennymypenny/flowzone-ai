@@ -7,7 +7,7 @@ export const days = [
     short: "One form, a few sentences. No discovery call, no 40 question brief.",
     title: "You tell us the idea",
     body:
-      "One form, a few sentences. No discovery call, no 40 question brief, no proposal deck. If we need something clarified we email you the same day, and if we think you need a smaller package than the one you picked we say so before you pay.",
+      "One form, a few sentences. No discovery call, no 40 question brief, no proposal deck. If we need something clarified we email you the same day, and if we think you need a smaller build than the one you picked we say so before you pay.",
     you: "15 minutes",
   },
   {
@@ -23,7 +23,7 @@ export const days = [
     short: "Real pages, real copy, real payments, real forms that land in your inbox.",
     title: "We build the real thing",
     body:
-      "Real pages, real copy, real payments, real forms that land in your inbox. Everything is built on Next.js and deployed to Vercel, which means it loads fast and does not fall over. If your package includes a system, this is when it gets wired in and tested with live data.",
+      "Real pages, real copy, real payments, real forms that land in your inbox. Everything is built on Next.js and deployed to Vercel, which means it loads fast and does not fall over. If your build includes a system, this is when it gets wired in and tested with live data.",
     you: "Nothing. Go run your business",
   },
   {
@@ -47,11 +47,11 @@ export const faqs = [
   },
   {
     q: "What if I do not like the first direction?",
-    a: "Tell us and we redo it. Revisions are included in every package, and the whole reason you see something real on day 2 rather than day 6 is so a wrong direction costs you a day instead of a week.",
+    a: "Tell us and we redo it. Revisions are included in every build, and the whole reason you see something real on day 2 rather than day 6 is so a wrong direction costs you a day instead of a week.",
   },
   {
-    q: "What if my idea does not fit one of the three packages?",
-    a: "Then it is a Scale project and we quote it flat after we understand it. Send it over either way. If it is smaller than you think, we will tell you and point you at the cheaper package.",
+    q: "What if my idea does not fit one of the builds?",
+    a: "Then we scope it together and quote it flat before you pay, the same way the Storefront works. Send it over either way. If it is smaller than you think, we will tell you and point you at the cheaper build.",
   },
   {
     q: "Why would I pay you when I could just ask AI?",
