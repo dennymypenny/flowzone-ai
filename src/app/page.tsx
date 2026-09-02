@@ -6,6 +6,7 @@ import MessageUs, { TicketNote } from "@/components/MessageUs";
 import Testimonials from "@/components/Testimonials";
 import { SITE } from "@/lib/site";
 import PitchPath from "@/app/components/PitchPath";
+import FastVideo from "@/app/components/FastVideo";
 
 export const metadata: Metadata = {
   title: "FlowZone Studio | Brand, Website and Storefront Design",
@@ -28,11 +29,10 @@ export default function Home() {
   return (
     <>
       {/* ---------- 1 · Hero ---------- */}
-      {/* Light, centered and type-first. The reel sits framed inside the
-          hero instead of running full bleed, so the page opens calm and
-          premium and the film reads as the work, not the wallpaper. The
-          warm paper eases into the cool light band below by the last stop
-          of the background gradient. */}
+      {/* Light, centered and type-first, on real water. The wash is held
+          back a step so the ocean reads, and the type is solid ink so
+          nothing looks faded on a phone. The reel sits in branded player
+          chrome so the film reads as ours, not a stock drop-in. */}
       <section
         className="band-light relative overflow-hidden px-6"
         style={{
@@ -41,60 +41,106 @@ export default function Home() {
         }}
       >
         <div className="absolute inset-0" aria-hidden>
-          <video
+          <FastVideo
             className="absolute inset-0 w-full h-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
+            rate={1.15}
             poster="/assets/ocean-hero-poster.jpg"
-          >
-            <source src="/assets/ocean-hero.webm" type="video/webm" />
-            <source src="/assets/ocean-hero.mp4" type="video/mp4" />
-          </video>
+            sources={[
+              { src: "/assets/ocean-hero.webm", type: "video/webm" },
+              { src: "/assets/ocean-hero.mp4", type: "video/mp4" },
+            ]}
+          />
           {/* Transparent white wash so the type reads and the waves stay a texture. */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(180deg, rgba(253,251,246,0.74) 0%, rgba(253,251,246,0.58) 45%, rgba(244,247,252,0.86) 100%)",
+                "linear-gradient(180deg, rgba(253,251,246,0.78) 0%, rgba(253,251,246,0.62) 45%, rgba(244,247,252,0.9) 100%)",
             }}
           />
         </div>
         <div className="relative max-w-6xl mx-auto pt-20 pb-16 md:pt-28 md:pb-24 text-center">
-          <p className="text-[11px] font-medium uppercase tracking-label text-[#647089] mb-6">
-            FlowZone Studio · Brand, site and system
+          <p className="text-[11px] font-semibold uppercase tracking-label text-[#2B57C4] mb-6">
+            FlowZone Studio
           </p>
 
-          <h1 className="display text-[3rem] sm:text-6xl md:text-[5.25rem] max-w-4xl mx-auto">
+          <h1
+            className="display text-[2.5rem] leading-[1.04] sm:text-6xl md:text-[5.25rem] max-w-4xl mx-auto text-[#0B1322]"
+            style={{ fontWeight: 600 }}
+          >
             You imagine it.
             <br />
             We get it <span className="text-gradient">moving</span>.
           </h1>
 
-          <p className="text-xl md:text-2xl text-[#49566E] leading-snug max-w-2xl mx-auto mt-6 font-light">
-            The idea was never the problem. We point the best technology and
-            the best practices working today at the design, the words, the
-            build and the plumbing.
+          <p className="text-lg sm:text-xl md:text-2xl text-[#1C2942] leading-snug max-w-2xl mx-auto mt-6">
+            We design the brand, build the site or storefront, and wire the
+            system that runs it. One flat price, live in days.
           </p>
+
+          <div className="flex items-center justify-center gap-2.5 mt-6 flex-wrap">
+            {[
+              { c: "#2B57C4", w: "Brand" },
+              { c: "#155E9C", w: "Site" },
+              { c: "#0F6B4F", w: "System" },
+            ].map((d) => (
+              <span
+                key={d.w}
+                className="inline-flex items-center gap-2 rounded-full border bg-white/85 px-3.5 py-1.5 text-[12px] font-medium tracking-wide"
+                style={{ borderColor: `${d.c}40`, color: d.c }}
+              >
+                <span
+                  className="block w-1.5 h-1.5 rounded-full"
+                  style={{ background: d.c }}
+                  aria-hidden
+                />
+                {d.w}
+              </span>
+            ))}
+          </div>
 
           <div className="flex flex-col sm:flex-row gap-3 mt-8 justify-center">
             <MessageUs className="btn-primary shine" />
           </div>
           <TicketNote className="text-center" />
 
-          <p className="mt-5 text-sm text-[#647089] font-light">
+          <p className="mt-5 text-sm text-[#33405A]">
             Builds are flat and paid once, no hourly billing.{" "}
             <Link
               href="/pricing"
-              className="text-[#49566E] hover:text-[#0B1322] transition-colors underline decoration-[#C9D6EA] underline-offset-4"
+              className="text-[#1C2942] hover:text-[#0B1322] transition-colors underline decoration-[#C9D6EA] underline-offset-4"
             >
               See the prices
             </Link>
           </p>
 
-          <div className="relative mt-12 md:mt-16 max-w-5xl mx-auto">
+        </div>
+      </section>
+
+      {/* ---------- 1b · The reel, in space ---------- */}
+      {/* Ocean above, space below. The reel gets its own dark band so on a
+          phone it stops floating on foam and reads as the studio's own
+          player. The price row under it is the pitch in one line. */}
+      <section
+        className="relative overflow-hidden px-6 pb-16 md:pb-24 pt-12 md:pt-16"
+        style={{
+          background:
+            "#060B1F url(/assets/space-distance.jpg) center / cover no-repeat",
+        }}
+      >
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(6,11,31,0.55) 0%, rgba(6,11,31,0.78) 100%)",
+          }}
+          aria-hidden
+        />
+        <div className="relative max-w-6xl mx-auto text-center">
+          <p className="text-[11px] font-semibold uppercase tracking-label text-[#8FA3C8] mb-5">
+            What a build looks like
+          </p>
+          <div className="relative max-w-5xl mx-auto">
             <div
               className="relative overflow-hidden rounded-[20px] border border-[#E7E2D6] bg-[#060B1F]"
               style={{
@@ -107,21 +153,56 @@ export default function Home() {
                 style={{ background: "#4C7BE8" }}
                 aria-hidden
               />
-              <video
-                className="w-full h-auto block"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                poster="/assets/studio-reel-poster.jpg"
-                aria-label="FlowZone studio reel: you bring the idea, we build the brand, the site and the system"
+              {/* Player chrome: the reel is ours, so it wears the wordmark. */}
+              <div
+                className="flex items-center justify-between px-4 sm:px-5 py-2.5 border-b"
+                style={{
+                  background: "#0A1129",
+                  borderColor: "rgba(76,123,232,0.35)",
+                }}
               >
-                <source src="/assets/studio-reel.webm" type="video/webm" />
-                <source src="/assets/studio-reel.mp4" type="video/mp4" />
-              </video>
+                <span className="font-display text-[15px] leading-none text-white">
+                  flow<span style={{ color: "#5B8CFF" }}>zone</span>
+                </span>
+                <span className="text-[10px] font-medium uppercase tracking-label text-[#8FA3C8]">
+                  Studio reel
+                </span>
+              </div>
+              <FastVideo
+                className="w-full h-auto block"
+                rate={1.25}
+                poster="/assets/studio-reel-poster.jpg"
+                ariaLabel="FlowZone studio reel: you bring the idea, we build the brand, the site and the system"
+                sources={[
+                  { src: "/assets/studio-reel.mp4", type: "video/mp4" },
+                  { src: "/assets/studio-reel.webm", type: "video/webm" },
+                ]}
+              />
             </div>
+            <p className="mt-3 text-[12px] text-[#9AA7BE]">
+              The studio reel, at speed. Brand, site and system.
+            </p>
           </div>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5">
+            {[
+              { w: "Identity", p: "from $500", c: "#5B8CFF", h: "/intake?build=identity" },
+              { w: "Site", p: "from $500", c: "#5BB8FF", h: "/intake?build=site" },
+              { w: "Storefront", p: "from $2,500", c: "#FFB27A", h: "/intake?build=storefront" },
+            ].map((x) => (
+              <Link
+                key={x.w}
+                href={x.h}
+                className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[13px] text-white transition-colors hover:bg-white/10"
+                style={{ borderColor: `${x.c}66`, background: "rgba(255,255,255,0.04)" }}
+              >
+                <span className="font-medium" style={{ color: x.c }}>{x.w}</span>
+                <span className="text-[#C9D6EA]">{x.p}</span>
+              </Link>
+            ))}
+          </div>
+          <p className="mt-4 text-[13px] text-[#9AA7BE]">
+            Flat, paid once. Tell us the idea and you see your number before anything starts.
+          </p>
         </div>
       </section>
 
