@@ -7,6 +7,7 @@ import Testimonials from "@/components/Testimonials";
 import { SITE } from "@/lib/site";
 import PitchPath from "@/app/components/PitchPath";
 import FastVideo from "@/app/components/FastVideo";
+import { days, faqs } from "@/lib/process";
 
 export const metadata: Metadata = {
   title: "FlowZone Studio | Brand, Website and Storefront Design",
@@ -105,8 +106,23 @@ export default function Home() {
           </div>
           <TicketNote className="text-center" />
 
+          {/* The facts strip. Every studio template worth copying puts three
+              or four hard facts under the hero. Ours are the true ones. */}
+          <dl className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-4 max-w-3xl mx-auto text-left">
+            {[
+              { k: "Who builds it", v: "The founder. Start to finish." },
+              { k: "How you pay", v: "One flat price, paid once." },
+              { k: "Retainers", v: "None. Ever." },
+              { k: "When it ships", v: "You own the code and the accounts." },
+            ].map((f) => (
+              <div key={f.k} className="border-t pt-3" style={{ borderColor: "rgba(43,87,196,0.28)" }}>
+                <dt className="text-[10px] font-semibold uppercase tracking-label text-[#2B57C4]">{f.k}</dt>
+                <dd className="text-[13px] text-[#1C2942] mt-1 leading-snug">{f.v}</dd>
+              </div>
+            ))}
+          </dl>
           <p className="mt-5 text-sm text-[#33405A]">
-            Builds are flat and paid once, no hourly billing.{" "}
+            No hourly billing.{" "}
             <Link
               href="/pricing"
               className="text-[#1C2942] hover:text-[#0B1322] transition-colors underline decoration-[#C9D6EA] underline-offset-4"
@@ -574,6 +590,59 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ---------- 4.5 · How it ships ---------- */}
+      {/* The four-step process every studio site carries, pulled from
+          /how-we-work so the two never disagree. */}
+      <section data-flow className="band-light px-6 py-16 md:py-24">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-12 gap-6 mb-10">
+            <div className="md:col-span-7">
+              <p className="label mb-4">How it ships</p>
+              <h2 className="display text-4xl md:text-5xl text-[#0B1322]">
+                Four steps.
+                <br />
+                You do the first one.
+              </h2>
+            </div>
+            <p className="md:col-span-5 text-[#49566E] leading-relaxed self-end max-w-reading">
+              No discovery call, no proposal deck. You see something real
+              early, and you see your number before anything starts.{" "}
+              <Link href="/how-we-work" className="text-[#2B57C4] underline decoration-[#C9D6EA] underline-offset-4">
+                The full walk-through
+              </Link>
+            </p>
+          </div>
+          <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {days.map((d, i) => (
+              <li
+                key={d.tag}
+                className="relative rounded-[18px] border bg-white p-6 flex flex-col"
+                style={{ borderColor: "#D6DEEC", boxShadow: "0 20px 44px -30px rgba(11,19,34,0.35)" }}
+              >
+                <div className="flex items-center justify-between mb-5">
+                  <span className="font-display text-3xl leading-none text-[#2B57C4]">
+                    0{i + 1}
+                  </span>
+                  <span className="text-[10px] font-semibold uppercase tracking-label text-[#647089]">
+                    {d.tag}
+                  </span>
+                </div>
+                <p className="font-display text-xl leading-[1.15] text-[#0B1322] mb-3">
+                  {d.title}
+                </p>
+                <p className="text-[13px] text-[#49566E] leading-relaxed">
+                  {d.short}
+                </p>
+                <p className="mt-auto pt-4 text-[11px] text-[#647089]">
+                  <span className="font-semibold uppercase tracking-label text-[#2B57C4]">You</span>{" "}
+                  {d.you}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
       {/* ---------- 5 · Point of view, on white for contrast ---------- */}
       <section data-flow className="band-light px-6 py-16 md:py-20">
         <div className="max-w-6xl mx-auto">
@@ -859,6 +928,52 @@ export default function Home() {
 
       {/* ---------- 8 · In their words (absent until real) ---------- */}
       <Testimonials />
+
+      {/* ---------- 8.5 · Straight answers ---------- */}
+      {/* The FAQ, on the home page where the templates all keep it. Native
+          details, no JS, and the same list /how-we-work uses. */}
+      <section data-flow className="band-light px-6 py-16 md:py-24">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-12 gap-8">
+          <div className="md:col-span-4">
+            <p className="label mb-4">Straight answers</p>
+            <h2 className="display text-4xl md:text-5xl text-[#0B1322]">
+              The questions
+              <br />
+              people ask first.
+            </h2>
+            <p className="text-[#49566E] leading-relaxed mt-5 max-w-reading">
+              Short versions here.{" "}
+              <Link href="/how-we-work" className="text-[#2B57C4] underline decoration-[#C9D6EA] underline-offset-4">
+                The long ones
+              </Link>{" "}
+              are on the process page.
+            </p>
+          </div>
+          <div className="md:col-span-8">
+            {[0, 1, 2, 4, 5].map((i) => faqs[i]).map((f) => (
+              <details
+                key={f.q}
+                className="group border-b py-5"
+                style={{ borderColor: "rgba(11,19,34,0.14)" }}
+              >
+                <summary className="flex items-start justify-between gap-6 cursor-pointer list-none font-display text-lg md:text-xl leading-snug text-[#0B1322]">
+                  {f.q}
+                  <span
+                    className="shrink-0 mt-1 w-6 h-6 rounded-full border flex items-center justify-center text-[#2B57C4] transition-transform group-open:rotate-45"
+                    style={{ borderColor: "rgba(43,87,196,0.35)" }}
+                    aria-hidden
+                  >
+                    +
+                  </span>
+                </summary>
+                <p className="mt-3 text-[15px] text-[#49566E] leading-relaxed max-w-reading">
+                  {f.a}
+                </p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ---------- 9 · Closing CTA ---------- */}
       <section data-flow className="bg-paper-deep glow border-t border-rule px-6 py-20">
