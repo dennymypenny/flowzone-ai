@@ -141,14 +141,14 @@ export async function POST(req: NextRequest) {
       const detail = await res.text().catch(() => "");
       console.error("[FlowZone Scan] LEAD LOST:", res.status, detail, "|", email, "|", report.host);
       return NextResponse.json(
-        { ok: false, error: "That did not send. Email us the link directly and we will run it by hand." },
+        { ok: false, error: "We could not reach the studio. Email us the link directly and we will run it by hand." },
         { status: 502 }
       );
     }
   } catch (e) {
     console.error("[FlowZone Scan] LEAD LOST:", e, "|", email, "|", report.host);
     return NextResponse.json(
-      { ok: false, error: "That did not send. Email us the link directly and we will run it by hand." },
+      { ok: false, error: "We could not reach the studio. Email us the link directly and we will run it by hand." },
       { status: 502 }
     );
   }

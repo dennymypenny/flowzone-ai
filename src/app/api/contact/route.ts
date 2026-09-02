@@ -73,14 +73,14 @@ export async function POST(req: NextRequest) {
     if (error) {
       console.error("[FlowZone] CONTACT LOST:", error, "|", email, "|", message);
       return NextResponse.json(
-        { ok: false, error: "That did not send. Please text us instead." },
+        { ok: false, error: "We could not reach the studio. Please text us instead." },
         { status: 502 }
       );
     }
   } catch (e) {
     console.error("[FlowZone] CONTACT LOST:", e, "|", email, "|", message);
     return NextResponse.json(
-      { ok: false, error: "That did not send. Please text us instead." },
+      { ok: false, error: "We could not reach the studio. Please text us instead." },
       { status: 502 }
     );
   }

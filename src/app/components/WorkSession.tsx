@@ -1086,7 +1086,7 @@ export default function WorkSession() {
       setSay("Sent. Check your inbox for the brief.");
     } catch {
       setSaveState("error");
-      setSay("That did not send. Check the address and try again.");
+      setSay("Could not reach the studio. Check the address and try again.");
     }
   };
 
@@ -1879,7 +1879,7 @@ export default function WorkSession() {
                   </div>
                   {saveState === "error" && (
                     <p className="text-[12px] text-[#FBBF24] mt-2.5">
-                      That did not send. Check the address, or use the download buttons
+                      Could not reach the studio. Check the address, or use the download buttons
                       below instead.
                     </p>
                   )}

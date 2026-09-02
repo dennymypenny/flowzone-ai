@@ -61,4 +61,8 @@ export const faqs = [
     q: "How fast is this, really?",
     a: "Fast, but we do not sell you a number before we know what you are asking for. You get a real date with your scope and your price, before you pay, and that is the date we work to. What we will promise is that it starts the day you say go and it does not sit in a queue. Things move here because we are as excited to see the thing exist as you are.",
   },
+  {
+    q: "Do you only work with companies?",
+    a: "No. Personal branding is the same work with your name on it instead of a company's, and we do it here: the mark, the palette, the voice, the photos and the way you show up, then a personal site or portfolio that carries it. Founders, freelancers, creators and consultants all buy the same builds everyone else does. If the thing you are building a brand for is you, that is not a smaller job, it is just a more specific one.",
+  },
 ];

@@ -48,8 +48,8 @@ export const PILLARS = [
     line: "What people recognize you by.",
     lead: true,
     body:
-      "This is what the studio is best at. The mark, the palette, the type, the voice and the feel, decided properly so everything after it has something to be built from.",
-    items: ["Logo and wordmark", "Color and type system", "Voice, copy and messaging", "Usage guide you can hand to anyone"],
+      "This is what the studio is best at. The mark, the palette, the type, the voice and the feel, decided properly so everything after it has something to be built from. Companies and people both: a personal brand is the same work with your name on it.",
+    items: ["Logo and wordmark", "Color and type system", "Voice, copy and messaging", "Personal brand, for a name rather than a company", "Usage guide you can hand to anyone"],
   },
   {
     num: "02",
@@ -59,8 +59,8 @@ export const PILLARS = [
     emoji: "🧭",
     line: "Where people decide.",
     body:
-      "A marketing site or a full storefront, designed against your brand rather than a theme. Fast, mobile first and deployed on your own domain.",
-    items: ["Custom design, no templates", "Marketing site or storefront", "Copy written for you", "Payments and forms wired up"],
+      "A marketing site, a portfolio or a full storefront, designed against your brand rather than a theme. Fast, mobile first and deployed on your own domain.",
+    items: ["Custom design, no templates", "Marketing site, portfolio or storefront", "Copy written for you", "Payments and forms wired up"],
   },
   {
     num: "03",

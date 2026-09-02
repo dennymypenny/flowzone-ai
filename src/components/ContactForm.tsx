@@ -40,11 +40,11 @@ export default function ContactForm({ accent = "#5B9BF9" }: { accent?: string })
         body: JSON.stringify({ name, email, reason, budget, message }),
       });
       const data = await res.json();
-      if (!res.ok || !data.ok) throw new Error(data.error || "That did not send.");
+      if (!res.ok || !data.ok) throw new Error(data.error || "Could not reach the studio.");
       setState("done");
     } catch (e) {
       setState("error");
-      setError(e instanceof Error ? e.message : "That did not send.");
+      setError(e instanceof Error ? e.message : "Could not reach the studio.");
     }
   };
 

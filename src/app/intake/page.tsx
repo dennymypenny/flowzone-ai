@@ -152,6 +152,10 @@ function IntakeForm() {
     description: "",
   });
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
+  // A 400 means the form is not filled in right, which is nothing like the
+  // send failing. Same red box for both used to tell somebody their details
+  // vanished when all they did was write four words in the description.
+  const [fixable, setFixable] = useState(false);
   // The opener pops up only for cold arrivals. A preselected build or a
   // cart handoff already answered the question somewhere else.
   const [asked, setAsked] = useState(
@@ -203,6 +207,7 @@ function IntakeForm() {
     e.preventDefault();
     if (!form.service) {
       setState("error");
+      setFixable(true);
       setError("Pick one of the four builds, or choose not sure yet.");
       return;
     }
@@ -217,12 +222,16 @@ function IntakeForm() {
       // The success screen only ever runs when the server says the details
       // really landed. No body, no promise.
       const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data?.ok) throw new Error(data?.error || "That did not send.");
+      if (!res.ok || !data?.ok) {
+        // 400 is the form, anything else is us.
+        setFixable(res.status === 400);
+        throw new Error(data?.error || "Could not reach the studio.");
+      }
       setState("done");
       if (cameFromCart) clearCart();
     } catch (err) {
       setState("error");
-      setError(err instanceof Error ? err.message : "That did not send.");
+      setError(err instanceof Error ? err.message : "Could not reach the studio.");
     }
   };
 
@@ -384,14 +393,17 @@ function IntakeForm() {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-ink-soft mb-1.5">Business Name</label>
+            <label className="block text-sm font-semibold text-ink-soft mb-1.5">
+              Business Name{" "}
+              <span className="font-normal text-ink-mute">or your own, if the brand is you</span>
+            </label>
             <input
               type="text"
               required
               value={form.business}
               onChange={(e) => set("business", e.target.value)}
               className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent"
-              placeholder="Acme Co."
+              placeholder="Acme Co. or Jane Doe"
             />
           </div>
 
@@ -399,12 +411,14 @@ function IntakeForm() {
             <label className="block text-sm font-semibold text-ink-soft mb-1.5">Tell us about the idea</label>
             <textarea
               required
+              minLength={10}
               rows={4}
               value={form.description}
               onChange={(e) => set("description", e.target.value)}
               className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent resize-none"
               placeholder="Describe what you want built and any tools you already use..."
             />
+            <p className="text-xs text-ink-mute mt-1.5">One sentence is enough. A few words is not.</p>
           </div>
 
           <button
@@ -415,16 +429,28 @@ function IntakeForm() {
             {loading ? "Submitting..." : "Submit Project →"}
           </button>
 
-          {state === "error" && (
+          {state === "error" && fixable && (
             <div className="surface border border-rule rounded-xl p-5">
               <div className="flex items-center gap-2 mb-2">
                 <Icon name="chat" size={20} color="#5B8CFF" />
-                <p className="label">That did not send</p>
+                <p className="label">One more thing</p>
               </div>
-              <p className="text-sm text-ink-soft leading-relaxed mb-2">{error}</p>
+              <p className="text-sm text-ink-soft leading-relaxed">{error}</p>
+              <p className="text-sm text-ink-mute leading-relaxed mt-2">
+                Everything you typed is still here. Fix that one and press submit again.
+              </p>
+            </div>
+          )}
+
+          {state === "error" && !fixable && (
+            <div className="surface border border-rule rounded-xl p-5">
+              <div className="flex items-center gap-2 mb-2">
+                <Icon name="chat" size={20} color="#5B8CFF" />
+                <p className="label">Let&apos;s get this to Denny</p>
+              </div>
               <p className="text-sm text-ink-mute leading-relaxed mb-4">
-                Nothing you typed is lost. Press submit again, or open the email below. It is already
-                filled in with your answers and it goes straight to Denny.
+                Everything you typed is still here. Press submit again, or open the email below. It
+                is already filled in with your answers and it goes straight to Denny.
               </p>
               <a href={fallbackMailto} className="btn-primary shine">
                 Email it to us <span className="arrow">→</span>

@@ -330,7 +330,7 @@ export default function Home() {
                 icon: "palette",
                 c: "#2B57C4",
                 b: "What people recognize you by.",
-                d: "The mark, the colors, the words. The part that makes you look like you meant it.",
+                d: "The mark, the colors, the words. For a company or for your own name. The part that makes you look like you meant it.",
               },
               {
                 n: "02",
@@ -338,7 +338,7 @@ export default function Home() {
                 icon: "compass",
                 c: "#155E9C",
                 b: "Where people go to decide.",
-                d: "A page that answers the question and asks for the next step, instead of a profile and a DM.",
+                d: "A site or a portfolio that answers the question and asks for the next step, instead of a profile and a DM.",
               },
               {
                 n: "03",
@@ -985,7 +985,7 @@ export default function Home() {
             </p>
           </div>
           <div className="md:col-span-8">
-            {[0, 1, 2, 4, 5].map((i) => faqs[i]).map((f) => (
+            {[0, 1, 2, 4, 5, 6].map((i) => faqs[i]).map((f) => (
               <details
                 key={f.q}
                 className="group border-b py-5"

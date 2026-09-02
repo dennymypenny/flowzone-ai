@@ -103,12 +103,12 @@ export default function ScanTool() {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) {
-        setUnlockError(data.error || "That did not send. Try again.");
+        setUnlockError(data.error || "Could not reach the studio. Try again.");
       } else {
         setOpen(true);
       }
     } catch {
-      setUnlockError("That did not send. Try again.");
+      setUnlockError("Could not reach the studio. Try again.");
     } finally {
       setUnlocking(false);
     }

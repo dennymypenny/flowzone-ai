@@ -35,14 +35,15 @@ const PARTS = [
     colorLight: "#2B57C4",
     line: "What people recognize you by.",
     intro:
-      "Before anything gets designed, there has to be something to design against. We build the identity first so the site is an expression of it rather than a guess.",
+      "Before anything gets designed, there has to be something to design against. We build the identity first so the site is an expression of it rather than a guess. It works the same whether the name on it is a company or a person.",
     get: [
       "Logo and wordmark, drawn for you",
       "Color palette and type system",
       "Voice, positioning line and the words you repeat",
+      "Personal branding, when the name on the door is yours",
       "A usage guide you can hand to anyone",
     ],
-    for: "Launching something new, or you have a site that looks nothing like the business you actually run.",
+    for: "Launching something new, or you have a site that looks nothing like the business you actually run. Founders, freelancers and creators building a name of their own count too.",
   },
   {
     num: "02",
@@ -55,7 +56,7 @@ const PARTS = [
       "A marketing site or a full storefront, designed against your brand rather than a theme with your logo dropped in the corner. Written, built and deployed on your own domain.",
     get: [
       "Custom design, no templates and no page builder",
-      "Marketing site or a full product storefront",
+      "Marketing site, personal site or portfolio, or a full product storefront",
       "Copy written for you, not lorem ipsum you fill in later",
       "Payments, forms and email wired end to end",
       "Fast on a phone, tested before it ships",
@@ -104,7 +105,8 @@ export default function Services() {
               Brand identity is the studio's strongest work and where most projects
               start. You can buy any one part on its own, but we can take the whole
               thing end to end, and the seams between the three are exactly where
-              projects usually fall apart.
+              projects usually fall apart. It runs the same for a company or for a
+              person: personal brands and portfolios are built here too.
             </p>
             <div className="md:col-span-6 md:flex md:justify-end">
               <Link href="/pricing" className="btn-primary">
