@@ -31,7 +31,9 @@ const RULES: Array<[string, Rule]> = [
   // These reach Denny directly. Nobody legitimate sends six in ten minutes.
   ["/api/contact", { limit: 5, windowMs: 10 * 60_000 }],
   ["/api/subscribe", { limit: 5, windowMs: 10 * 60_000 }],
-  ["/api/intake", { limit: 5, windowMs: 10 * 60_000 }],
+  // Looser than contact: a founder testing the form, or a visitor who trips
+  // validation a few times, must not hit a wall. Still a brake on a loop.
+  ["/api/intake", { limit: 15, windowMs: 10 * 60_000 }],
   // Photo and footage quota. A real session makes a handful of these.
   ["/api/moodboard", { limit: 60, windowMs: 10 * 60_000 }],
   ["/api/clips", { limit: 60, windowMs: 10 * 60_000 }],
