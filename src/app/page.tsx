@@ -37,7 +37,7 @@ export default function Home() {
         className="band-light relative overflow-hidden px-6"
         style={{
           background:
-            "linear-gradient(180deg, #FDFBF6 0%, #F9F6EE 55%, #F4F7FC 100%)",
+            "linear-gradient(180deg, #F3F7FE 0%, #EEF4FC 55%, #EAF1FB 100%)",
         }}
       >
         <div className="absolute inset-0" aria-hidden>
@@ -56,7 +56,7 @@ export default function Home() {
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(180deg, rgba(253,251,246,0.78) 0%, rgba(253,251,246,0.62) 45%, rgba(244,247,252,0.9) 100%)",
+                "linear-gradient(180deg, rgba(240,246,253,0.78) 0%, rgba(240,246,253,0.62) 45%, rgba(234,241,251,0.92) 100%)",
             }}
           />
         </div>
@@ -118,7 +118,51 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------- 1b · The reel ---------- */}
+      {/* ---------- 2 · The name as a verb, in space ---------- */}
+      <section data-flow className="relative overflow-hidden px-6 py-16 md:py-20 bg-black">
+        <img
+          src="/assets/space-distance.jpg"
+          alt=""
+          aria-hidden
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(6,11,31,0.55) 0%, rgba(6,11,31,0.35) 50%, rgba(6,11,31,0.7) 100%), radial-gradient(55% 60% at 50% 40%, rgba(91,155,249,0.18) 0%, rgba(6,11,31,0) 70%)",
+          }}
+        />
+        <div className="relative max-w-6xl mx-auto">
+          <div className="panel p-6 md:p-8 grid md:grid-cols-12 gap-6">
+            <div className="md:col-span-5">
+              <p className="label mb-4">What the name means</p>
+              <p className="font-display text-5xl leading-none">
+                flow<span className="text-accent">zone</span>
+              </p>
+              <p className="text-[13px] text-ink-mute mt-3">
+                verb · flowzoned, flowzoning
+              </p>
+            </div>
+            <div className="md:col-span-7">
+              <p className="text-xl text-ink font-light leading-snug">
+                To take an intention and get it moving. To go from a thing you keep
+                meaning to start, to a thing that is live, branded and running on its
+                own.
+              </p>
+              <p className="text-ink-soft font-light leading-relaxed mt-4 max-w-reading">
+                The gap is never the idea. It is the design, the words, the build and the plumbing, all needed at once. That gap is the whole job.
+              </p>
+              <p className="text-ink-soft font-light leading-relaxed mt-4 max-w-reading">
+                We named the studio after the gap because closing it is the entire
+                service.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- 2b · The reel ---------- */}
       {/* A clean light band, so the dark reel pops instead of sinking into
           a dark backdrop. The frame is a window with the three logo dots as
           its traffic lights, so the film reads as ours before it plays. The
@@ -126,7 +170,7 @@ export default function Home() {
       <section
         className="band-light relative overflow-hidden px-6 pb-16 md:pb-24 pt-12 md:pt-16"
         style={{
-          background: "linear-gradient(180deg, #F4F7FC 0%, #FFFFFF 100%)",
+          background: "linear-gradient(180deg, #EAF1FB 0%, #F7FAFF 100%)",
         }}
       >
         <div
@@ -210,37 +254,6 @@ export default function Home() {
           <p className="mt-4 text-[13px] text-[#49566E]">
             Flat, paid once. Tell us the idea and you see your number before anything starts.
           </p>
-        </div>
-      </section>
-
-      {/* ---------- 2 · The name as a verb ---------- */}
-      <section data-flow className="band-light px-6 py-16 md:py-20">
-        <div className="max-w-6xl mx-auto">
-          <div className="panel p-6 md:p-8 grid md:grid-cols-12 gap-6">
-            <div className="md:col-span-5">
-              <p className="label mb-4">What the name means</p>
-              <p className="font-display text-5xl leading-none">
-                flow<span className="text-accent">zone</span>
-              </p>
-              <p className="text-[13px] text-ink-mute mt-3">
-                verb · flowzoned, flowzoning
-              </p>
-            </div>
-            <div className="md:col-span-7">
-              <p className="text-xl text-ink font-light leading-snug">
-                To take an intention and get it moving. To go from a thing you keep
-                meaning to start, to a thing that is live, branded and running on its
-                own.
-              </p>
-              <p className="text-ink-soft font-light leading-relaxed mt-4 max-w-reading">
-                The gap is never the idea. It is the design, the words, the build and the plumbing, all needed at once. That gap is the whole job.
-              </p>
-              <p className="text-ink-soft font-light leading-relaxed mt-4 max-w-reading">
-                We named the studio after the gap because closing it is the entire
-                service.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 

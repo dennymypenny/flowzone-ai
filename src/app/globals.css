@@ -244,7 +244,7 @@ button {
      the words matter most. Text inside is near black on purpose, 16:1 rather
      than the 9:1 the dark sections run at. */
   .band-light {
-    background: linear-gradient(180deg, #FFFFFF 0%, #F4F7FC 100%);
+    background: linear-gradient(180deg, #F7FAFF 0%, #EAF1FB 100%);
     color: #0B1322;
   }
   .band-light,

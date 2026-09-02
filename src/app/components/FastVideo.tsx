@@ -3,11 +3,11 @@
 import { useEffect, useRef } from "react";
 
 /* A muted looping video that plays a touch faster than real time and
-   actually autoplays on phones. React does not write the muted attribute
-   into the server HTML, so iOS sees an unmuted video and refuses to start
-   it. We set muted as a property, call play() ourselves, and retry on the
-   first touch or scroll for Low Power Mode, which blocks the silent start
-   until the person interacts. */
+   actually autoplays on phones. React never writes the muted attribute
+   into the server HTML, and iOS decides at parse time, so the tag is
+   written as raw HTML with muted in it. Then we still set the property,
+   call play() ourselves, and retry on the first touch or scroll for Low
+   Power Mode, which blocks the silent start until the person interacts. */
 export default function FastVideo({
   className = "",
   poster,
@@ -23,16 +23,17 @@ export default function FastVideo({
   ariaLabel?: string;
   sources: { src: string; type: string }[];
 }) {
-  const ref = useRef<HTMLVideoElement>(null);
+  const box = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const v = ref.current;
+    const v = box.current?.querySelector("video");
     if (!v) return;
     v.defaultMuted = true;
     v.muted = true;
     v.playbackRate = rate;
 
     const tryPlay = () => {
+      v.muted = true;
       v.playbackRate = rate;
       if (v.paused) v.play().catch(() => {});
     };
@@ -44,36 +45,44 @@ export default function FastVideo({
     };
 
     tryPlay();
+    const t = window.setTimeout(tryPlay, 800);
     v.addEventListener("play", onPlay);
     v.addEventListener("loadeddata", tryPlay);
+    v.addEventListener("canplay", tryPlay);
     document.addEventListener("visibilitychange", onVisible);
     window.addEventListener("touchstart", tryPlay, { passive: true });
+    window.addEventListener("touchend", tryPlay, { passive: true });
     window.addEventListener("scroll", tryPlay, { passive: true });
+    window.addEventListener("click", tryPlay, { passive: true });
     return () => {
+      window.clearTimeout(t);
       v.removeEventListener("play", onPlay);
       v.removeEventListener("loadeddata", tryPlay);
+      v.removeEventListener("canplay", tryPlay);
       document.removeEventListener("visibilitychange", onVisible);
       window.removeEventListener("touchstart", tryPlay);
+      window.removeEventListener("touchend", tryPlay);
       window.removeEventListener("scroll", tryPlay);
+      window.removeEventListener("click", tryPlay);
     };
   }, [rate]);
 
+  const esc = (x: string) => x.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+  const html =
+    `<video class="${esc(className)}" autoplay muted loop playsinline webkit-playsinline ` +
+    `preload="${preload}" disablepictureinpicture` +
+    (poster ? ` poster="${esc(poster)}"` : "") +
+    (ariaLabel ? ` aria-label="${esc(ariaLabel)}"` : "") +
+    `>` +
+    sources.map((s) => `<source src="${esc(s.src)}" type="${esc(s.type)}">`).join("") +
+    `</video>`;
+
   return (
-    <video
-      ref={ref}
-      className={className}
-      autoPlay
-      muted
-      loop
-      playsInline
-      preload={preload}
-      poster={poster}
-      aria-label={ariaLabel}
-      disablePictureInPicture
-    >
-      {sources.map((s) => (
-        <source key={s.src} src={s.src} type={s.type} />
-      ))}
-    </video>
+    <div
+      ref={box}
+      className="contents"
+      suppressHydrationWarning
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
   );
 }
