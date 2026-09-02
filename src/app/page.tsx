@@ -44,6 +44,7 @@ export default function Home() {
           <FastVideo
             className="absolute inset-0 w-full h-full object-cover"
             rate={1.15}
+            preload="auto"
             poster="/assets/ocean-hero-poster.jpg"
             sources={[
               { src: "/assets/ocean-hero.webm", type: "video/webm" },
@@ -75,7 +76,7 @@ export default function Home() {
 
           <p className="text-lg sm:text-xl md:text-2xl text-[#1C2942] leading-snug max-w-2xl mx-auto mt-6">
             We design the brand, build the site or storefront, and wire the
-            system that runs it. One flat price, live in days.
+            system that runs it. One flat price, paid once.
           </p>
 
           <div className="flex items-center justify-center gap-2.5 mt-6 flex-wrap">
@@ -117,50 +118,55 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------- 1b · The reel, in space ---------- */}
-      {/* Ocean above, space below. The reel gets its own dark band so on a
-          phone it stops floating on foam and reads as the studio's own
-          player. The price row under it is the pitch in one line. */}
+      {/* ---------- 1b · The reel ---------- */}
+      {/* A clean light band, so the dark reel pops instead of sinking into
+          a dark backdrop. The frame is a window with the three logo dots as
+          its traffic lights, so the film reads as ours before it plays. The
+          price row under it is the pitch in one line. */}
       <section
-        className="relative overflow-hidden px-6 pb-16 md:pb-24 pt-12 md:pt-16"
+        className="band-light relative overflow-hidden px-6 pb-16 md:pb-24 pt-12 md:pt-16"
         style={{
-          background:
-            "#060B1F url(/assets/space-distance.jpg) center / cover no-repeat",
+          background: "linear-gradient(180deg, #F4F7FC 0%, #FFFFFF 100%)",
         }}
       >
         <div
-          className="absolute inset-0"
+          className="absolute left-1/2 top-16 -translate-x-1/2 w-[70%] h-[60%] rounded-full pointer-events-none"
           style={{
             background:
-              "linear-gradient(180deg, rgba(6,11,31,0.55) 0%, rgba(6,11,31,0.78) 100%)",
+              "radial-gradient(closest-side, rgba(76,123,232,0.16), rgba(76,123,232,0))",
           }}
           aria-hidden
         />
         <div className="relative max-w-6xl mx-auto text-center">
-          <p className="text-[11px] font-semibold uppercase tracking-label text-[#8FA3C8] mb-5">
+          <p className="text-[11px] font-semibold uppercase tracking-label text-[#2B57C4] mb-5">
             What a build looks like
           </p>
           <div className="relative max-w-5xl mx-auto">
             <div
-              className="relative overflow-hidden rounded-[20px] border border-[#E7E2D6] bg-[#060B1F]"
+              className="relative overflow-hidden rounded-[18px] border bg-[#060B1F]"
               style={{
+                borderColor: "#D6DEEC",
                 boxShadow:
-                  "0 48px 100px -44px rgba(11,19,34,0.5), 0 20px 44px -30px rgba(11,19,34,0.35)",
+                  "0 40px 90px -40px rgba(11,19,34,0.45), 0 16px 40px -24px rgba(43,87,196,0.35)",
               }}
             >
-              <span
-                className="absolute top-0 left-0 h-[3px] w-full z-10"
-                style={{ background: "#4C7BE8" }}
-                aria-hidden
-              />
-              {/* Player chrome: the reel is ours, so it wears the wordmark. */}
+              {/* Window chrome: the three logo dots as the traffic lights. */}
               <div
                 className="flex items-center justify-between px-4 sm:px-5 py-2.5 border-b"
                 style={{
                   background: "#0A1129",
-                  borderColor: "rgba(76,123,232,0.35)",
+                  borderColor: "rgba(76,123,232,0.3)",
                 }}
               >
+                <span className="flex items-center gap-1.5" aria-hidden>
+                  {["#2B57C4", "#4C7BE8", "#A8C4FF"].map((c) => (
+                    <span
+                      key={c}
+                      className="block w-2.5 h-2.5 rounded-full"
+                      style={{ background: c }}
+                    />
+                  ))}
+                </span>
                 <span className="font-display text-[15px] leading-none text-white">
                   flow<span style={{ color: "#5B8CFF" }}>zone</span>
                 </span>
@@ -179,28 +185,29 @@ export default function Home() {
                 ]}
               />
             </div>
-            <p className="mt-3 text-[12px] text-[#9AA7BE]">
+            <p className="mt-3 text-[12px] text-[#647089]">
               The studio reel, at speed. Brand, site and system.
             </p>
           </div>
+
           <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5">
             {[
-              { w: "Identity", p: "from $500", c: "#5B8CFF", h: "/intake?build=identity" },
-              { w: "Site", p: "from $500", c: "#5BB8FF", h: "/intake?build=site" },
-              { w: "Storefront", p: "from $2,500", c: "#FFB27A", h: "/intake?build=storefront" },
+              { w: "Identity", p: "from $500", c: "#2B57C4", h: "/intake?build=identity" },
+              { w: "Site", p: "from $500", c: "#155E9C", h: "/intake?build=site" },
+              { w: "Storefront", p: "from $2,500", c: "#A03D14", h: "/intake?build=storefront" },
             ].map((x) => (
               <Link
                 key={x.w}
                 href={x.h}
-                className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[13px] text-white transition-colors hover:bg-white/10"
-                style={{ borderColor: `${x.c}66`, background: "rgba(255,255,255,0.04)" }}
+                className="inline-flex items-center gap-2 rounded-full border bg-white px-4 py-2 text-[13px] transition-colors hover:bg-[#F4F7FC]"
+                style={{ borderColor: `${x.c}55` }}
               >
                 <span className="font-medium" style={{ color: x.c }}>{x.w}</span>
-                <span className="text-[#C9D6EA]">{x.p}</span>
+                <span className="text-[#1C2942]">{x.p}</span>
               </Link>
             ))}
           </div>
-          <p className="mt-4 text-[13px] text-[#9AA7BE]">
+          <p className="mt-4 text-[13px] text-[#49566E]">
             Flat, paid once. Tell us the idea and you see your number before anything starts.
           </p>
         </div>
