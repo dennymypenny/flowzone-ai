@@ -609,3 +609,26 @@ button {
   -webkit-appearance: none;
   opacity: 0;
 }
+
+/* Flowy, the helper on the right edge. A slow bob and a blink every few
+   seconds, both off for anyone who asked their system for less motion. */
+@keyframes flowy-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+@keyframes flowy-blink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  94% { transform: scaleY(0.08); }
+}
+.flowy-bob {
+  animation: flowy-bob 3.2s ease-in-out infinite;
+}
+.flowy-blink {
+  animation: flowy-blink 4.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .flowy-bob,
+  .flowy-blink {
+    animation: none;
+  }
+}

@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { SITE } from "@/lib/site";
 import Wordmark from "@/components/Wordmark";
+import Flowy from "@/app/components/Flowy";
 
 type Role = "user" | "assistant";
 type ApiMsg = { role: Role; content: string };
@@ -70,7 +71,10 @@ export default function ChatWidget({ className = "" }: { className?: string }) {
       {/* pr-14 keeps the label clear of the dock close button. */}
       <div className="flex items-center justify-between pl-6 pr-14 py-4 border-b border-rule">
         <Wordmark tone="dark" size={16} />
-        <p className="label">Studio assistant</p>
+        <span className="inline-flex items-center gap-2">
+          <Flowy size={22} animate={false} />
+          <p className="label">Flowy</p>
+        </span>
       </div>
 
       {/* Messages */}
@@ -78,10 +82,11 @@ export default function ChatWidget({ className = "" }: { className?: string }) {
         {isEmpty && (
           <div className="flex flex-col items-start gap-5">
             <p className="text-ink-soft leading-relaxed max-w-md">
-              Hey. Tell me what you are trying to get moving and I will tell you
-              what it needs, what it roughly costs and how long it takes. A whole
-              business or a single graphic, both are fair game, and no question
-              here is too small.
+              Hey, I am Flowy, FlowZone&apos;s little helper. Tell me what you
+              are trying to get moving and I will tell you what it needs, what
+              it roughly costs and how long it takes. A whole business or a
+              single graphic, both are fair game, and no question here is too
+              small.
             </p>
             <div className="flex flex-wrap gap-2">
               {CHIPS.map((chip) => (

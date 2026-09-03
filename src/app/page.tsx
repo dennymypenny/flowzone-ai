@@ -26,14 +26,74 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * The work wall on the homepage. Each entry is one tile: the image fills
+ * its box and is cropped from the side named in pos, so a phone screen, a
+ * landing page and a vertical reel all sit in one grid. The Mantel and
+ * Kalender renders live at the two work-*.jpg paths; drop a new export at
+ * the same path to replace either one.
+ */
+const SHOWCASE = [
+  {
+    name: "Kalender",
+    kind: "Landing page",
+    src: "/assets/work-kalender.jpg",
+    alt: "Kalender landing page: a black pill navigation, the headline You are not busy, your meetings are just broken, an email sign-up and a dark week calendar over a field of daisies",
+    cell: "col-span-2 md:col-span-8",
+    box: "aspect-[16/10]",
+    pos: "object-left-top",
+    href: null,
+  },
+  {
+    name: "Mantel",
+    kind: "Mobile app",
+    src: "/assets/work-mantel.jpg",
+    alt: "Mantel app welcome screen on a phone: a cluster of gold framed family photos, the Mantel wordmark, the line Rescue your memories, make them physical, and a Get Started button",
+    cell: "col-span-1 md:col-span-4",
+    box: "aspect-[4/5]",
+    pos: "object-center",
+    href: null,
+  },
+  {
+    name: "CardsRG",
+    kind: "Storefront",
+    src: "/assets/crg-hero.jpg",
+    alt: "CardsRG storefront: the CRG shield logo, the category navigation and the Shop Sports and Shop TCG doors over graded card photography",
+    cell: "col-span-2 md:col-span-6 md:order-3",
+    box: "aspect-[16/10]",
+    pos: "object-left-top",
+    href: "https://cardsrg.com",
+  },
+  {
+    name: "ABC Capital Group",
+    kind: "Reel",
+    src: "/assets/abc-capital-reel-poster.jpg",
+    alt: "ABC Capital Group reel frame: the ABC mark and the line Selling a house shouldn't be this hard, set in a serif on warm paper",
+    cell: "col-span-1 md:col-span-3 md:order-4",
+    box: "aspect-[4/5]",
+    pos: "object-center",
+    href: "/work",
+  },
+  {
+    name: "Shutters Depot",
+    kind: "Reel",
+    src: "/assets/shutters-depot-reel-poster.jpg",
+    alt: "Shutters Depot reel frame: the Shutters Depot logo on a white card over a dark rain-streaked sky",
+    cell: "col-span-2 md:col-span-3 md:order-5",
+    box: "aspect-[16/10] md:aspect-[4/5]",
+    pos: "object-center",
+    href: "/work",
+  },
+];
+
 export default function Home() {
   return (
     <>
       {/* ---------- 1 · Hero ---------- */}
       {/* Light, centered and type-first, on real water. The wash is held
           back a step so the ocean reads, and the type is solid ink so
-          nothing looks faded on a phone. The reel sits in branded player
-          chrome so the film reads as ours, not a stock drop-in. */}
+          nothing looks faded on a phone. The work wall under it shows the
+          screens the reel used to play. */}
       <section
         className="band-light relative overflow-hidden px-6"
         style={{
@@ -179,11 +239,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------- 2b · The reel ---------- */}
-      {/* A clean light band, so the dark reel pops instead of sinking into
-          a dark backdrop. The frame is a window with the three logo dots as
-          its traffic lights, so the film reads as ours before it plays. The
-          price row under it is the pitch in one line. */}
+      {/* ---------- 2b · The work ---------- */}
+      {/* A clean light band. This used to be the studio reel in a player
+          window. It is a wall of shipped work now, because a grid of real
+          screens says what the reel said and does not need to be played.
+          The price row under it is the pitch in one line. */}
       <section
         className="band-light relative overflow-hidden px-6 pb-16 md:pb-24 pt-12 md:pt-16"
         style={{
@@ -200,56 +260,65 @@ export default function Home() {
         />
         <div className="relative max-w-6xl mx-auto text-center">
           <p className="text-[11px] font-semibold uppercase tracking-label text-[#2B57C4] mb-5">
-            What a build looks like
+            Work
           </p>
-          <div className="relative max-w-5xl mx-auto">
-            <div
-              className="relative overflow-hidden rounded-[18px] border bg-[#060B1F]"
-              style={{
-                borderColor: "#D6DEEC",
-                boxShadow:
-                  "0 40px 90px -40px rgba(11,19,34,0.45), 0 16px 40px -24px rgba(43,87,196,0.35)",
-              }}
-            >
-              {/* Window chrome: the three logo dots as the traffic lights. */}
-              <div
-                className="flex items-center justify-between px-4 sm:px-5 py-2.5 border-b"
-                style={{
-                  background: "#0A1129",
-                  borderColor: "rgba(76,123,232,0.3)",
-                }}
-              >
-                <span className="flex items-center gap-1.5" aria-hidden>
-                  {["#2B57C4", "#4C7BE8", "#A8C4FF"].map((c) => (
-                    <span
-                      key={c}
-                      className="block w-2.5 h-2.5 rounded-full"
-                      style={{ background: c }}
-                    />
-                  ))}
-                </span>
-                <span className="font-display text-[15px] leading-none text-white">
-                  flow<span style={{ color: "#5B8CFF" }}>zone</span>
-                </span>
-                <span className="text-[10px] font-medium uppercase tracking-label text-[#8FA3C8]">
-                  Studio reel
-                </span>
-              </div>
-              <FastVideo
-                className="w-full h-auto block"
-                rate={1.25}
-                poster="/assets/studio-reel-poster.jpg"
-                fallback="/assets/studio-reel-anim.webp"
-                ariaLabel="FlowZone studio reel: you bring the idea, we build the brand, the site and the system"
-                sources={[
-                  { src: "/assets/studio-reel.mp4", type: "video/mp4" },
-                  { src: "/assets/studio-reel.webm", type: "video/webm" },
-                ]}
-              />
-            </div>
-            <p className="mt-3 text-[12px] text-[#647089]">
-              The studio reel, at speed. Brand, site and system.
-            </p>
+          <h2 className="font-display text-4xl md:text-5xl leading-[1.05] text-[#0B1322] max-w-3xl mx-auto">
+            Some of the work we create at FlowZone
+          </h2>
+          <p className="mt-4 text-[15px] text-[#49566E] max-w-xl mx-auto">
+            Apps, landing pages, storefronts and reels, designed and shipped by
+            this studio.{" "}
+            <Link href="/work" className="text-[#2B57C4] underline decoration-[#C9D6EA] underline-offset-4">
+              See all the work
+            </Link>
+          </p>
+
+          {/* The wall. Two wide tiles, three tall ones, every image cropped
+              to its box so the grid stays a grid whatever gets dropped in.
+              Order changes between phone and desktop so the tall ones pair
+              up on a small screen instead of leaving a gap. */}
+          <div className="mt-10 grid grid-cols-2 md:grid-cols-12 gap-3 md:gap-4 text-left">
+            {SHOWCASE.map((w) => {
+              const frame = (
+                <div
+                  className={`relative overflow-hidden rounded-[18px] border bg-white ${w.box}`}
+                  style={{
+                    borderColor: "#D6DEEC",
+                    boxShadow:
+                      "0 30px 70px -40px rgba(11,19,34,0.45), 0 12px 32px -22px rgba(43,87,196,0.35)",
+                  }}
+                >
+                  <img
+                    src={w.src}
+                    alt={w.alt}
+                    loading="lazy"
+                    className={`absolute inset-0 w-full h-full object-cover ${w.pos}`}
+                  />
+                </div>
+              );
+              return (
+                <figure key={w.name} className={`group ${w.cell}`}>
+                  {w.href ? (
+                    <a
+                      href={w.href}
+                      target={w.href.startsWith("http") ? "_blank" : undefined}
+                      rel={w.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                      className="block transition-transform duration-300 group-hover:-translate-y-0.5"
+                    >
+                      {frame}
+                    </a>
+                  ) : (
+                    frame
+                  )}
+                  <figcaption className="mt-2 px-0.5 flex items-baseline justify-between gap-3">
+                    <span className="text-[13px] font-medium text-[#0B1322]">{w.name}</span>
+                    <span className="text-[10px] font-medium uppercase tracking-label text-[#647089]">
+                      {w.kind}
+                    </span>
+                  </figcaption>
+                </figure>
+              );
+            })}
           </div>
 
           {/* The price ladder, the same three numbers /pricing sells. */}
