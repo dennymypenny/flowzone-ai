@@ -26,10 +26,21 @@ const esc = (v: unknown) =>
 // that owns the Resend account, which is the usual reason nothing arrives.
 const FROM = process.env.RESEND_FROM || "FlowZone <onboarding@resend.dev>";
 
-export async function POST(req: NextRequest) {
-  const { email, brief, name, path, build, source } = await req.json().catch(() => ({}));
+// Caps so a paste bomb or a bot cannot turn one save into a huge email.
+const LIMITS = { email: 200, brief: 8000, name: 120, path: 200, build: 60, source: 60 };
+const clean = (v: unknown, max: number) => String(v ?? "").trim().slice(0, max);
 
-  if (typeof email !== "string" || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+export async function POST(req: NextRequest) {
+  const body = await req.json().catch(() => ({}));
+  const raw = (body && typeof body === "object" ? body : {}) as Record<string, unknown>;
+  const email = clean(raw.email, LIMITS.email);
+  const brief = clean(raw.brief, LIMITS.brief);
+  const name = clean(raw.name, LIMITS.name);
+  const path = clean(raw.path, LIMITS.path);
+  const build = clean(raw.build, LIMITS.build);
+  const source = clean(raw.source, LIMITS.source);
+
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
     return NextResponse.json({ ok: false, error: "invalid email" }, { status: 400 });
   }
 
@@ -43,7 +54,7 @@ export async function POST(req: NextRequest) {
 
   const resend = new Resend(process.env.RESEND_API_KEY);
 
-  const hasBrief = typeof brief === "string" && brief.trim().length > 0;
+  const hasBrief = brief.length > 0;
   const briefHtml = hasBrief
     ? `<pre style="white-space:pre-wrap;font-family:inherit;font-size:14px;line-height:1.6;color:#333;background:#F4F6FA;padding:20px;border-left:3px solid #5B8CFF;margin:20px 0">${esc(
         brief

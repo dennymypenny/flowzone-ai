@@ -63,10 +63,41 @@ function keywordFallback(message: string): string {
   return `We build brands, sites and the systems that run them, and we make one off graphics for $49.99 if that is all you need. Email ${E} with what you are getting moving and a person comes straight back.`;
 }
 
+type Turn = { role: "user" | "assistant"; content: string };
+
+// The transcript arrives from the browser, so it is treated like any form
+// field. Only user and assistant turns get through (a caller-supplied
+// "system" turn would rewrite Flowy's instructions), only the last few, and
+// each one is cut to a sane length so nobody can run up the model bill with
+// one giant request.
+const MAX_TURNS = 12;
+const MAX_CHARS = 1500;
+
+function cleanTurns(raw: unknown): Turn[] | null {
+  if (!Array.isArray(raw) || raw.length === 0) return null;
+  const out: Turn[] = [];
+  for (const m of raw.slice(-MAX_TURNS)) {
+    if (!m || typeof m !== "object") return null;
+    const { role, content } = m as Record<string, unknown>;
+    if ((role !== "user" && role !== "assistant") || typeof content !== "string") return null;
+    const text = content.trim().slice(0, MAX_CHARS);
+    if (text) out.push({ role, content: text });
+  }
+  if (!out.length || out[out.length - 1].role !== "user") return null;
+  return out;
+}
+
 export async function POST(req: NextRequest) {
   try {
-    const { messages } = await req.json();
-    const lastMessage = messages[messages.length - 1]?.content ?? "";
+    const body = (await req.json().catch(() => null)) as { messages?: unknown } | null;
+    const messages = cleanTurns(body?.messages);
+    if (!messages) {
+      return NextResponse.json(
+        { text: "Tell me what you are trying to get moving and I will point you the right way." },
+        { status: 400 }
+      );
+    }
+    const lastMessage = messages[messages.length - 1].content;
 
     if (process.env.GROQ_API_KEY) {
       try {

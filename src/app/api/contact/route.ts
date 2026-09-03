@@ -30,14 +30,23 @@ const REASONS: Record<string, string> = {
   other: "Something else",
 };
 
+// Caps so a paste bomb or a bot cannot turn one submission into a huge email.
+const LIMITS = { name: 120, email: 200, reason: 40, message: 5000, budget: 60 };
+const clean = (v: unknown, max: number) => String(v ?? "").trim().slice(0, max);
+
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => ({}));
-  const { name, email, reason, message, budget } = body as Record<string, string>;
+  const raw = (body && typeof body === "object" ? body : {}) as Record<string, unknown>;
+  const name = clean(raw.name, LIMITS.name);
+  const email = clean(raw.email, LIMITS.email);
+  const reason = clean(raw.reason, LIMITS.reason);
+  const message = clean(raw.message, LIMITS.message);
+  const budget = clean(raw.budget, LIMITS.budget);
 
-  if (typeof email !== "string" || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
     return NextResponse.json({ ok: false, error: "Check the email address." }, { status: 400 });
   }
-  if (typeof message !== "string" || message.trim().length < 10) {
+  if (message.length < 10) {
     return NextResponse.json(
       { ok: false, error: "Tell us a little more, even one sentence." },
       { status: 400 }
