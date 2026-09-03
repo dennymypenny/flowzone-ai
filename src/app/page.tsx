@@ -31,9 +31,9 @@ export const metadata: Metadata = {
  * The work row on the homepage: three tiles, a taste, because /work holds
  * the whole set and CardsRG gets its own band further down this page. Each
  * image fills its box and is cropped from the side named in pos, so a
- * landing page, a phone screen and a vertical reel sit in one row. The
- * Mantel and Kalender renders live at the two work-*.jpg paths; drop a new
- * export at the same path to replace either one.
+ * landing page, a phone screen and a vertical reel sit in one row. Mantel
+ * is the real app screen, cropped to 2:3. Kalender is still a coded render
+ * at work-kalender.jpg; drop the real export at that path to replace it.
  */
 const SHOWCASE = [
   {
