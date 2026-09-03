@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { SITE } from "@/lib/site";
 import Wordmark from "@/components/Wordmark";
-import Flowy from "@/app/components/Flowy";
+import { FlowyFace } from "@/app/components/Flowy";
 
 type Role = "user" | "assistant";
 type ApiMsg = { role: Role; content: string };
@@ -71,9 +71,12 @@ export default function ChatWidget({ className = "" }: { className?: string }) {
       {/* pr-14 keeps the label clear of the dock close button. */}
       <div className="flex items-center justify-between pl-6 pr-14 py-4 border-b border-rule">
         <Wordmark tone="dark" size={16} />
-        <span className="inline-flex items-center gap-2">
-          <Flowy size={22} animate={false} />
-          <p className="label">Flowy</p>
+        <span className="inline-flex items-center gap-2.5">
+          <FlowyFace size={28} />
+          <span className="leading-tight">
+            <span className="block text-sm font-semibold text-ink">Flowy</span>
+            <span className="block text-[11px] text-ink-mute">FlowZone&apos;s little helper</span>
+          </span>
         </span>
       </div>
 
@@ -103,7 +106,8 @@ export default function ChatWidget({ className = "" }: { className?: string }) {
         )}
 
         {display.map((msg, i) => (
-          <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+          <div key={i} className={`flex items-end gap-2 ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+            {msg.role === "bot" && <FlowyFace size={24} className="mb-0.5" />}
             <div
               className={`px-4 py-3 rounded-lg max-w-xs sm:max-w-md text-sm leading-relaxed ${
                 msg.role === "user"
@@ -117,7 +121,8 @@ export default function ChatWidget({ className = "" }: { className?: string }) {
         ))}
 
         {loading && (
-          <div className="flex justify-start">
+          <div className="flex items-end gap-2 justify-start">
+            <FlowyFace size={24} className="mb-0.5" />
             <div className="bg-paper-deep border border-rule rounded-lg px-4 py-3.5 flex items-center gap-1.5">
               {[0, 1, 2].map((i) => (
                 <span

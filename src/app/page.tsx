@@ -6,6 +6,7 @@ import MessageUs, { TicketNote } from "@/components/MessageUs";
 import Testimonials from "@/components/Testimonials";
 import { SITE } from "@/lib/site";
 import PitchPath from "@/app/components/PitchPath";
+import PartsSwitch from "@/app/components/PartsSwitch";
 import FastVideo from "@/app/components/FastVideo";
 import { days, faqs } from "@/lib/process";
 
@@ -41,9 +42,10 @@ const SHOWCASE = [
     src: "/assets/work-kalender.jpg",
     alt: "Kalender landing page: a black pill navigation, the headline You are not busy, your meetings are just broken, an email sign-up and a dark week calendar over a field of daisies",
     cell: "col-span-2 md:col-span-6",
-    box: "aspect-[16/10]",
-    pos: "object-left-top",
+    box: "aspect-[4/3]",
+    pos: "object-center",
     href: null,
+    video: null,
   },
   {
     name: "Mantel",
@@ -51,19 +53,28 @@ const SHOWCASE = [
     src: "/assets/work-mantel.jpg",
     alt: "Mantel app welcome screen on a phone: a cluster of gold framed family photos, the Mantel wordmark, the line Rescue your memories, make them physical, and a Get Started button",
     cell: "col-span-1 md:col-span-3",
-    box: "aspect-[4/5]",
+    box: "aspect-[2/3]",
     pos: "object-center",
     href: null,
+    video: null,
   },
   {
     name: "ABC Capital Group",
     kind: "Reel",
     src: "/assets/abc-capital-reel-poster.jpg",
-    alt: "ABC Capital Group reel frame: the ABC mark and the line Selling a house shouldn't be this hard, set in a serif on warm paper",
+    alt: "ABC Capital Group reel: selling a house in South Florida should not be this hard, over one hundred million bought and sold across Miami-Dade, Broward and Palm Beach, and a four step process ending in a fair all-cash offer",
     cell: "col-span-1 md:col-span-3",
-    box: "aspect-[4/5]",
+    box: "aspect-[2/3]",
     pos: "object-center",
     href: "/work",
+    // The reel plays in its tile, muted and looping, the way the studio
+    // reel used to. The still above is its poster while it loads.
+    video: {
+      sources: [
+        { src: "/assets/abc-capital-reel.mp4", type: "video/mp4" },
+        { src: "/assets/abc-capital-reel.webm", type: "video/webm" },
+      ],
+    },
   },
 ];
 
@@ -122,25 +133,9 @@ export default function Home() {
             system that runs it. One flat price, paid once.
           </p>
 
-          <div className="flex items-center justify-center gap-2.5 mt-6 flex-wrap">
-            {[
-              { c: "#2B57C4", w: "Brand" },
-              { c: "#155E9C", w: "Site" },
-              { c: "#0F6B4F", w: "System" },
-            ].map((d) => (
-              <span
-                key={d.w}
-                className="inline-flex items-center gap-2 rounded-full border bg-white/85 px-3.5 py-1.5 text-[12px] font-medium tracking-wide"
-                style={{ borderColor: `${d.c}40`, color: d.c }}
-              >
-                <span
-                  className="block w-1.5 h-1.5 rounded-full"
-                  style={{ background: d.c }}
-                  aria-hidden
-                />
-                {d.w}
-              </span>
-            ))}
+          {/* The three parts, as one pill. Each segment scrolls to its card. */}
+          <div className="flex justify-center mt-6">
+            <PartsSwitch />
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 mt-8 justify-center">
@@ -255,8 +250,10 @@ export default function Home() {
           </p>
 
           {/* One row: a wide tile and two tall ones, the same height on a
-              desktop. On a phone the wide one goes full width and the two
-              tall ones sit side by side under it. */}
+              desktop (6 columns at 4:3 is as tall as 3 columns at 2:3). On
+              a phone the wide one goes full width and the two tall ones sit
+              side by side under it. 2:3 is close enough to a 9:16 reel that
+              the whole frame reads. */}
           <div className="mt-10 grid grid-cols-2 md:grid-cols-12 gap-3 md:gap-4 text-left">
             {SHOWCASE.map((w) => {
               const frame = (
@@ -268,12 +265,22 @@ export default function Home() {
                       "0 30px 70px -40px rgba(11,19,34,0.45), 0 12px 32px -22px rgba(43,87,196,0.35)",
                   }}
                 >
-                  <img
-                    src={w.src}
-                    alt={w.alt}
-                    loading="lazy"
-                    className={`absolute inset-0 w-full h-full object-cover ${w.pos}`}
-                  />
+                  {w.video ? (
+                    <FastVideo
+                      className={`absolute inset-0 w-full h-full object-cover ${w.pos}`}
+                      rate={1}
+                      poster={w.src}
+                      ariaLabel={w.alt}
+                      sources={w.video.sources}
+                    />
+                  ) : (
+                    <img
+                      src={w.src}
+                      alt={w.alt}
+                      loading="lazy"
+                      className={`absolute inset-0 w-full h-full object-cover ${w.pos}`}
+                    />
+                  )}
                 </div>
               );
               return (
@@ -400,7 +407,8 @@ export default function Home() {
             ].map((x) => (
               <div
                 key={x.k}
-                className="relative rounded-[18px] border bg-white p-7 md:p-8 flex flex-col overflow-hidden transition-transform duration-300 hover:-translate-y-1"
+                id={x.k.toLowerCase()}
+                className="relative scroll-mt-28 rounded-[18px] border bg-white p-7 md:p-8 flex flex-col overflow-hidden transition-transform duration-300 hover:-translate-y-1"
                 style={{
                   borderColor: `${x.c}2E`,
                   backgroundImage: `linear-gradient(180deg, ${x.c}0F 0%, rgba(255,255,255,0) 42%)`,

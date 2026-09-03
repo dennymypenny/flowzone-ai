@@ -7,6 +7,37 @@
  * at 22px in the chat header and at 96px on the edge of the page, so the
  * character is one file and one shape everywhere it shows up.
  */
+/**
+ * Flowy looking straight at you: a full disc with the eyes side by side.
+ * For the chat header and beside Flowy's replies, where the peeking half
+ * would be too small to read.
+ */
+export function FlowyFace({ size = 28, className = "" }: { size?: number; className?: string }) {
+  return (
+    <span className={`inline-block shrink-0 ${className}`} style={{ width: size, height: size }} aria-hidden>
+      <svg width={size} height={size} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="30" fill="#4C7BE8" />
+        <circle cx="32" cy="32" r="30" fill="url(#flowy-face-shade)" />
+        <defs>
+          <radialGradient id="flowy-face-shade" cx="0.3" cy="0.25" r="0.9">
+            <stop offset="0" stopColor="#7FA6FF" stopOpacity="0.6" />
+            <stop offset="0.6" stopColor="#4C7BE8" stopOpacity="0" />
+            <stop offset="1" stopColor="#1E3A8A" stopOpacity="0.35" />
+          </radialGradient>
+        </defs>
+        <rect x="12" y="24" width="18" height="16" rx="8" fill="#FFFFFF" />
+        <rect x="34" y="24" width="18" height="16" rx="8" fill="#FFFFFF" />
+        <circle cx="22" cy="32" r="4.4" fill="#0B1322" />
+        <circle cx="44" cy="32" r="4.4" fill="#0B1322" />
+        <circle cx="23.5" cy="30.5" r="1.3" fill="#FFFFFF" />
+        <circle cx="45.5" cy="30.5" r="1.3" fill="#FFFFFF" />
+        <path d="M14 19 q8 -5 16 0" stroke="#0B1322" strokeWidth="2.4" strokeLinecap="round" fill="none" />
+        <path d="M34 19 q8 -5 16 0" stroke="#0B1322" strokeWidth="2.4" strokeLinecap="round" fill="none" />
+      </svg>
+    </span>
+  );
+}
+
 export default function Flowy({
   size = 96,
   className = "",
