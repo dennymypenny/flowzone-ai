@@ -53,7 +53,7 @@ const SHOWCASE = [
     src: "/assets/work-mantel-real.jpg",
     alt: "Mantel app welcome screen on a phone: a cluster of gold framed family photos, the Mantel wordmark, the line Rescue your memories, make them physical, and a Get Started button",
     cell: "col-span-1 md:col-span-3",
-    box: "aspect-[2/3]",
+    box: "aspect-[2/3] md:aspect-auto md:flex-1 md:min-h-0",
     pos: "object-center",
     href: null,
     video: null,
@@ -64,7 +64,7 @@ const SHOWCASE = [
     src: "/assets/abc-capital-reel-poster.jpg",
     alt: "ABC Capital Group reel: selling a house in South Florida should not be this hard, over one hundred million bought and sold across Miami-Dade, Broward and Palm Beach, and a four step process ending in a fair all-cash offer",
     cell: "col-span-1 md:col-span-3",
-    box: "aspect-[2/3]",
+    box: "aspect-[2/3] md:aspect-auto md:flex-1 md:min-h-0",
     pos: "object-center",
     href: "/work",
     // The reel plays in its tile, muted and looping, the way the studio
@@ -258,7 +258,7 @@ export default function Home() {
             {SHOWCASE.map((w) => {
               const frame = (
                 <div
-                  className={`relative overflow-hidden rounded-[18px] border bg-white ${w.box}`}
+                  className={`relative w-full overflow-hidden rounded-[18px] border bg-white ${w.box}`}
                   style={{
                     borderColor: "#D6DEEC",
                     boxShadow:
@@ -284,13 +284,13 @@ export default function Home() {
                 </div>
               );
               return (
-                <figure key={w.name} className={`group ${w.cell}`}>
+                <figure key={w.name} className={`group flex flex-col md:h-full ${w.cell}`}>
                   {w.href ? (
                     <a
                       href={w.href}
                       target={w.href.startsWith("http") ? "_blank" : undefined}
                       rel={w.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      className="block transition-transform duration-300 group-hover:-translate-y-0.5"
+                      className="flex md:flex-1 md:min-h-0 transition-transform duration-300 group-hover:-translate-y-0.5"
                     >
                       {frame}
                     </a>
