@@ -33,13 +33,13 @@ export const metadata: Metadata = {
  * image fills its box and is cropped from the side named in pos, so a
  * landing page, a phone screen and a vertical reel sit in one row. Mantel
  * and Kalender are the real screens, cropped to 2:3 and 4:3 at the two
- * work-*.jpg paths.
+ * work-*-real.jpg paths.
  */
 const SHOWCASE = [
   {
     name: "Kalender",
     kind: "Landing page",
-    src: "/assets/work-kalender.jpg",
+    src: "/assets/work-kalender-real.jpg",
     alt: "Kalender landing page: a black pill navigation, the headline You are not busy, your meetings are just broken, an email sign-up and a dark week calendar over a field of daisies",
     cell: "col-span-2 md:col-span-6",
     box: "aspect-[4/3]",
@@ -50,7 +50,7 @@ const SHOWCASE = [
   {
     name: "Mantel",
     kind: "Mobile app",
-    src: "/assets/work-mantel.jpg",
+    src: "/assets/work-mantel-real.jpg",
     alt: "Mantel app welcome screen on a phone: a cluster of gold framed family photos, the Mantel wordmark, the line Rescue your memories, make them physical, and a Get Started button",
     cell: "col-span-1 md:col-span-3",
     box: "aspect-[2/3]",
