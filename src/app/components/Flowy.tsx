@@ -2,8 +2,8 @@
  * Flowy, FlowZone's little helper.
  *
  * A blue half-disc that peeks in from the right edge of the screen, eyes
- * stacked because the face is turned sideways to look at you, two small
- * hands holding the edge and one loose curl on top. The same drawing works
+ * stacked because the face is turned sideways to look at you, and two small
+ * hands holding the edge. The same drawing works
  * at 22px in the chat header and at 96px on the edge of the page, so the
  * character is one file and one shape everywhere it shows up.
  */
@@ -36,15 +36,6 @@ export default function Flowy({
             <stop offset="1" stopColor="#1E3A8A" stopOpacity="0.35" />
           </linearGradient>
         </defs>
-
-        {/* The curl on top. */}
-        <path
-          d="M30 48 c-4 -6 2 -10 6 -6 c3 3 -1 7 -4 5"
-          stroke="#0B1322"
-          strokeWidth="2.6"
-          strokeLinecap="round"
-          fill="none"
-        />
 
         {/* Eyes, stacked. Each one blinks from its own centre. */}
         <g className={animate ? "flowy-blink" : undefined} style={{ transformOrigin: "51px 50px" }}>
