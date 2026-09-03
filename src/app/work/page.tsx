@@ -32,7 +32,7 @@ export default function Work() {
         <div className="relative max-w-6xl mx-auto">
           <div className="flex items-center justify-between border-b border-rule pb-4 mb-12">
             <p className="label">Work</p>
-            <p className="label">Everything here is real and live</p>
+            <p className="label">Everything here is real and ours</p>
           </div>
           {/* Not "a short list, on purpose". That apologised for the count
               before anybody saw the work. This is an invitation instead. */}
@@ -43,9 +43,9 @@ export default function Work() {
           </h1>
           <p className="lede max-w-reading mt-10">
             A storefront built end to end, three reels cut for sound-off feeds,
-            a product animation and brand graphics for clients. Everything here
-            is live and
-            every piece of it was made by us. If you have something you want
+            a product animation, brand graphics for clients and two interface
+            designs. Everything here was made by us, and nothing on this page
+            is a concept dressed up as a client. If you have something you want
             built,{" "}
             <Link
               href="/intake"
@@ -499,6 +499,106 @@ export default function Work() {
                     <p className="text-sm text-ink-soft">{v}</p>
                   </div>
                 ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- 05 · Interface design ----------
+          The two screens the homepage row shows as a taste, at full size. A
+          marketing page that has to sell inside one screen, and a first app
+          screen that has to explain a product before anybody taps anything.
+          Both are studio design work, labelled that way rather than dressed
+          up as client builds, per the rule the top of this page sets. */}
+      <section data-flow className="px-6 py-24 border-t border-rule">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-12 gap-10 mb-10">
+            <div className="md:col-span-6">
+              <p className="label mb-4">05 · Interface design</p>
+              <h2 className="font-display text-5xl leading-none mb-4">
+                The screen doing
+                <br />
+                all of the selling.
+              </h2>
+            </div>
+            <p className="md:col-span-6 text-ink-soft leading-relaxed self-end max-w-reading">
+              A landing page and a first app screen have the same job. Say what
+              the thing is, say why it is worth a minute, and leave one obvious
+              next move. These two are studio design work, drawn to be handed
+              to a build and shipped without a second pass.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-12 gap-6 md:gap-8 items-start">
+            <div className="md:col-span-8">
+              <div className="panel overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/assets/work-kalender-full.jpg"
+                  alt="Kalender landing page: a black pill navigation, the headline You are not busy, your meetings are just broken, an email sign-up beside it, a trusted-by logo row and a dark week calendar sitting over a field of daisies"
+                  className="w-full h-auto block"
+                  loading="lazy"
+                />
+              </div>
+              <div className="mt-6">
+                <p className="label mb-3">Studio design</p>
+                <h3 className="font-display text-3xl leading-none mb-3">Kalender</h3>
+                <p className="text-ink-soft font-light leading-relaxed max-w-reading">
+                  A scheduling tool sells on one promise, so the page leads with
+                  the objection instead of the feature list. The headline names
+                  the problem, the sign-up sits at eye level next to it, and the
+                  product itself carries the rest of the screen. The calendar is
+                  shown running, not described.
+                </p>
+                <div className="border-t border-rule mt-6 pt-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  {[
+                    ["Piece", "Landing page"],
+                    ["Screens", "One, above the fold"],
+                    ["Type", "Serif headline, grotesk UI"],
+                    ["Made for", "Sign-ups"],
+                  ].map(([k, v]) => (
+                    <div key={k}>
+                      <p className="label mb-1.5">{k}</p>
+                      <p className="text-sm text-ink-soft">{v}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="md:col-span-4">
+              <div className="panel overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/assets/work-mantel-full.jpg"
+                  alt="Mantel app welcome screen on a phone: a cluster of gold framed family photos, the Mantel wordmark, the line Rescue your memories, make them physical, and a Get Started button"
+                  className="w-full h-auto block"
+                  loading="lazy"
+                />
+              </div>
+              <div className="mt-6">
+                <p className="label mb-3">Studio design</p>
+                <h3 className="font-display text-3xl leading-none mb-3">Mantel</h3>
+                <p className="text-ink-soft font-light leading-relaxed max-w-reading">
+                  The first screen of an app has one job, and it is not
+                  onboarding. The framed photos say what the product makes
+                  before the wordmark says its name, so the line underneath
+                  only has to confirm it. One button, no account wall.
+                </p>
+                <div className="border-t border-rule mt-6 pt-4 grid grid-cols-2 gap-4">
+                  {[
+                    ["Piece", "Mobile app screen"],
+                    ["Format", "Phone, first run"],
+                    ["Actions", "One"],
+                    ["Made for", "The App Store shot"],
+                  ].map(([k, v]) => (
+                    <div key={k}>
+                      <p className="label mb-1.5">{k}</p>
+                      <p className="text-sm text-ink-soft">{v}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

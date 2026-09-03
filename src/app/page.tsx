@@ -221,7 +221,7 @@ export default function Home() {
           screens says what the reel said and does not need to be played.
           The price row under it is the pitch in one line. */}
       <section
-        className="band-light relative overflow-hidden px-6 pb-16 md:pb-24 pt-12 md:pt-16"
+        className="band-light relative overflow-hidden px-6 pb-10 md:pb-14 pt-12 md:pt-16"
         style={{
           background: "linear-gradient(180deg, #EAF1FB 0%, #F7FAFF 100%)",
         }}
@@ -345,7 +345,7 @@ export default function Home() {
           are the whole offer and a hairline border was not carrying that.
           Each card is tinted with its own part colour so the three read as a
           set before a single word is read. */}
-      <section data-flow className="band-light px-6 py-16 md:py-24">
+      <section data-flow className="band-light px-6 pt-10 md:pt-14 pb-16 md:pb-24">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center flex-wrap gap-y-2 mb-6">
             {[
