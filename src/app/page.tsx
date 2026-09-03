@@ -27,11 +27,12 @@ export const metadata: Metadata = {
 };
 
 /**
- * The work wall on the homepage. Each entry is one tile: the image fills
- * its box and is cropped from the side named in pos, so a phone screen, a
- * landing page and a vertical reel all sit in one grid. The Mantel and
- * Kalender renders live at the two work-*.jpg paths; drop a new export at
- * the same path to replace either one.
+ * The work row on the homepage: three tiles, a taste, because /work holds
+ * the whole set and CardsRG gets its own band further down this page. Each
+ * image fills its box and is cropped from the side named in pos, so a
+ * landing page, a phone screen and a vertical reel sit in one row. The
+ * Mantel and Kalender renders live at the two work-*.jpg paths; drop a new
+ * export at the same path to replace either one.
  */
 const SHOWCASE = [
   {
@@ -39,7 +40,7 @@ const SHOWCASE = [
     kind: "Landing page",
     src: "/assets/work-kalender.jpg",
     alt: "Kalender landing page: a black pill navigation, the headline You are not busy, your meetings are just broken, an email sign-up and a dark week calendar over a field of daisies",
-    cell: "col-span-2 md:col-span-8 md:order-1",
+    cell: "col-span-2 md:col-span-6",
     box: "aspect-[16/10]",
     pos: "object-left-top",
     href: null,
@@ -49,7 +50,7 @@ const SHOWCASE = [
     kind: "Mobile app",
     src: "/assets/work-mantel.jpg",
     alt: "Mantel app welcome screen on a phone: a cluster of gold framed family photos, the Mantel wordmark, the line Rescue your memories, make them physical, and a Get Started button",
-    cell: "col-span-1 md:col-span-4 md:order-2",
+    cell: "col-span-1 md:col-span-3",
     box: "aspect-[4/5]",
     pos: "object-center",
     href: null,
@@ -59,28 +60,8 @@ const SHOWCASE = [
     kind: "Reel",
     src: "/assets/abc-capital-reel-poster.jpg",
     alt: "ABC Capital Group reel frame: the ABC mark and the line Selling a house shouldn't be this hard, set in a serif on warm paper",
-    cell: "col-span-1 md:col-span-3 md:order-4",
+    cell: "col-span-1 md:col-span-3",
     box: "aspect-[4/5]",
-    pos: "object-center",
-    href: "/work",
-  },
-  {
-    name: "CardsRG",
-    kind: "Storefront",
-    src: "/assets/work-cardsrg.jpg",
-    alt: "CardsRG storefront in a browser window: the CRG shield logo and category navigation, the Shop Sports and Shop TCG doors over graded card photography, and the row of Cards Rips and Grails, PSA 10 Grails, DM to Deal and Follow the Rips",
-    cell: "col-span-2 md:col-span-6 md:order-3",
-    box: "aspect-[16/10]",
-    pos: "object-center",
-    href: "https://cardsrg.com",
-  },
-  {
-    name: "Shutters Depot",
-    kind: "Reel",
-    src: "/assets/shutters-depot-reel-poster.jpg",
-    alt: "Shutters Depot reel frame: the Shutters Depot logo on a white card over a dark rain-streaked sky",
-    cell: "col-span-2 md:col-span-3 md:order-5",
-    box: "aspect-[16/10] md:aspect-[4/5]",
     pos: "object-center",
     href: "/work",
   },
@@ -266,18 +247,16 @@ export default function Home() {
             Some of the work we create at FlowZone
           </h2>
           <p className="mt-4 text-[15px] text-[#49566E] max-w-xl mx-auto">
-            Apps, landing pages, storefronts and reels, designed and shipped by
-            this studio.{" "}
+            A landing page, an app and a reel, designed and shipped by this
+            studio.{" "}
             <Link href="/work" className="text-[#2B57C4] underline decoration-[#C9D6EA] underline-offset-4">
               See all the work
             </Link>
           </p>
 
-          {/* The wall. Two wide tiles, three tall ones, every image cropped
-              to its box so the grid stays a grid whatever gets dropped in.
-              The list is in phone order, so the two tall tiles sit side by
-              side there; md:order puts the storefront ahead of the reels on
-              a desktop where the row is twelve columns wide. */}
+          {/* One row: a wide tile and two tall ones, the same height on a
+              desktop. On a phone the wide one goes full width and the two
+              tall ones sit side by side under it. */}
           <div className="mt-10 grid grid-cols-2 md:grid-cols-12 gap-3 md:gap-4 text-left">
             {SHOWCASE.map((w) => {
               const frame = (
