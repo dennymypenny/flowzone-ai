@@ -7,14 +7,14 @@ import MessageUs, { TicketNote } from "@/components/MessageUs";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Some of the work FlowZone has shipped. A storefront built end to end, three reels cut for sound-off feeds, a product animation and brand graphics for clients, all of it live.",
+    "Some of the work FlowZone has shipped. A storefront built end to end, three reels cut for sound-off feeds, a brand animation, a product animation and brand graphics for clients, all of it live.",
   alternates: { canonical: "/work" },
   // Set in full because metadata merging is shallow. A page that declares
   // openGraph replaces the layout block outright, so anything omitted is gone.
   openGraph: {
     title: "Work | FlowZone",
     description:
-      "Some of our work, and we are always looking for the next one. A storefront built end to end, three reels cut for sound-off feeds, a product animation and brand graphics for clients.",
+      "Some of our work, and we are always looking for the next one. A storefront built end to end, three reels cut for sound-off feeds, a brand animation, a product animation and brand graphics for clients.",
     url: `${SITE.url}/work`,
     siteName: "FlowZone",
     type: "website",
@@ -43,8 +43,8 @@ export default function Work() {
           </h1>
           <p className="lede max-w-reading mt-10">
             A storefront built end to end, three reels cut for sound-off feeds,
-            a product animation, brand graphics for clients and two interface
-            designs. Everything here was made by us, and nothing on this page
+            a brand animation, a product animation, brand graphics for clients
+            and two interface designs. Everything here was made by us, and nothing on this page
             is a concept dressed up as a client. If you have something you want
             built,{" "}
             <Link
@@ -359,6 +359,94 @@ export default function Work() {
         </div>
       </section>
 
+      {/* ---------- 03 · Brand animation ----------
+          The Mahj & Coffee welcome piece is square, built for the Instagram
+          grid, so it does not fit the vertical reel row above or the landscape
+          slot below. It sits at half width beside its write-up. Client work:
+          a real community brand with a real account, linked. */}
+      <section data-flow className="px-6 py-24 border-t border-rule">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-12 gap-10 mb-10">
+            <div className="md:col-span-6">
+              <p className="label mb-4">03 · Brand animation</p>
+              <h2 className="font-display text-5xl leading-none mb-4">
+                A whole welcome,
+                <br />
+                in two colours.
+              </h2>
+            </div>
+            <p className="md:col-span-6 text-ink-soft leading-relaxed self-end max-w-reading">
+              A new community does not have a photo library yet. It has a
+              logo, a palette and a reason to exist. This piece introduces all
+              three in under thirty seconds, drawn entirely from the brand
+              itself, so the account looked like it had been there for years
+              on day one.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-12 gap-6 md:gap-8 items-start">
+            <div className="md:col-span-6">
+              <div className="panel overflow-hidden">
+                <video
+                  className="w-full h-auto block"
+                  poster="/assets/mahj-coffee-welcome-poster.jpg"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  controls
+                  preload="metadata"
+                  aria-label="Mahj & Coffee welcome animation: the mahj and coffee wordmark, then a community for Mahjong lovers to Charleston into connection, tiles and coffee cups around a table, learn the game, find your people, why play behind a screen, real laughs, real macchiatos, real connection, bird bam, come for the tiles, leave with lifelong pungs of friendship, where the tiles click, the coffee is hot, and the people are even better, hashtag sip and play."
+                >
+                  <source src="/assets/mahj-coffee-welcome.webm" type="video/webm" />
+                  <source src="/assets/mahj-coffee-welcome.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+
+            <div className="md:col-span-6 md:pt-2">
+              <p className="label mb-3">Client work</p>
+              <h3 className="font-display text-3xl leading-none mb-2">Mahj &amp; Coffee</h3>
+              <a
+                href="https://www.instagram.com/mahjandcoffee/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-accent hover:underline"
+              >
+                @mahjandcoffee ↗
+              </a>
+              <p className="text-ink-soft font-light leading-relaxed max-w-reading mt-4">
+                Mahj &amp; Coffee is a Miami community for American Mahjong,
+                built around the table rather than the app. The welcome piece
+                had to say that without a single photo, so it is made from the
+                brand&apos;s own parts: the wordmark, the tiles, the cups, the
+                bird bam, and the copy from the account&apos;s own bio. Two
+                colours only, the logo red on blush, because the brand has two
+                colours and a third would have made it somebody else&apos;s.
+              </p>
+              <p className="text-ink-soft font-light leading-relaxed max-w-reading mt-4">
+                It reads with the sound off, lands the tagline at the end, and
+                loops clean on a grid post, in a story and pinned to the top of
+                the profile.
+              </p>
+              <div className="border-t border-rule mt-6 pt-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {[
+                  ["Length", "27 seconds"],
+                  ["Format", "1:1 square"],
+                  ["Made for", "Instagram grid"],
+                  ["Audio", "None needed"],
+                ].map(([k, v]) => (
+                  <div key={k}>
+                    <p className="label mb-1.5">{k}</p>
+                    <p className="text-sm text-ink-soft">{v}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* The SlipFolio piece is landscape and explains a product, so it does
           not belong in the vertical reel grid. It gets the full width and the
           write-up sits under it. */}
@@ -366,7 +454,7 @@ export default function Work() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-12 gap-10 mb-10">
             <div className="md:col-span-6">
-              <p className="label mb-4">03 · Product animation</p>
+              <p className="label mb-4">04 · Product animation</p>
               <h2 className="font-display text-5xl leading-none mb-4">
                 Explaining the thing
                 <br />
@@ -443,7 +531,7 @@ export default function Work() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-12 gap-10 mb-10">
             <div className="md:col-span-6">
-              <p className="label mb-4">04 · Brand graphics</p>
+              <p className="label mb-4">05 · Brand graphics</p>
               <h2 className="font-display text-5xl leading-none mb-4">
                 One graphic,
                 <br />
@@ -505,7 +593,7 @@ export default function Work() {
         </div>
       </section>
 
-      {/* ---------- 05 · Interface design ----------
+      {/* ---------- 06 · Interface design ----------
           The two screens the homepage row shows as a taste, at full size. A
           marketing page that has to sell inside one screen, and a first app
           screen that has to explain a product before anybody taps anything.
@@ -515,7 +603,7 @@ export default function Work() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-12 gap-10 mb-10">
             <div className="md:col-span-6">
-              <p className="label mb-4">05 · Interface design</p>
+              <p className="label mb-4">06 · Interface design</p>
               <h2 className="font-display text-5xl leading-none mb-4">
                 The screen doing
                 <br />
