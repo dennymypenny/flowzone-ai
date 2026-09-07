@@ -258,11 +258,11 @@ export default function Work() {
       </section>
 
       {/* ---------- 02 · Client site ----------
-          The Mahj & Coffee site, the second site on the page, so it sits next
-          to CardsRG. Client work: a real Miami community with a real account.
-          Not hosted here yet, so there is no site link, only the Instagram.
-          Hero at 8 columns, the phone view at 4, then the invite band full
-          width because it is the screen that carries the brand's voice. */}
+          Mahj & Coffee, the second site on the page, next to CardsRG. Two
+          square videos side by side: a scroll-through of the site itself and
+          the welcome reel cut for the account, so the brand shows up in
+          motion twice rather than as stills. Client work: a real Miami
+          community with a real account. Not hosted here, so no site link. */}
       <section data-flow className="px-6 py-24 border-t border-rule">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-12 gap-10 mb-10">
@@ -276,45 +276,50 @@ export default function Work() {
             </div>
             <p className="md:col-span-6 text-ink-soft leading-relaxed self-end max-w-reading">
               A community site has to feel like the room before you walk in.
-              This one is built from the logo alone, its red and its blush and
-              nothing else, so every screen looks like the brand and the
-              founder&apos;s voice does the rest.
+              The site and the welcome reel are built from the logo alone, its
+              red and its blush and nothing else, so everything the brand
+              posts looks like the same brand.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-12 gap-6 md:gap-8 items-start">
-            <div className="md:col-span-8">
-              <div className="panel overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/assets/work-mahj-hero.jpg"
-                  alt="Mahj & Coffee homepage: the red mahj and coffee wordmark on blush, the line A community for Mahjong lovers to Charleston into connection, two coffee-cup buttons and a scrolling marquee reading sip and play, bird bam"
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+            {[
+              {
+                base: "mahj-coffee-site",
+                tag: "The site",
+                note: "One page, top to bottom.",
+                aria: "Scroll-through of the Mahj & Coffee website: the red wordmark on blush, Emily's welcome, ways to play, the Girl friend meet me for Mahj & Coffee band, the purist approach, the calendar, the Etsy practice sheet and the join list.",
+              },
+              {
+                base: "mahj-coffee-welcome",
+                tag: "The welcome reel",
+                note: "Cut for the Instagram grid.",
+                aria: "Mahj & Coffee welcome animation: the mahj and coffee wordmark, then a community for Mahjong lovers to Charleston into connection, tiles and coffee cups around a table, learn the game, find your people, why play behind a screen, real laughs, real macchiatos, real connection, bird bam, come for the tiles, leave with lifelong pungs of friendship, hashtag sip and play.",
+              },
+            ].map((v) => (
+              <figure key={v.base} className="panel overflow-hidden flex flex-col">
+                <video
                   className="w-full h-auto block"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-            <div className="md:col-span-4">
-              <div className="panel overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/assets/work-mahj-phone.jpg"
-                  alt="The same Mahj & Coffee homepage on a phone, wordmark centred with the welcome line and the two buttons under it"
-                  className="w-full h-auto block"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="panel overflow-hidden mt-6 md:mt-8">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/assets/work-mahj-invite.jpg"
-              alt="Mahj & Coffee invite band: Girl friend, meet me for Mahj & Coffee in red italic and bold serif beside a cut-out of a woman in a towel and robe holding a Mahj & Coffee mug on a red block"
-              className="w-full h-auto block"
-              loading="lazy"
-            />
+                  poster={`/assets/${v.base}-poster.jpg`}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  controls
+                  preload="metadata"
+                  aria-label={v.aria}
+                >
+                  <source src={`/assets/${v.base}.webm`} type="video/webm" />
+                  <source src={`/assets/${v.base}.mp4`} type="video/mp4" />
+                </video>
+                <figcaption className="px-5 py-4 border-t border-rule flex items-baseline gap-3">
+                  <span className="text-[11px] font-medium uppercase tracking-label shrink-0 text-accent">
+                    {v.tag}
+                  </span>
+                  <span className="text-sm text-ink-soft font-light">{v.note}</span>
+                </figcaption>
+              </figure>
+            ))}
           </div>
 
           <div className="grid md:grid-cols-12 gap-10 mt-8">
@@ -335,22 +340,24 @@ export default function Work() {
                 Mahj &amp; Coffee teaches American Mahjong in Miami, beginner
                 lessons, guided play, game nights and coffee meetups, the
                 purist way. The site takes the two colours off the logo and
-                refuses a third. The founder&apos;s welcome is written in her
-                own voice, the buttons carry a coffee cup, the girl with the
-                mug gets a whole band, and the practice sheet from the Etsy
-                shop gets its own room.
+                refuses a third. The founder&apos;s welcome is in her own
+                voice, the buttons carry a coffee cup, the girl with the mug
+                gets a whole band, and the practice sheet from the Etsy shop
+                gets its own room.
               </p>
               <p className="text-ink-soft font-light leading-relaxed max-w-reading mt-4">
-                One HTML file, no framework, so it loads in a blink on a phone
-                at a coffee shop and the booking calendar drops in the moment
-                it is ready.
+                The reel introduces the same brand in twenty-seven seconds
+                with no photo library, drawn from the wordmark, the tiles, the
+                cups and the copy from the account&apos;s own bio. It reads
+                with the sound off and loops clean pinned to the top of the
+                profile.
               </p>
               <div className="border-t border-rule mt-6 pt-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {[
-                  ["Piece", "Community site"],
+                  ["Pieces", "Site and reel"],
                   ["Palette", "Two, from the logo"],
-                  ["Sections", "Nine, one page"],
-                  ["Stack", "Single HTML file"],
+                  ["Site", "Single HTML file"],
+                  ["Reel", "27s, 1:1, no audio"],
                 ].map(([k, v]) => (
                   <div key={k}>
                     <p className="label mb-1.5">{k}</p>
@@ -466,94 +473,6 @@ export default function Work() {
         </div>
       </section>
 
-      {/* ---------- 04 · Brand animation ----------
-          The Mahj & Coffee welcome piece is square, built for the Instagram
-          grid, so it does not fit the vertical reel row above or the landscape
-          slot below. It sits at half width beside its write-up. Client work:
-          a real community brand with a real account, linked. */}
-      <section data-flow className="px-6 py-24 border-t border-rule">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-12 gap-10 mb-10">
-            <div className="md:col-span-6">
-              <p className="label mb-4">04 · Brand animation</p>
-              <h2 className="font-display text-5xl leading-none mb-4">
-                A whole welcome,
-                <br />
-                in two colours.
-              </h2>
-            </div>
-            <p className="md:col-span-6 text-ink-soft leading-relaxed self-end max-w-reading">
-              A new community does not have a photo library yet. It has a
-              logo, a palette and a reason to exist. This piece introduces all
-              three in under thirty seconds, drawn entirely from the brand
-              itself, so the account looked like it had been there for years
-              on day one.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-12 gap-6 md:gap-8 items-start">
-            <div className="md:col-span-6">
-              <div className="panel overflow-hidden">
-                <video
-                  className="w-full h-auto block"
-                  poster="/assets/mahj-coffee-welcome-poster.jpg"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  controls
-                  preload="metadata"
-                  aria-label="Mahj & Coffee welcome animation: the mahj and coffee wordmark, then a community for Mahjong lovers to Charleston into connection, tiles and coffee cups around a table, learn the game, find your people, why play behind a screen, real laughs, real macchiatos, real connection, bird bam, come for the tiles, leave with lifelong pungs of friendship, where the tiles click, the coffee is hot, and the people are even better, hashtag sip and play."
-                >
-                  <source src="/assets/mahj-coffee-welcome.webm" type="video/webm" />
-                  <source src="/assets/mahj-coffee-welcome.mp4" type="video/mp4" />
-                </video>
-              </div>
-            </div>
-
-            <div className="md:col-span-6 md:pt-2">
-              <p className="label mb-3">Client work</p>
-              <h3 className="font-display text-3xl leading-none mb-2">Mahj &amp; Coffee</h3>
-              <a
-                href="https://www.instagram.com/mahjandcoffee/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-accent hover:underline"
-              >
-                @mahjandcoffee ↗
-              </a>
-              <p className="text-ink-soft font-light leading-relaxed max-w-reading mt-4">
-                Mahj &amp; Coffee is a Miami community for American Mahjong,
-                built around the table rather than the app. The welcome piece
-                had to say that without a single photo, so it is made from the
-                brand&apos;s own parts: the wordmark, the tiles, the cups, the
-                bird bam, and the copy from the account&apos;s own bio. Two
-                colours only, the logo red on blush, because the brand has two
-                colours and a third would have made it somebody else&apos;s.
-              </p>
-              <p className="text-ink-soft font-light leading-relaxed max-w-reading mt-4">
-                It reads with the sound off, lands the tagline at the end, and
-                loops clean on a grid post, in a story and pinned to the top of
-                the profile.
-              </p>
-              <div className="border-t border-rule mt-6 pt-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
-                {[
-                  ["Length", "27 seconds"],
-                  ["Format", "1:1 square"],
-                  ["Made for", "Instagram grid"],
-                  ["Audio", "None needed"],
-                ].map(([k, v]) => (
-                  <div key={k}>
-                    <p className="label mb-1.5">{k}</p>
-                    <p className="text-sm text-ink-soft">{v}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* The SlipFolio piece is landscape and explains a product, so it does
           not belong in the vertical reel grid. It gets the full width and the
           write-up sits under it. */}
@@ -561,7 +480,7 @@ export default function Work() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-12 gap-10 mb-10">
             <div className="md:col-span-6">
-              <p className="label mb-4">05 · Product animation</p>
+              <p className="label mb-4">04 · Product animation</p>
               <h2 className="font-display text-5xl leading-none mb-4">
                 Explaining the thing
                 <br />
@@ -631,7 +550,7 @@ export default function Work() {
         </div>
       </section>
 
-      {/* ---------- 06 · Interface design ----------
+      {/* ---------- 05 · Interface design ----------
           The two screens the homepage row shows as a taste, at full size. A
           marketing page that has to sell inside one screen, and a first app
           screen that has to explain a product before anybody taps anything.
@@ -641,7 +560,7 @@ export default function Work() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-12 gap-10 mb-10">
             <div className="md:col-span-6">
-              <p className="label mb-4">06 · Interface design</p>
+              <p className="label mb-4">05 · Interface design</p>
               <h2 className="font-display text-5xl leading-none mb-4">
                 The screen doing
                 <br />
@@ -738,7 +657,7 @@ export default function Work() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-12 gap-10 mb-10">
             <div className="md:col-span-6">
-              <p className="label mb-4">07 · Brand graphics</p>
+              <p className="label mb-4">06 · Brand graphics</p>
               <h2 className="font-display text-5xl leading-none mb-4">
                 One graphic,
                 <br />
