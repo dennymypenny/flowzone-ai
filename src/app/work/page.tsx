@@ -7,14 +7,14 @@ import MessageUs, { TicketNote } from "@/components/MessageUs";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Some of the work FlowZone has shipped. A storefront built end to end, three reels cut for sound-off feeds, a brand animation, a product animation and brand graphics for clients, all of it live.",
+    "Some of the work FlowZone has shipped. A storefront built end to end, a community site for a Miami Mahjong club, three reels cut for sound-off feeds, a brand animation, a product animation and brand graphics for clients, all of it live.",
   alternates: { canonical: "/work" },
   // Set in full because metadata merging is shallow. A page that declares
   // openGraph replaces the layout block outright, so anything omitted is gone.
   openGraph: {
     title: "Work | FlowZone",
     description:
-      "Some of our work, and we are always looking for the next one. A storefront built end to end, three reels cut for sound-off feeds, a brand animation, a product animation and brand graphics for clients.",
+      "Some of our work, and we are always looking for the next one. A storefront built end to end, a community site for a Miami Mahjong club, three reels cut for sound-off feeds, a brand animation, a product animation and brand graphics for clients.",
     url: `${SITE.url}/work`,
     siteName: "FlowZone",
     type: "website",
@@ -42,9 +42,10 @@ export default function Work() {
             Always looking for more.
           </h1>
           <p className="lede max-w-reading mt-10">
-            A storefront built end to end, three reels cut for sound-off feeds,
-            a brand animation, a product animation, brand graphics for clients
-            and two interface designs. Everything here was made by us, and nothing on this page
+            A storefront built end to end, a community site for a Miami
+            Mahjong club, three reels cut for sound-off feeds, a brand
+            animation, a product animation, brand graphics for clients and two
+            interface designs. Everything here was made by us, and nothing on this page
             is a concept dressed up as a client. If you have something you want
             built,{" "}
             <Link
@@ -256,6 +257,112 @@ export default function Work() {
         </div>
       </section>
 
+      {/* ---------- 02 · Client site ----------
+          The Mahj & Coffee site, the second site on the page, so it sits next
+          to CardsRG. Client work: a real Miami community with a real account.
+          Not hosted here yet, so there is no site link, only the Instagram.
+          Hero at 8 columns, the phone view at 4, then the invite band full
+          width because it is the screen that carries the brand's voice. */}
+      <section data-flow className="px-6 py-24 border-t border-rule">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-12 gap-10 mb-10">
+            <div className="md:col-span-6">
+              <p className="label mb-4">02 · Client site</p>
+              <h2 className="font-display text-5xl leading-none mb-4">
+                Two colours,
+                <br />
+                one very good table.
+              </h2>
+            </div>
+            <p className="md:col-span-6 text-ink-soft leading-relaxed self-end max-w-reading">
+              A community site has to feel like the room before you walk in.
+              This one is built from the logo alone, its red and its blush and
+              nothing else, so every screen looks like the brand and the
+              founder&apos;s voice does the rest.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-12 gap-6 md:gap-8 items-start">
+            <div className="md:col-span-8">
+              <div className="panel overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/assets/work-mahj-hero.jpg"
+                  alt="Mahj & Coffee homepage: the red mahj and coffee wordmark on blush, the line A community for Mahjong lovers to Charleston into connection, two coffee-cup buttons and a scrolling marquee reading sip and play, bird bam"
+                  className="w-full h-auto block"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <div className="md:col-span-4">
+              <div className="panel overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/assets/work-mahj-phone.jpg"
+                  alt="The same Mahj & Coffee homepage on a phone, wordmark centred with the welcome line and the two buttons under it"
+                  className="w-full h-auto block"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="panel overflow-hidden mt-6 md:mt-8">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/assets/work-mahj-invite.jpg"
+              alt="Mahj & Coffee invite band: Girl friend, meet me for Mahj & Coffee in red italic and bold serif beside a cut-out of a woman in a towel and robe holding a Mahj & Coffee mug on a red block"
+              className="w-full h-auto block"
+              loading="lazy"
+            />
+          </div>
+
+          <div className="grid md:grid-cols-12 gap-10 mt-8">
+            <div className="md:col-span-5">
+              <p className="label mb-3">Client work</p>
+              <h3 className="font-display text-3xl leading-none mb-2">Mahj &amp; Coffee</h3>
+              <a
+                href="https://www.instagram.com/mahjandcoffee/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-accent hover:underline"
+              >
+                @mahjandcoffee ↗
+              </a>
+            </div>
+            <div className="md:col-span-7">
+              <p className="text-ink-soft font-light leading-relaxed max-w-reading">
+                Mahj &amp; Coffee teaches American Mahjong in Miami, beginner
+                lessons, guided play, game nights and coffee meetups, the
+                purist way. The site takes the two colours off the logo and
+                refuses a third. The founder&apos;s welcome is written in her
+                own voice, the buttons carry a coffee cup, the girl with the
+                mug gets a whole band, and the practice sheet from the Etsy
+                shop gets its own room.
+              </p>
+              <p className="text-ink-soft font-light leading-relaxed max-w-reading mt-4">
+                One HTML file, no framework, so it loads in a blink on a phone
+                at a coffee shop and the booking calendar drops in the moment
+                it is ready.
+              </p>
+              <div className="border-t border-rule mt-6 pt-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {[
+                  ["Piece", "Community site"],
+                  ["Palette", "Two, from the logo"],
+                  ["Sections", "Nine, one page"],
+                  ["Stack", "Single HTML file"],
+                ].map(([k, v]) => (
+                  <div key={k}>
+                    <p className="label mb-1.5">{k}</p>
+                    <p className="text-sm text-ink-soft">{v}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Motion: three reels, on white. Two are client work and one is a
           studio sample, and each says which it is, because the rule on this
           page is that nothing pretends. Three across with the write-up under
@@ -263,7 +370,7 @@ export default function Work() {
       <section data-flow className="band-light px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <div className="border-t border-rule pt-10 mb-12">
-            <p className="label mb-4">02 · Motion</p>
+            <p className="label mb-4">03 · Motion</p>
             <div className="grid md:grid-cols-12 gap-10">
               <h2 className="md:col-span-6 font-display text-5xl leading-none">
                 Reels built for
@@ -359,7 +466,7 @@ export default function Work() {
         </div>
       </section>
 
-      {/* ---------- 03 · Brand animation ----------
+      {/* ---------- 04 · Brand animation ----------
           The Mahj & Coffee welcome piece is square, built for the Instagram
           grid, so it does not fit the vertical reel row above or the landscape
           slot below. It sits at half width beside its write-up. Client work:
@@ -368,7 +475,7 @@ export default function Work() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-12 gap-10 mb-10">
             <div className="md:col-span-6">
-              <p className="label mb-4">03 · Brand animation</p>
+              <p className="label mb-4">04 · Brand animation</p>
               <h2 className="font-display text-5xl leading-none mb-4">
                 A whole welcome,
                 <br />
@@ -454,7 +561,7 @@ export default function Work() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-12 gap-10 mb-10">
             <div className="md:col-span-6">
-              <p className="label mb-4">04 · Product animation</p>
+              <p className="label mb-4">05 · Product animation</p>
               <h2 className="font-display text-5xl leading-none mb-4">
                 Explaining the thing
                 <br />
@@ -531,7 +638,7 @@ export default function Work() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-12 gap-10 mb-10">
             <div className="md:col-span-6">
-              <p className="label mb-4">05 · Brand graphics</p>
+              <p className="label mb-4">06 · Brand graphics</p>
               <h2 className="font-display text-5xl leading-none mb-4">
                 One graphic,
                 <br />
@@ -593,7 +700,7 @@ export default function Work() {
         </div>
       </section>
 
-      {/* ---------- 06 · Interface design ----------
+      {/* ---------- 07 · Interface design ----------
           The two screens the homepage row shows as a taste, at full size. A
           marketing page that has to sell inside one screen, and a first app
           screen that has to explain a product before anybody taps anything.
@@ -603,7 +710,7 @@ export default function Work() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-12 gap-10 mb-10">
             <div className="md:col-span-6">
-              <p className="label mb-4">06 · Interface design</p>
+              <p className="label mb-4">07 · Interface design</p>
               <h2 className="font-display text-5xl leading-none mb-4">
                 The screen doing
                 <br />
