@@ -7,14 +7,14 @@ import MessageUs, { TicketNote } from "@/components/MessageUs";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Some of the work FlowZone has shipped. A storefront built end to end, a community site for a Miami Mahjong club, three reels cut for sound-off feeds, a brand animation, a product animation and brand graphics for clients, all of it live.",
+    "Some of the work FlowZone has shipped. A storefront built end to end, a community site for a Miami Mahjong club, three reels cut for sound-off feeds, a brand animation, a product animation, a show title animation and brand graphics for clients, all of it live.",
   alternates: { canonical: "/work" },
   // Set in full because metadata merging is shallow. A page that declares
   // openGraph replaces the layout block outright, so anything omitted is gone.
   openGraph: {
     title: "Work | FlowZone",
     description:
-      "Some of our work, and we are always looking for the next one. A storefront built end to end, a community site for a Miami Mahjong club, three reels cut for sound-off feeds, a brand animation, a product animation and brand graphics for clients.",
+      "Some of our work, and we are always looking for the next one. A storefront built end to end, a community site for a Miami Mahjong club, three reels cut for sound-off feeds, a brand animation, a product animation, a show title animation and brand graphics for clients.",
     url: `${SITE.url}/work`,
     siteName: "FlowZone",
     type: "website",
@@ -44,8 +44,8 @@ export default function Work() {
           <p className="lede max-w-reading mt-10">
             A storefront built end to end, a community site for a Miami
             Mahjong club, three reels cut for sound-off feeds, a brand
-            animation, a product animation, brand graphics for clients and two
-            interface designs. Everything here was made by us, and nothing on this page
+            animation, a product animation, a show title animation, brand
+            graphics for clients and two interface designs. Everything here was made by us, and nothing on this page
             is a concept dressed up as a client. If you have something you want
             built,{" "}
             <Link
@@ -550,7 +550,77 @@ export default function Work() {
         </div>
       </section>
 
-      {/* ---------- 05 · Interface design ----------
+      {/* ---------- 05 · Title animation ----------
+          A twelve second show open, "powered by people", cut in the studio.
+          Landscape like SlipFolio, so it takes the full width. Studio sample,
+          labelled that way: there is no client behind it and no link. */}
+      <section data-flow className="band-light px-6 py-24">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-12 gap-10 mb-10">
+            <div className="md:col-span-6">
+              <p className="label mb-4">05 · Title animation</p>
+              <h2 className="font-display text-5xl leading-none mb-4">
+                The first twelve seconds
+                <br />
+                set the whole tone.
+              </h2>
+            </div>
+            <p className="md:col-span-6 text-ink-soft leading-relaxed self-end max-w-reading">
+              A show open has one job: make the name land before the host says
+              a word. This one types itself in letter by letter over a live
+              waveform, so the format is clear before the title finishes.
+            </p>
+          </div>
+
+          <div className="panel overflow-hidden">
+            <video
+              className="w-full h-auto block"
+              poster="/assets/powered-by-people-intro-poster.jpg"
+              autoPlay
+              muted
+              loop
+              playsInline
+              controls
+              preload="metadata"
+              aria-label="Powered by People title animation: the words powered by people type in letter by letter over a glowing audio waveform on a deep blue background, then settle as a title card."
+            >
+              <source src="/assets/powered-by-people-intro.webm" type="video/webm" />
+              <source src="/assets/powered-by-people-intro.mp4" type="video/mp4" />
+            </video>
+          </div>
+
+          <div className="grid md:grid-cols-12 gap-10 mt-8">
+            <div className="md:col-span-5">
+              <p className="label mb-3">Studio sample</p>
+              <h3 className="font-display text-3xl leading-none mb-2">Powered by People</h3>
+            </div>
+            <div className="md:col-span-7">
+              <p className="text-ink-soft font-light leading-relaxed max-w-reading">
+                An intro built in the studio for a talk format about the people
+                behind the work. Sans for the power, italic serif for the
+                people, and a waveform that keeps moving so the card never sits
+                still. It drops in front of any episode, podcast or video,
+                without a recut.
+              </p>
+              <div className="border-t border-rule mt-6 pt-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {[
+                  ["Length", "12 seconds"],
+                  ["Format", "16:9 landscape"],
+                  ["Made for", "Podcast and video opens"],
+                  ["Audio", "Add the theme"],
+                ].map(([k, v]) => (
+                  <div key={k}>
+                    <p className="label mb-1.5">{k}</p>
+                    <p className="text-sm text-ink-soft">{v}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- 06 · Interface design ----------
           The two screens the homepage row shows as a taste, at full size. A
           marketing page that has to sell inside one screen, and a first app
           screen that has to explain a product before anybody taps anything.
@@ -560,7 +630,7 @@ export default function Work() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-12 gap-10 mb-10">
             <div className="md:col-span-6">
-              <p className="label mb-4">05 · Interface design</p>
+              <p className="label mb-4">06 · Interface design</p>
               <h2 className="font-display text-5xl leading-none mb-4">
                 The screen doing
                 <br />
@@ -657,7 +727,7 @@ export default function Work() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-12 gap-10 mb-10">
             <div className="md:col-span-6">
-              <p className="label mb-4">06 · Brand graphics</p>
+              <p className="label mb-4">07 · Brand graphics</p>
               <h2 className="font-display text-5xl leading-none mb-4">
                 One graphic,
                 <br />
