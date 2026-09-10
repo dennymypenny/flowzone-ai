@@ -5,6 +5,10 @@ const E = SITE.email;
 
 const SYSTEM = `You are Flowy, the studio assistant for FlowZone, a small creative studio. Flowy is a small blue character who lives on the edge of the site and is glad people stopped by. If someone asks who or what you are, say you are Flowy, FlowZone's little helper. Otherwise do not talk about yourself, talk about their project.
 
+The studio is run by Dennis Valdes. He designs and builds the work himself and he is the person who reads every message that comes through the site. If someone asks who is behind FlowZone, who they would be working with, or who reads their email, tell them Dennis by name. You can call him Dennis in conversation ("Dennis would build that against your brand first"). Do not invent anything else about him.
+
+How a conversation should go. This is a chat, not a form and not a brochure. Be friendly first: greet people back, use their name if they give it, and if they open with small talk answer it like a person would before steering toward the project. Your job is to find out what they actually need, so ask. One question per reply, the most useful one: what they are getting moving, what exists already, what is getting in the way, when they need it. Build on what they said last turn rather than starting over. When you know enough to name the part or the graphic they need, say so plainly, then hand them to Dennis. Do not paste a link or an email into every reply; point them somewhere real once you know what they need, or when they ask how to start, or when they seem ready. If a visitor is vague ("I need help"), ask what they are working on in a warm way instead of listing everything the studio does.
+
 FlowZone is the jumpstart. Someone arrives with an intention, a shop they want to open or a company that exists but does not look like it yet, and we hand back the running thing. Done for you, start to finish. The name is used as a verb: to flowzone something is to take an intention and get it live.
 
 The big work groups into three parts: Brand (identity, logo, palette, type, voice), Site (a marketing site or a full storefront, custom designed) and System (the thing that keeps running after launch: lead intake, booking, invoicing, reporting). When somebody describes a whole project, tell them which of the three parts they need and why.
@@ -15,44 +19,50 @@ The studio's one line is: "${SITE.line}" A person makes every call on taste, lay
 
 Real shipped work: cardsrg.com, a collector trading card storefront we built end to end. The studio is early and takes a small number of projects at a time. Never invent clients, testimonials, ratings or stats. If asked how many clients we have had, say we are early and point to cardsrg.com.
 
-Keep every reply to 1 or 3 short sentences. End by pointing them somewhere real: an email to ${E} for a whole project, or /intake?build=small for a one off graphic. A person reads it either way and comes back with scope, a price and a date. Send pricing questions to /pricing: One Build at $500, The Full Build at $1,500 and The Storefront from $2,500. Any single graphic is $49.99, a promo reel is $74.99 and a new page is $99.99.
+Keep every reply to 1 to 3 short sentences, and usually end with a question until you know what they need. The places to send people, once you do: an email to ${E} for a whole project, or /intake?build=small for a one off graphic. Dennis reads it either way and comes back with scope, a price and a date. Pricing lives at /pricing: One Build at $500, The Full Build at $1,500 and The Storefront from $2,500. Any single graphic is $49.99, a promo reel is $74.99 and a new page is $99.99. Give a price straight when asked, no need to send them to the page first.
 
-Tone. You are warm, direct and glad they asked. Talk like a person who likes making things, not a form. Open by engaging with the actual thing they described rather than restating it back, and lead with what we can do for them before any caveat. Say yes early when the answer is yes. Never make somebody feel like their job is too small or too odd to bring here.
+Tone. You are warm, direct and glad they asked. Talk like a person who likes making things, not a form. Use plain words and contractions where they sound natural. Engage with the actual thing they described rather than restating it back, and lead with what we can do for them before any caveat. Say yes early when the answer is yes. Never make somebody feel like their job is too small or too odd to bring here.
 
 Voice rules, follow strictly. Never use the words "automate", "automated" or "automation" to describe what we do, even when the visitor uses them. Say we build systems, or that something runs itself, or that it is hands free. Never use em dashes. Never use an Oxford comma. Do not gush, do not use exclamation marks and do not call anything "amazing".`;
 
 function keywordFallback(message: string): string {
   const m = message.toLowerCase();
 
+  if (/^(hi|hey|hello|yo|sup|good (morning|afternoon|evening))\b/.test(m) && m.length < 40)
+    return `Hey, good to see you. What are you working on right now, a whole business, a site, or just one graphic you need done?`;
+
+  if (m.includes("who runs") || m.includes("who is behind") || m.includes("who are you") || m.includes("who made") || m.includes("dennis") || m.includes("founder") || m.includes("who would i"))
+    return `That is Dennis Valdes. He runs FlowZone, designs and builds the work himself and reads every message that comes through here. What are you thinking about bringing him?`;
+
   if (m.includes("price") || m.includes("cost") || m.includes("how much") || m.includes("budget"))
     return `One Build is $500, The Full Build is $1,500 and The Storefront starts at $2,500. Small one off jobs start at $49.99. See what each includes at /pricing, then email ${E} and we will tell you which one fits.`;
 
   if (m.includes("template") || m.includes("generic") || m.includes("looks bad") || m.includes("ugly"))
-    return `That is usually a Brand problem showing up on the Site. We build the identity first, then design the site against it. Send me the details at ${E} and a person comes back with scope and a date.`;
+    return `That is usually a Brand problem showing up on the Site. We build the identity first, then design the site against it. Tell me a bit about yours and I will point you to Dennis at ${E}, he comes back with scope and a date.`;
 
   if (m.includes("brand") || m.includes("logo") || m.includes("identity") || m.includes("rebrand"))
-    return `Brand is part one: logo, palette, type, voice and the rules for using them, so everything after it has something to be built from. Send me the details at ${E} and a person comes back with scope and a date.`;
+    return `Brand is part one: logo, palette, type, voice and the rules for using them, so everything after it has something to be built from. Tell me a bit about yours and I will point you to Dennis at ${E}, he comes back with scope and a date.`;
 
   if (m.includes("store") || m.includes("shop") || m.includes("ecommerce") || m.includes("product") || m.includes("checkout"))
-    return `Storefronts are our favorite kind of project, cardsrg.com is one we built end to end. Email ${E} with what you are selling and we will come back with scope and a date.`;
+    return `Storefronts are our favorite kind of project, cardsrg.com is one we built end to end. What are you selling? Tell me a little and I will point you to Dennis at ${E}, he comes back with scope and a date.`;
 
   if (m.includes("website") || m.includes("site") || m.includes("landing") || m.includes("portfolio"))
-    return `Site is part two, custom designed against your brand rather than a theme, and live on your own domain. Send me the details at ${E} and a person comes back with scope and a date.`;
+    return `Site is part two, custom designed against your brand rather than a theme, and live on your own domain. Tell me a bit about yours and I will point you to Dennis at ${E}, he comes back with scope and a date.`;
 
   if (m.includes("lead") || m.includes("crm") || m.includes("follow") || m.includes("intake"))
-    return `That is a System, part three. Lead intake that captures, sorts and answers every inquiry without you touching it. Send me the details at ${E} and a person comes back with scope and a date.`;
+    return `That is a System, part three. Lead intake that captures, sorts and answers every inquiry without you touching it. Tell me a bit about yours and I will point you to Dennis at ${E}, he comes back with scope and a date.`;
 
   if (m.includes("booking") || m.includes("appointment") || m.includes("schedul") || m.includes("calendar"))
-    return `Booking, confirmations and reminders is a System build, wired into your site so the calendar runs itself. Send me the details at ${E} and a person comes back with scope and a date.`;
+    return `Booking, confirmations and reminders is a System build, wired into your site so the calendar runs itself. Tell me a bit about yours and I will point you to Dennis at ${E}, he comes back with scope and a date.`;
 
   if (m.includes("invoice") || m.includes("payment") || m.includes("billing"))
-    return `Invoicing, reminders and books that stay in sync is a System build, so you get paid without chasing. Send me the details at ${E} and a person comes back with scope and a date.`;
+    return `Invoicing, reminders and books that stay in sync is a System build, so you get paid without chasing. Tell me a bit about yours and I will point you to Dennis at ${E}, he comes back with scope and a date.`;
 
   if (m.includes("dashboard") || m.includes("kpi") || m.includes("report") || m.includes("analytics"))
-    return `Reporting is a System build, pulling from the tools you already run so the numbers stay current on their own. Send me the details at ${E} and a person comes back with scope and a date.`;
+    return `Reporting is a System build, pulling from the tools you already run so the numbers stay current on their own. Tell me a bit about yours and I will point you to Dennis at ${E}, he comes back with scope and a date.`;
 
   if (m.includes("automat") || m.includes("workflow") || m.includes("manual") || m.includes("integrat") || m.includes("api"))
-    return `Tell us the manual work eating your week and we build the System that runs it, connected to the tools you already have. Send me the details at ${E} and a person comes back with scope and a date.`;
+    return `Tell us the manual work eating your week and we build the System that runs it, connected to the tools you already have. Tell me a bit about yours and I will point you to Dennis at ${E}, he comes back with scope and a date.`;
 
   if (m.includes("graphic") || m.includes("flyer") || m.includes("poster") || m.includes("banner") || m.includes("thumbnail") || m.includes("card") || m.includes("menu") || m.includes("deck") || m.includes("design just") || m.includes("just a"))
     return `Yes, we make those. Any single graphic is a flat $49.99, made by the same people who do the builds, usually back in a couple of days. Describe it at /intake?build=small and you get a price before anything starts.`;
@@ -60,7 +70,7 @@ function keywordFallback(message: string): string {
   if (m.includes("work") || m.includes("portfolio") || m.includes("client") || m.includes("example"))
     return `We are early and we say so. The work page has cardsrg.com, a storefront we built end to end, and everything on it is live. See /work, then email ${E} and we will walk you through what we built.`;
 
-  return `We build brands, sites and the systems that run them, and we make one off graphics for $49.99 if that is all you need. Email ${E} with what you are getting moving and a person comes straight back.`;
+  return `Happy to help with that. Tell me a bit more, what is it for and what exists today? Then I can tell you what it needs and roughly what it costs.`;
 }
 
 type Turn = { role: "user" | "assistant"; content: string };
@@ -109,7 +119,7 @@ export async function POST(req: NextRequest) {
           },
           body: JSON.stringify({
             model: "llama-3.1-8b-instant",
-            max_tokens: 120,
+            max_tokens: 160,
             messages: [{ role: "system", content: SYSTEM }, ...messages],
           }),
         });

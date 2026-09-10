@@ -85,11 +85,10 @@ export default function ChatWidget({ className = "" }: { className?: string }) {
         {isEmpty && (
           <div className="flex flex-col items-start gap-5">
             <p className="text-ink-soft leading-relaxed max-w-md">
-              Hey, I am Flowy, FlowZone&apos;s little helper. Tell me what you
-              are trying to get moving and I will tell you what it needs, what
-              it roughly costs and how long it takes. A whole business or a
-              single graphic, both are fair game, and no question here is too
-              small.
+              Hey, I&apos;m Flowy, FlowZone&apos;s little helper. Dennis runs
+              the studio and I help people figure out what to bring him. So,
+              what are you working on? A whole business or a single graphic,
+              both are fair game, and no question here is too small.
             </p>
             <div className="flex flex-wrap gap-2">
               {CHIPS.map((chip) => (
