@@ -76,7 +76,18 @@ function keywordFallback(message: string): string {
   return `Happy to help with that. Tell me a bit more, what is it for and what exists today? Then I can tell you what it needs and roughly what it costs.`;
 }
 
-const GROQ_MODELS = ["openai/gpt-oss-20b", "llama-3.3-70b-versatile"];
+const GROQ_MODELS = ["llama-3.3-70b-versatile", "openai/gpt-oss-20b"];
+
+// The voice rules in SYSTEM say no exclamation marks and no em dashes, and
+// small models still slip them in. Fix the text rather than trusting the model.
+function tidy(text: string): string {
+  return text
+    .replace(/\s*[\u2014\u2013]\s*/g, ", ")
+    .replace(/!+/g, ".")
+    .replace(/\.\s*\./g, ".")
+    .replace(/\s+([,.])/g, "$1")
+    .trim();
+}
 
 type Turn = { role: "user" | "assistant"; content: string };
 
@@ -140,7 +151,7 @@ export async function POST(req: NextRequest) {
           if (response.ok) {
             const data = await response.json();
             const text = data.choices?.[0]?.message?.content?.trim();
-            if (text) return NextResponse.json({ text });
+            if (text) return NextResponse.json({ text: tidy(text) });
           } else {
             console.error(`[flowy] groq ${model} ${response.status}: ${(await response.text()).slice(0, 300)}`);
           }
