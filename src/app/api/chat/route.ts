@@ -76,6 +76,8 @@ function keywordFallback(message: string): string {
   return `Happy to help with that. Tell me a bit more, what is it for and what exists today? Then I can tell you what it needs and roughly what it costs.`;
 }
 
+const GROQ_MODELS = ["openai/gpt-oss-20b", "llama-3.3-70b-versatile"];
+
 type Turn = { role: "user" | "assistant"; content: string };
 
 // The transcript arrives from the browser, so it is treated like any form
@@ -113,27 +115,41 @@ export async function POST(req: NextRequest) {
     const lastMessage = messages[messages.length - 1].content;
 
     if (process.env.GROQ_API_KEY) {
-      try {
-        const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            model: "llama-3.1-8b-instant",
-            max_tokens: 160,
-            messages: [{ role: "system", content: SYSTEM }, ...messages],
-          }),
-        });
-        if (response.ok) {
-          const data = await response.json();
-          const text = data.choices?.[0]?.message?.content;
-          if (text) return NextResponse.json({ text });
+      // Groq retires model ids without warning (llama-3.1-8b-instant went
+      // Aug 16 2026 and Flowy silently fell back to canned lines for weeks).
+      // Try the current recommended model first, then an older one, and log
+      // the failure so it shows up in Vercel instead of vanishing.
+      for (const model of GROQ_MODELS) {
+        try {
+          const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model,
+              max_tokens: 400,
+              temperature: 0.7,
+              // gpt-oss thinks before it answers and the thinking counts
+              // against max_tokens, so keep it short for a chat widget.
+              ...(model.startsWith("openai/") ? { reasoning_effort: "low" } : {}),
+              messages: [{ role: "system", content: SYSTEM }, ...messages],
+            }),
+          });
+          if (response.ok) {
+            const data = await response.json();
+            const text = data.choices?.[0]?.message?.content?.trim();
+            if (text) return NextResponse.json({ text });
+          } else {
+            console.error(`[flowy] groq ${model} ${response.status}: ${(await response.text()).slice(0, 300)}`);
+          }
+        } catch (err) {
+          console.error(`[flowy] groq ${model} threw`, err);
         }
-      } catch {
-        /* fall through */
       }
+    } else {
+      console.error("[flowy] GROQ_API_KEY is not set, using keyword fallback");
     }
 
     return NextResponse.json({ text: keywordFallback(lastMessage) });
