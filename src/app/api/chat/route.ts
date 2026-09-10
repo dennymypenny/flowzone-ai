@@ -80,6 +80,14 @@ const GROQ_MODELS = ["llama-3.3-70b-versatile", "openai/gpt-oss-20b"];
 
 // The voice rules in SYSTEM say no exclamation marks and no em dashes, and
 // small models still slip them in. Fix the text rather than trusting the model.
+// If the visitor asks how to begin, the reply has to carry the handoff.
+const START_RE = /(how (do|can|should) (i|we) (get )?start|get started|next step|how to start|where do (i|we) (start|begin)|sign ?up|book|hire you)/i;
+function ensureHandoff(reply: string, userMessage: string): string {
+  if (!START_RE.test(userMessage)) return reply;
+  if (reply.includes(E) || reply.includes("/intake")) return reply;
+  return `${reply} Easiest way in: email ${E} with what you just told me, or if it is a single graphic, open a ticket at /intake?build=small. Dennis reads both and comes back with scope, a price and a date.`;
+}
+
 function tidy(text: string): string {
   return text
     .replace(/\s*[\u2014\u2013]\s*/g, ", ")
@@ -151,7 +159,7 @@ export async function POST(req: NextRequest) {
           if (response.ok) {
             const data = await response.json();
             const text = data.choices?.[0]?.message?.content?.trim();
-            if (text) return NextResponse.json({ text: tidy(text) });
+            if (text) return NextResponse.json({ text: ensureHandoff(tidy(text), lastMessage) });
           } else {
             console.error(`[flowy] groq ${model} ${response.status}: ${(await response.text()).slice(0, 300)}`);
           }
