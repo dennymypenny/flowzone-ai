@@ -45,7 +45,7 @@ export default function Work() {
             A storefront built end to end, a community site for a Miami
             Mahjong club, three reels cut for sound-off feeds, a brand
             animation, a product animation, a show title animation, brand
-            graphics for clients and two interface designs. Everything here was made by us, and nothing on this page
+            graphics for clients and three interface designs. Everything here was made by us, and nothing on this page
             is a concept dressed up as a client. If you have something you want
             built,{" "}
             <Link
@@ -640,7 +640,7 @@ export default function Work() {
             <p className="md:col-span-6 text-ink-soft leading-relaxed self-end max-w-reading">
               A landing page and a first app screen have the same job. Say what
               the thing is, say why it is worth a minute, and leave one obvious
-              next move. These two are studio design work, drawn to be handed
+              next move. These three are studio design work, drawn to be handed
               to a build and shipped without a second pass.
             </p>
           </div>
@@ -714,6 +714,55 @@ export default function Work() {
                     </div>
                   ))}
                 </div>
+              </div>
+            </div>
+          </div>
+
+          {/* NOVA sits under the Kalender and Mantel row because it answers the
+              same brief at a different temperature. Those two are light and
+              quiet; this one is a dark product hero that has to make an AI tool
+              feel calm instead of loud. Studio design, labelled as such. */}
+          <div className="grid md:grid-cols-12 gap-6 md:gap-8 items-start mt-20 border-t border-rule pt-16">
+            <div className="md:col-span-12">
+              <div className="panel overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/assets/work-nova-full.jpg"
+                  alt="NOVA landing page: the headline Your mind, upgraded in black and blue over a portrait lit from below, with glass feature cards for Ideas, Organize and Focus orbiting the figure, a Get started free button and a trusted-by row"
+                  className="w-full h-auto block"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <div className="md:col-span-5">
+              <p className="label mb-3">Studio design</p>
+              <h3 className="font-display text-3xl leading-none mb-3">NOVA</h3>
+            </div>
+            <div className="md:col-span-7">
+              <p className="text-ink-soft font-light leading-relaxed max-w-reading">
+                Every AI product page opens the same way, with a gradient and a
+                promise about productivity. This one puts a person at the center
+                and lets the features orbit them, so the thing being upgraded is
+                obvious before a word is read. The headline splits across two
+                weights to do the same job in three words.
+              </p>
+              <p className="text-ink-soft font-light leading-relaxed max-w-reading mt-4">
+                Dark, but not heavy. The glow sits behind the subject rather than
+                on the type, which keeps the copy legible and stops the page
+                looking like every other launch in the category.
+              </p>
+              <div className="border-t border-rule mt-6 pt-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {[
+                  ["Piece", "Landing page"],
+                  ["Screens", "One, above the fold"],
+                  ["Type", "Grotesk, two weights"],
+                  ["Made for", "Product launch"],
+                ].map(([k, v]) => (
+                  <div key={k}>
+                    <p className="label mb-1.5">{k}</p>
+                    <p className="text-sm text-ink-soft">{v}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
