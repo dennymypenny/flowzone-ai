@@ -95,13 +95,14 @@ button {
     @apply btn text-white;
     /* Fluid glass. The measured-contrast gradient stays as the base (4.53 at
        the top, 6.44 at the bottom, white text passes everywhere on it). On
-       top of it: a cool glass cap, a liquid sheen that sweeps across on
-       hover, and a soft blue halo behind the button that breathes and
-       surges out on click. All three are layers, none of them touch the
-       text. */
+       top of it: a cool glass cap, a soft light band that drifts across the
+       glass on a loop, a bright stroke that orbits the edge of the button
+       without stopping, and a blurred blue halo behind it that breathes and
+       surges out on press. All of it is layers, none of it touches the text. */
     position: relative;
     isolation: isolate;
     background:
+      linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.22) 50%, transparent 62%) 130% 0 / 300% 100% no-repeat,
       radial-gradient(120% 160% at 50% -30%, rgba(198, 228, 248, 0.42), transparent 55%),
       linear-gradient(180deg, #3D6FE8 0%, #2B57C4 100%);
     border: 1px solid rgba(198, 228, 248, 0.5);
@@ -110,6 +111,7 @@ button {
       inset 0 -1px 0 rgba(11, 19, 34, 0.25),
       inset 0 0 14px rgba(168, 196, 255, 0.28),
       0 10px 30px -10px rgba(91, 140, 255, 0.7);
+    animation: btn-flow 4.2s ease-in-out infinite;
   }
   .btn-primary:hover {
     transform: translateY(-1px);
@@ -120,27 +122,37 @@ button {
       inset 0 0 18px rgba(168, 196, 255, 0.4),
       0 16px 40px -12px rgba(91, 140, 255, 0.9);
   }
-  /* The liquid sheen. A soft white band parked off the right edge that
-     sweeps left across the glass when the cursor arrives. */
+  /* The orbiting stroke. A conic gradient with one bright tail, masked down
+     to a 2px ring on the button's edge, rotating on a loop. Browsers
+     without @property show the stroke standing still, which still reads. */
   .btn-primary::before {
     content: "";
     position: absolute;
-    inset: 0;
+    inset: -1px;
     border-radius: inherit;
     z-index: -1;
     pointer-events: none;
-    background: linear-gradient(
-      115deg,
-      transparent 36%,
-      rgba(255, 255, 255, 0.34) 50%,
-      transparent 64%
+    padding: 2px;
+    background: conic-gradient(
+      from var(--fz-orbit),
+      transparent 0deg 150deg,
+      rgba(91, 140, 255, 0.55) 250deg,
+      rgba(198, 228, 248, 0.95) 330deg,
+      #ffffff 352deg,
+      transparent 360deg
     );
-    background-size: 260% 100%;
-    background-position: 130% 0;
-    transition: background-position 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    animation: btn-orbit 2.6s linear infinite;
   }
   .btn-primary:hover::before {
-    background-position: -30% 0;
+    animation-duration: 1.4s;
   }
   /* The blue halo. Sits behind the button, blurred, breathing slowly.
      Brightens on hover and surges outward on press. */
@@ -673,7 +685,20 @@ button {
   opacity: 0;
 }
 
-/* The primary button's halo: a slow breath, and a surge on press. */
+/* The primary button: the orbit angle, the drifting light, the halo's
+   breath, and the surge on press. */
+@property --fz-orbit {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes btn-orbit {
+  to { --fz-orbit: 360deg; }
+}
+@keyframes btn-flow {
+  0%, 15% { background-position: 130% 0, 0 0, 0 0; }
+  70%, 100% { background-position: -30% 0, 0 0, 0 0; }
+}
 @keyframes btn-halo {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.07); }
@@ -683,11 +708,10 @@ button {
   100% { transform: scale(1.35); opacity: 0.85; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .btn-primary,
+  .btn-primary::before,
   .btn-primary::after {
     animation: none;
-  }
-  .btn-primary::before {
-    transition: none;
   }
 }
 
