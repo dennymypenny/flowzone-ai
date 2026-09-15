@@ -176,10 +176,10 @@ export default function Work() {
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
               {[
-                { n: "89,212", k: "Views", c: "#A8C4FF" },
-                { n: "28,027", k: "People reached", c: "#5B8CFF" },
-                { n: "4,743", k: "Interactions", c: "#C6E4F8" },
-                { n: "+998", k: "Net new followers", c: "#34D399" },
+                { n: "205,569", k: "Views", c: "#A8C4FF" },
+                { n: "90,313", k: "People reached", c: "#5B8CFF" },
+                { n: "11,001", k: "Interactions", c: "#C6E4F8" },
+                { n: "+1,327", k: "Net new followers", c: "#34D399" },
               ].map((m) => (
                 <div key={m.k}>
                   <p
@@ -199,7 +199,7 @@ export default function Work() {
                 className="w-full h-[130px] md:h-[170px] block"
                 preserveAspectRatio="none"
                 role="img"
-                aria-label="Daily views: flat through late May, climbing from early July, spiking to sixteen thousand in the week of August 19"
+                aria-label="Daily views: quiet through June, building through July, a spike to eighteen thousand in mid August, then a spike to thirty-seven thousand in the week of September 9"
               >
                 <defs>
                   <linearGradient id="crgWorkLine" x1="0" y1="0" x2="1" y2="0">
@@ -209,7 +209,7 @@ export default function Work() {
                   </linearGradient>
                 </defs>
                 <path
-                  d="M 0.0,146.7 L 7.9,146.6 L 15.8,146.7 L 23.7,146.5 L 31.6,146.6 L 39.5,146.7 L 47.4,146.4 L 55.3,146.6 L 63.2,146.7 L 71.1,146.5 L 79.0,146.6 L 86.9,146.7 L 94.8,146.6 L 102.7,146.4 L 110.6,146.6 L 118.5,146.7 L 126.4,146.5 L 134.3,146.6 L 142.2,146.7 L 150.1,146.6 L 158.0,146.5 L 165.9,146.7 L 173.8,146.6 L 181.7,146.4 L 189.6,146.6 L 197.5,146.7 L 205.4,146.5 L 213.3,146.6 L 221.2,146.7 L 229.1,146.6 L 237.0,130.9 L 244.9,120.1 L 252.8,128.2 L 260.7,117.4 L 268.6,130.0 L 276.5,121.9 L 284.4,129.1 L 292.3,133.6 L 300.2,126.4 L 308.1,131.8 L 316.0,124.6 L 324.0,130.0 L 331.9,127.3 L 339.8,132.7 L 347.7,115.6 L 355.6,126.4 L 363.5,121.0 L 371.4,128.2 L 379.3,122.8 L 387.2,130.0 L 395.1,134.5 L 403.0,123.7 L 410.9,129.1 L 418.8,119.2 L 426.7,126.4 L 434.6,112.9 L 442.5,124.6 L 450.4,117.4 L 458.3,125.5 L 466.2,108.4 L 474.1,121.0 L 482.0,103.9 L 489.9,115.6 L 497.8,110.2 L 505.7,117.4 L 513.6,97.6 L 521.5,113.8 L 529.4,103.0 L 537.3,111.1 L 545.2,92.2 L 553.1,106.6 L 561.0,99.4 L 568.9,110.2 L 576.8,84.1 L 584.7,103.0 L 592.6,4.0 L 600.5,65.2 L 608.4,90.4 L 616.3,79.6 L 624.2,103.0 L 632.1,128.2 L 640.0,133.6"
+                  d="M 0.0,144.9 L 7.2,143.7 L 14.4,145.2 L 21.6,144.8 L 28.8,144.3 L 36.0,145.5 L 43.1,145.4 L 50.3,143.9 L 57.5,144.5 L 64.7,145.4 L 71.9,144.8 L 79.1,144.4 L 86.3,145.4 L 93.5,143.7 L 100.7,144.5 L 107.9,145.1 L 115.1,145.5 L 122.2,145.4 L 129.4,144.7 L 136.6,144.7 L 143.8,143.1 L 151.0,141.7 L 158.2,142.9 L 165.4,139.3 L 172.6,140.3 L 179.8,143.1 L 187.0,139.1 L 194.2,142.6 L 201.3,141.9 L 208.5,138.6 L 215.7,138.7 L 222.9,139.0 L 230.1,143.1 L 237.3,139.1 L 244.5,139.0 L 251.7,140.5 L 258.9,143.2 L 266.1,141.9 L 273.3,143.2 L 280.4,139.2 L 287.6,142.6 L 294.8,141.3 L 302.0,140.3 L 309.2,142.5 L 316.4,139.3 L 323.6,142.7 L 330.8,139.1 L 338.0,141.2 L 345.2,132.1 L 352.4,138.1 L 359.6,139.3 L 366.7,131.7 L 373.9,131.9 L 381.1,137.9 L 388.3,135.0 L 395.5,123.6 L 402.7,77.3 L 409.9,123.6 L 417.1,139.4 L 424.3,132.3 L 431.5,139.9 L 438.7,132.0 L 445.8,140.0 L 453.0,137.7 L 460.2,133.1 L 467.4,132.5 L 474.6,134.2 L 481.8,136.0 L 489.0,133.6 L 496.2,131.7 L 503.4,133.8 L 510.6,135.2 L 517.8,136.2 L 524.9,137.0 L 532.1,138.1 L 539.3,137.1 L 546.5,139.6 L 553.7,131.8 L 560.9,136.2 L 568.1,132.6 L 575.3,133.1 L 582.5,135.5 L 589.7,133.8 L 596.9,112.0 L 604.0,4.0 L 611.2,96.6 L 618.4,115.8 L 625.6,119.7 L 632.8,125.5 L 640.0,133.2"
                   fill="none"
                   stroke="url(#crgWorkLine)"
                   strokeWidth="3"
@@ -219,16 +219,16 @@ export default function Work() {
                 />
               </svg>
               <div className="flex justify-between mt-3">
-                <span className="label">May 22</span>
-                <span className="label">Jul 5</span>
-                <span className="label">Aug 19</span>
+                <span className="label">Jun 17</span>
+                <span className="label">Jul 31</span>
+                <span className="label">Sep 14</span>
               </div>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-5 mt-6">
               {[
-                { k: "Reels", v: "42K", w: "93%", c: "#5B8CFF" },
-                { k: "Posts", v: "30K", w: "67%", c: "#A8C4FF" },
+                { k: "Reels", v: "139K", w: "93%", c: "#5B8CFF" },
+                { k: "Posts", v: "41K", w: "30%", c: "#A8C4FF" },
               ].map((b) => (
                 <div key={b.k}>
                   <div className="flex items-baseline justify-between mb-2">
