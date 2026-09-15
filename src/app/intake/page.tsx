@@ -424,9 +424,9 @@ function IntakeForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-accent text-white font-medium py-4 rounded-xl hover:bg-accent-deep transition-colors disabled:opacity-50"
+            className="btn-primary w-full !py-4 text-base disabled:opacity-50"
           >
-            {loading ? "Submitting..." : "Submit Project →"}
+            {loading ? "Submitting..." : <>Submit Project <span className="arrow">→</span></>}
           </button>
 
           {state === "error" && fixable && (
