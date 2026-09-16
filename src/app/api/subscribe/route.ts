@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SITE } from "@/lib/site";
 import { Resend } from "resend";
+import { addToList } from "@/lib/contacts";
 
 /**
  * Saving a work session by email.
@@ -100,6 +101,7 @@ export async function POST(req: NextRequest) {
   }
 
   console.log("[FlowZone] lead delivered:", studioId, "|", email, "|", source);
+  await addToList({ email, source: source || "site" });
 
   // Their copy. Nice to have, never load-bearing, and never allowed to turn a
   // captured lead into an error the visitor sees.
@@ -116,7 +118,7 @@ export async function POST(req: NextRequest) {
         <p style="color:#4A5568;line-height:1.6">${
           hasBrief
             ? "It is yours. Take it anywhere, brief anyone with it. If you want us to build it, just reply to this email and you will get back a scope, a price and a date."
-            : "Nothing much will land in your inbox. When something worth reading exists, you will get it."
+            : "Short studio notes, free graphic drops and the odd behind the scenes build. Nothing weekly for the sake of it. Reply any time, a person reads it."
         }</p>
         ${briefHtml}
         <p style="color:#888;font-size:13px;margin-top:28px">FlowZone · flowzone.dev<br/>

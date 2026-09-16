@@ -737,3 +737,38 @@ button {
     animation: none;
   }
 }
+
+/* The free sample pop up. Keyframes only: the card is rendered only while
+   open, so nothing here hides content that something else must reveal. */
+@keyframes fz-veil-in {
+  from { opacity: 0; }
+}
+@keyframes fz-card-in {
+  from { opacity: 0; transform: translateY(28px) scale(0.98); }
+}
+@keyframes fz-print-in {
+  from { opacity: 0; translate: 0 26px; }
+}
+@keyframes fz-tab-in {
+  from { opacity: 0; transform: translateY(16px); }
+}
+@keyframes fz-ping {
+  0% { transform: scale(1); opacity: 0.7; }
+  80%, 100% { transform: scale(2.6); opacity: 0; }
+}
+.fz-sample-veil { animation: fz-veil-in 0.35s ease-out; }
+.fz-sample-card { animation: fz-card-in 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+.fz-sample-print { animation: fz-print-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+.fz-sample-done { animation: fz-card-in 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+.fz-sample-tab { animation: fz-tab-in 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+.fz-sample-ping { animation: fz-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .fz-sample-veil,
+  .fz-sample-card,
+  .fz-sample-print,
+  .fz-sample-done,
+  .fz-sample-tab,
+  .fz-sample-ping {
+    animation: none;
+  }
+}

@@ -34,6 +34,8 @@ const RULES: Array<[string, Rule]> = [
   // Looser than contact: a founder testing the form, or a visitor who trips
   // validation a few times, must not hit a wall. Still a brake on a loop.
   ["/api/intake", { limit: 15, windowMs: 10 * 60_000 }],
+  // The free sample pop up. Same reasoning as intake.
+  ["/api/sample", { limit: 10, windowMs: 10 * 60_000 }],
   // Photo and footage quota. A real session makes a handful of these.
   ["/api/moodboard", { limit: 60, windowMs: 10 * 60_000 }],
   ["/api/clips", { limit: 60, windowMs: 10 * 60_000 }],
