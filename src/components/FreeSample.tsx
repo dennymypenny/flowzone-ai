@@ -52,7 +52,7 @@ function write(state: "dismissed" | "done") {
 }
 
 const field =
-  "w-full bg-paper text-ink placeholder-ink-mute border border-rule rounded-xl px-4 py-3 text-[15px] focus:outline-none focus:border-accent";
+  "w-full bg-white/[0.05] text-ink placeholder-ink-mute border border-white/[0.08] rounded-[18px] px-5 py-3.5 text-[15px] focus:outline-none focus:border-accent/70 transition-colors";
 
 export default function FreeSample() {
   const pathname = usePathname() || "/";
@@ -177,120 +177,138 @@ export default function FreeSample() {
     }
   }
 
+  const pill = { "--radius-control": "999px" } as React.CSSProperties;
+
   return (
     <>
       {tab && !open && !quiet && (
         <button
           onClick={show}
-          className="fz-sample-tab fixed z-40 left-4 bottom-4 md:left-5 md:bottom-5 flex items-center gap-2.5 rounded-full bg-paper-deep/95 border border-rule pl-3 pr-4 py-2.5 text-[13px] font-semibold text-ink shadow-panel hover:border-accent transition-colors"
+          className="fz-sample-tab fixed z-40 left-4 bottom-4 md:left-6 md:bottom-6 group"
           aria-label="Get a free graphic"
         >
-          <span className="relative flex w-2.5 h-2.5" aria-hidden>
-            <span className="fz-sample-ping absolute inset-0 rounded-full bg-own" />
-            <span className="relative w-2.5 h-2.5 rounded-full bg-own" />
+          <span className="fz-bob flex items-center gap-2.5 rounded-full pl-2 pr-5 py-2 text-[14px] font-semibold text-white bg-[linear-gradient(135deg,#4C7BE8,#3D6FE8_45%,#2BB39A)] shadow-[0_14px_36px_-10px_rgba(76,123,232,0.75),inset_0_1px_0_rgba(255,255,255,0.35)] transition-transform duration-300 group-hover:scale-[1.06]">
+            <span className="relative flex items-center justify-center w-8 h-8 rounded-full bg-white/20" aria-hidden>
+              <span className="fz-sample-ping absolute inset-1 rounded-full bg-white/40" />
+              <svg className="relative w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                <path d="M4 12h16M12 4v16" strokeLinecap="round" />
+              </svg>
+            </span>
+            Get a free graphic
           </span>
-          Get a free graphic
         </button>
       )}
 
       {open && (
         <div className="fixed inset-0 z-[70] flex items-end md:items-center justify-center md:p-6">
-          <div className="fz-sample-veil absolute inset-0 bg-[rgba(4,8,20,0.72)] backdrop-blur-[6px]" onClick={close} aria-hidden />
+          <div className="fz-sample-veil absolute inset-0 bg-[rgba(4,8,20,0.66)] backdrop-blur-[10px]" onClick={close} aria-hidden />
 
           <div
             role="dialog"
             aria-modal="true"
             aria-labelledby="fz-sample-title"
-            className="fz-sample-card relative w-full md:max-w-[900px] max-h-[94vh] overflow-y-auto rounded-t-[24px] md:rounded-[24px] bg-paper-deep border border-rule shadow-panel md:grid md:grid-cols-[1fr_1.08fr]"
+            className="fz-sample-card relative w-full md:max-w-[880px] max-h-[94vh] overflow-y-auto rounded-t-[32px] md:rounded-[34px] p-2.5 md:p-3 bg-[linear-gradient(160deg,rgba(26,40,72,0.97),rgba(12,20,38,0.98))] border border-white/[0.09] shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9),0_0_80px_-30px_rgba(91,140,255,0.45),inset_0_1px_0_rgba(255,255,255,0.08)] md:grid md:grid-cols-[1fr_1.05fr] md:gap-3"
           >
             <button
               onClick={close}
               aria-label="Close"
-              className="absolute z-20 top-3.5 right-3.5 w-9 h-9 rounded-full bg-paper/80 border border-rule text-ink-soft hover:text-ink flex items-center justify-center"
+              className="absolute z-20 top-5 right-5 w-10 h-10 rounded-full bg-white/[0.07] hover:bg-white/[0.14] text-ink-soft hover:text-ink flex items-center justify-center transition-all duration-300 hover:rotate-90"
             >
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
                 <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
               </svg>
             </button>
 
-            {/* The pitch side. */}
-            <div className="relative overflow-hidden px-5 pt-6 pb-4 md:p-9 md:pb-8 bg-[radial-gradient(120%_90%_at_0%_0%,rgba(91,140,255,0.28),transparent_60%),radial-gradient(90%_70%_at_100%_100%,rgba(52,211,153,0.14),transparent_60%)] md:border-r border-rule">
-              <p className="label">Free sample</p>
-              <h2 id="fz-sample-title" className="font-display mt-4 text-[25px] md:text-[36px] leading-[1.06] text-ink">
-                Try the studio.
-                <br />
-                <span className="text-accent-light">
-                  Your first graphic <br className="hidden md:inline" />
-                  is on us.
+            {/* The pitch side: a soft inner bubble with light drifting through it. */}
+            <div className="relative overflow-hidden rounded-[26px] md:rounded-[26px] px-6 pt-7 pb-5 md:p-9 bg-[linear-gradient(155deg,#1B3160,#12203F_55%,#0F2A33)]">
+              <span className="fz-float-a pointer-events-none absolute -top-16 -left-10 w-56 h-56 rounded-full bg-[#5B8CFF]/35 blur-3xl" aria-hidden />
+              <span className="fz-float-b pointer-events-none absolute -bottom-20 -right-10 w-64 h-64 rounded-full bg-[#34D399]/20 blur-3xl" aria-hidden />
+              <span className="fz-float-c pointer-events-none absolute top-1/3 right-8 w-24 h-24 rounded-full bg-[#FBBF24]/10 blur-2xl" aria-hidden />
+              {/* A few glassy bubbles. */}
+              <span className="fz-bubble pointer-events-none absolute top-8 right-20 w-5 h-5 rounded-full border border-white/25 bg-white/[0.06]" aria-hidden />
+              <span className="fz-bubble pointer-events-none absolute top-24 right-10 w-3 h-3 rounded-full border border-white/20 bg-white/[0.05]" style={{ animationDelay: "1.2s" }} aria-hidden />
+              <span className="fz-bubble pointer-events-none absolute bottom-24 left-6 w-4 h-4 rounded-full border border-white/20 bg-white/[0.05] hidden md:block" style={{ animationDelay: "2.1s" }} aria-hidden />
+
+              <div className="relative">
+                <span className="inline-flex items-center gap-2 rounded-full bg-white/[0.08] border border-white/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-accent-light">
+                  <span className="w-1.5 h-1.5 rounded-full bg-own" aria-hidden />
+                  Free sample
                 </span>
-              </h2>
-              <p className="hidden md:block mt-4 text-[15px] leading-relaxed text-ink-soft max-w-[40ch]">
-                Tell us what you need. A post, a flyer, a logo idea. We make it and send it back so you can see how we work before you spend a dollar.
-              </p>
+                <h2 id="fz-sample-title" className="font-display mt-4 md:mt-5 text-[24px] md:text-[38px] leading-[1.05] text-ink">
+                  Try the studio.
+                  <br />
+                  <span className="bg-[linear-gradient(90deg,#A8C4FF,#C6E4F8_55%,#7EE8C6)] bg-clip-text text-transparent">
+                    Your first graphic <br className="hidden md:inline" />
+                    is on us.
+                  </span>
+                </h2>
+                <p className="hidden md:block mt-4 text-[15px] leading-relaxed text-ink-soft max-w-[36ch]">
+                  Tell us what you need. We make it and send it back, so you can see how we work before you spend a dollar.
+                </p>
 
-              {/* Three real pieces from the studio, fanned like prints on a desk. */}
-              <div className="hidden md:block relative h-[196px] mt-8" aria-hidden>
-                <img
-                  src="/assets/sample-kalender.jpg"
-                  alt=""
-                  className="fz-sample-print absolute left-[4%] top-[18px] w-[46%] rounded-[12px] border border-white/10 shadow-[0_24px_50px_-20px_rgba(0,0,0,0.9)] -rotate-[8deg]"
-                  style={{ animationDelay: "120ms" }}
-                />
-                <img
-                  src="/assets/sample-mahj.jpg"
-                  alt=""
-                  className="fz-sample-print absolute right-[6%] top-0 w-[34%] rounded-[12px] border border-white/10 shadow-[0_24px_50px_-20px_rgba(0,0,0,0.9)] rotate-[7deg]"
-                  style={{ animationDelay: "220ms" }}
-                />
-                <img
-                  src="/assets/sample-crg.jpg"
-                  alt=""
-                  className="fz-sample-print absolute left-[16%] bottom-0 w-[66%] rounded-[12px] border border-white/15 shadow-[0_30px_60px_-18px_rgba(0,0,0,0.95)] rotate-[-1deg]"
-                  style={{ animationDelay: "320ms" }}
-                />
+                {/* Real pieces from the studio, floating. */}
+                <div className="hidden md:block relative h-[190px] mt-7" aria-hidden>
+                  <span className="fz-print-wrap absolute left-[2%] top-[20px] w-[46%]" style={{ animationDelay: "0s" }}>
+                    <img src="/assets/sample-kalender.jpg" alt="" className="fz-sample-print w-full rounded-[18px] ring-1 ring-white/15 shadow-[0_26px_50px_-18px_rgba(0,0,0,0.85)] -rotate-[8deg]" style={{ animationDelay: "120ms" }} />
+                  </span>
+                  <span className="fz-print-wrap absolute right-[4%] top-0 w-[34%]" style={{ animationDelay: "0.8s" }}>
+                    <img src="/assets/sample-mahj.jpg" alt="" className="fz-sample-print w-full rounded-[22px] ring-1 ring-white/15 shadow-[0_26px_50px_-18px_rgba(0,0,0,0.85)] rotate-[7deg]" style={{ animationDelay: "220ms" }} />
+                  </span>
+                  <span className="fz-print-wrap absolute left-[15%] bottom-0 w-[66%]" style={{ animationDelay: "1.6s" }}>
+                    <img src="/assets/sample-crg.jpg" alt="" className="fz-sample-print w-full rounded-[16px] ring-1 ring-white/20 shadow-[0_30px_60px_-16px_rgba(0,0,0,0.9)] -rotate-1" style={{ animationDelay: "320ms" }} />
+                  </span>
+                </div>
+
+                <ul className="mt-4 md:mt-7 flex flex-wrap gap-2">
+                  {["No card, no call", "Yours to keep", "Back in about 2 days"].map((t) => (
+                    <li key={t} className="flex items-center gap-1.5 rounded-full bg-white/[0.07] border border-white/[0.08] pl-2 pr-3 py-1.5 text-[12px] md:text-[13px] font-medium text-ink-soft">
+                      <span className="flex items-center justify-center w-4 h-4 rounded-full bg-own/20">
+                        <svg className="w-2.5 h-2.5 text-own" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.4" aria-hidden>
+                          <path d="M5 12.5l4.2 4.2L19 7" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </span>
+                      {t}
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <p className="hidden md:block mt-3 text-[11px] text-ink-mute">Made in the studio: CardsRG, Mahj &amp; Coffee, Kalender.</p>
-
-              <ul className="mt-3 md:mt-6 flex flex-wrap md:grid md:grid-cols-1 gap-x-4 gap-y-1.5 md:gap-2.5 text-[12px] md:text-[14px] text-ink-soft">
-                {["No card, no call", "Yours to keep", "Back in about 2 days"].map((t) => (
-                  <li key={t} className="flex items-center gap-2">
-                    <svg className="w-4 h-4 shrink-0 text-own" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden>
-                      <path d="M5 12.5l4.2 4.2L19 7" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    {t}
-                  </li>
-                ))}
-              </ul>
             </div>
 
             {/* The form side. */}
-            <div className="px-5 pb-6 pt-2 md:p-9">
+            <div className="px-4 pb-5 pt-5 md:px-6 md:pt-7 md:pb-6">
               {sent ? (
-                <div className="fz-sample-done flex flex-col items-start justify-center h-full min-h-[320px]">
-                  <span className="w-14 h-14 rounded-full bg-own/15 border border-own/40 flex items-center justify-center">
-                    <svg className="w-7 h-7 text-own" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden>
+                <div className="flex flex-col items-center text-center justify-center h-full min-h-[340px] px-4">
+                  <span className="fz-pop relative w-20 h-20 rounded-full bg-[linear-gradient(135deg,#34D399,#2DD4BF)] flex items-center justify-center shadow-[0_18px_50px_-12px_rgba(52,211,153,0.7),inset_0_2px_0_rgba(255,255,255,0.4)]">
+                    <svg className="w-9 h-9 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" aria-hidden>
                       <path d="M5 12.5l4.2 4.2L19 7" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
+                    <span className="fz-ring absolute inset-0 rounded-full border-2 border-own/60" aria-hidden />
                   </span>
-                  <h3 className="font-display mt-6 text-[28px] leading-tight text-ink">
+                  <h3 className="fz-sample-done font-display mt-7 text-[30px] leading-tight text-ink">
                     {sent === "sample" ? "It is in the queue." : "You are on the list."}
                   </h3>
-                  <p className="mt-3 text-[15px] leading-relaxed text-ink-soft max-w-[38ch]">
+                  <p className="fz-sample-done mt-3 text-[15px] leading-relaxed text-ink-soft max-w-[34ch]">
                     {sent === "sample"
-                      ? `A person reads every request. Your graphic comes back to ${form.email}, usually within two days. Check your inbox for the receipt.`
+                      ? `Your graphic comes back to ${form.email}, usually within two days. A receipt is on its way now.`
                       : "Short studio notes and free graphic drops. Nothing weekly for the sake of it."}
                   </p>
-                  <button onClick={close} className="btn-ghost mt-8">
+                  <button onClick={close} style={pill} className="btn-ghost mt-8 px-7">
                     Back to the site
                   </button>
                 </div>
               ) : (
                 <>
-                  <div className="md:mt-1 inline-flex p-1 rounded-full bg-paper border border-rule text-[13px] font-semibold" role="tablist">
+                  {/* Sliding pill switch. */}
+                  <div className="relative grid grid-cols-2 w-full max-w-[330px] p-1 rounded-full bg-white/[0.06] border border-white/[0.07] text-[13px] font-semibold" role="tablist">
+                    <span
+                      className="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-full bg-[linear-gradient(135deg,#5B8CFF,#3D6FE8)] shadow-[0_8px_22px_-8px_rgba(91,140,255,0.9),inset_0_1px_0_rgba(255,255,255,0.35)] transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+                      style={{ transform: mode === "list" ? "translateX(100%)" : "none" }}
+                      aria-hidden
+                    />
                     {(
                       [
                         ["sample", "Free graphic"],
-                        ["list", "Just the email list"],
+                        ["list", "Email list"],
                       ] as const
                     ).map(([id, label]) => (
                       <button
@@ -301,16 +319,14 @@ export default function FreeSample() {
                           setMode(id);
                           setError("");
                         }}
-                        className={`px-4 py-2 rounded-full transition-colors ${
-                          mode === id ? "bg-accent-deep text-white shadow-glowbtn" : "text-ink-soft hover:text-ink"
-                        }`}
+                        className={`relative z-10 py-2.5 rounded-full transition-colors duration-300 ${mode === id ? "text-white" : "text-ink-soft hover:text-ink"}`}
                       >
                         {label}
                       </button>
                     ))}
                   </div>
 
-                  <form onSubmit={submit} className="mt-5 md:mt-6 space-y-3.5 md:space-y-4" noValidate>
+                  <form key={mode} onSubmit={submit} className="fz-sample-done mt-6 space-y-4" noValidate>
                     {/* Humans never see this. */}
                     <input
                       type="text"
@@ -325,7 +341,7 @@ export default function FreeSample() {
                     {mode === "sample" ? (
                       <>
                         <div>
-                          <p className="text-sm font-semibold text-ink-soft mb-2">What should we make?</p>
+                          <p className="text-[13px] font-semibold text-ink-soft mb-2.5 pl-1">What should we make?</p>
                           <div className="flex flex-wrap gap-2">
                             {KINDS.map((k) => (
                               <button
@@ -333,10 +349,10 @@ export default function FreeSample() {
                                 key={k.id}
                                 onClick={() => set("kind", k.id)}
                                 aria-pressed={form.kind === k.id}
-                                className={`px-3.5 py-2 rounded-full border text-[13px] font-medium transition-colors ${
+                                className={`px-4 py-2 rounded-full text-[13px] font-medium transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] active:scale-95 ${
                                   form.kind === k.id
-                                    ? "border-accent bg-accent/15 text-ink"
-                                    : "border-rule text-ink-soft hover:border-ink-mute hover:text-ink"
+                                    ? "bg-white text-[#0C1424] shadow-[0_8px_24px_-8px_rgba(168,196,255,0.8)] scale-[1.04]"
+                                    : "bg-white/[0.06] border border-white/[0.08] text-ink-soft hover:bg-white/[0.11] hover:text-ink"
                                 }`}
                               >
                                 {k.label}
@@ -345,93 +361,76 @@ export default function FreeSample() {
                           </div>
                         </div>
 
-                        <div>
-                          <label htmlFor="fz-idea" className="block text-sm font-semibold text-ink-soft mb-1.5">
-                            Describe it
-                          </label>
-                          <textarea
-                            id="fz-idea"
-                            ref={(el) => {
-                              firstField.current = el;
-                            }}
-                            rows={3}
-                            value={form.idea}
-                            onChange={(e) => set("idea", e.target.value)}
-                            className={`${field} resize-none`}
-                            placeholder="A launch post for our new cold brew. Bold, summery, our colors are orange and cream."
-                          />
+                        <textarea
+                          id="fz-idea"
+                          aria-label="Describe the graphic"
+                          ref={(el) => {
+                            firstField.current = el;
+                          }}
+                          rows={3}
+                          value={form.idea}
+                          onChange={(e) => set("idea", e.target.value)}
+                          className={`${field} !rounded-[22px] resize-none`}
+                          placeholder="Describe it. A launch post for our new cold brew, bold and summery, orange and cream."
+                        />
+
+                        <div className="grid grid-cols-2 gap-3">
+                          <input id="fz-name" aria-label="Name" type="text" autoComplete="name" value={form.name} onChange={(e) => set("name", e.target.value)} className={`${field} !rounded-full`} placeholder="Your name" />
+                          <input id="fz-email" aria-label="Email" type="email" autoComplete="email" value={form.email} onChange={(e) => set("email", e.target.value)} className={`${field} !rounded-full`} placeholder="Email" />
                         </div>
 
-                        <div className="grid sm:grid-cols-2 gap-4">
-                          <div>
-                            <label htmlFor="fz-name" className="block text-sm font-semibold text-ink-soft mb-1.5">
-                              Name
-                            </label>
-                            <input id="fz-name" type="text" autoComplete="name" value={form.name} onChange={(e) => set("name", e.target.value)} className={field} placeholder="Jane Smith" />
-                          </div>
-                          <div>
-                            <label htmlFor="fz-email" className="block text-sm font-semibold text-ink-soft mb-1.5">
-                              Email
-                            </label>
-                            <input id="fz-email" type="email" autoComplete="email" value={form.email} onChange={(e) => set("email", e.target.value)} className={field} placeholder="jane@company.com" />
-                          </div>
-                        </div>
+                        <input id="fz-brand" aria-label="Brand, Instagram or website (optional)" type="text" value={form.brand} onChange={(e) => set("brand", e.target.value)} className={`${field} !rounded-full`} placeholder="@yourbrand or website (optional)" />
 
-                        <div>
-                          <label htmlFor="fz-brand" className="block text-sm font-semibold text-ink-soft mb-1.5">
-                            Brand, Instagram or website <span className="font-normal text-ink-mute">optional</span>
-                          </label>
-                          <input id="fz-brand" type="text" value={form.brand} onChange={(e) => set("brand", e.target.value)} className={field} placeholder="@yourbrand or yourbrand.com" />
-                        </div>
-
-                        <label className="flex items-start gap-3 text-[13px] text-ink-soft cursor-pointer select-none">
-                          <input
-                            type="checkbox"
-                            checked={form.list}
-                            onChange={(e) => set("list", e.target.checked)}
-                            className="mt-0.5 w-4 h-4 accent-[#5B8CFF]"
-                          />
-                          Also send me studio notes and free graphic drops. Unsubscribe any time.
-                        </label>
+                        <button
+                          type="button"
+                          role="switch"
+                          aria-checked={form.list}
+                          onClick={() => set("list", !form.list)}
+                          className="flex items-center gap-3 text-left text-[13px] text-ink-soft pl-1"
+                        >
+                          <span className={`relative shrink-0 w-10 h-6 rounded-full transition-colors duration-300 ${form.list ? "bg-own" : "bg-white/15"}`}>
+                            <span
+                              className="absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+                              style={{ transform: form.list ? "translateX(16px)" : "none" }}
+                            />
+                          </span>
+                          Send me free graphic drops too
+                        </button>
                       </>
                     ) : (
-                      <>
-                        <h3 className="font-display text-[26px] leading-tight text-ink">Not ready yet? Stay in the loop.</h3>
-                        <p className="text-[15px] leading-relaxed text-ink-soft">
-                          Short studio notes, before and after builds and the next free graphic drop. Nothing weekly for the sake of it.
+                      <div className="pt-2">
+                        <h3 className="font-display text-[28px] leading-tight text-ink">Not ready yet?</h3>
+                        <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
+                          Get studio notes, before and after builds and the next free graphic drop. Nothing weekly for the sake of it.
                         </p>
-                        <div>
-                          <label htmlFor="fz-list-email" className="block text-sm font-semibold text-ink-soft mb-1.5">
-                            Email
-                          </label>
-                          <input
-                            id="fz-list-email"
-                            ref={(el) => {
-                              firstField.current = el;
-                            }}
-                            type="email"
-                            autoComplete="email"
-                            value={form.email}
-                            onChange={(e) => set("email", e.target.value)}
-                            className={field}
-                            placeholder="jane@company.com"
-                          />
-                        </div>
-                      </>
+                        <input
+                          id="fz-list-email"
+                          aria-label="Email"
+                          ref={(el) => {
+                            firstField.current = el;
+                          }}
+                          type="email"
+                          autoComplete="email"
+                          value={form.email}
+                          onChange={(e) => set("email", e.target.value)}
+                          className={`${field} !rounded-full mt-6`}
+                          placeholder="you@company.com"
+                        />
+                      </div>
                     )}
 
                     {error && (
-                      <p role="alert" className="text-[13px] text-price">
+                      <p role="alert" className="fz-sample-done rounded-full bg-price/10 px-4 py-2 text-[13px] text-price">
                         {error}
                       </p>
                     )}
 
-                    <button type="submit" disabled={busy} className="btn-primary w-full justify-center disabled:opacity-70">
-                      {busy ? "Sending..." : mode === "sample" ? "Send my free graphic request" : "Join the list"}
+                    <button type="submit" disabled={busy} style={pill} className="btn-primary w-full justify-center !py-4 !text-[15px] !font-semibold disabled:opacity-70">
+                      {busy ? "Sending..." : mode === "sample" ? "Get my free graphic" : "Join the list"}
                       {!busy && <span className="arrow ml-1">→</span>}
                     </button>
                     <p className="text-center text-[12px] text-ink-mute">
-                      {mode === "sample" ? "One free graphic per business. A person reads every request." : "No spam. One click to leave."}
+                      {mode === "sample" ? "One per business. A real person reads every request." : "No spam. One click to leave."}
                     </p>
                   </form>
                 </>
