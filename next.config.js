@@ -70,6 +70,8 @@ const nextConfig = {
       // pointed at what we actually do now.
       { source: "/blog", destination: "/services", permanent: true },
       { source: "/blog/:slug", destination: "/services", permanent: true },
+      // Short link for bios and posts: flowzone.dev/sample opens the free graphic pop up.
+      { source: "/sample", destination: "/?sample=1", permanent: false },
     ];
   },
 };
