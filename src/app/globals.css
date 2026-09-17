@@ -802,3 +802,63 @@ button {
     animation: none;
   }
 }
+
+/* ------------------------------------------------------------------
+   The phone top band.
+   Links to flowzone.dev get opened inside X, LinkedIn and Instagram,
+   and those in-app browsers hang their close X over the very top of
+   the page. The site used to put the nav right under it, so closing
+   the tab meant aiming at a 3px gap. On phones the whole page now
+   starts below a clear band: nothing tappable lives up there.
+   ------------------------------------------------------------------ */
+.topline { top: 0; }
+.sitebar { top: 3px; }
+
+@media (max-width: 767px) {
+  body {
+    padding-top: calc(52px + env(safe-area-inset-top, 0px));
+  }
+  .topline {
+    top: calc(52px + env(safe-area-inset-top, 0px));
+  }
+  .sitebar {
+    top: calc(55px + env(safe-area-inset-top, 0px));
+  }
+}
+
+/* ------------------------------------------------------------------
+   Flowy on a phone.
+   The dock is a dark glass panel on desktop. On a phone it sits over
+   the whole screen, so it runs white and bright there instead, with
+   room to breathe and taps that are easy to hit.
+   ------------------------------------------------------------------ */
+.chat-light { background: transparent; }
+.chat-light .panel {
+  background: #FFFFFF;
+  border: 1px solid rgba(11, 19, 34, 0.12);
+  box-shadow: 0 -24px 60px -22px rgba(11, 19, 34, 0.55);
+}
+.chat-light .bg-paper-deep {
+  background-color: #F4F8FF;
+}
+.chat-light .bg-accent\/10 {
+  background-color: rgba(43, 87, 196, 0.08);
+}
+.chat-light input::placeholder {
+  color: #7B879E;
+}
+/* The lit-glass field wash is built for the dark canvas. On the white
+   panel it reads as a smudge, so the field becomes a pale tray instead. */
+.chat-light input[type="text"] {
+  background-color: #F1F6FF;
+  background-image: none;
+  border-radius: 12px;
+  padding-left: 14px;
+  padding-right: 14px;
+  box-shadow: inset 0 0 0 1px rgba(11, 19, 34, 0.1);
+}
+.chat-light input[type="text"]:hover,
+.chat-light input[type="text"]:focus {
+  background-image: none;
+  box-shadow: inset 0 0 0 1px rgba(43, 87, 196, 0.45);
+}

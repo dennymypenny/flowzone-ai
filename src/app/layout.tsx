@@ -78,7 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <StructuredData />
       </head>
       <body className="antialiased bg-paper text-ink">
-        <div className="fixed top-0 left-0 right-0 h-[3px] z-[60] bg-[#4C7BE8]" />
+        <div className="topline fixed left-0 right-0 h-[3px] z-[60] bg-[#4C7BE8]" />
         <Nav />
         <main className="pt-16">{children}</main>
         <Footer />

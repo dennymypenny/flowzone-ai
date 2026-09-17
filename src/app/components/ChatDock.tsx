@@ -14,6 +14,18 @@ export default function ChatDock() {
   // The bubble says hello for a few seconds, then tucks away so it is not
   // sitting on top of the page. It comes back when the pointer reaches Flowy.
   const [hint, setHint] = useState(true);
+  // Phones get the light panel. Matched in JS rather than with a breakpoint
+  // class because the light treatment is a whole set of CSS rules, not one
+  // utility, and band-light has to go on or off as a unit.
+  const [phone, setPhone] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const set = () => setPhone(mq.matches);
+    set();
+    mq.addEventListener("change", set);
+    return () => mq.removeEventListener("change", set);
+  }, []);
 
   useEffect(() => {
     const t = window.setTimeout(() => setHint(false), 7000);
@@ -85,19 +97,21 @@ export default function ChatDock() {
           <div
             role="dialog"
             aria-label="Flowy, the FlowZone helper"
-            className="fixed z-50 right-0 md:right-5 bottom-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 w-full md:w-[420px] max-h-[88vh] md:max-h-[80vh] overflow-hidden"
+            className={`fixed z-50 right-0 md:right-5 bottom-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 w-full md:w-[420px] max-h-[82vh] md:max-h-[80vh] overflow-hidden ${
+              phone ? "band-light chat-light" : ""
+            }`}
           >
             <div className="relative">
               <button
                 onClick={() => setOpen(false)}
                 aria-label="Close Flowy"
-                className="absolute z-10 top-3.5 right-3.5 w-8 h-8 rounded-full bg-paper-deep border border-rule text-ink-soft hover:text-ink flex items-center justify-center"
+                className="absolute z-10 top-4 right-4 w-11 h-11 rounded-full bg-paper-deep border border-rule text-ink-soft hover:text-ink flex items-center justify-center md:w-8 md:h-8 md:top-3.5 md:right-3.5"
               >
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+                <svg className="w-5 h-5 md:w-4 md:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
                   <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
                 </svg>
               </button>
-              <ChatWidget className="h-[78vh] md:h-[560px] !min-h-0 rounded-b-none md:rounded-b-[18px]" />
+              <ChatWidget className="h-[82vh] md:h-[560px] !min-h-0 rounded-b-none md:rounded-b-[18px]" />
             </div>
           </div>
         </>

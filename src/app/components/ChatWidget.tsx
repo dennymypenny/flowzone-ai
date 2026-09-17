@@ -69,8 +69,12 @@ export default function ChatWidget({ className = "" }: { className?: string }) {
     <div className={`flex flex-col panel overflow-hidden min-h-[440px] ${className}`}>
       {/* Header */}
       {/* pr-14 keeps the label clear of the dock close button. */}
-      <div className="flex items-center justify-between pl-6 pr-14 py-4 border-b border-rule">
-        <Wordmark tone="dark" size={16} />
+      <div className="flex items-center justify-between pl-5 pr-[68px] py-4 sm:pl-6 sm:pr-14 border-b border-rule">
+        {/* The wordmark is the nav's job on a phone, where this header has to
+            hold Flowy, his line and the close button in 390px. */}
+        <span className="hidden sm:inline-flex">
+          <Wordmark tone="dark" size={16} />
+        </span>
         <span className="inline-flex items-center gap-2.5">
           <FlowyFace size={28} />
           <span className="leading-tight">
@@ -81,9 +85,9 @@ export default function ChatWidget({ className = "" }: { className?: string }) {
       </div>
 
       {/* Messages */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 py-6 sm:px-6 space-y-4 sm:space-y-4">
         {isEmpty && (
-          <div className="flex flex-col items-start gap-5">
+          <div className="flex flex-col items-start gap-5 pt-1">
             <p className="text-ink-soft leading-relaxed max-w-md">
               Hey, I&apos;m Flowy, FlowZone&apos;s little helper. Dennis runs
               the studio and I help people figure out what to bring him. So,
@@ -95,7 +99,7 @@ export default function ChatWidget({ className = "" }: { className?: string }) {
                 <button
                   key={chip}
                   onClick={() => send(chip)}
-                  className="text-xs border border-rule text-ink-soft px-3.5 py-2 rounded-md hover:border-accent/50 hover:text-ink hover:bg-accent/10 transition-colors"
+                  className="text-[13px] sm:text-xs border border-rule text-ink-soft px-4 py-2.5 sm:px-3.5 sm:py-2 rounded-lg sm:rounded-md hover:border-accent/50 hover:text-ink hover:bg-accent/10 transition-colors"
                 >
                   {chip}
                 </button>
@@ -138,8 +142,8 @@ export default function ChatWidget({ className = "" }: { className?: string }) {
       </div>
 
       {/* Nudge to a real person */}
-      <div className="border-t border-rule px-6 py-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:justify-between bg-paper-deep">
-        <p className="text-sm text-ink-soft font-light">
+      <div className="border-t border-rule px-5 py-4 sm:px-6 flex flex-col sm:flex-row sm:items-center gap-3 sm:justify-between bg-paper-deep">
+        <p className="text-[13px] sm:text-sm text-ink-soft font-light leading-snug">
           Answers here are quick. A real price and a date come from a person.
         </p>
         <a href={SITE.mailto} className="btn-primary !px-4 !py-2.5 shrink-0">
@@ -149,20 +153,20 @@ export default function ChatWidget({ className = "" }: { className?: string }) {
 
       {/* Input */}
       <div className="border-t border-rule">
-        <div className="flex items-center gap-3 px-6 py-3">
+        <div className="flex items-center gap-3 px-5 py-3 sm:px-6">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && send(input)}
             placeholder="Describe what you are building..."
-            className="flex-1 bg-transparent text-sm text-ink placeholder-ink-mute outline-none py-2"
+            className="flex-1 bg-transparent text-[16px] sm:text-sm text-ink placeholder-ink-mute outline-none py-2.5"
           />
           <button
             onClick={() => send(input)}
             disabled={!input.trim() || loading}
             aria-label="Send"
-            className="w-9 h-9 rounded-md bg-accent text-white flex items-center justify-center disabled:opacity-30 hover:bg-accent-deep transition-colors shrink-0"
+            className="w-11 h-11 sm:w-9 sm:h-9 rounded-lg sm:rounded-md bg-accent text-white flex items-center justify-center disabled:opacity-30 hover:bg-accent-deep transition-colors shrink-0"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
               <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
