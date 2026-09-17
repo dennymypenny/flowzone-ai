@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SITE } from "@/lib/site";
+import CookieChoice from "@/components/CookieChoice";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -23,7 +24,7 @@ export default function PrivacyPolicy() {
       <div className="max-w-3xl mx-auto px-6 py-20">
         <p className="text-sm text-accent font-semibold uppercase tracking-wide mb-3">Legal</p>
         <h1 className="text-4xl font-bold text-ink mb-4">Privacy Policy</h1>
-        <p className="text-ink-mute text-sm mb-12">Effective date: March 1, 2025 &nbsp;&middot;&nbsp; Last updated: March 22, 2026</p>
+        <p className="text-ink-mute text-sm mb-12">Effective date: March 1, 2025 &nbsp;&middot;&nbsp; Last updated: September 16, 2026</p>
 
         <div className="prose prose-gray max-w-none space-y-10 text-ink-soft leading-relaxed">
 
@@ -90,18 +91,21 @@ export default function PrivacyPolicy() {
             </p>
           </section>
 
-          <section>
-            <h2 className="text-xl font-bold text-ink mb-3">6. Cookies</h2>
+          <section id="cookies">
+            <h2 className="text-xl font-bold text-ink mb-3">6. Cookies and Analytics</h2>
             <p>
-              Our website uses cookies and similar technologies to analyze traffic and improve your experience. These include:
+              We count visits ourselves so we know which pages are useful. Here is everything that runs:
             </p>
             <ul className="list-disc pl-6 space-y-2 mt-3">
-              <li><strong>Essential cookies:</strong> Required for the website to function properly.</li>
-              <li><strong>Analytics:</strong> We use Vercel Analytics to count page views and see which pages people find useful. It does not use cookies and does not track you across other websites.</li>
+              <li><strong>Visit counts, no cookie:</strong> page views, how long a page stays open, how far it is scrolled, which links and buttons are pressed, the site that sent you, your device type and country. These are stored only as daily totals, with a random id that lives in your browser tab and ends when you close it. We do not store your IP address.</li>
+              <li><strong>One optional cookie, fz_vid:</strong> only if you press Okay on the notice. It holds a random id for one year so a later visit counts as returning. It is never used for ads and never shared or sold.</li>
+              <li><strong>fz_consent:</strong> remembers your answer to the notice so we do not ask again.</li>
+              <li><strong>Vercel Analytics:</strong> counts page views without cookies and does not track you across other websites.</li>
             </ul>
             <p className="mt-4">
-              You can control cookie settings through your browser. Disabling cookies may affect some website functionality.
+              If your browser sends a Global Privacy Control signal, we treat it as a no and never set the optional cookie. You can also change your answer at any time:
             </p>
+            <CookieChoice />
           </section>
 
           <section>

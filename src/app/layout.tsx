@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import Flow from "@/components/Flow";
 import ChatDock from "@/app/components/ChatDock";
 import FreeSample from "@/components/FreeSample";
+import Pulse from "@/components/Pulse";
 import StructuredData from "@/components/StructuredData";
 import { Analytics } from "@vercel/analytics/react";
 import { SITE } from "@/lib/site";
@@ -84,6 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Flow />
         <ChatDock />
         <FreeSample />
+        <Pulse />
         <Analytics />
       </body>
     </html>

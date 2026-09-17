@@ -42,6 +42,10 @@ const RULES: Array<[string, Rule]> = [
   // Cheap, but still ours to pay for.
   ["/api/plan-edit", { limit: 60, windowMs: 10 * 60_000 }],
   ["/api/imageproxy", { limit: 300, windowMs: 10 * 60_000 }],
+  // Visit counting. A busy reader fires a few events a page; a loop is not a reader.
+  ["/api/track", { limit: 400, windowMs: 10 * 60_000 }],
+  // Denny's dashboard pull. Also needs STATS_KEY.
+  ["/api/stats", { limit: 30, windowMs: 10 * 60_000 }],
 ];
 
 const hits = new Map<string, number[]>();
