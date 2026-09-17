@@ -17,14 +17,18 @@ export default function FastVideo({
   ariaLabel,
   sources,
   fallback,
+  fallbackPortrait,
 }: {
   className?: string;
   poster?: string;
   rate?: number;
   preload?: "none" | "metadata" | "auto";
   ariaLabel?: string;
-  sources: { src: string; type: string }[];
+  sources: { src: string; type: string; media?: string }[];
   fallback?: string;
+  /* Animated image used instead of `fallback` when the viewport is taller
+     than it is wide, so a phone never stretches a landscape frame. */
+  fallbackPortrait?: string;
 }) {
   const box = useRef<HTMLDivElement>(null);
 
@@ -41,7 +45,9 @@ export default function FastVideo({
       if (swapped || !fallback) return;
       swapped = true;
       const img = document.createElement("img");
-      img.src = fallback;
+      const portrait =
+        fallbackPortrait && window.matchMedia("(orientation: portrait)").matches;
+      img.src = portrait ? fallbackPortrait : fallback;
       img.alt = "";
       img.setAttribute("aria-hidden", "true");
       img.className = v.className;
@@ -92,7 +98,7 @@ export default function FastVideo({
       window.removeEventListener("touchstart", tryPlay);
       window.removeEventListener("scroll", tryPlay);
     };
-  }, [rate, fallback]);
+  }, [rate, fallback, fallbackPortrait]);
 
   const esc = (x: string) => x.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
   const html =
@@ -101,7 +107,14 @@ export default function FastVideo({
     (poster ? ` poster="${esc(poster)}"` : "") +
     (ariaLabel ? ` aria-label="${esc(ariaLabel)}"` : "") +
     `>` +
-    sources.map((s) => `<source src="${esc(s.src)}" type="${esc(s.type)}">`).join("") +
+    sources
+      .map(
+        (s) =>
+          `<source src="${esc(s.src)}" type="${esc(s.type)}"` +
+          (s.media ? ` media="${esc(s.media)}"` : "") +
+          `>`,
+      )
+      .join("") +
     `</video>`;
 
   return (

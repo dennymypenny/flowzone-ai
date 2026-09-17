@@ -100,7 +100,12 @@ export default function Home() {
             preload="auto"
             poster="/assets/ocean-hero-poster.jpg"
             fallback="/assets/ocean-hero-anim.webp"
+            fallbackPortrait="/assets/ocean-hero-portrait-anim.webp"
             sources={[
+              /* Phones held upright get a 720x1280 crop so the water stays
+                 sharp instead of a 720p landscape frame stretched tall. */
+              { src: "/assets/ocean-hero-portrait.webm", type: "video/webm", media: "(orientation: portrait)" },
+              { src: "/assets/ocean-hero-portrait.mp4", type: "video/mp4", media: "(orientation: portrait)" },
               { src: "/assets/ocean-hero.webm", type: "video/webm" },
               { src: "/assets/ocean-hero.mp4", type: "video/mp4" },
             ]}

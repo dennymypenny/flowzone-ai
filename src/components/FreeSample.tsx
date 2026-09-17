@@ -212,9 +212,9 @@ export default function FreeSample() {
             <button
               onClick={close}
               aria-label="Close"
-              className="absolute z-20 top-5 right-5 w-10 h-10 rounded-full bg-white/[0.07] hover:bg-white/[0.14] text-ink-soft hover:text-ink flex items-center justify-center transition-all duration-300 hover:rotate-90"
+              className="absolute z-20 top-4 right-4 md:top-5 md:right-5 w-11 h-11 md:w-10 md:h-10 rounded-full bg-white text-[#0B1322] shadow-[0_6px_18px_-4px_rgba(0,0,0,0.6)] ring-1 ring-black/10 md:bg-white/[0.07] md:text-ink-soft md:shadow-none md:ring-0 md:hover:bg-white/[0.14] md:hover:text-ink flex items-center justify-center transition-all duration-300 hover:rotate-90"
             >
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+              <svg className="w-5 h-5 md:w-4 md:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
                 <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
               </svg>
             </button>
