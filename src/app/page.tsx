@@ -344,15 +344,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------- 3 · Three parts ---------- */}
-      {/* White, on purpose. The page was three dark bands in a row and
-          nothing popped. Cards rather than columns, because the three parts
-          are the whole offer and a hairline border was not carrying that.
-          Each card is tinted with its own part colour so the three read as a
-          set before a single word is read. */}
+      {/* ---------- 3 · Three parts ----------
+          Sep 22: this used to define the three words the hero had already
+          said, so it told a visitor nothing new. Now each part leads with a
+          real piece and says honestly what it is (client work or our own
+          shop), then links to where it lives on /work. Proof, not a glossary. */}
       <section data-flow className="band-light px-6 pt-10 md:pt-14 pb-16 md:pb-24">
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-center flex-wrap gap-y-2 mb-6">
+          <div className="flex items-center flex-wrap gap-y-2 mb-5">
             {[
               { c: "#2B57C4", w: "Brand" },
               { c: "#155E9C", w: "Site" },
@@ -374,13 +373,16 @@ export default function Home() {
               </span>
             ))}
             <span className="text-[11px] font-medium uppercase tracking-label text-[#647089] ml-4">
-              Three parts, one studio
+              What we make
             </span>
           </div>
 
+          <h2 className="font-display text-4xl md:text-5xl leading-[1.05] text-[#0B1322] mb-4 max-w-3xl">
+            Brand, site and system. Here is one we built for each.
+          </h2>
           <p className="text-[#49566E] font-light leading-relaxed max-w-reading mb-10">
-            Any one of these on its own fails quietly. That&apos;s why we
-            don&apos;t sell them on their own.
+            Hire us for one part or all three. Every piece below is real, and
+            each one says whose it is.
           </p>
 
           <div className="grid md:grid-cols-3 gap-5">
@@ -388,63 +390,129 @@ export default function Home() {
               {
                 n: "01",
                 k: "Brand",
-                icon: "palette",
                 c: "#2B57C4",
                 b: "What people recognize you by.",
-                d: "The mark, the colors, the words. For a company or for your own name. The part that makes you look like you meant it.",
+                d: "The mark, the colors, the words. The part that makes you look like you meant it.",
+                img: "/assets/npu-banner.png",
+                fit: "object-contain",
+                bg: "#0E0D0A",
+                alt: "NextPlayU brand banner in black and gold with the NPU monogram and the line Your next play starts here",
+                tag: "Client work",
+                who: "NextPlayU",
+                what: "A brand banner that introduces the whole company in one graphic.",
+                href: "/work#nextplayu",
+                start: "/intake?build=identity",
+                cta: "Start a brand",
               },
               {
                 n: "02",
                 k: "Site",
-                icon: "compass",
                 c: "#155E9C",
                 b: "Where people go to decide.",
-                d: "A site or a portfolio that answers the question and asks for the next step, instead of a profile and a DM.",
+                d: "A site that answers the question and asks for the next step, instead of a profile and a DM.",
+                img: "/assets/mahj-coffee-site-poster.jpg",
+                fit: "object-cover object-center",
+                bg: "#FEF4FC",
+                alt: "The Mahj & Coffee website homepage: the red wordmark on blush with See upcoming events and Learn to play buttons",
+                tag: "Client work",
+                who: "Mahj & Coffee",
+                what: "A community site for a Miami mahjong group, built from the logo out.",
+                href: "/work#mahj-and-coffee",
+                start: "/intake?build=site",
+                cta: "Start a site",
               },
               {
                 n: "03",
                 k: "System",
-                icon: "bolt",
                 c: "#0F6B4F",
                 b: "What runs it behind the scenes.",
-                d: "Booking, checkout, follow-up. The parts nobody sees and everybody feels.",
+                d: "Checkout, booking, follow-up. The parts nobody sees and everybody feels.",
+                img: "/assets/crg-hero.jpg",
+                fit: "object-cover object-left-top",
+                bg: "#0B0A14",
+                alt: "The CardsRG storefront with its CRG shield logo, category nav, account and cart",
+                tag: "Our own shop",
+                who: "CardsRG",
+                what: "Product pages, cart and checkout on a card shop we run ourselves. It sells.",
+                href: "/work#cardsrg",
+                start: "/intake?build=engine",
+                cta: "Start a system",
               },
             ].map((x) => (
               <div
                 key={x.k}
                 id={x.k.toLowerCase()}
-                className="relative scroll-mt-28 rounded-[18px] border bg-white p-7 md:p-8 flex flex-col overflow-hidden transition-transform duration-300 hover:-translate-y-1"
+                className="group relative scroll-mt-28 rounded-[18px] border bg-white flex flex-col overflow-hidden transition-transform duration-300 hover:-translate-y-1"
                 style={{
                   borderColor: `${x.c}2E`,
-                  backgroundImage: `linear-gradient(180deg, ${x.c}0F 0%, rgba(255,255,255,0) 42%)`,
                   boxShadow: `0 24px 48px -30px ${x.c}66`,
                 }}
               >
                 <span
-                  className="absolute top-0 left-0 h-[3px] w-full"
+                  className="absolute top-0 left-0 h-[3px] w-full z-10"
                   style={{ background: x.c }}
                   aria-hidden
                 />
-                <div className="flex items-center justify-between mb-6 mt-1">
+                {/* The proof sits first: a visitor sees the work before the words. */}
+                <Link
+                  href={x.href}
+                  aria-label={`See the ${x.who} piece on our work page`}
+                  className="relative block aspect-[16/10] overflow-hidden border-b"
+                  style={{ background: x.bg, borderColor: `${x.c}2E` }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={x.img}
+                    alt={x.alt}
+                    loading="lazy"
+                    className={`absolute inset-0 w-full h-full ${x.fit} transition-transform duration-500 group-hover:scale-[1.03]`}
+                  />
+                </Link>
+
+                <div className="p-7 md:p-8 flex flex-col flex-1">
                   <span
-                    className="inline-flex items-center justify-center w-12 h-12 rounded-full"
-                    style={{ background: `${x.c}1A`, color: x.c }}
-                  >
-                    <Icon name={x.icon} className="w-6 h-6" />
-                  </span>
-                  <span
-                    className="text-[11px] font-medium uppercase tracking-label"
+                    className="text-[11px] font-medium uppercase tracking-label mb-3"
                     style={{ color: x.c }}
                   >
                     {x.n} · {x.k}
                   </span>
+                  <p className="font-display text-[1.6rem] md:text-3xl leading-[1.12] text-[#0B1322] mb-3">
+                    {x.b}
+                  </p>
+                  <p className="text-sm text-[#49566E] font-light leading-relaxed mb-6">
+                    {x.d}
+                  </p>
+
+                  <div
+                    className="mt-auto pt-5 border-t"
+                    style={{ borderColor: `${x.c}24` }}
+                  >
+                    <p className="text-[11px] font-medium uppercase tracking-label text-[#647089] mb-1.5">
+                      {x.tag} · <span style={{ color: x.c }}>{x.who}</span>
+                    </p>
+                    <p className="text-sm text-[#2A3448] leading-relaxed mb-4">
+                      {x.what}
+                    </p>
+                    {/* Two ways out of every card: see the proof, or start
+                        that part right now with the ticket already picked. */}
+                    <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+                      <Link
+                        href={x.start}
+                        className="inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
+                        style={{ background: x.c }}
+                      >
+                        {x.cta} →
+                      </Link>
+                      <Link
+                        href={x.href}
+                        className="text-sm font-medium underline underline-offset-4"
+                        style={{ color: x.c, textDecorationColor: `${x.c}55` }}
+                      >
+                        See the full piece
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-                <p className="font-display text-[1.6rem] md:text-3xl leading-[1.12] text-[#0B1322] mb-3">
-                  {x.b}
-                </p>
-                <p className="text-sm text-[#49566E] font-light leading-relaxed">
-                  {x.d}
-                </p>
               </div>
             ))}
           </div>

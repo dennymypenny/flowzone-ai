@@ -1,11 +1,13 @@
 import Link from "next/link";
 import Wordmark from "@/components/Wordmark";
 import { SITE } from "@/lib/site";
+import FooterVideo from "@/components/FooterVideo";
 
 export default function Footer() {
   return (
-    <footer className="bg-paper-deep border-t border-rule">
-      <div className="max-w-6xl mx-auto px-6 py-20">
+    <footer className="relative isolate overflow-hidden bg-paper-deep border-t border-rule">
+      <FooterVideo />
+      <div className="relative max-w-6xl mx-auto px-6 py-20">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
           <div className="md:col-span-5">
             <Wordmark tone="dark" />

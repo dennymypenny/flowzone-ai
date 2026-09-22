@@ -60,7 +60,7 @@ export default function Work() {
       </section>
 
       {/* CardsRG */}
-      <section data-flow className="px-6 pb-24">
+      <section id="cardsrg" data-flow className="scroll-mt-24 px-6 pb-24">
         <div className="max-w-6xl mx-auto">
           <div className="border-t border-rule pt-10 grid md:grid-cols-12 gap-10 mb-10">
             <div className="md:col-span-4">
@@ -344,7 +344,7 @@ export default function Work() {
           the welcome reel cut for the account, so the brand shows up in
           motion twice rather than as stills. Client work: a real Miami
           community with a real account. Not hosted here, so no site link. */}
-      <section data-flow className="px-6 py-24 border-t border-rule">
+      <section id="mahj-and-coffee" data-flow className="scroll-mt-24 px-6 py-24 border-t border-rule">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-12 gap-10 mb-10">
             <div className="md:col-span-6">
@@ -853,7 +853,7 @@ export default function Work() {
       {/* NextPlayU is one banner, and that is the point: it sits here as the
           proof behind the single-graphic offer. Landscape, so it gets the full
           width like SlipFolio rather than a grid slot. */}
-      <section data-flow className="px-6 py-24 border-t border-rule">
+      <section id="nextplayu" data-flow className="scroll-mt-24 px-6 py-24 border-t border-rule">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-12 gap-10 mb-10">
             <div className="md:col-span-6">

@@ -862,3 +862,28 @@ button {
   background-image: none;
   box-shadow: inset 0 0 0 1px rgba(43, 87, 196, 0.45);
 }
+
+/* The footer boat. Outside every @layer on purpose so the build cannot drop
+   it (see the Aug 16 outages). Only transform moves; the boat is visible in
+   every state. */
+.fz-boat {
+  transform: translateX(-160px);
+  animation: fz-sail 46s linear infinite;
+  will-change: transform;
+}
+.fz-boat-bob {
+  animation: fz-bob 3.2s ease-in-out infinite;
+  transform-origin: 80% 50%;
+}
+@keyframes fz-sail {
+  from { transform: translateX(-160px); }
+  to { transform: translateX(calc(100vw + 20px)); }
+}
+@keyframes fz-bob {
+  0%, 100% { transform: translateY(0) rotate(-1.2deg); }
+  50% { transform: translateY(2px) rotate(1.2deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fz-boat { animation: none; transform: translateX(12vw); }
+  .fz-boat-bob { animation: none; }
+}
