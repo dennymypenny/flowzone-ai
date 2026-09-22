@@ -455,7 +455,7 @@ export default function Work() {
           studio sample, and each says which it is, because the rule on this
           page is that nothing pretends. Three across with the write-up under
           each, so a fourth drops in without a relayout. */}
-      <section data-flow className="band-light px-6 py-24">
+      <section id="motion" data-flow className="scroll-mt-24 band-light px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <div className="border-t border-rule pt-10 mb-12">
             <p className="label mb-4">04 · Motion</p>

@@ -381,8 +381,8 @@ export default function Home() {
             Brand, site and system. Here is one we built for each.
           </h2>
           <p className="text-[#49566E] font-light leading-relaxed max-w-reading mb-10">
-            Hire us for one part or all three. Every piece below is real, and
-            each one says whose it is.
+            Hire us for one part or all three, plus animation videos. Every
+            piece below is real, and each one says whose it is.
           </p>
 
           <div className="grid md:grid-cols-3 gap-5">
@@ -393,14 +393,15 @@ export default function Home() {
                 c: "#2B57C4",
                 b: "What people recognize you by.",
                 d: "The mark, the colors, the words. The part that makes you look like you meant it.",
-                img: "/assets/npu-banner.png",
-                fit: "object-contain",
+                img: "/assets/npu-brand-card.jpg",
+                fit: "object-cover object-center",
                 bg: "#0E0D0A",
                 alt: "NextPlayU brand banner in black and gold with the NPU monogram and the line Your next play starts here",
                 tag: "Client work",
                 who: "NextPlayU",
                 what: "A brand banner that introduces the whole company in one graphic.",
                 href: "/work#nextplayu",
+                more: "See the full piece",
                 start: "/intake?build=identity",
                 cta: "Start a brand",
               },
@@ -410,14 +411,15 @@ export default function Home() {
                 c: "#155E9C",
                 b: "Where people go to decide.",
                 d: "A site that answers the question and asks for the next step, instead of a profile and a DM.",
-                img: "/assets/mahj-coffee-site-poster.jpg",
-                fit: "object-cover object-center",
-                bg: "#FEF4FC",
-                alt: "The Mahj & Coffee website homepage: the red wordmark on blush with See upcoming events and Learn to play buttons",
-                tag: "Client work",
-                who: "Mahj & Coffee",
-                what: "A community site for a Miami mahjong group, built from the logo out.",
+                img: "/assets/flowzone-landing-card.jpg",
+                fit: "object-cover object-top",
+                bg: "#EEF2F7",
+                alt: "The FlowZone landing page: You imagine it. We get it moving, over moving ocean water, with the Start a ticket button",
+                tag: "Our own site",
+                who: "FlowZone",
+                what: "This landing page. Brand, copy, build and the ticket behind it, all made here.",
                 href: "/work#mahj-and-coffee",
+                more: "See a client site",
                 start: "/intake?build=site",
                 cta: "Start a site",
               },
@@ -435,6 +437,7 @@ export default function Home() {
                 who: "CardsRG",
                 what: "Product pages, cart and checkout on a card shop we run ourselves. It sells.",
                 href: "/work#cardsrg",
+                more: "See the full piece",
                 start: "/intake?build=engine",
                 cta: "Start a system",
               },
@@ -508,13 +511,75 @@ export default function Home() {
                         className="text-sm font-medium underline underline-offset-4"
                         style={{ color: x.c, textDecorationColor: `${x.c}55` }}
                       >
-                        See the full piece
+                        {x.more}
                       </Link>
                     </div>
                   </div>
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Animation videos. Not a fourth part of the build, a thing we
+              make on its own or on top of any of the three, so it gets its
+              own wide card under the set. Landscape client piece, playing. */}
+          <div
+            id="motion"
+            className="relative scroll-mt-28 mt-5 rounded-[18px] border bg-white overflow-hidden grid md:grid-cols-12"
+            style={{ borderColor: "#A8175E2E", boxShadow: "0 24px 48px -30px #A8175E66" }}
+          >
+            <span className="absolute top-0 left-0 h-[3px] w-full z-10" style={{ background: "#A8175E" }} aria-hidden />
+            <div className="md:col-span-7 relative bg-black aspect-video md:aspect-auto md:min-h-[320px]">
+              <video
+                className="absolute inset-0 w-full h-full object-cover"
+                poster="/assets/slipfolio-hype-poster.jpg"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                aria-label="SlipFolio product animation: a bet slip turns into an investment, a slice of every stake going into a portfolio"
+              >
+                <source src="/assets/slipfolio-hype.webm" type="video/webm" />
+                <source src="/assets/slipfolio-hype.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div className="md:col-span-5 p-7 md:p-9 flex flex-col">
+              <span className="text-[11px] font-medium uppercase tracking-label mb-3" style={{ color: "#A8175E" }}>
+                Plus · Animation videos
+              </span>
+              <p className="font-display text-[1.6rem] md:text-3xl leading-[1.12] text-[#0B1322] mb-3">
+                What makes people stop scrolling.
+              </p>
+              <p className="text-sm text-[#49566E] font-light leading-relaxed mb-6">
+                Brand reels, product explainers, title animations and ads. Cut
+                for Instagram, TikTok, X or your homepage.
+              </p>
+              <div className="mt-auto pt-5 border-t" style={{ borderColor: "#A8175E24" }}>
+                <p className="text-[11px] font-medium uppercase tracking-label text-[#647089] mb-1.5">
+                  Client work · <span style={{ color: "#A8175E" }}>SlipFolio</span>
+                </p>
+                <p className="text-sm text-[#2A3448] leading-relaxed mb-4">
+                  A 12 second product animation that explains what a screenshot could not.
+                </p>
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+                  <Link
+                    href="/intake?build=small"
+                    className="inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
+                    style={{ background: "#A8175E" }}
+                  >
+                    Start a video →
+                  </Link>
+                  <Link
+                    href="/work#motion"
+                    className="text-sm font-medium underline underline-offset-4"
+                    style={{ color: "#A8175E", textDecorationColor: "#A8175E55" }}
+                  >
+                    See the reels
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
