@@ -522,7 +522,7 @@ export default function Home() {
 
           {/* Animation videos. Not a fourth part of the build, a thing we
               make on its own or on top of any of the three, so it gets its
-              own wide card under the set. Landscape client piece, playing. */}
+              own wide card under the set. Landscape spec piece, playing, tagged as spec. */}
           <div
             id="motion"
             className="relative scroll-mt-28 mt-5 rounded-[18px] border bg-white overflow-hidden grid md:grid-cols-12"
@@ -532,16 +532,16 @@ export default function Home() {
             <div className="md:col-span-7 relative bg-black aspect-video md:aspect-auto md:min-h-[320px]">
               <video
                 className="absolute inset-0 w-full h-full object-cover"
-                poster="/assets/slipfolio-hype-poster.jpg"
+                poster="/assets/profound-ad-poster.jpg"
                 autoPlay
                 muted
                 loop
                 playsInline
                 preload="metadata"
-                aria-label="SlipFolio product animation: a bet slip turns into an investment, a slice of every stake going into a portfolio"
+                aria-label="Spec recruiting ad for Profound: a prompt box fills a grid with generic output, three lines name the harder problem, four stages link into one platform, and the ad closes on the Profound logo"
               >
-                <source src="/assets/slipfolio-hype.webm" type="video/webm" />
-                <source src="/assets/slipfolio-hype.mp4" type="video/mp4" />
+                <source src="/assets/profound-ad.webm" type="video/webm" />
+                <source src="/assets/profound-ad.mp4" type="video/mp4" />
               </video>
             </div>
             <div className="md:col-span-5 p-7 md:p-9 flex flex-col">
@@ -557,10 +557,10 @@ export default function Home() {
               </p>
               <div className="mt-auto pt-5 border-t" style={{ borderColor: "#A8175E24" }}>
                 <p className="text-[11px] font-medium uppercase tracking-label text-[#647089] mb-1.5">
-                  Client work · <span style={{ color: "#A8175E" }}>SlipFolio</span>
+                  Spec piece · <span style={{ color: "#A8175E" }}>Profound</span>
                 </p>
                 <p className="text-sm text-[#2A3448] leading-relaxed mb-4">
-                  A 12 second product animation that explains what a screenshot could not.
+                  A 31 second recruiting ad we made for Profound on our own, not commissioned.
                 </p>
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
                   <Link
@@ -571,11 +571,11 @@ export default function Home() {
                     Start a video →
                   </Link>
                   <Link
-                    href="/work#motion"
+                    href="/work#profound"
                     className="text-sm font-medium underline underline-offset-4"
                     style={{ color: "#A8175E", textDecorationColor: "#A8175E55" }}
                   >
-                    See the reels
+                    See the full piece
                   </Link>
                 </div>
               </div>

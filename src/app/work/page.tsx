@@ -261,7 +261,7 @@ export default function Work() {
           A 31 second recruiting ad made for Profound, on spec. Nobody at
           Profound asked for it or paid for it, and the tag says so. Landscape,
           so it takes the full width like SlipFolio. */}
-      <section data-flow className="band-light px-6 py-24">
+      <section id="profound" data-flow className="scroll-mt-24 band-light px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-12 gap-10 mb-10">
             <div className="md:col-span-6">
