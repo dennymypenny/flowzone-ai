@@ -3,6 +3,7 @@ import Icon from "@/components/Icon";
 import AddToCart from "@/app/components/AddToCart";
 import type { Metadata } from "next";
 import MessageUs, { TicketNote } from "@/components/MessageUs";
+import LogoBand from "@/components/LogoBand";
 import Testimonials from "@/components/Testimonials";
 import { SITE } from "@/lib/site";
 import PitchPath from "@/app/components/PitchPath";
@@ -223,6 +224,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Client logos, moving, right on top of the work. */}
+      <LogoBand workLink={false} />
 
       {/* ---------- 2b · The work ---------- */}
       {/* A clean light band. This used to be the studio reel in a player

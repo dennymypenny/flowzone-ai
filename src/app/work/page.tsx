@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { SITE } from "@/lib/site";
 import NodeWeb from "@/app/components/NodeWeb";
 import MessageUs, { TicketNote } from "@/components/MessageUs";
+import LogoBand from "@/components/LogoBand";
 
 export const metadata: Metadata = {
   title: "Work",
@@ -59,8 +60,10 @@ export default function Work() {
         </div>
       </section>
 
+      <LogoBand workLink={false} />
+
       {/* CardsRG */}
-      <section id="cardsrg" data-flow className="scroll-mt-24 px-6 pb-24">
+      <section id="cardsrg" data-flow className="scroll-mt-24 px-6 pt-16 pb-24">
         <div className="max-w-6xl mx-auto">
           <div className="border-t border-rule pt-10 grid md:grid-cols-12 gap-10 mb-10">
             <div className="md:col-span-4">

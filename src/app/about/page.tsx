@@ -1,9 +1,9 @@
 import Link from "next/link";
-import Image from "next/image";
 import type { Metadata } from "next";
 import { SITE } from "@/lib/site";
 import NodeWeb from "@/app/components/NodeWeb";
 import MessageUs, { TicketNote } from "@/components/MessageUs";
+import LogoBand from "@/components/LogoBand";
 
 /*
  * /about is written to be read by people and quoted by AI search.
@@ -32,16 +32,6 @@ export const metadata: Metadata = {
     locale: "en_US",
   },
 };
-
-/* The logo band. White marks cut from each client's own logo. */
-const LOGOS = [
-  { src: "/assets/logos/logo-shutters-depot.png", alt: "Shutters Depot", w: 704, h: 120, show: 30 },
-  { src: "/assets/logos/logo-abc-capital.png", alt: "ABC Capital Group", w: 265, h: 120, show: 40 },
-  { src: "/assets/logos/logo-slipfolio.png", alt: "SlipFolio", w: 401, h: 120, show: 34 },
-  { src: "/assets/logos/logo-nextplayu.png", alt: "NextPlayU", w: 1055, h: 120, show: 26 },
-  { src: "/assets/logos/logo-mahj-coffee.png", alt: "Mahj & Coffee", w: 131, h: 120, show: 58 },
-  { src: "/assets/logos/logo-cardsrg.png", alt: "CardsRG", w: 118, h: 120, show: 58 },
-];
 
 const SERVICES = [
   {
@@ -202,24 +192,6 @@ const jsonLd = {
   ],
 };
 
-function LogoRow({ hidden }: { hidden?: boolean }) {
-  return (
-    <div className="fz-logorow" aria-hidden={hidden ? "true" : undefined}>
-      {LOGOS.map((l) => (
-        <Image
-          key={l.alt}
-          src={l.src}
-          alt={hidden ? "" : l.alt}
-          width={l.w}
-          height={l.h}
-          className="fz-logo mx-7 md:mx-11"
-          style={{ height: l.show, width: "auto" }}
-        />
-      ))}
-    </div>
-  );
-}
-
 export default function About() {
   return (
     <>
@@ -248,22 +220,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Logo band */}
-      <section aria-label="Brands FlowZone has built for" className="border-y border-rule bg-paper-deep py-10">
-        <p className="label text-center mb-8 px-6">Brands we have built for</p>
-        <div className="fz-logoband overflow-hidden">
-          <div className="fz-logotrack">
-            <LogoRow />
-            <LogoRow hidden />
-          </div>
-        </div>
-        <p className="text-center text-xs text-ink-mute mt-8 px-6">
-          Client work, plus CardsRG, the studio&apos;s own store.{" "}
-          <Link href="/work" className="underline underline-offset-4 hover:text-ink">
-            See every piece
-          </Link>
-        </p>
-      </section>
+      <LogoBand />
 
       {/* 2. What FlowZone does */}
       <section data-flow className="band-light px-6 py-20 md:py-24">
