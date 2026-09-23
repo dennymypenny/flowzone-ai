@@ -1211,7 +1211,7 @@ export default function Home() {
       </section>
 
       {/* ---------- 9 · Closing CTA ---------- */}
-      <section data-flow className="bg-paper-deep glow border-t border-rule px-6 py-20">
+      <section data-flow className="band-light band-flow px-6 py-20">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-[11px] font-medium uppercase tracking-label text-ink-mute mb-6">
             Start here

@@ -942,3 +942,57 @@ button {
   .fz-logorow[aria-hidden="true"] { display: none; }
   .fz-logoband { -webkit-mask-image: none; mask-image: none; }
 }
+
+/* The closing band on every page: a flowy white gradient so the dark
+   footer below always has a clear edge. Pair with .band-light (which flips
+   all the ink, rules and buttons to dark-on-light). The two soft blue
+   washes drift slowly; only transform animates, content is never hidden. */
+.band-flow {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 80% at 50% 0%, #FFFFFF 0%, rgba(255, 255, 255, 0) 70%),
+    linear-gradient(180deg, #FFFFFF 0%, #F2F7FF 45%, #E3EDFB 100%);
+}
+.band-flow::before,
+.band-flow::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 70vmax;
+  height: 70vmax;
+  border-radius: 9999px;
+  pointer-events: none;
+  will-change: transform;
+}
+.band-flow::before {
+  left: -30vmax;
+  top: -38vmax;
+  background: radial-gradient(closest-side, rgba(91, 155, 249, 0.22), rgba(91, 155, 249, 0));
+  animation: fz-flow-a 22s ease-in-out infinite alternate;
+}
+.band-flow::after {
+  right: -32vmax;
+  bottom: -44vmax;
+  background: radial-gradient(closest-side, rgba(198, 228, 248, 0.75), rgba(198, 228, 248, 0));
+  animation: fz-flow-b 26s ease-in-out infinite alternate;
+}
+@keyframes fz-flow-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(18vmax, 8vmax, 0) scale(1.15); }
+}
+@keyframes fz-flow-b {
+  from { transform: translate3d(0, 0, 0) scale(1.1); }
+  to { transform: translate3d(-16vmax, -6vmax, 0) scale(0.95); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .band-flow::before,
+  .band-flow::after { animation: none; }
+}
+/* The footer's top edge: the three brand dot colors as a line, so even a
+   page that ends dark (intake, privacy) has a visible seam. */
+.fz-footer-edge {
+  height: 3px;
+  background: linear-gradient(90deg, #1E3A8A 0%, #4C7BE8 35%, #5B9BF9 60%, #C6E4F8 100%);
+}

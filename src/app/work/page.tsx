@@ -1106,7 +1106,7 @@ export default function Work() {
       </section>
 
       {/* CTA */}
-      <section data-flow className="bg-paper-deep glow border-t border-rule px-6 py-24">
+      <section data-flow className="band-light band-flow px-6 py-24">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="font-display text-4xl md:text-6xl leading-[0.95] mb-6">
             Want to be the next one on this page?

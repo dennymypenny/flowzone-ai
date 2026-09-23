@@ -5,7 +5,8 @@ import FooterVideo from "@/components/FooterVideo";
 
 export default function Footer() {
   return (
-    <footer className="relative isolate overflow-hidden bg-paper-deep border-t border-rule">
+    <footer className="relative isolate overflow-hidden bg-paper-deep">
+      <div className="fz-footer-edge relative z-10" aria-hidden />
       <FooterVideo />
       <div className="relative max-w-6xl mx-auto px-6 py-20">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">

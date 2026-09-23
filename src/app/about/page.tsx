@@ -362,7 +362,7 @@ export default function About() {
       </section>
 
       {/* CTA */}
-      <section data-flow className="bg-paper-deep glow border-t border-rule px-6 py-28">
+      <section data-flow className="band-light band-flow px-6 py-28">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="font-display text-5xl md:text-7xl leading-[0.95] mb-8">
             {SITE.line}
