@@ -906,3 +906,39 @@ button {
   .fz-boat { animation: none; transform: translateX(12vw); }
   .fz-boat-bob { animation: none; }
 }
+
+/* Client logo band on /about. A plain CSS marquee: the track holds the
+   logo row twice and slides left by exactly one copy, so the loop is
+   seamless. Logos are always visible; only transform animates. */
+.fz-logoband {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+}
+.fz-logotrack {
+  display: flex;
+  width: max-content;
+  animation: fz-logoslide 32s linear infinite;
+}
+.fz-logoband:hover .fz-logotrack { animation-play-state: paused; }
+.fz-logorow {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.fz-logo {
+  display: block;
+  width: auto;
+  opacity: 0.72;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.fz-logo:hover { opacity: 1; transform: translateY(-2px); }
+@keyframes fz-logoslide {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fz-logotrack { animation: none; width: auto; flex-wrap: wrap; justify-content: center; }
+  .fz-logorow { flex-wrap: wrap; justify-content: center; }
+  .fz-logorow[aria-hidden="true"] { display: none; }
+  .fz-logoband { -webkit-mask-image: none; mask-image: none; }
+}
