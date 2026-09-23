@@ -36,7 +36,7 @@ function Row({ hidden }: { hidden?: boolean }) {
 
 export default function LogoBand({ workLink = true }: { workLink?: boolean }) {
   return (
-    <section aria-label="Brands FlowZone has built for" className="border-y border-rule bg-paper-deep py-10">
+    <section aria-label="Brands FlowZone has built for" className="fz-logoband-bg py-10">
       <p className="label text-center mb-8 px-6">Brands we have built for</p>
       <div className="fz-logoband overflow-hidden">
         <div className="fz-logotrack">

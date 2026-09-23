@@ -996,3 +996,19 @@ button {
   height: 3px;
   background: linear-gradient(90deg, #1E3A8A 0%, #4C7BE8 35%, #5B9BF9 60%, #C6E4F8 100%);
 }
+
+/* The logo band sits between dark and light sections alike, so it carries
+   its own edge: a near-black strip with brand blue hairlines top and bottom. */
+.fz-logoband-bg {
+  position: relative;
+  background:
+    radial-gradient(60% 140% at 50% 50%, rgba(91, 155, 249, 0.35), rgba(91, 155, 249, 0) 70%),
+    linear-gradient(90deg, #16307A 0%, #1E3A8A 30%, #2B57C4 50%, #1E3A8A 70%, #16307A 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(198, 228, 248, 0.5),
+    inset 0 -1px 0 rgba(198, 228, 248, 0.5);
+}
+.fz-logoband-bg .label,
+.fz-logoband-bg .text-ink-mute { color: #DCE8FB; }
+.fz-logoband-bg .label::before { background: #C6E4F8; }
+.fz-logoband-bg .fz-logo { opacity: 0.92; }
