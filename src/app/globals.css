@@ -917,7 +917,7 @@ button {
 .fz-logotrack {
   display: flex;
   width: max-content;
-  animation: fz-logoslide 32s linear infinite;
+  animation: fz-logoslide 20s linear infinite;
 }
 .fz-logoband:hover .fz-logotrack { animation-play-state: paused; }
 .fz-logorow {
