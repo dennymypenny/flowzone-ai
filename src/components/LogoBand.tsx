@@ -4,8 +4,7 @@ import Image from "next/image";
 /*
  * The moving band of client logos. White marks cut from each client's own
  * logo, on navy. Used on /about, the homepage work section and /work.
- * Honesty rule: only brands with real work on /work. CardsRG is the
- * studio's own store and the caption says so.
+ * Honesty rule: only brands with real work on /work. Client work only.
  */
 const LOGOS = [
   { src: "/assets/logos/logo-shutters-depot.png", alt: "Shutters Depot", w: 704, h: 120, show: 30 },
@@ -13,7 +12,6 @@ const LOGOS = [
   { src: "/assets/logos/logo-slipfolio.png", alt: "SlipFolio", w: 401, h: 120, show: 34 },
   { src: "/assets/logos/logo-nextplayu.png", alt: "NextPlayU", w: 1055, h: 120, show: 26 },
   { src: "/assets/logos/logo-mahj-coffee.png", alt: "Mahj & Coffee", w: 131, h: 120, show: 58 },
-  { src: "/assets/logos/logo-cardsrg.png", alt: "CardsRG", w: 118, h: 120, show: 58 },
 ];
 
 function Row({ hidden }: { hidden?: boolean }) {
@@ -40,12 +38,16 @@ export default function LogoBand({ workLink = true }: { workLink?: boolean }) {
       <p className="label text-center mb-8 px-6">Brands we have built for</p>
       <div className="fz-logoband overflow-hidden">
         <div className="fz-logotrack">
+          {/* Four copies, sliding by two, so the loop never shows a gap
+              even on a wide screen with only a few logos. */}
           <Row />
+          <Row hidden />
+          <Row hidden />
           <Row hidden />
         </div>
       </div>
       <p className="text-center text-xs text-ink-mute mt-8 px-6">
-        Client work, plus CardsRG, the studio&apos;s own store.
+        Client work. Always looking to add more.
         {workLink && (
           <>
             {" "}
