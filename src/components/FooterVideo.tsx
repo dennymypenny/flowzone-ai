@@ -16,6 +16,20 @@ import { useEffect, useRef, useState } from "react";
 export default function FooterVideo() {
   const wrap = useRef<HTMLDivElement>(null);
   const [load, setLoad] = useState(false);
+  const vid = useRef<HTMLVideoElement>(null);
+
+  // iPhones in Low Power Mode (and some browsers) refuse muted autoplay and
+  // paint a big play button over the video instead. This is decoration, so
+  // if play is refused, drop the video and leave the still poster.
+  useEffect(() => {
+    if (!load) return;
+    const v = vid.current;
+    if (!v) return;
+    const p = v.play();
+    if (p && typeof p.catch === "function") p.catch((e: unknown) => {
+        if ((e as { name?: string })?.name === "NotAllowedError") setLoad(false);
+      });
+  }, [load]);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -49,11 +63,15 @@ export default function FooterVideo() {
       />
       {load && (
         <video
-          className="absolute inset-0 w-full h-full object-cover"
+          ref={vid}
+          className="fz-video absolute inset-0 w-full h-full object-cover"
           autoPlay
           muted
           loop
           playsInline
+          disablePictureInPicture
+          controls={false}
+          tabIndex={-1}
           preload="auto"
           poster="/assets/footer-flow-poster.jpg"
         >
