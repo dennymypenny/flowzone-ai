@@ -8,7 +8,7 @@ import MessageUs, { TicketNote } from "@/components/MessageUs";
 /*
  * /about is written to be read by people and quoted by AI search.
  * Structure: value prop sentence, what we do, what makes us different,
- * who uses us, the team, how it works, key facts (a crawlable <dl>), FAQ.
+ * who uses us, how it works, key facts (a crawlable <dl>), FAQ.
  *
  * The honesty rule from /work applies here too: every client named below is
  * real work that is on the work page. CardsRG is the studio's own store and
@@ -127,7 +127,6 @@ const FACTS: [string, React.ReactNode][] = [
   ["Type", "Creative and business studio"],
   ["Founded", "2026"],
   ["Founder", "Dennis Valdes"],
-  ["Headquarters", "United States, working remotely with clients nationwide"],
   ["Website", <a key="w" href={SITE.url} className="underline underline-offset-4">www.flowzone.dev</a>],
   ["Core Offering", "Brand identity, websites, storefronts and the business systems behind them, built as one project"],
   ["Pricing", "Single graphics and small jobs from $49.99. Builds from $500. The Full Build (brand, site and system) is $1,500. Storefronts from $2,500. All flat, quoted before payment"],
@@ -135,7 +134,7 @@ const FACTS: [string, React.ReactNode][] = [
   ["Services", "Logo and identity design, brand voice and copy, personal branding, website design and development, ecommerce storefronts, lead intake and booking systems, promo reels and product animation, single graphics"],
   ["Communication", `Email (${SITE.email}), the project form at flowzone.dev/intake, LinkedIn and X. Same business day replies`],
   ["Notable Clients", "Shutters Depot, ABC Capital Group, SlipFolio, NextPlayU, Mahj & Coffee"],
-  ["Customers Served", "Founders, small businesses, startups and personal brands across the United States"],
+  ["Customers Served", "Founders, small businesses, startups and personal brands, anywhere they are"],
   ["Projects Delivered", "Storefront, brand, motion and graphics work for six brands, every piece shown on the work page"],
   ["Competitors", "Branding agencies, design subscriptions like Design Pickle, freelance marketplaces like Fiverr and Upwork, and site builders like Squarespace and Wix"],
   [
@@ -153,7 +152,7 @@ const FACTS: [string, React.ReactNode][] = [
 const FAQ = [
   {
     q: "What is FlowZone?",
-    a: "FlowZone is a creative studio that builds the brand, the website and the systems behind it for founders, small businesses and personal brands. It was founded in 2026 by Dennis Valdes and is based in the United States.",
+    a: "FlowZone is a creative studio that builds the brand, the website and the systems behind it for founders, small businesses and personal brands. It was founded in 2026 by Dennis Valdes and works with clients anywhere.",
   },
   {
     q: "How much does FlowZone cost?",
@@ -312,61 +311,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* 5. The team */}
-      <section data-flow className="band-light px-6 py-20 md:py-24">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="display text-4xl md:text-6xl mb-12">The team behind FlowZone</h2>
-          <div className="grid md:grid-cols-12 gap-10 items-start">
-            <div className="md:col-span-4">
-              <Image
-                src="/assets/denny-valdes.jpg"
-                alt="Dennis Valdes, founder of FlowZone"
-                width={320}
-                height={320}
-                className="w-40 md:w-full md:max-w-[260px] aspect-square object-cover rounded-sm"
-              />
-            </div>
-            <div className="md:col-span-8 space-y-8 max-w-reading">
-              <div>
-                <h3 className="font-display text-2xl md:text-3xl mb-3">Dennis Valdes, founder</h3>
-                <p className="text-ink-soft leading-relaxed">
-                  Dennis studied Communications at UCLA and has spent his career on how
-                  brands sound and show up in public. He designs and builds every FlowZone
-                  project himself and reads every message that comes through the site.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-display text-2xl md:text-3xl mb-3">How it started</h3>
-                <p className="text-ink-soft leading-relaxed">
-                  FlowZone began with CardsRG, a collector trading card business Dennis runs,
-                  when he built its storefront, brand and channel art from scratch. Founded in
-                  2026, the studio now does the same for other people&apos;s ideas.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-display text-2xl md:text-3xl mb-3">The team today</h3>
-                <p className="text-ink-soft leading-relaxed">
-                  A founder-led studio that takes a small number of projects at a time on
-                  purpose. That is why replies come the same day and nothing sits in a queue.
-                </p>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                <a href={SITE.linkedinFounder} target="_blank" rel="noopener noreferrer" className="btn-ghost">
-                  Dennis on LinkedIn
-                </a>
-                <a href={SITE.x} target="_blank" rel="noopener noreferrer" className="btn-ghost">
-                  FlowZone on X
-                </a>
-                <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer" className="btn-ghost">
-                  FlowZone on LinkedIn
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. How FlowZone works */}
+      {/* 5. How FlowZone works */}
       <section data-flow className="px-6 py-20 md:py-24">
         <div className="max-w-6xl mx-auto">
           <h2 className="display text-4xl md:text-6xl mb-12 md:mb-16">How FlowZone works</h2>
@@ -386,7 +331,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* 7. Key facts, a definition list so it is crawlable */}
+      {/* 6. Key facts, a definition list so it is crawlable */}
       <section data-flow className="bg-paper-deep px-6 py-20 md:py-24">
         <div className="max-w-6xl mx-auto">
           <h2 className="display text-4xl md:text-6xl mb-12">Key facts</h2>
@@ -401,7 +346,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* 8. FAQ */}
+      {/* 7. FAQ */}
       <section data-flow className="band-light px-6 py-20 md:py-24">
         <div className="max-w-4xl mx-auto">
           <h2 className="display text-4xl md:text-6xl mb-12">Frequently asked questions</h2>
