@@ -94,6 +94,7 @@ export default function Pulse() {
   const [ask, setAsk] = useState(false);
   const visitor = useRef<{ id: string; type: "new" | "returning" | "anon" }>({ id: "", type: "anon" });
   const page = useRef({ path: "", shownAt: 0, visibleMs: 0, depth: 0 });
+  const timer = useRef<number | null>(null);
 
   // One time setup: opt-out flag, consent state, visitor id, listeners.
   useEffect(() => {
@@ -112,7 +113,11 @@ export default function Pulse() {
       if (!existing) setCookie(VID, id);
       visitor.current = { id, type: existing ? "returning" : "new" };
     } else if (!choice && !gpc()) {
-      setAsk(true);
+      // A few seconds of quiet first. The notice must never be the thing a
+      // visitor has to get past to press what they came for, and it sits
+      // below the ticket and sample dialogs on purpose.
+      const t = window.setTimeout(() => setAsk(true), 4000);
+      timer.current = t;
     }
 
     const flushLeave = () => {
@@ -150,6 +155,7 @@ export default function Pulse() {
     window.addEventListener("fz:cookies", onAsk);
     (window as Window & { __fzPulseFlush?: () => void }).__fzPulseFlush = flushLeave;
     return () => {
+      if (timer.current) window.clearTimeout(timer.current);
       document.removeEventListener("visibilitychange", onVis);
       window.removeEventListener("pagehide", flushLeave);
       window.removeEventListener("scroll", onScroll);
@@ -214,7 +220,7 @@ export default function Pulse() {
       data-pulse-ignore
       role="region"
       aria-label="Cookie notice"
-      className="fixed z-[65] left-3 right-3 bottom-3 md:left-auto md:right-6 md:bottom-6 md:w-[380px] rounded-[20px] border border-white/[0.1] bg-[#101A2E] shadow-[0_18px_50px_rgba(0,0,0,0.45)] p-5 text-ink"
+      className="fixed z-[45] left-3 right-3 bottom-3 md:left-auto md:right-6 md:bottom-6 md:w-[380px] rounded-[20px] border border-white/[0.1] bg-[#101A2E] shadow-[0_18px_50px_rgba(0,0,0,0.45)] p-5 text-ink"
     >
       <p className="text-[15px] font-semibold mb-1.5">One cookie, if that is okay</p>
       <p className="text-[14px] leading-relaxed text-ink-soft">

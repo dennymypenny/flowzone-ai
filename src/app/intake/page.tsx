@@ -79,6 +79,10 @@ const builds: Build[] = [
 
 const NOT_SURE = "Not sure yet";
 
+/** One input look, used by the page form and the contact card. */
+const field =
+  "w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent";
+
 /* The opener question. It pops up before the form for anyone who arrives
    cold, requires an answer, and uses it to pick the build. The visitor
    lands on a ticket that is already half filled in, which is the close. */
@@ -162,6 +166,9 @@ function IntakeForm() {
     Boolean(preselected) || searchParams.get("cart") === "1"
   );
   const [opener, setOpener] = useState<(typeof OPENERS)[number] | null>(null);
+  // Picking a build opens the contact card right there, so the next thing on
+  // screen is four fields and the send button instead of a page to scroll.
+  const [sheet, setSheet] = useState(false);
   const [error, setError] = useState("");
   const loading = state === "sending";
 
@@ -193,6 +200,22 @@ function IntakeForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cameFromCart]);
 
+  // Escape closes the contact card, and the page behind it does not scroll
+  // while it is open.
+  useEffect(() => {
+    if (!sheet) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSheet(false);
+    };
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [sheet]);
+
   // The lead in their own mail app, ready to send. This is what saves the
   // project when our email is down, so it carries every answer they typed.
   const fallbackMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(
@@ -207,6 +230,7 @@ function IntakeForm() {
     e.preventDefault();
     if (!form.service) {
       setState("error");
+      setSheet(false);
       setFixable(true);
       setError("Pick one of the four builds, or choose not sure yet.");
       return;
@@ -228,12 +252,15 @@ function IntakeForm() {
         throw new Error(data?.error || "Could not reach the studio.");
       }
       setState("done");
+      setSheet(false);
       if (cameFromCart) clearCart();
     } catch (err) {
       setState("error");
       setError(err instanceof Error ? err.message : "Could not reach the studio.");
     }
   };
+
+  const picked = builds.find((b) => b.name === form.service);
 
   if (state === "done") {
     return (
@@ -301,6 +328,136 @@ function IntakeForm() {
             </div>
           </div>
         )}
+
+        {sheet && (
+          <div
+            className="fixed inset-0 z-[70] bg-[#060B1F]/85 backdrop-blur-sm flex items-end sm:items-center justify-center sm:px-6 overflow-y-auto"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Your details"
+            onMouseDown={(e) => {
+              if (e.target === e.currentTarget) setSheet(false);
+            }}
+          >
+            <div className="w-full sm:max-w-md bg-paper rounded-t-2xl sm:rounded-xl border border-rule p-6 sm:p-8 my-0 sm:my-10">
+              {picked && (
+                <div className="flex items-start gap-3 mb-5">
+                  <span className="text-2xl leading-none">{picked.emoji}</span>
+                  <div className="min-w-0">
+                    <p className="text-xs text-ink-mute">You picked</p>
+                    <p className="text-base font-semibold text-ink">{picked.name}</p>
+                    <p className="text-xs mt-0.5 font-medium" style={{ color: picked.c }}>
+                      {picked.from}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setSheet(false)}
+                    className="ml-auto text-xs text-ink-mute hover:text-ink transition-colors"
+                  >
+                    Change build
+                  </button>
+                </div>
+              )}
+
+              <p className="text-sm text-ink-soft leading-relaxed mb-5">
+                Four answers and you get a scope, a price and a date back, usually the same day.
+              </p>
+
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label htmlFor="fz-sheet-name" className="block text-sm font-semibold text-ink-soft mb-1.5">
+                    Full Name
+                  </label>
+                  <input
+                    id="fz-sheet-name"
+                    name="name"
+                    type="text"
+                    autoComplete="name"
+                    autoFocus
+                    required
+                    value={form.name}
+                    onChange={(e) => set("name", e.target.value)}
+                    className={field}
+                    placeholder="Jane Smith"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="fz-sheet-email" className="block text-sm font-semibold text-ink-soft mb-1.5">
+                    Email Address
+                  </label>
+                  <input
+                    id="fz-sheet-email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    inputMode="email"
+                    required
+                    value={form.email}
+                    onChange={(e) => set("email", e.target.value)}
+                    className={field}
+                    placeholder="jane@company.com"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="fz-sheet-business" className="block text-sm font-semibold text-ink-soft mb-1.5">
+                    Business Name{" "}
+                    <span className="font-normal text-ink-mute">or your own, if the brand is you</span>
+                  </label>
+                  <input
+                    id="fz-sheet-business"
+                    name="organization"
+                    type="text"
+                    autoComplete="organization"
+                    required
+                    value={form.business}
+                    onChange={(e) => set("business", e.target.value)}
+                    className={field}
+                    placeholder="Acme Co. or Jane Doe"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="fz-sheet-idea" className="block text-sm font-semibold text-ink-soft mb-1.5">
+                    Tell us about the idea
+                  </label>
+                  <textarea
+                    id="fz-sheet-idea"
+                    name="description"
+                    required
+                    minLength={10}
+                    rows={3}
+                    value={form.description}
+                    onChange={(e) => set("description", e.target.value)}
+                    className={`${field} resize-none`}
+                    placeholder="Describe what you want built and any tools you already use..."
+                  />
+                  <p className="text-xs text-ink-mute mt-1.5">One sentence is enough. A few words is not.</p>
+                </div>
+
+                <button type="submit" disabled={loading} className="btn-primary w-full !py-4 text-base disabled:opacity-50">
+                  {loading ? "Submitting..." : <>Submit Project <span className="arrow">&rarr;</span></>}
+                </button>
+
+                {state === "error" && (
+                  <p className="text-sm text-ink-soft leading-relaxed">
+                    {error} Everything you typed is still here.
+                  </p>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => setSheet(false)}
+                  className="w-full text-xs text-ink-mute hover:text-ink transition-colors"
+                >
+                  I want to see the other builds first
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
         <div className="text-center mb-10">
           <p className="text-accent font-semibold text-sm uppercase tracking-wider mb-3">Get Started</p>
           <h1 className="text-4xl font-display font-normal text-ink mb-3">Start Your Project</h1>
@@ -335,7 +492,10 @@ function IntakeForm() {
                     type="button"
                     role="radio"
                     aria-checked={on}
-                    onClick={() => set("service", b.name)}
+                    onClick={() => {
+                      set("service", b.name);
+                      setSheet(true);
+                    }}
                     className={`text-left rounded-lg border px-4 py-3.5 transition-colors bg-paper-deep ${
                       on ? "border-transparent" : "border-rule hover:border-ink-mute"
                     }`}
@@ -372,6 +532,9 @@ function IntakeForm() {
             <label className="block text-sm font-semibold text-ink-soft mb-1.5">Full Name</label>
             <input
               type="text"
+              id="fz-name"
+              name="name"
+              autoComplete="name"
               required
               value={form.name}
               onChange={(e) => set("name", e.target.value)}
@@ -384,6 +547,10 @@ function IntakeForm() {
             <label className="block text-sm font-semibold text-ink-soft mb-1.5">Email Address</label>
             <input
               type="email"
+              id="fz-email"
+              name="email"
+              autoComplete="email"
+              inputMode="email"
               required
               value={form.email}
               onChange={(e) => set("email", e.target.value)}
@@ -399,6 +566,9 @@ function IntakeForm() {
             </label>
             <input
               type="text"
+              id="fz-business"
+              name="organization"
+              autoComplete="organization"
               required
               value={form.business}
               onChange={(e) => set("business", e.target.value)}
@@ -410,6 +580,8 @@ function IntakeForm() {
           <div>
             <label className="block text-sm font-semibold text-ink-soft mb-1.5">Tell us about the idea</label>
             <textarea
+              id="fz-idea"
+              name="description"
               required
               minLength={10}
               rows={4}
