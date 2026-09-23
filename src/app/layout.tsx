@@ -1,4 +1,21 @@
 import type { Metadata, Viewport } from "next";
+import { Figtree, Space_Grotesk } from "next/font/google";
+
+/* Self-hosted through next/font: the fonts ship from our own domain with
+   the CSS inlined, so a phone is not waiting on a round trip to Google
+   before it can paint the first word. Same two families as before. */
+const figtree = Figtree({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
+  variable: "--font-figtree",
+});
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-space",
+});
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -6,6 +23,7 @@ import Flow from "@/components/Flow";
 import ChatDock from "@/app/components/ChatDock";
 import FreeSample from "@/components/FreeSample";
 import Pulse from "@/components/Pulse";
+import VideoGate from "@/components/VideoGate";
 import StructuredData from "@/components/StructuredData";
 import { Analytics } from "@vercel/analytics/react";
 import { SITE } from "@/lib/site";
@@ -67,14 +85,8 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${figtree.variable} ${spaceGrotesk.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
         <StructuredData />
       </head>
       <body className="antialiased bg-paper text-ink">
@@ -86,6 +98,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ChatDock />
         <FreeSample />
         <Pulse />
+        <VideoGate />
         <Analytics />
       </body>
     </html>

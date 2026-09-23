@@ -18,6 +18,7 @@ export default function FastVideo({
   sources,
   fallback,
   fallbackPortrait,
+  lazy = false,
 }: {
   className?: string;
   poster?: string;
@@ -29,6 +30,10 @@ export default function FastVideo({
   /* Animated image used instead of `fallback` when the viewport is taller
      than it is wide, so a phone never stretches a landscape frame. */
   fallbackPortrait?: string;
+  /* Below the fold: the sources stay out of the tag until VideoGate sees
+     the video coming into view, so a phone downloads nothing for it on
+     arrival. The poster shows in the meantime. */
+  lazy?: boolean;
 }) {
   const box = useRef<HTMLDivElement>(null);
 
@@ -57,6 +62,13 @@ export default function FastVideo({
 
     const tryPlay = () => {
       if (swapped) return;
+      /* VideoGate parked it off screen, or it is nowhere near the screen
+         yet. Leave it alone so a phone is not downloading three videos at
+         once on arrival. */
+      if (v.dataset.fzOff) return;
+      if (lazy && !v.querySelector("source[src]")) return;
+      const r = v.getBoundingClientRect();
+      if (r.top > window.innerHeight + 160 || r.bottom < -160) return;
       v.muted = true;
       v.playbackRate = rate;
       if (!v.paused) return;
@@ -77,9 +89,18 @@ export default function FastVideo({
     };
 
     tryPlay();
-    /* Belt and braces: if nothing is moving after a moment, swap anyway. */
-    const t = window.setTimeout(() => {
-      if (!swapped && (v.paused || v.readyState < 2) && v.currentTime === 0) {
+    /* Belt and braces: if the phone has plainly refused to play, swap. A
+       video that is still downloading on a slow connection is not a
+       refusal, so keep checking instead of fetching the animated image on
+       top of the video and paying for both. Give up after 12 seconds. */
+    let checks = 0;
+    const t = window.setInterval(() => {
+      if (swapped) { window.clearInterval(t); return; }
+      const stillLoading = v.networkState === HTMLMediaElement.NETWORK_LOADING && v.readyState < 3;
+      if (!v.paused || v.currentTime > 0 || v.dataset.fzOff) { window.clearInterval(t); return; }
+      checks += 1;
+      if (!stillLoading || checks >= 5) {
+        window.clearInterval(t);
         swap();
       }
     }, 2500);
@@ -90,7 +111,7 @@ export default function FastVideo({
     window.addEventListener("touchstart", tryPlay, { passive: true });
     window.addEventListener("scroll", tryPlay, { passive: true });
     return () => {
-      window.clearTimeout(t);
+      window.clearInterval(t);
       v.removeEventListener("play", onPlay);
       v.removeEventListener("loadeddata", tryPlay);
       v.removeEventListener("canplay", tryPlay);
@@ -98,11 +119,11 @@ export default function FastVideo({
       window.removeEventListener("touchstart", tryPlay);
       window.removeEventListener("scroll", tryPlay);
     };
-  }, [rate, fallback, fallbackPortrait]);
+  }, [rate, fallback, fallbackPortrait, lazy]);
 
   const esc = (x: string) => x.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
   const html =
-    `<video class="${esc(className)} fz-video" autoplay muted loop playsinline webkit-playsinline ` +
+    `<video class="${esc(className)} fz-video" ${lazy ? 'data-fz-auto="1"' : "autoplay"} muted loop playsinline webkit-playsinline ` +
     `preload="${preload}" disablepictureinpicture disableremoteplayback x-webkit-airplay="deny"` +
     (poster ? ` poster="${esc(poster)}"` : "") +
     (ariaLabel ? ` aria-label="${esc(ariaLabel)}"` : "") +
@@ -110,7 +131,7 @@ export default function FastVideo({
     sources
       .map(
         (s) =>
-          `<source src="${esc(s.src)}" type="${esc(s.type)}"` +
+          `<source ${lazy ? "data-src" : "src"}="${esc(s.src)}" type="${esc(s.type)}"` +
           (s.media ? ` media="${esc(s.media)}"` : "") +
           `>`,
       )

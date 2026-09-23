@@ -8,6 +8,7 @@ import { SITE } from "@/lib/site";
 import PitchPath from "@/app/components/PitchPath";
 import PartsSwitch from "@/app/components/PartsSwitch";
 import FastVideo from "@/app/components/FastVideo";
+import { preload } from "react-dom";
 import { days, faqs } from "@/lib/process";
 
 export const metadata: Metadata = {
@@ -79,6 +80,9 @@ const SHOWCASE = [
 ];
 
 export default function Home() {
+  /* The hero poster is the biggest thing on the first screen. Ask for it
+     before the browser finds it inside the video tag. */
+  preload("/assets/ocean-hero-poster.jpg", { as: "image", fetchPriority: "high" });
   return (
     <>
       {/* ---------- 1 · Hero ---------- */}
@@ -178,7 +182,7 @@ export default function Home() {
 
       {/* ---------- 2 · The name as a verb, in space ---------- */}
       <section data-flow className="relative overflow-hidden px-6 py-16 md:py-20 bg-black">
-        <img
+        <img loading="lazy" decoding="async"
           src="/assets/space-distance.jpg"
           alt=""
           aria-hidden
@@ -274,6 +278,8 @@ export default function Home() {
                     <FastVideo
                       className={`absolute inset-0 w-full h-full object-cover ${w.pos}`}
                       rate={1}
+                      preload="none"
+                      lazy
                       poster={w.src}
                       ariaLabel={w.alt}
                       sources={w.video.sources}
@@ -530,19 +536,18 @@ export default function Home() {
           >
             <span className="absolute top-0 left-0 h-[3px] w-full z-10" style={{ background: "#A8175E" }} aria-hidden />
             <div className="md:col-span-7 relative bg-black aspect-video md:aspect-auto md:min-h-[320px]">
-              <video
+              <FastVideo
                 className="absolute inset-0 w-full h-full object-cover"
+                rate={1}
+                preload="none"
+                lazy
                 poster="/assets/profound-ad-poster.jpg"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                aria-label="Spec recruiting ad for Profound: a prompt box fills a grid with generic output, three lines name the harder problem, four stages link into one platform, and the ad closes on the Profound logo"
-              >
-                <source src="/assets/profound-ad.webm" type="video/webm" />
-                <source src="/assets/profound-ad.mp4" type="video/mp4" />
-              </video>
+                ariaLabel="Spec recruiting ad for Profound: a prompt box fills a grid with generic output, three lines name the harder problem, four stages link into one platform, and the ad closes on the Profound logo"
+                sources={[
+                  { src: "/assets/profound-ad.webm", type: "video/webm" },
+                  { src: "/assets/profound-ad.mp4", type: "video/mp4" },
+                ]}
+              />
             </div>
             <div className="md:col-span-5 p-7 md:p-9 flex flex-col">
               <span className="text-[11px] font-medium uppercase tracking-label mb-3" style={{ color: "#A8175E" }}>
@@ -588,7 +593,7 @@ export default function Home() {
           was stock, and a design studio's site cannot carry an image that is
           not work. The line lands on its own. */}
       <section data-flow className="relative border-t border-rule px-6 py-28 md:py-44 overflow-hidden bg-black">
-        <img
+        <img loading="lazy" decoding="async"
           src="/assets/space-distance.jpg"
           alt=""
           aria-hidden
@@ -994,7 +999,7 @@ export default function Home() {
           <Link href="/work" className="group block">
             <div className="grid md:grid-cols-12 gap-4">
               <div className="md:col-span-8 relative overflow-hidden rounded-2xl border border-[#DCE5F2] shadow-[0_30px_70px_-30px_rgba(11,19,34,0.45)]">
-                <img
+                <img loading="lazy" decoding="async"
                   src="/assets/crg-hero.jpg"
                   alt="CardsRG storefront homepage, dark with the headline Rip. Pull. Collect."
                   className="w-full h-full object-cover block transition-transform duration-700 group-hover:scale-[1.015]"
@@ -1004,7 +1009,7 @@ export default function Home() {
                 </span>
               </div>
               <div className="md:col-span-4 overflow-hidden rounded-2xl border border-[#DCE5F2] shadow-[0_30px_70px_-30px_rgba(11,19,34,0.45)]">
-                <img
+                <img loading="lazy" decoding="async"
                   src="/assets/crg-cards.jpg"
                   alt="CardsRG product grid showing real graded card listings"
                   className="w-full h-full object-cover block transition-transform duration-700 group-hover:scale-[1.02]"
@@ -1217,7 +1222,7 @@ export default function Home() {
             We bring the running thing.
           </h2>
           <div className="flex flex-col items-center mb-6">
-            <img
+            <img loading="lazy" decoding="async"
               src="/assets/denny-valdes.jpg"
               alt="Dennis V. of FlowZone"
               width={64}

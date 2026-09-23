@@ -18,7 +18,7 @@ html {
 body {
   color: var(--ink);
   background: var(--paper);
-  font-family: 'Figtree', system-ui, sans-serif;
+  font-family: var(--font-figtree), 'Figtree', system-ui, sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -799,6 +799,20 @@ button {
   .fz-float-a, .fz-float-b, .fz-float-c, .fz-print-wrap, .fz-bubble, .fz-sample-ping, .fz-bob { animation: none; }
   .fz-sample-card { animation-duration: 0.4s; will-change: transform; }
   .fz-sample-print { animation: none; }
+}
+/* Phones: the primary button's orbit, sweep and breathing halo each
+   repaint a gradient or a blurred layer every frame, on every button on
+   the page at once. That is most of the paint cost of a phone scroll, so
+   on touch screens the button holds its full look and stands still. */
+@media (hover: none) {
+  .btn-primary,
+  .btn-primary::before,
+  .btn-primary::after {
+    animation: none;
+  }
+  .btn-primary::after {
+    filter: blur(8px);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .fz-sample-veil, .fz-sample-card, .fz-sample-print, .fz-print-wrap,

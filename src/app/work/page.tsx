@@ -284,7 +284,7 @@ export default function Work() {
             <video
               className="w-full h-auto block"
               poster="/assets/profound-ad-poster.jpg"
-              autoPlay
+              data-fz-auto="1"
               muted
               loop
               playsInline
@@ -292,8 +292,8 @@ export default function Work() {
               preload="metadata"
               aria-label="Spec recruiting ad for Profound: a prompt box fills a grid with generic output, three lines name the harder problem, four stages link into one platform, and the ad closes on the Profound logo with a careers link."
             >
-              <source src="/assets/profound-ad.webm" type="video/webm" />
-              <source src="/assets/profound-ad.mp4" type="video/mp4" />
+              <source data-src="/assets/profound-ad.webm" type="video/webm" />
+              <source data-src="/assets/profound-ad.mp4" type="video/mp4" />
             </video>
           </div>
 
@@ -382,7 +382,7 @@ export default function Work() {
                 <video
                   className="w-full h-auto block"
                   poster={`/assets/${v.base}-poster.jpg`}
-                  autoPlay
+                  data-fz-auto="1"
                   muted
                   loop
                   playsInline
@@ -390,8 +390,8 @@ export default function Work() {
                   preload="metadata"
                   aria-label={v.aria}
                 >
-                  <source src={`/assets/${v.base}.webm`} type="video/webm" />
-                  <source src={`/assets/${v.base}.mp4`} type="video/mp4" />
+                  <source data-src={`/assets/${v.base}.webm`} type="video/webm" />
+                  <source data-src={`/assets/${v.base}.mp4`} type="video/mp4" />
                 </video>
                 <figcaption className="px-5 py-4 border-t border-rule flex items-baseline gap-3">
                   <span className="text-[11px] font-medium uppercase tracking-label shrink-0 text-accent">
@@ -511,7 +511,7 @@ export default function Work() {
                   <video
                     className="w-full h-auto block"
                     poster={`/assets/${r.base}-poster.jpg`}
-                    autoPlay
+                    data-fz-auto="1"
                     muted
                     loop
                     playsInline
@@ -519,8 +519,8 @@ export default function Work() {
                     preload="metadata"
                     aria-label={r.aria}
                   >
-                    <source src={`/assets/${r.base}.webm`} type="video/webm" />
-                    <source src={`/assets/${r.base}.mp4`} type="video/mp4" />
+                    <source data-src={`/assets/${r.base}.webm`} type="video/webm" />
+                    <source data-src={`/assets/${r.base}.mp4`} type="video/mp4" />
                   </video>
                 </div>
                 <div className="mt-6 flex flex-col flex-1">
@@ -580,7 +580,7 @@ export default function Work() {
             <video
               className="w-full h-auto block"
               poster="/assets/slipfolio-hype-poster.jpg"
-              autoPlay
+              data-fz-auto="1"
               muted
               loop
               playsInline
@@ -588,8 +588,8 @@ export default function Work() {
               preload="metadata"
               aria-label="SlipFolio product animation: a fifty dollar bet slip on Lakers minus four and a half, with a slice of the stake investing automatically, win or lose. Every bet builds a portfolio."
             >
-              <source src="/assets/slipfolio-hype.webm" type="video/webm" />
-              <source src="/assets/slipfolio-hype.mp4" type="video/mp4" />
+              <source data-src="/assets/slipfolio-hype.webm" type="video/webm" />
+              <source data-src="/assets/slipfolio-hype.mp4" type="video/mp4" />
             </video>
           </div>
 
@@ -657,7 +657,7 @@ export default function Work() {
             <video
               className="w-full h-auto block"
               poster="/assets/powered-by-people-intro-poster.jpg"
-              autoPlay
+              data-fz-auto="1"
               muted
               loop
               playsInline
@@ -665,8 +665,8 @@ export default function Work() {
               preload="metadata"
               aria-label="Powered by People title animation: the words powered by people type in letter by letter over a glowing audio waveform on a deep blue background, then settle as a title card."
             >
-              <source src="/assets/powered-by-people-intro.webm" type="video/webm" />
-              <source src="/assets/powered-by-people-intro.mp4" type="video/mp4" />
+              <source data-src="/assets/powered-by-people-intro.webm" type="video/webm" />
+              <source data-src="/assets/powered-by-people-intro.mp4" type="video/mp4" />
             </video>
           </div>
 
