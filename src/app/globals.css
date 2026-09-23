@@ -792,8 +792,13 @@ button {
 .fz-sample-ping { animation: fz-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite; }
 .fz-pop { animation: fz-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1); }
 .fz-ring { animation: fz-ring-out 1s ease-out 0.25s forwards; opacity: 0.8; }
+/* Phones: no looping motion inside the sample card. Every infinite animation
+   here forces a repaint of a blurred, shadowed layer, which is exactly what
+   makes scrolling and tapping the card feel laggy on a phone. */
 @media (hover: none), (max-width: 767px) {
-  .fz-float-a, .fz-float-b, .fz-float-c { animation: none; }
+  .fz-float-a, .fz-float-b, .fz-float-c, .fz-print-wrap, .fz-bubble, .fz-sample-ping, .fz-bob { animation: none; }
+  .fz-sample-card { animation-duration: 0.4s; will-change: transform; }
+  .fz-sample-print { animation: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .fz-sample-veil, .fz-sample-card, .fz-sample-print, .fz-print-wrap,

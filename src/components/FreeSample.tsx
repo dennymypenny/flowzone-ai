@@ -124,14 +124,33 @@ export default function FreeSample() {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && close();
     window.addEventListener("keydown", onKey);
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    // Lock the page under the card. On iOS overflow:hidden alone still lets the
+    // page rubber-band and fight the card for the scroll, so pin the body at its
+    // current offset and put it back on close.
+    const body = document.body;
+    const y = window.scrollY;
+    const prev = { overflow: body.style.overflow, position: body.style.position, top: body.style.top, width: body.style.width };
+    body.style.overflow = "hidden";
+    body.style.position = "fixed";
+    body.style.top = `-${y}px`;
+    body.style.width = "100%";
+    // The ocean videos keep decoding behind the veil and cost the phone the
+    // frames the card needs. Pause them while it is open.
+    const paused: HTMLVideoElement[] = [];
+    document.querySelectorAll("video").forEach((v) => {
+      if (!v.paused && !v.closest(".fz-sample-card")) { v.pause(); paused.push(v); }
+    });
     const t = window.setTimeout(() => {
       if (window.matchMedia("(min-width: 768px)").matches) firstField.current?.focus();
     }, 260);
     return () => {
       window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prev;
+      body.style.overflow = prev.overflow;
+      body.style.position = prev.position;
+      body.style.top = prev.top;
+      body.style.width = prev.width;
+      window.scrollTo(0, y);
+      paused.forEach((v) => { v.play().catch(() => {}); });
       window.clearTimeout(t);
     };
   }, [open, close, mode]);
@@ -201,13 +220,13 @@ export default function FreeSample() {
 
       {open && (
         <div className="fixed inset-0 z-[70] flex items-end md:items-center justify-center md:p-6">
-          <div className="fz-sample-veil absolute inset-0 bg-[rgba(4,8,20,0.66)] backdrop-blur-[10px]" onClick={close} aria-hidden />
+          <div className="fz-sample-veil absolute inset-0 bg-[rgba(4,8,20,0.86)] md:bg-[rgba(4,8,20,0.66)] md:backdrop-blur-[10px]" onClick={close} aria-hidden />
 
           <div
             role="dialog"
             aria-modal="true"
             aria-labelledby="fz-sample-title"
-            className="fz-sample-card relative w-full md:max-w-[880px] max-h-[94vh] overflow-y-auto rounded-t-[32px] md:rounded-[34px] p-2.5 md:p-3 bg-[linear-gradient(160deg,rgba(26,40,72,0.97),rgba(12,20,38,0.98))] border border-white/[0.09] shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9),0_0_80px_-30px_rgba(91,140,255,0.45),inset_0_1px_0_rgba(255,255,255,0.08)] md:grid md:grid-cols-[1fr_1.05fr] md:gap-3"
+            className="fz-sample-card relative w-full md:max-w-[880px] max-h-[94vh] overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch] [touch-action:pan-y] rounded-t-[32px] md:rounded-[34px] p-2.5 md:p-3 bg-[linear-gradient(160deg,rgba(26,40,72,0.97),rgba(12,20,38,0.98))] border border-white/[0.09] shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9),0_0_80px_-30px_rgba(91,140,255,0.45),inset_0_1px_0_rgba(255,255,255,0.08)] md:grid md:grid-cols-[1fr_1.05fr] md:gap-3"
           >
             <button
               onClick={close}
@@ -220,13 +239,13 @@ export default function FreeSample() {
             </button>
 
             {/* The pitch side: a soft inner bubble with light drifting through it. */}
-            <div className="relative overflow-hidden rounded-[26px] md:rounded-[26px] px-6 pt-7 pb-5 md:p-9 bg-[linear-gradient(155deg,#1B3160,#12203F_55%,#0F2A33)]">
-              <span className="fz-float-a pointer-events-none absolute -top-16 -left-10 w-56 h-56 rounded-full bg-[#5B8CFF]/35 blur-3xl" aria-hidden />
-              <span className="fz-float-b pointer-events-none absolute -bottom-20 -right-10 w-64 h-64 rounded-full bg-[#34D399]/20 blur-3xl" aria-hidden />
-              <span className="fz-float-c pointer-events-none absolute top-1/3 right-8 w-24 h-24 rounded-full bg-[#FBBF24]/10 blur-2xl" aria-hidden />
+            <div className="relative overflow-hidden rounded-[26px] md:rounded-[26px] px-6 pt-7 pb-5 md:p-9 bg-[radial-gradient(60%_50%_at_0%_0%,rgba(91,140,255,0.30),transparent_70%),radial-gradient(55%_45%_at_100%_100%,rgba(52,211,153,0.16),transparent_70%),linear-gradient(155deg,#1B3160,#12203F_55%,#0F2A33)] md:bg-[linear-gradient(155deg,#1B3160,#12203F_55%,#0F2A33)]">
+              <span className="fz-float-a hidden md:block pointer-events-none absolute -top-16 -left-10 w-56 h-56 rounded-full bg-[#5B8CFF]/35 blur-3xl" aria-hidden />
+              <span className="fz-float-b hidden md:block pointer-events-none absolute -bottom-20 -right-10 w-64 h-64 rounded-full bg-[#34D399]/20 blur-3xl" aria-hidden />
+              <span className="fz-float-c hidden md:block pointer-events-none absolute top-1/3 right-8 w-24 h-24 rounded-full bg-[#FBBF24]/10 blur-2xl" aria-hidden />
               {/* A few glassy bubbles. */}
-              <span className="fz-bubble pointer-events-none absolute top-8 right-20 w-5 h-5 rounded-full border border-white/25 bg-white/[0.06]" aria-hidden />
-              <span className="fz-bubble pointer-events-none absolute top-24 right-10 w-3 h-3 rounded-full border border-white/20 bg-white/[0.05]" style={{ animationDelay: "1.2s" }} aria-hidden />
+              <span className="fz-bubble hidden md:block pointer-events-none absolute top-8 right-20 w-5 h-5 rounded-full border border-white/25 bg-white/[0.06]" aria-hidden />
+              <span className="fz-bubble hidden md:block pointer-events-none absolute top-24 right-10 w-3 h-3 rounded-full border border-white/20 bg-white/[0.05]" style={{ animationDelay: "1.2s" }} aria-hidden />
               <span className="fz-bubble pointer-events-none absolute bottom-24 left-6 w-4 h-4 rounded-full border border-white/20 bg-white/[0.05] hidden md:block" style={{ animationDelay: "2.1s" }} aria-hidden />
 
               <div className="relative">
