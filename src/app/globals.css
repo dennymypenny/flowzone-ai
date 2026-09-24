@@ -1098,39 +1098,42 @@ button {
 }
 @media (prefers-reduced-motion: reduce) { .fz-ball, .fz-ball-lean { animation: none; } }
 
-/* The homepage intro (Intro.tsx). Outside every @layer on purpose so the
-   build cannot drop a rule. The overlay is display:none unless the head
-   script put fz-intro-on on <html>, so with JS off nobody ever sees it.
-   With JS on it still fades itself out at 3.4s from CSS alone, so a
-   stalled video or a script error can never leave the site covered. */
+/* The homepage intro reel (Intro.tsx). Outside every @layer on purpose so
+   the build cannot drop a rule. The overlay is display:none unless the head
+   script put fz-intro-on on <html>, so with JS off nobody ever sees it. With
+   JS on it still fades itself out at 4.6s from CSS alone, so nothing can
+   ever leave the site covered. No skip button: it is a 2.5s reel. */
 .fz-intro { display: none; }
 html.fz-intro-on .fz-intro {
   display: block;
   position: fixed;
   inset: 0;
   z-index: 100;
+  overflow: hidden;
   background: #0C1424;
-  cursor: pointer;
-  animation: fz-intro-auto 0.45s ease 3.4s forwards;
+  will-change: opacity;
+  transform: translateZ(0);
+  animation: fz-intro-auto 0.45s ease 4.6s forwards;
 }
 html.fz-intro-out .fz-intro {
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.55s cubic-bezier(0.33, 0, 0.2, 1);
 }
 @keyframes fz-intro-auto { to { opacity: 0; visibility: hidden; pointer-events: none; } }
-.fz-intro video { width: 100%; height: 100%; object-fit: cover; display: block; }
-.fz-intro-skip {
-  position: absolute;
-  right: 20px;
-  bottom: calc(20px + env(safe-area-inset-bottom));
-  font: 500 12px/1 var(--font-figtree), system-ui, sans-serif;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #93A2BC;
-  background: transparent;
-  border: 1px solid #26355A;
-  border-radius: 11px;
-  padding: 10px 14px;
-}
-.fz-intro-skip:hover { color: #F1F3F7; border-color: #5B8CFF; }
+.fz-intro .fzi-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; background: #0C1424; }
+.fz-intro .fzi-stage { display: none; position: absolute; left: 50%; top: 50%; transform-origin: 50% 50%; }
+.fzi-glow { position: absolute; inset: 0; }
+.fzi-bar { position: absolute; top: 0; left: 0; width: 0; height: 5px; background: #4C7BE8; }
+.fzi-p .fzi-bar { height: 7px; }
+.fzi-lockup { position: absolute; left: 50%; top: 50%; display: flex; align-items: center; gap: 0; }
+.fzi-p .fzi-lockup { flex-direction: column; gap: 82px; }
+.fzi-mark { display: block; width: 309px; height: 96px; overflow: visible; }
+.fzi-p .fzi-mark { width: 483px; height: 150px; }
+.fzi-clip { display: block; overflow: hidden; width: 0; }
+.fzi-name { display: inline-block; font-family: var(--font-space), system-ui, sans-serif; font-weight: 600; font-size: 118px; line-height: 1; letter-spacing: -0.028em; color: #F1F3F7; white-space: nowrap; opacity: 0; }
+.fzi-p .fzi-name { font-size: 150px; }
+.fzi-tag { position: absolute; left: 50%; font-family: var(--font-figtree), system-ui, sans-serif; font-weight: 400; font-size: 44px; color: #ABB8CF; white-space: nowrap; text-align: center; opacity: 0; }
+.fzi-p .fzi-tag { font-size: 50px; line-height: 1.35; }
+.fzi-tag b { font-weight: 500; color: #F1F3F7; }
+.fzi-tag i { font-style: normal; font-weight: 500; color: #5B8CFF; }

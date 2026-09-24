@@ -110,12 +110,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               "try{if(/Instagram|FBAN|FBAV|LinkedInApp|Twitter|TwitterAndroid|musical_ly|BytedanceWebview|Snapchat/i.test(navigator.userAgent))document.documentElement.classList.add('inapp')}catch(e){}",
           }}
         />
-        {/* The homepage intro plays once per visit, on the homepage only,
-            and never for reduced motion, data saver or crawlers. See Intro.tsx. */}
+        {/* The homepage intro reel plays on every fresh landing on the
+            homepage, never for crawlers. See Intro.tsx. */}
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{var n=navigator,h=document.documentElement,ok=location.pathname==='/'&&!location.hash&&!/bot|crawl|spider|slurp|lighthouse|pagespeed|headless|preview/i.test(n.userAgent)&&!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)&&!(n.connection&&n.connection.saveData);var seen=false;try{seen=sessionStorage.getItem('fz-intro')==='1';if(ok)sessionStorage.setItem('fz-intro','1')}catch(e){}if(ok&&!seen)h.classList.add('fz-intro-on')}catch(e){}",
+              "try{if(location.pathname==='/'&&!location.hash&&!/bot|crawl|spider|slurp|lighthouse|pagespeed|headless|preview/i.test(navigator.userAgent))document.documentElement.classList.add('fz-intro-on')}catch(e){}",
           }}
         />
         <StructuredData />
