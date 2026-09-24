@@ -24,6 +24,7 @@ import ChatDock from "@/app/components/ChatDock";
 import FreeSample from "@/components/FreeSample";
 import Pulse from "@/components/Pulse";
 import VideoGate from "@/components/VideoGate";
+import Intro from "@/components/Intro";
 import StructuredData from "@/components/StructuredData";
 import { Analytics } from "@vercel/analytics/react";
 import { SITE } from "@/lib/site";
@@ -109,9 +110,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               "try{if(/Instagram|FBAN|FBAV|LinkedInApp|Twitter|TwitterAndroid|musical_ly|BytedanceWebview|Snapchat/i.test(navigator.userAgent))document.documentElement.classList.add('inapp')}catch(e){}",
           }}
         />
+        {/* The homepage intro plays once per visit, on the homepage only,
+            and never for reduced motion, data saver or crawlers. See Intro.tsx. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var n=navigator,h=document.documentElement,ok=location.pathname==='/'&&!location.hash&&!/bot|crawl|spider|slurp|lighthouse|pagespeed|headless|preview/i.test(n.userAgent)&&!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)&&!(n.connection&&n.connection.saveData);var seen=false;try{seen=sessionStorage.getItem('fz-intro')==='1';if(ok)sessionStorage.setItem('fz-intro','1')}catch(e){}if(ok&&!seen)h.classList.add('fz-intro-on')}catch(e){}",
+          }}
+        />
         <StructuredData />
       </head>
       <body className="antialiased bg-paper text-ink">
+        <Intro />
         <div className="topline fixed left-0 right-0 h-[3px] z-[60] bg-[#4C7BE8]" />
         <Nav />
         <main className="pt-16">{children}</main>
