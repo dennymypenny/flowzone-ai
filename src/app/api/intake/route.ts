@@ -16,6 +16,11 @@ import { studioEmail, receiptEmail, ticketId } from "@/lib/intakeEmails";
  */
 
 const FROM = process.env.RESEND_FROM || "FlowZone Intake <onboarding@resend.dev>";
+// Same verified address, friendlier names. The customer hears from a person,
+// the studio copy is easy to spot in the inbox.
+const FROM_ADDR = (FROM.match(/<([^>]+)>/)?.[1] || FROM).trim();
+const FROM_STUDIO = `FlowZone Tickets <${FROM_ADDR}>`;
+const FROM_DENNIS = `Dennis at FlowZone <${FROM_ADDR}>`;
 
 // Caps so a paste bomb or a bot cannot turn one submission into a huge email.
 const LIMITS = {
@@ -82,7 +87,7 @@ export async function POST(req: NextRequest) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: FROM,
+        from: FROM_STUDIO,
         to: SITE.leadInbox,
         reply_to: email,
         subject: studio.subject,
@@ -116,7 +121,7 @@ export async function POST(req: NextRequest) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: FROM,
+        from: FROM_DENNIS,
         to: email,
         reply_to: SITE.leadInbox,
         subject: receipt.subject,
