@@ -135,7 +135,7 @@ export default function Home() {
           >
             You imagine it.
             <br />
-            We get it <span className="text-gradient">moving</span>.
+            We get it <span className="fz-ball"><span className="fz-ball-lean text-gradient">moving</span></span>.
           </h1>
 
           <p className="text-lg sm:text-xl md:text-2xl text-[#1C2942] leading-snug max-w-2xl mx-auto mt-6">
@@ -406,16 +406,16 @@ export default function Home() {
                 c: "#2B57C4",
                 b: "What people recognize you by.",
                 d: "The mark, the colors, the words. The part that makes you look like you meant it.",
-                img: "/assets/card-npu-2x.jpg",
+                img: "/assets/card-brands-2x.jpg",
                 fit: "object-cover object-center",
                 tint: "#E9F0FD",
-                bg: "#0E0D0A",
-                alt: "NextPlayU brand banner in black and gold with the NPU monogram and the line Your next play starts here",
-                tag: "Client work",
-                who: "NextPlayU",
-                what: "A brand banner that introduces the whole company in one graphic.",
-                href: "/work#nextplayu",
-                more: "See the full piece",
+                bg: "#0C1424",
+                alt: "Two brands side by side. FlowZone: three connected dots, the FlowZone wordmark and its navy and blue palette. CardsRG: the chrome crown shield with the CRG monogram, Rip Pull Collect, and its pink, teal and navy palette",
+                tag: "Our own brands",
+                who: "FlowZone + CardsRG",
+                what: "Two brands we built and run ourselves, from the mark to the colors.",
+                href: "/work#crg-mark",
+                more: "See the mark",
                 start: "/intake?build=identity",
                 cta: "Start a brand",
               },

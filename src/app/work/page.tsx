@@ -929,7 +929,7 @@ export default function Work() {
           #FFFFFF: #2B57C4 6.44, #A8175E 7.12, #0E6E85 5.85, #8A5100 6.45,
           #0F6B4F 6.49, #155E9C 6.75. The originals measured 3.96, 3.29, 1.57,
           1.67 and 1.92. */}
-      <section data-flow className="band-light px-6 py-24">
+      <section id="crg-mark" data-flow className="scroll-mt-24 band-light px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <p className="label mb-6">Walk through one decision at a time</p>
           <div className="grid md:grid-cols-12 gap-10 mb-16">
