@@ -588,7 +588,8 @@ function TicketSide({
   me: { name: string; business: string };
   loading: boolean;
 }) {
-  const short = build ? (build.name === NOT_SURE ? "ticket" : build.name.replace(/^The /, "")) : "ticket";
+  // "Send my Storefront Build ticket", or just "Send my ticket" with no build yet.
+  const label = build && build.name !== NOT_SURE ? `Send my ${build.name.replace(/^The /, "")} ticket` : "Send my ticket";
   return (
     <div className="space-y-4">
       <div className="relative rounded-[16px] overflow-hidden border border-white/10">
@@ -654,7 +655,7 @@ function TicketSide({
           disabled={loading}
           className="fz-go w-full rounded-[12px] font-semibold text-base py-4"
         >
-          {loading ? "Sending..." : <>Send my {short} ticket <span aria-hidden>&rarr;</span></>}
+          {loading ? "Sending..." : <>{label} <span aria-hidden>&rarr;</span></>}
         </button>
         <p className="flex items-center justify-center gap-2 text-xs text-[#6B7890] mt-3">
           <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5" /><path d="M5.5 7V5a2.5 2.5 0 015 0v2" /></svg>

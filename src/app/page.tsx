@@ -395,7 +395,10 @@ export default function Home() {
             piece below is real, and each one says whose it is.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-5">
+          {/* The three parts as one puzzle: the cards sit edge to edge and
+              each one's tab locks into the next, because brand, site and
+              system are one build. A piece lifts on its own when hovered. */}
+          <div className="grid md:grid-cols-3 rounded-[20px] border border-[#D5DEEC] shadow-[0_30px_60px_-36px_rgba(30,58,138,0.45)]">
             {[
               {
                 n: "01",
@@ -403,8 +406,9 @@ export default function Home() {
                 c: "#2B57C4",
                 b: "What people recognize you by.",
                 d: "The mark, the colors, the words. The part that makes you look like you meant it.",
-                img: "/assets/npu-brand-card.jpg",
+                img: "/assets/card-npu-2x.jpg",
                 fit: "object-cover object-center",
+                tint: "#E9F0FD",
                 bg: "#0E0D0A",
                 alt: "NextPlayU brand banner in black and gold with the NPU monogram and the line Your next play starts here",
                 tag: "Client work",
@@ -421,8 +425,9 @@ export default function Home() {
                 c: "#155E9C",
                 b: "Where people go to decide.",
                 d: "A site that answers the question and asks for the next step, instead of a profile and a DM.",
-                img: "/assets/flowzone-landing-card.jpg",
+                img: "/assets/card-flowzone-2x.jpg",
                 fit: "object-cover object-top",
+                tint: "#FFFFFF",
                 bg: "#EEF2F7",
                 alt: "The FlowZone landing page: You imagine it. We get it moving, over moving ocean water, with the Start a ticket button",
                 tag: "Our own site",
@@ -439,8 +444,9 @@ export default function Home() {
                 c: "#0F6B4F",
                 b: "What runs it behind the scenes.",
                 d: "Checkout, booking, follow-up. The parts nobody sees and everybody feels.",
-                img: "/assets/crg-fullscreen.jpg",
+                img: "/assets/card-cardsrg-2x.jpg",
                 fit: "object-cover object-top",
+                tint: "#E6F5EE",
                 bg: "#0B0A14",
                 alt: "A full screen of the CardsRG storefront: promo bar, CRG shield logo, category nav, cart, and the Shop by category grid of graded cards",
                 tag: "Our own shop",
@@ -451,79 +457,62 @@ export default function Home() {
                 start: "/intake?build=engine",
                 cta: "Start a system",
               },
-            ].map((x) => (
+            ].map((x, i, all) => (
               <div
                 key={x.k}
                 id={x.k.toLowerCase()}
-                className="group relative scroll-mt-28 rounded-[18px] border bg-white flex flex-col overflow-hidden transition-transform duration-300 hover:-translate-y-1"
-                style={{
-                  borderColor: `${x.c}2E`,
-                  boxShadow: `0 24px 48px -30px ${x.c}66`,
-                }}
+                className={`group relative scroll-mt-28 flex flex-col transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:z-20 ${
+                  i === 0 ? "rounded-t-[20px] md:rounded-tr-none md:rounded-l-[20px]" : ""
+                } ${i === all.length - 1 ? "rounded-b-[20px] md:rounded-bl-none md:rounded-r-[20px]" : ""} ${
+                  i > 0 ? "border-t md:border-t-0 md:border-l border-[#D5DEEC]" : ""
+                }`}
+                style={{ background: x.tint, zIndex: all.length - i }}
               >
+                {i < all.length - 1 && <PuzzleTab fill={x.tint} />}
                 <span
-                  className="absolute top-0 left-0 h-[3px] w-full z-10"
+                  className={`absolute top-0 left-0 h-[3px] w-full z-10 ${i === 0 ? "rounded-tl-[20px] md:rounded-tl-[20px]" : ""} ${i === 0 ? "rounded-tr-[20px] md:rounded-tr-none" : ""} ${i === all.length - 1 ? "md:rounded-tr-[20px]" : ""}`}
                   style={{ background: x.c }}
                   aria-hidden
                 />
-                {/* The proof sits first: a visitor sees the work before the words. */}
-                <Link
-                  href={x.href}
-                  aria-label={`See the ${x.who} piece on our work page`}
-                  className="relative block aspect-[16/10] overflow-hidden border-b"
-                  style={{ background: x.bg, borderColor: `${x.c}2E` }}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={x.img}
-                    alt={x.alt}
-                    loading="lazy"
-                    className={`absolute inset-0 w-full h-full ${x.fit} transition-transform duration-500 group-hover:scale-[1.03]`}
-                  />
-                </Link>
-
-                <div className="p-7 md:p-8 flex flex-col flex-1">
-                  <span
-                    className="text-[11px] font-medium uppercase tracking-label mb-3"
-                    style={{ color: x.c }}
+                <div className={`p-4 pb-0 ${i > 0 ? "pt-11 md:pt-4" : ""}`}>
+                  <Link
+                    href={x.href}
+                    aria-label={`See the ${x.who} piece on our work page`}
+                    className="relative block aspect-[16/10] overflow-hidden rounded-[12px] border shadow-[0_14px_30px_-18px_rgba(12,20,36,0.5)]"
+                    style={{ background: x.bg, borderColor: `${x.c}33` }}
                   >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={x.img}
+                      alt={x.alt}
+                      loading="lazy"
+                      decoding="async"
+                      width={1920}
+                      height={1200}
+                      className={`absolute inset-0 w-full h-full ${x.fit} transition-transform duration-500 group-hover:scale-[1.03]`}
+                    />
+                  </Link>
+                </div>
+
+                <div className="p-6 md:p-7 flex flex-col flex-1">
+                  <span className="text-[11px] font-medium uppercase tracking-label mb-2.5" style={{ color: x.c }}>
                     {x.n} · {x.k}
                   </span>
-                  <p className="font-display text-[1.6rem] md:text-3xl leading-[1.12] text-[#0B1322] mb-3">
-                    {x.b}
+                  <p className="font-display text-[1.5rem] md:text-[1.75rem] leading-[1.12] text-[#0B1322] mb-3">{x.b}</p>
+                  <p className="text-sm text-[#49566E] leading-relaxed mb-6">
+                    <span className="font-medium" style={{ color: x.c }}>{x.who}.</span> {x.what}
                   </p>
-                  <p className="text-sm text-[#49566E] font-light leading-relaxed mb-6">
-                    {x.d}
-                  </p>
-
-                  <div
-                    className="mt-auto pt-5 border-t"
-                    style={{ borderColor: `${x.c}24` }}
-                  >
-                    <p className="text-[11px] font-medium uppercase tracking-label text-[#647089] mb-1.5">
-                      {x.tag} · <span style={{ color: x.c }}>{x.who}</span>
-                    </p>
-                    <p className="text-sm text-[#2A3448] leading-relaxed mb-4">
-                      {x.what}
-                    </p>
-                    {/* Two ways out of every card: see the proof, or start
-                        that part right now with the ticket already picked. */}
-                    <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
-                      <Link
-                        href={x.start}
-                        className="inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
-                        style={{ background: x.c }}
-                      >
-                        {x.cta} →
-                      </Link>
-                      <Link
-                        href={x.href}
-                        className="text-sm font-medium underline underline-offset-4"
-                        style={{ color: x.c, textDecorationColor: `${x.c}55` }}
-                      >
-                        {x.more}
-                      </Link>
-                    </div>
+                  <div className="mt-auto flex items-center gap-x-5 gap-y-3 flex-wrap">
+                    <Link
+                      href={x.start}
+                      className="inline-flex items-center justify-center rounded-[11px] px-5 py-2.5 text-sm font-medium text-white transition-transform duration-150 hover:-translate-y-px active:translate-y-px"
+                      style={{ background: x.c, boxShadow: `0 3px 0 ${x.c}AA` }}
+                    >
+                      {x.cta} →
+                    </Link>
+                    <Link href={x.href} className="text-sm font-medium text-[#49566E] hover:text-[#0B1322] transition-colors">
+                      {x.more}
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -1244,6 +1233,43 @@ export default function Home() {
           <TicketNote className="text-center" />
         </div>
       </section>
+    </>
+  );
+}
+
+
+/**
+ * The tab of a puzzle piece. It sits on the right edge of a card on desktop
+ * (the bottom edge when the cards stack on phones), filled with the card's own
+ * tint so it reads as part of that piece, pushing into the next one. The
+ * outline is drawn on the rounded part only, never along the seam.
+ */
+function PuzzleTab({ fill }: { fill: string }) {
+  const d = "M0 10 C9 10 7 1 15 1 C23 1 29 9 29 22 C29 35 23 43 15 43 C7 43 9 34 0 34";
+  return (
+    <>
+      <svg
+        aria-hidden
+        viewBox="0 0 30 44"
+        width="24"
+        height="35"
+        className="hidden md:block absolute top-[calc(50.5%-17px)] -right-[23px] z-30 pointer-events-none overflow-visible"
+        style={{ filter: "drop-shadow(3px 1px 3px rgba(30,58,138,0.18))" }}
+      >
+        <path d={d + " Z"} fill={fill} />
+        <path d={d} fill="none" stroke="#C3CFE3" strokeWidth="1.2" />
+      </svg>
+      <svg
+        aria-hidden
+        viewBox="0 0 30 44"
+        width="30"
+        height="44"
+        className="md:hidden absolute left-1/2 -bottom-[36px] z-30 pointer-events-none overflow-visible"
+        style={{ transform: "translateX(-50%) rotate(90deg)", filter: "drop-shadow(3px 1px 3px rgba(30,58,138,0.18))" }}
+      >
+        <path d={d + " Z"} fill={fill} />
+        <path d={d} fill="none" stroke="#C3CFE3" strokeWidth="1.2" />
+      </svg>
     </>
   );
 }
