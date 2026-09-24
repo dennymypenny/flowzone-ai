@@ -43,16 +43,24 @@ function LandingSchema({ l }: { l: Landing }) {
           { "@type": "AdministrativeArea", name: "Los Angeles County, California" },
           { "@type": "Country", name: "United States" },
         ],
-        offers: [
-          { "@type": "Offer", name: "One Build", price: "500", priceCurrency: "USD", url: `${SITE.url}/pricing` },
-          { "@type": "Offer", name: "The Full Build", price: "1500", priceCurrency: "USD", url: `${SITE.url}/pricing` },
-          {
-            "@type": "Offer",
-            name: "The Storefront",
-            priceSpecification: { "@type": "PriceSpecification", minPrice: "2500", priceCurrency: "USD" },
-            url: `${SITE.url}/pricing`,
-          },
-        ],
+        offers: l.offers
+          ? l.offers.map((o) => ({
+              "@type": "Offer",
+              name: o.name,
+              price: o.price,
+              priceCurrency: "USD",
+              url: `${SITE.url}/pricing`,
+            }))
+          : [
+              { "@type": "Offer", name: "One Build", price: "500", priceCurrency: "USD", url: `${SITE.url}/pricing` },
+              { "@type": "Offer", name: "The Full Build", price: "1500", priceCurrency: "USD", url: `${SITE.url}/pricing` },
+              {
+                "@type": "Offer",
+                name: "The Storefront",
+                priceSpecification: { "@type": "PriceSpecification", minPrice: "2500", priceCurrency: "USD" },
+                url: `${SITE.url}/pricing`,
+              },
+            ],
       },
       {
         "@type": "FAQPage",
@@ -159,7 +167,7 @@ export default function LandingPage({ l }: { l: Landing }) {
             ))}
           </div>
           <p className="text-ink-soft leading-relaxed mt-14 max-w-reading">
-            {PRICE_LINE}{" "}
+            {l.priceLine ?? PRICE_LINE}{" "}
             <Link href="/pricing" className="underline underline-offset-4">
               See pricing
             </Link>

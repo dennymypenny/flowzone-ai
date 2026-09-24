@@ -27,6 +27,9 @@ export type Landing = {
   forWho: { name: string; body: string }[];
   faqs: { q: string; a: string }[];
   related: string[];
+  /* Overrides the build prices in the Service schema and the price line. */
+  offers?: { name: string; price: string }[];
+  priceLine?: string;
 };
 
 export const PRICE_LINE =
@@ -244,6 +247,94 @@ export const LANDINGS: Landing[] = [
     ],
     related: ["brand-design", "website-design", "startup-branding"],
   },
+  {
+    slug: "motion-graphics",
+    title: "Motion Graphics, Logo Animation and Brand Video",
+    description:
+      "Motion graphics from FlowZone Studio: logo animations, title sequences, product explainers, promo reels and ads, cut to work with the sound off. Promo reels from $74.99.",
+    label: "Motion graphics",
+    h1: "Motion graphics that make a brand move.",
+    answer:
+      "FlowZone Studio makes motion graphics for brands: logo and brand animations, title sequences, product explainer animations, promo reels and ads, cut for feeds where the sound is off. Every piece is built from your brand, so it looks like you and nobody else.",
+    service: "Motion graphics and brand video",
+    get: [
+      "Logo and brand animations",
+      "Title sequences for shows, podcasts and series",
+      "Product explainer animations",
+      "Promo reels cut for sound off feeds",
+      "Ads and spec spots in vertical, square and wide",
+      "Voiceover, captions and music if you want them",
+    ],
+    forWho: [
+      { name: "Brands launching something", body: "A launch deserves more than a static post. Ten seconds of motion stops the scroll." },
+      { name: "Shows and podcasts", body: "A title animation that makes episode one feel like a real series." },
+      { name: "Products that are hard to picture", body: "If it takes a paragraph to explain, an animation can show it in five seconds." },
+    ],
+    faqs: [
+      {
+        q: "How much do motion graphics cost at FlowZone?",
+        a: "A promo reel cut for sound off feeds is $74.99. Larger pieces like a brand animation, a title sequence or a product explainer are scoped and quoted flat before you pay.",
+      },
+      {
+        q: "What kind of animation do you make?",
+        a: "Logo and brand animations, title sequences, product explainers, promo reels and ads. Examples are on the work page, including a Mahj & Coffee welcome animation, the Powered by People title animation, a SlipFolio product animation and a spec ad for Profound.",
+      },
+      {
+        q: "What formats will I get?",
+        a: "MP4 in whatever shapes you need: vertical 9:16 for Reels, TikTok and Shorts, square for feeds and 16:9 for YouTube and your site, plus a web optimized version.",
+      },
+      {
+        q: "Can you add a voiceover or captions?",
+        a: "Yes. Captions are standard since most feeds play muted, and voiceover and music can be added.",
+      },
+    ],
+    related: ["graphic-design", "brand-design", "startup-branding"],
+    offers: [{ name: "Promo reel", price: "74.99" }],
+    priceLine:
+      "Promo reels cut for sound off feeds are $74.99. Brand animations, title sequences and product explainers are quoted flat before you pay. Brand, site and system builds start at $500.",
+  },
+  {
+    slug: "graphic-design",
+    title: "Graphic Design: Social Graphics, Flyers, Decks and Ads",
+    description:
+      "On brand graphic design from FlowZone Studio: social post packs, flyers, ad creative, presentation decks, one pagers, channel art and thumbnails. $49.99 each, flat.",
+    label: "Graphic design",
+    h1: "Graphic design, one flat price per piece.",
+    answer:
+      "FlowZone Studio designs single graphics for brands that already have a foundation: social post packs, flyers, story and ad creative, presentation decks, one pagers, channel art, thumbnails and email headers. Each one is $49.99, flat, and if it is a single graphic, it can be made.",
+    service: "Graphic design",
+    get: [
+      "Social post pack, three graphics",
+      "Flyer, poster or cover",
+      "Story or ad creative",
+      "Presentation or pitch deck",
+      "One pager or sell sheet",
+      "Channel art, thumbnails and email headers",
+    ],
+    forWho: [
+      { name: "Brands with a look already", body: "You have the logo and colors. You need the next ten posts to match them." },
+      { name: "Events and launches", body: "A flyer, a story set and an ad, all in one style, ready the same week." },
+      { name: "Founders pitching", body: "A deck that looks like the company you are about to become." },
+    ],
+    faqs: [
+      {
+        q: "How much does a graphic cost?",
+        a: "$49.99 per graphic or per pack, flat. That covers flyers, a three post social pack, ad creative, decks, one pagers, channel art, thumbnails and email headers.",
+      },
+      {
+        q: "What if I do not have a brand yet?",
+        a: "Then a $49.99 graphic will not fix it, and we will tell you so. A brand identity is One Build at $500, and after that every graphic has something to match.",
+      },
+      {
+        q: "Can I get a free sample?",
+        a: "Yes. There is a free sample graphic offer on the site so you can see the work before paying for anything.",
+      },
+    ],
+    related: ["motion-graphics", "brand-design", "logo-design"],
+    offers: [{ name: "Single graphic or pack", price: "49.99" }],
+    priceLine:
+      "Every single graphic or pack is $49.99, flat. Brand identities start at $500 and The Full Build (brand, site and one working system) is $1,500.",
+  },
 ];
 
 export const LANDING_NAV: Record<string, string> = {
@@ -251,7 +342,10 @@ export const LANDING_NAV: Record<string, string> = {
   "startup-branding": "Startup branding",
   "logo-design": "Logo design",
   "website-design": "Website design",
+  "motion-graphics": "Motion graphics",
+  "graphic-design": "Graphic design",
   "orange-county-brand-design": "Orange County and LA",
+  questions: "Questions",
 };
 
 export function getLanding(slug: string): Landing {

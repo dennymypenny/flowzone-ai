@@ -1,8 +1,8 @@
 # FlowZone Studio
 
-> FlowZone Studio (flowzone.dev) is a brand design studio for startups, small businesses and personal brands. It designs logos and brand identities, builds websites and online storefronts and wires in the systems behind them (lead intake, booking, payments). One person makes every call, prices are flat and agreed before work starts, and clients own everything at the end. Based in Orange County, California, serving Orange County, Los Angeles and clients anywhere remotely.
+> FlowZone Studio (flowzone.dev) is a brand design studio for startups, small businesses and personal brands. It designs logos and brand identities, builds websites and online storefronts, makes graphics and motion graphics and wires in the systems behind them (lead intake, booking, payments). One person makes every call, prices are flat and agreed before work starts, and clients own everything at the end. Based in Orange County, California, serving Orange County, Los Angeles and clients anywhere remotely.
 
-The studio's name is FlowZone (also written FlowZone Studio). It is not related to FlowZone sprayers or flowzone.com project management software.
+The studio's name is FlowZone, also written FlowZone Studio, Flow Zone or Flow Zone Studio, at flowzone.dev and @flowzonedev on X. It is not related to FlowZone sprayers or flowzone.com project management software.
 
 Founder: Dennis Valdes (https://www.linkedin.com/in/dennisvaldesjr/)
 Contact: hello@flowzone.dev
@@ -14,7 +14,10 @@ Start a project: https://www.flowzone.dev/intake
 - [Startup branding](https://www.flowzone.dev/startup-branding): identity, launch site and signup, waitlist or checkout, built together
 - [Logo design](https://www.flowzone.dev/logo-design): custom logo and wordmark delivered as a full identity with every file format
 - [Website design](https://www.flowzone.dev/website-design): custom marketing sites, portfolios and storefronts on Next.js, mobile first, on the client's own domain
+- [Motion graphics](https://www.flowzone.dev/motion-graphics): logo animations, title sequences, product explainers, promo reels and ads cut for sound off feeds (promo reels from $74.99)
+- [Graphic design](https://www.flowzone.dev/graphic-design): social post packs, flyers, ad creative, pitch decks, one pagers, channel art, $49.99 each
 - [Orange County and Los Angeles](https://www.flowzone.dev/orange-county-brand-design): brand and website design for local businesses and startups
+- [Questions, answered](https://www.flowzone.dev/questions): how to make a business look professional, where to start with an idea, who can do a logo and website, what it costs
 - [Everything the studio builds](https://www.flowzone.dev/services)
 
 ## Pricing (flat, USD)
