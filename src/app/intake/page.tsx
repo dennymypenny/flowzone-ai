@@ -81,6 +81,7 @@ const GROUPS: { key: GroupKey; title: string; line: string; icon: string; c: str
       { label: "Landing page", small: true },
       { label: "Fix or speed up", small: true },
       { label: "Show up on Google" },
+      { label: "Website care (monthly)", small: true },
     ],
   },
   {
@@ -206,19 +207,15 @@ function Choice({
       role={role}
       aria-checked={on}
       onClick={onClick}
-      className={`inline-flex items-center gap-2 rounded-[11px] border px-3.5 py-2.5 text-sm transition-all duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-px active:scale-[0.97] ${
-        on
-          ? "bg-white text-[#0C1424] border-white font-medium shadow-[0_10px_28px_-14px_rgba(255,255,255,0.55)]"
-          : "bg-[#10141D] text-[#C9D2E3] border-white/10 hover:border-white/30 hover:text-white"
-      }`}
+      className="fz-key inline-flex items-center gap-2 rounded-[11px] px-3.5 py-2.5 text-sm font-medium"
     >
       <span
         aria-hidden
         className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-colors"
-        style={on ? { background: c, borderColor: c } : { borderColor: "rgba(255,255,255,0.25)" }}
+        style={on ? { background: "#FFFFFF", borderColor: "#FFFFFF" } : { borderColor: "#A9B4C7", background: "#FFFFFF" }}
       >
         {on && (
-          <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="#0F6B4F" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
             <path d="M2.5 6.2l2.3 2.3 4.7-5" />
           </svg>
         )}
@@ -246,34 +243,32 @@ function PlanRow({
       role="radio"
       aria-checked={on}
       onClick={onClick}
-      className={`w-full text-left flex items-center gap-4 rounded-[14px] border px-4 py-3.5 transition-all duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.99] ${
-        on ? "bg-white border-white shadow-[0_14px_36px_-18px_rgba(255,255,255,0.6)]" : "bg-[#10141D] border-white/[0.07] hover:border-white/25"
-      }`}
+      className="fz-key w-full text-left flex items-center gap-4 rounded-[14px] px-4 py-3.5"
     >
       <span
         aria-hidden
         className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors"
-        style={on ? { borderColor: "#0C1424" } : { borderColor: "rgba(255,255,255,0.18)", background: "#07090F" }}
+        style={on ? { borderColor: "#04291B", background: "#FFFFFF" } : { borderColor: "#A9B4C7", background: "#FFFFFF" }}
       >
-        {on && <span className="h-2.5 w-2.5 rounded-full bg-[#0C1424]" />}
+        {on && <span className="h-2.5 w-2.5 rounded-full bg-[#0F6B4F]" />}
       </span>
       <span className="min-w-0 flex-1">
         <span className="flex items-center gap-2 flex-wrap">
-          <span className={`font-semibold text-[15px] ${on ? "text-[#0C1424]" : "text-white"}`}>{b.name.replace(/^The /, "")}</span>
+          <span className="font-semibold text-[15px]">{b.name.replace(/^The /, "")}</span>
           {fit && (
             <span
               className="fz-settle text-[10px] font-semibold uppercase tracking-[0.08em] rounded-[6px] px-1.5 py-0.5"
-              style={on ? { background: "#0C1424", color: "#fff" } : { background: b.c, color: "#0C1424" }}
+              style={on ? { background: "#04291B", color: "#fff" } : { background: "#0C1424", color: "#fff" }}
             >
               Best fit
             </span>
           )}
         </span>
-        <span className={`block text-[13px] mt-0.5 sm:truncate leading-snug ${on ? "text-[#4A5873]" : "text-[#8190A8]"}`}>{b.one}</span>
+        <span className={`block text-[13px] mt-0.5 sm:truncate leading-snug ${on ? "text-[#0A4A33]" : "text-[#5B6880]"}`}>{b.one}</span>
       </span>
-      <span className={`shrink-0 text-right font-semibold text-[15px] tabular-nums ${on ? "text-[#0C1424]" : "text-white"}`}>
+      <span className="shrink-0 text-right font-semibold text-[15px] tabular-nums">
         {b.from.replace("From ", "")}
-        <span className={`block text-[10px] font-normal uppercase tracking-[0.1em] ${on ? "text-[#8190A8]" : "text-[#6B7890]"}`}>
+        <span className={`block text-[10px] font-normal uppercase tracking-[0.1em] ${on ? "text-[#0A4A33]" : "text-[#7A879E]"}`}>
           {b.from.startsWith("From") ? "from" : ""}
         </span>
       </span>
@@ -293,7 +288,14 @@ function IntakeForm() {
     : undefined;
   const preselected = fromBuild ?? fromLegacy ?? "";
 
-  const [picked, setPicked] = useState<string[]>(() => BUILD_STARTER[preselected] ?? []);
+  // ?pick=Landing%20page,Website%20care%20(monthly) arrives from offer pages.
+  const fromPick = (searchParams.get("pick") || "")
+    .split(",")
+    .map((x) => x.trim())
+    .filter((x) => pickIndex.has(x));
+  const [picked, setPicked] = useState<string[]>(() =>
+    fromPick.length ? fromPick : BUILD_STARTER[preselected] ?? []
+  );
   // A build the visitor chose by hand wins over the suggestion until they clear it.
   const [manual, setManual] = useState<string>(preselected);
   const [timeline, setTimeline] = useState("");
@@ -460,12 +462,12 @@ function IntakeForm() {
                         <p className="text-sm font-semibold text-white">{g.title}</p>
                         <p className="text-xs text-[#6B7890] hidden sm:block">{g.line}</p>
                         {count > 0 && (
-                          <span key={count} className="fz-settle ml-auto text-[11px] font-semibold tabular-nums rounded-[6px] px-1.5 py-0.5 bg-white text-[#0C1424]">
+                          <span key={count} className="fz-settle ml-auto text-[11px] font-semibold tabular-nums rounded-[6px] px-1.5 py-0.5 bg-[#34D399] text-[#04291B]">
                             {count}
                           </span>
                         )}
                       </div>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-x-2 gap-y-3">
                         {g.picks.map((p) => (
                           <Choice key={p.label} on={picked.includes(p.label)} c={g.c} onClick={() => toggle(p.label)}>
                             {p.label}
@@ -486,7 +488,7 @@ function IntakeForm() {
               ) : "Matched as you tap"}>
                 02 · Your build
               </Label>
-              <div className="space-y-2" role="radiogroup" aria-label="Pick a build">
+              <div className="space-y-3" role="radiogroup" aria-label="Pick a build">
                 {planList.map((b) => (
                   <PlanRow
                     key={b.key}
@@ -501,14 +503,14 @@ function IntakeForm() {
 
             <section>
               <Label right="Optional">03 · When and where from?</Label>
-              <div className="flex flex-wrap gap-2 mb-3" role="radiogroup" aria-label="Timeline">
+              <div className="flex flex-wrap gap-x-2 gap-y-3 mb-4" role="radiogroup" aria-label="Timeline">
                 {TIMELINES.map((t) => (
                   <Choice key={t} role="radio" on={timeline === t} c="#FBBF24" onClick={() => setTimeline(timeline === t ? "" : t)}>
                     {t}
                   </Choice>
                 ))}
               </div>
-              <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Starting point">
+              <div className="flex flex-wrap gap-x-2 gap-y-3" role="radiogroup" aria-label="Starting point">
                 {STARTS.map((s) => (
                   <Choice key={s} role="radio" on={start === s} c="#2DD4BF" onClick={() => setStart(start === s ? "" : s)}>
                     {s}
@@ -650,7 +652,7 @@ function TicketSide({
           type="submit"
           form="fz-ticket"
           disabled={loading}
-          className="w-full rounded-[12px] bg-white text-[#0C1424] font-semibold text-base py-4 transition-all duration-200 hover:bg-[#EAF0FF] hover:-translate-y-px active:scale-[0.99] disabled:opacity-60 shadow-[0_14px_40px_-18px_rgba(255,255,255,0.7)]"
+          className="fz-go w-full rounded-[12px] font-semibold text-base py-4"
         >
           {loading ? "Sending..." : <>Send my {short} ticket <span aria-hidden>&rarr;</span></>}
         </button>

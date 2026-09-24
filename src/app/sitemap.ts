@@ -33,6 +33,7 @@ const ROUTES: Route[] = [
   { path: "/questions", priority: 0.85, changeFrequency: "monthly", lastModified: "2026-09-23" },
   { path: "/orange-county-brand-design", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-09-23" },
   { path: "/services", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-08-17" },
+  { path: "/landing-page", priority: 0.85, changeFrequency: "monthly", lastModified: "2026-09-23" },
   { path: "/pricing", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-08-17" },
   { path: "/book", priority: 0.85, changeFrequency: "monthly", lastModified: "2026-08-17" },
   { path: "/how-we-work", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-08-17" },

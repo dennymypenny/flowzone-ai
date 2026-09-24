@@ -57,6 +57,16 @@ export const BUILDS: CartItem[] = [
 
 export const CATALOG: CartItem[] = [...SMALL_JOBS, ...BUILDS];
 
+/**
+ * Website care, month to month and optional. Never required to buy anything
+ * else, cancel anytime. Cheaper when it comes with the $99.99 landing page.
+ */
+export const CARE = {
+  name: "Website care",
+  monthly: 4900,
+  withPage: 3900,
+} as const;
+
 export const money = (cents: number) =>
   Number.isInteger(cents / 100)
     ? `$${(cents / 100).toLocaleString("en-US")}`

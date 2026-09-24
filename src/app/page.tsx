@@ -159,7 +159,7 @@ export default function Home() {
             {[
               { k: "Who builds it", v: "The founder. Start to finish." },
               { k: "How you pay", v: "One flat price, paid once." },
-              { k: "Retainers", v: "None. Ever." },
+              { k: "Retainers", v: "Never required." },
               { k: "When it ships", v: "You own the code and the accounts." },
             ].map((f) => (
               <div key={f.k} className="border-t pt-3" style={{ borderColor: "rgba(43,87,196,0.28)" }}>

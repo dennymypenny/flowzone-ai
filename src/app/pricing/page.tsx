@@ -8,14 +8,14 @@ import AddToCart from "@/app/components/AddToCart";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Three flat packages for brand, site and the system that runs it. One payment, no retainers, and a date agreed before you pay.",
+    "Three flat packages for brand, site and the system that runs it. One payment, no retainer required, and a date agreed before you pay.",
   alternates: { canonical: "/pricing" },
   // Set in full because metadata merging is shallow. A page that declares
   // openGraph replaces the layout block outright, so anything omitted is gone.
   openGraph: {
     title: "Pricing | FlowZone",
     description:
-      "Three flat packages for brand, site and the system that runs it. One payment, no retainers, and a date agreed before you pay.",
+      "Three flat packages for brand, site and the system that runs it. One payment, no retainer required, and a date agreed before you pay.",
     url: `${SITE.url}/pricing`,
     siteName: "FlowZone",
     type: "website",
@@ -49,7 +49,7 @@ const tiers = [
     tagline: "Brand, site and system. The whole thing.",
     best: true,
     blurb:
-      "What most people are actually here for. The look, the site and the machinery wired together, live in weeks — for less than one month of a typical agency retainer.",
+      "What most people are actually here for. The look, the site and the machinery wired together, live in weeks, for less than one month of a typical agency retainer.",
     includes: [
       "Identity, site and one working system",
       "Copy written for you, end to end",
@@ -87,7 +87,7 @@ export default function Pricing() {
         <div className="relative max-w-6xl mx-auto">
           <div className="flex items-center justify-between border-b border-rule pb-4 mb-12">
             <p className="label">Pricing</p>
-            <p className="label hidden sm:block">Flat · Paid once · No retainers</p>
+            <p className="label hidden sm:block">Flat · Paid once · No retainer required</p>
           </div>
           <h1 className="display text-5xl md:text-8xl max-w-4xl">
             Three ways
@@ -96,7 +96,7 @@ export default function Pricing() {
           </h1>
           <p className="lede max-w-reading mt-10">
             Three numbers, all flat, all agreed before we start. No hourly billing and
-            no retainer you forget to cancel. If the cheaper tier fits your idea, we
+            no retainer required. If the cheaper tier fits your idea, we
             will tell you that before you pay.
           </p>
         </div>

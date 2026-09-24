@@ -32,7 +32,7 @@ const principles = [
   {
     title: "Flat price, agreed up front",
     body:
-      "You know the number before we start. No hourly billing, no scope creep invoice at the end, no retainer you forget to cancel. If the scope genuinely changes we talk about it before doing the work.",
+      "You know the number before we start. No hourly billing, no scope creep invoice at the end, no retainer required. Ongoing care is optional and month to month. If the scope genuinely changes we talk about it before doing the work.",
   },
   {
     title: "You own everything",

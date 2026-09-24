@@ -1022,3 +1022,43 @@ button {
 }
 .fz-settle { animation: fz-settle 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
 @media (prefers-reduced-motion: reduce) { .fz-settle { animation: none; } }
+
+/* Real buttons. A raised white key that presses down and turns green when
+   it is picked. Used for every choice on /intake and /landing-page.
+   Depth is a solid bottom shadow, so pressing is just translateY plus a
+   shorter shadow. Nothing here touches opacity. */
+.fz-key {
+  background: linear-gradient(180deg, #FFFFFF 0%, #EEF2F8 100%);
+  color: #0C1424;
+  border: 1px solid #FFFFFF;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 4px 0 #8C99B0, 0 10px 20px -10px rgba(0,0,0,0.7);
+  transform: translateY(0);
+  transition: transform 0.12s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.12s cubic-bezier(0.22, 1, 0.36, 1), background 0.18s ease;
+}
+.fz-key:hover { transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 5px 0 #8C99B0, 0 12px 22px -10px rgba(0,0,0,0.7); }
+.fz-key:active { transform: translateY(3px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 1px 0 #8C99B0, 0 4px 10px -6px rgba(0,0,0,0.7); }
+.fz-key[aria-checked="true"] {
+  background: linear-gradient(180deg, #4BE3AE 0%, #22C38A 100%);
+  color: #04291B;
+  border-color: #5EEBB9;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 2px 0 #0F6B4F, 0 0 0 3px rgba(52,211,153,0.22), 0 12px 26px -10px rgba(52,211,153,0.75);
+  transform: translateY(2px);
+}
+.fz-key[aria-checked="true"]:active { transform: translateY(3px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 1px 0 #0F6B4F, 0 0 0 3px rgba(52,211,153,0.22); }
+.fz-key:focus-visible { outline: 2px solid #A8C4FF; outline-offset: 3px; }
+
+/* The go button: always green, raised, presses down. */
+.fz-go {
+  background: linear-gradient(180deg, #4BE3AE 0%, #22C38A 100%);
+  color: #04291B;
+  border: 1px solid #5EEBB9;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 5px 0 #0F6B4F, 0 16px 34px -14px rgba(52,211,153,0.8);
+  transform: translateY(0);
+  transition: transform 0.12s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.12s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fz-go:hover { transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 6px 0 #0F6B4F, 0 18px 36px -14px rgba(52,211,153,0.9); }
+.fz-go:active { transform: translateY(4px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 1px 0 #0F6B4F, 0 6px 14px -8px rgba(52,211,153,0.8); }
+.fz-go:disabled { transform: translateY(4px); box-shadow: 0 1px 0 #0F6B4F; cursor: wait; }
+@media (prefers-reduced-motion: reduce) {
+  .fz-key, .fz-go { transition: none; }
+}

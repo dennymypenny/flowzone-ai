@@ -18,7 +18,7 @@ import LogoBand from "@/components/LogoBand";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "FlowZone is a creative studio that builds the brand, the website and the systems behind it for founders, small businesses and personal brands. Flat prices, no retainers, one person on it start to finish.",
+    "FlowZone is a creative studio that builds the brand, the website and the systems behind it for founders, small businesses and personal brands. Flat prices, no retainer required, one person on it start to finish.",
   alternates: { canonical: "/about" },
   // Set in full because metadata merging is shallow. A page that declares
   // openGraph replaces the layout block outright, so anything omitted is gone.
@@ -62,8 +62,8 @@ const DIFFERENT = [
     b: "Builds start at $500 and the Full Build is $1,500, listed publicly on the pricing page. Most branding agencies quote only after a discovery call and bill hourly once the work starts. Here you see the number first and it does not move unless you change the scope.",
   },
   {
-    t: "No retainer and no contract",
-    b: "You pay per project and you can walk away the day it launches. Design subscriptions like Design Pickle bill every month whether you need work or not, and many agencies ask for a monthly retainer. FlowZone asks for neither.",
+    t: "No retainer required, no contract",
+    b: "You pay per project and you can walk away the day it launches. Design subscriptions like Design Pickle bill every month whether you need work or not, and many agencies ask for a monthly retainer. FlowZone requires neither. If you want someone keeping the site up after launch, website care is optional, month to month and cancel anytime.",
   },
   {
     t: "You own everything",
@@ -120,7 +120,7 @@ const FACTS: [string, React.ReactNode][] = [
   ["Website", <a key="w" href={SITE.url} className="underline underline-offset-4">www.flowzone.dev</a>],
   ["Core Offering", "Brand identity, websites, storefronts and the business systems behind them, built as one project"],
   ["Pricing", "Single graphics and small jobs from $49.99. Builds from $500. The Full Build (brand, site and system) is $1,500. Storefronts from $2,500. All flat, quoted before payment"],
-  ["Contract Terms", "Per project. No retainer, no subscription and no long term contract. Client owns all code, domains, accounts and content at handover"],
+  ["Contract Terms", "Per project. No retainer or long term contract required. Optional month-to-month website care. Client owns all code, domains, accounts and content at handover"],
   ["Services", "Logo and identity design, brand voice and copy, personal branding, website design and development, ecommerce storefronts, lead intake and booking systems, promo reels and product animation, single graphics"],
   ["Communication", `Email (${SITE.email}), the project form at flowzone.dev/intake, LinkedIn and X. Same business day replies`],
   ["Notable Clients", "Shutters Depot, ABC Capital Group, SlipFolio, NextPlayU, Mahj & Coffee"],
@@ -150,7 +150,7 @@ const FAQ = [
   },
   {
     q: "Do I have to sign a contract or pay a retainer?",
-    a: "No. FlowZone works per project with no retainer and no subscription. When the project is live you own everything and there is nothing left to cancel.",
+    a: "No. FlowZone works per project and never requires a retainer. When the project is live you own everything. If you want ongoing updates, website care is optional at $49 a month, cancel anytime.",
   },
   {
     q: "How long does a project take?",
