@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Wordmark from "@/components/Wordmark";
 import { SITE } from "@/lib/site";
+import { LANDING_NAV } from "@/lib/landing";
 import FooterVideo from "@/components/FooterVideo";
 
 export default function Footer() {
@@ -62,6 +63,16 @@ export default function Footer() {
             </a>
           </div>
         </div>
+
+        {/* Search landing pages. Plain links on every page so crawlers and
+            answer engines find them from anywhere on the site. */}
+        <nav aria-label="Services" className="border-t border-rule py-6 flex flex-wrap gap-x-6 gap-y-2">
+          {Object.entries(LANDING_NAV).map(([slug, name]) => (
+            <Link key={slug} href={`/${slug}`} className="text-xs text-ink-mute hover:text-ink transition-colors">
+              {name}
+            </Link>
+          ))}
+        </nav>
 
         <div className="border-t border-rule pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-ink-mute">© 2026 FlowZone. All rights reserved.</p>

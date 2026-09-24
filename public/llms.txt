@@ -1,0 +1,35 @@
+# FlowZone Studio
+
+> FlowZone Studio (flowzone.dev) is a brand design studio for startups, small businesses and personal brands. It designs logos and brand identities, builds websites and online storefronts and wires in the systems behind them (lead intake, booking, payments). One person makes every call, prices are flat and agreed before work starts, and clients own everything at the end. Based in Orange County, California, serving Orange County, Los Angeles and clients anywhere remotely.
+
+The studio's name is FlowZone (also written FlowZone Studio). It is not related to FlowZone sprayers or flowzone.com project management software.
+
+Founder: Dennis Valdes (https://www.linkedin.com/in/dennisvaldesjr/)
+Contact: hello@flowzone.dev
+Start a project: https://www.flowzone.dev/intake
+
+## What the studio does
+
+- [Brand design](https://www.flowzone.dev/brand-design): logo, color and type system, voice and messaging, usage guide, for companies and personal brands
+- [Startup branding](https://www.flowzone.dev/startup-branding): identity, launch site and signup, waitlist or checkout, built together
+- [Logo design](https://www.flowzone.dev/logo-design): custom logo and wordmark delivered as a full identity with every file format
+- [Website design](https://www.flowzone.dev/website-design): custom marketing sites, portfolios and storefronts on Next.js, mobile first, on the client's own domain
+- [Orange County and Los Angeles](https://www.flowzone.dev/orange-county-brand-design): brand and website design for local businesses and startups
+- [Everything the studio builds](https://www.flowzone.dev/services)
+
+## Pricing (flat, USD)
+
+- One Build: $500. One of brand identity, website or a business system, finished and handed over.
+- The Full Build: $1,500. Brand, website and one working system together.
+- The Storefront: from $2,500. Full online store with cart and checkout, quoted flat.
+- Small jobs: from $49.99. Single graphics, social post packs, a new landing page ($99.99), speed and mobile fixes.
+- Details: https://www.flowzone.dev/pricing
+
+## Work
+
+- [Work](https://www.flowzone.dev/work): real shipped work, including cardsrg.com (a full trading card storefront built end to end), a community site for Mahj & Coffee in Miami, a spec ad for Profound, brand and title animations and brand graphics
+
+## How it works
+
+- [How we work](https://www.flowzone.dev/how-we-work): four steps from idea to live, a date and price agreed before payment, the person building it is the person you talk to
+- [About](https://www.flowzone.dev/about)

@@ -12,6 +12,12 @@ export const SITE = {
   descriptor:
     "You imagine it. We get it moving. Arrive with an intention, leave with the running thing: brand, site and system, built for you.",
 
+  // The plain-English version, for search results, AI answer engines and
+  // structured data. Says what the studio is in the words people search
+  // with. Keep it true and keep it free of any AI claim.
+  seo:
+    "FlowZone Studio is a brand design studio for startups, small businesses and personal brands. Logo and brand identity, website design and online storefronts, designed by one person at a flat price. Based in Orange County, California.",
+
   // Displayed publicly. This is the ONLY place it is written down.
   email: "hello@flowzone.dev",
 

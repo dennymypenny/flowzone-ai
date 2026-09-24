@@ -21,8 +21,14 @@ type Route = {
 };
 
 const ROUTES: Route[] = [
-  { path: "", priority: 1.0, changeFrequency: "monthly", lastModified: "2026-08-20" },
-  { path: "/work", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-08-20" },
+  { path: "", priority: 1.0, changeFrequency: "weekly", lastModified: "2026-09-23" },
+  { path: "/work", priority: 0.9, changeFrequency: "weekly", lastModified: "2026-09-23" },
+  // Search landing pages, added 2026-09-23. Content in lib/landing.ts.
+  { path: "/brand-design", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-09-23" },
+  { path: "/startup-branding", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-09-23" },
+  { path: "/logo-design", priority: 0.85, changeFrequency: "monthly", lastModified: "2026-09-23" },
+  { path: "/website-design", priority: 0.85, changeFrequency: "monthly", lastModified: "2026-09-23" },
+  { path: "/orange-county-brand-design", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-09-23" },
   { path: "/services", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-08-17" },
   { path: "/pricing", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-08-17" },
   { path: "/book", priority: 0.85, changeFrequency: "monthly", lastModified: "2026-08-17" },

@@ -13,15 +13,15 @@ import { preload } from "react-dom";
 import { days, faqs } from "@/lib/process";
 
 export const metadata: Metadata = {
-  title: "FlowZone Studio | Brand, Website and Storefront Design",
-  description: `${SITE.line} ${SITE.descriptor}`,
+  title: "FlowZone Studio | Brand Design and Websites for Startups",
+  description: "Brand design studio for startups and small businesses. Logo, brand identity, website and storefront, designed by one person at a flat price. Brand, site and system. One studio.",
   alternates: { canonical: "/" },
   // openGraph merging is shallow, so siteName, type and locale get repeated on
   // every page. The card image is not repeated because app/opengraph-image.png
   // is file based metadata, which every route inherits on its own.
   openGraph: {
-    title: "FlowZone Studio | Brand, Website and Storefront Design",
-    description: `${SITE.line} ${SITE.descriptor}`,
+    title: "FlowZone Studio | Brand Design and Websites for Startups",
+    description: "Brand design studio for startups and small businesses. Logo, brand identity, website and storefront, designed by one person at a flat price. Brand, site and system. One studio.",
     url: SITE.url,
     siteName: "FlowZone",
     type: "website",

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SITE } from "@/lib/site";
+import { LANDING_NAV } from "@/lib/landing";
 import NodeWeb from "@/app/components/NodeWeb";
 import { TicketNote } from "@/components/MessageUs";
 import AddToCart from "@/app/components/AddToCart";
@@ -10,7 +11,7 @@ import Icon from "@/components/Icon";
 export const metadata: Metadata = {
   title: "What We Build",
   description:
-    "Brand, site and the system that runs it. Three parts of one piece of work, from a studio that does all three.",
+    "Brand design, logo and identity, website design and online storefronts, plus the system that runs them. Three parts of one piece of work, from one studio.",
   alternates: { canonical: "/services" },
   // Set in full because metadata merging is shallow. A page that declares
   // openGraph replaces the layout block outright, so anything omitted is gone.
@@ -480,6 +481,13 @@ export default function Services() {
           <Link href="/work" className="btn-primary">
             See what that looks like
           </Link>
+          <div className="flex flex-wrap gap-x-6 gap-y-2 justify-center mt-12">
+            {Object.entries(LANDING_NAV).map(([slug, name]) => (
+              <Link key={slug} href={`/${slug}`} className="text-sm underline underline-offset-4">
+                {name}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
     </>

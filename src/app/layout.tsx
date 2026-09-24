@@ -30,7 +30,7 @@ import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: {
-    default: "FlowZone Studio | Brand, Website and Storefront Design",
+    default: "FlowZone Studio | Brand Design and Websites for Startups",
     template: "%s | FlowZone Studio",
   },
   applicationName: "FlowZone",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Dennis Valdes", url: SITE.linkedinFounder }],
   creator: "FlowZone",
   publisher: "FlowZone",
-  description: SITE.descriptor,
+  description: SITE.seo,
   metadataBase: new URL(SITE.url),
   // Fallback only, for any route that forgets to declare its own. Metadata
   // merging is shallow, so a page that sets openGraph replaces this whole
@@ -69,13 +69,18 @@ export const metadata: Metadata = {
   },
   keywords: [
     "FlowZone",
+    "FlowZone Studio",
     "flowzone.dev",
-    "FlowZone studio",
-    "creative studio",
-    "brand identity studio",
-    "website design and build",
+    "brand design studio",
+    "brand design for startups",
+    "startup branding",
+    "logo design",
+    "brand identity design",
+    "personal branding",
+    "website design for startups",
+    "small business website design",
     "ecommerce storefront design",
-    "done for you brand and website",
+    "brand design Orange County",
   ],
 };
 
