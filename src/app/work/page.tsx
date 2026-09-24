@@ -1,3 +1,4 @@
+import FastVideo from "@/app/components/FastVideo";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SITE } from "@/lib/site";
@@ -303,20 +304,7 @@ export default function Work() {
               },
             ].map((v) => (
               <figure key={v.base} className={`panel overflow-hidden flex flex-col ${v.span}`}>
-                <video
-                  className="w-full h-auto block"
-                  poster={`/assets/${v.base}-poster.jpg`}
-                  data-fz-auto="1"
-                  muted
-                  loop
-                  playsInline
-                  controls
-                  preload="metadata"
-                  aria-label={v.aria}
-                >
-                  <source data-src={`/assets/${v.base}.webm`} type="video/webm" />
-                  <source data-src={`/assets/${v.base}.mp4`} type="video/mp4" />
-                </video>
+                <FastVideo className="w-full h-auto block" rate={1} preload="metadata" lazy controls poster={`/assets/${v.base}-poster.jpg`} ariaLabel={v.aria} sources={[{ src: `/assets/${v.base}.mp4`, type: "video/mp4" }, { src: `/assets/${v.base}.webm`, type: "video/webm" }]} />
                 <figcaption className="px-5 py-4 border-t border-rule flex items-baseline gap-3">
                   <span className="text-[11px] font-medium uppercase tracking-label shrink-0 text-accent">
                     {v.tag}
@@ -396,20 +384,7 @@ export default function Work() {
           </div>
 
           <div className="panel overflow-hidden">
-            <video
-              className="w-full h-auto block"
-              poster="/assets/profound-ad-poster.jpg"
-              data-fz-auto="1"
-              muted
-              loop
-              playsInline
-              controls
-              preload="metadata"
-              aria-label="Spec recruiting ad for Profound: a prompt box fills a grid with generic output, three lines name the harder problem, four stages link into one platform, and the ad closes on the Profound logo with a careers link."
-            >
-              <source data-src="/assets/profound-ad.webm" type="video/webm" />
-              <source data-src="/assets/profound-ad.mp4" type="video/mp4" />
-            </video>
+            <FastVideo className="w-full h-auto block" rate={1} preload="metadata" lazy controls poster={"/assets/profound-ad-poster.jpg"} ariaLabel={"Spec recruiting ad for Profound: a prompt box fills a grid with generic output, three lines name the harder problem, four stages link into one platform, and the ad closes on the Profound logo with a careers link."} sources={[{ src: "/assets/profound-ad.mp4", type: "video/mp4" }, { src: "/assets/profound-ad.webm", type: "video/webm" }]} />
           </div>
 
           <div className="grid md:grid-cols-12 gap-10 mt-8">
@@ -494,20 +469,7 @@ export default function Work() {
               },
             ].map((v) => (
               <figure key={v.base} className="panel overflow-hidden flex flex-col">
-                <video
-                  className="w-full h-auto block"
-                  poster={`/assets/${v.base}-poster.jpg`}
-                  data-fz-auto="1"
-                  muted
-                  loop
-                  playsInline
-                  controls
-                  preload="metadata"
-                  aria-label={v.aria}
-                >
-                  <source data-src={`/assets/${v.base}.webm`} type="video/webm" />
-                  <source data-src={`/assets/${v.base}.mp4`} type="video/mp4" />
-                </video>
+                <FastVideo className="w-full h-auto block" rate={1} preload="metadata" lazy controls poster={`/assets/${v.base}-poster.jpg`} ariaLabel={v.aria} sources={[{ src: `/assets/${v.base}.mp4`, type: "video/mp4" }, { src: `/assets/${v.base}.webm`, type: "video/webm" }]} />
                 <figcaption className="px-5 py-4 border-t border-rule flex items-baseline gap-3">
                   <span className="text-[11px] font-medium uppercase tracking-label shrink-0 text-accent">
                     {v.tag}
@@ -623,20 +585,7 @@ export default function Work() {
             ].map((r) => (
               <div key={r.base} className="flex flex-col">
                 <div className="panel overflow-hidden">
-                  <video
-                    className="w-full h-auto block"
-                    poster={`/assets/${r.base}-poster.jpg`}
-                    data-fz-auto="1"
-                    muted
-                    loop
-                    playsInline
-                    controls
-                    preload="metadata"
-                    aria-label={r.aria}
-                  >
-                    <source data-src={`/assets/${r.base}.webm`} type="video/webm" />
-                    <source data-src={`/assets/${r.base}.mp4`} type="video/mp4" />
-                  </video>
+                  <FastVideo className="w-full h-auto block" rate={1} preload="metadata" lazy controls poster={`/assets/${r.base}-poster.jpg`} ariaLabel={r.aria} sources={[{ src: `/assets/${r.base}.mp4`, type: "video/mp4" }, { src: `/assets/${r.base}.webm`, type: "video/webm" }]} />
                 </div>
                 <div className="mt-6 flex flex-col flex-1">
                   <p className="label mb-3">{r.kind}</p>
@@ -692,20 +641,7 @@ export default function Work() {
           </div>
 
           <div className="panel overflow-hidden">
-            <video
-              className="w-full h-auto block"
-              poster="/assets/slipfolio-hype-poster.jpg"
-              data-fz-auto="1"
-              muted
-              loop
-              playsInline
-              controls
-              preload="metadata"
-              aria-label="SlipFolio product animation: a fifty dollar bet slip on Lakers minus four and a half, with a slice of the stake investing automatically, win or lose. Every bet builds a portfolio."
-            >
-              <source data-src="/assets/slipfolio-hype.webm" type="video/webm" />
-              <source data-src="/assets/slipfolio-hype.mp4" type="video/mp4" />
-            </video>
+            <FastVideo className="w-full h-auto block" rate={1} preload="metadata" lazy controls poster={"/assets/slipfolio-hype-poster.jpg"} ariaLabel={"SlipFolio product animation: a fifty dollar bet slip on Lakers minus four and a half, with a slice of the stake investing automatically, win or lose. Every bet builds a portfolio."} sources={[{ src: "/assets/slipfolio-hype.mp4", type: "video/mp4" }, { src: "/assets/slipfolio-hype.webm", type: "video/webm" }]} />
           </div>
 
           <div className="grid md:grid-cols-12 gap-10 mt-8">
@@ -769,20 +705,7 @@ export default function Work() {
           </div>
 
           <div className="panel overflow-hidden">
-            <video
-              className="w-full h-auto block"
-              poster="/assets/powered-by-people-intro-poster.jpg"
-              data-fz-auto="1"
-              muted
-              loop
-              playsInline
-              controls
-              preload="metadata"
-              aria-label="Powered by People title animation: the words powered by people type in letter by letter over a glowing audio waveform on a deep blue background, then settle as a title card."
-            >
-              <source data-src="/assets/powered-by-people-intro.webm" type="video/webm" />
-              <source data-src="/assets/powered-by-people-intro.mp4" type="video/mp4" />
-            </video>
+            <FastVideo className="w-full h-auto block" rate={1} preload="metadata" lazy controls poster={"/assets/powered-by-people-intro-poster.jpg"} ariaLabel={"Powered by People title animation: the words powered by people type in letter by letter over a glowing audio waveform on a deep blue background, then settle as a title card."} sources={[{ src: "/assets/powered-by-people-intro.mp4", type: "video/mp4" }, { src: "/assets/powered-by-people-intro.webm", type: "video/webm" }]} />
           </div>
 
           <div className="grid md:grid-cols-12 gap-10 mt-8">

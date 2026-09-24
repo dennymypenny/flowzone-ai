@@ -19,6 +19,7 @@ export default function FastVideo({
   fallback,
   fallbackPortrait,
   lazy = false,
+  controls = false,
 }: {
   className?: string;
   poster?: string;
@@ -34,6 +35,9 @@ export default function FastVideo({
      the video coming into view, so a phone downloads nothing for it on
      arrival. The poster shows in the meantime. */
   lazy?: boolean;
+  /* Show the native scrubber, for long walkthroughs people may want to
+     scrub. Autoplay behaviour is unchanged. */
+  controls?: boolean;
 }) {
   const box = useRef<HTMLDivElement>(null);
 
@@ -124,7 +128,7 @@ export default function FastVideo({
   const esc = (x: string) => x.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
   const html =
     `<video class="${esc(className)} fz-video" ${lazy ? 'data-fz-auto="1"' : "autoplay"} muted loop playsinline webkit-playsinline ` +
-    `preload="${preload}" disablepictureinpicture disableremoteplayback x-webkit-airplay="deny"` +
+    `preload="${preload}"${controls ? " controls" : ""} disablepictureinpicture disableremoteplayback x-webkit-airplay="deny"` +
     (poster ? ` poster="${esc(poster)}"` : "") +
     (ariaLabel ? ` aria-label="${esc(ariaLabel)}"` : "") +
     `>` +
