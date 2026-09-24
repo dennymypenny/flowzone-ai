@@ -1012,3 +1012,13 @@ button {
 .fz-logoband-bg .text-ink-mute { color: #DCE8FB; }
 .fz-logoband-bg .label::before { background: #C6E4F8; }
 .fz-logoband-bg .fz-logo { opacity: 0.92; }
+
+/* Intake: a choice or a filled-in value lands with a small forward settle.
+   Transform only, never opacity, so nothing can get stuck hidden. */
+@keyframes fz-settle {
+  0% { transform: scale(0.95) translateX(-4px); }
+  60% { transform: scale(1.02) translateX(0); }
+  100% { transform: scale(1) translateX(0); }
+}
+.fz-settle { animation: fz-settle 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+@media (prefers-reduced-motion: reduce) { .fz-settle { animation: none; } }

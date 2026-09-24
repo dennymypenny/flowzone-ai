@@ -1,129 +1,140 @@
 "use client";
-import { useState, Suspense, useEffect } from "react";
+import { useState, Suspense, useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { readCart, clearCart, cartTotal, money } from "@/app/components/cart";
 import { SITE } from "@/lib/site";
 import Icon from "@/components/Icon";
 
 /**
- * The intake is a ticket with four options: the four builds. The visitor picks
- * the build, tells us the idea, submits. Same API, same fallback mailto, same
- * honest success screen. Legacy ?service= links from /pricing still preselect.
+ * The intake, rebuilt Sep 23 2026 as one screen with no popups.
+ *
+ * 1. Pick what you need from five grouped areas, as many as you like.
+ * 2. The best-fit build is worked out on every click, in the browser, and the
+ *    ticket preview fills itself in as you go. Nothing waits on the network.
+ * 3. Name, email, business, optional notes, send.
+ *
+ * The API still gets the same five fields. The picks, timeline and starting
+ * point are written into `description` as a short brief, so the studio email
+ * reads like a ticket and nobody has to type a paragraph.
+ *
+ * Name, email and business are remembered in this browser (try/catch, never
+ * required) so a second ticket fills itself in. Legacy ?build= and ?service=
+ * links and the cart handoff still preselect.
  */
 
 type Build = {
   key: string;
-  emoji: string;
+  icon: string;
   c: string;
   name: string;
   one: string;
   from: string;
-  amount?: number;
 };
 
 const builds: Build[] = [
-  {
-    key: "identity",
-    emoji: "\u{1F3A8}",
-    c: "#4C7BE8",
-    name: "The Identity Build",
-    one: "Your logo, colors and words. A brand people remember.",
-    from: "From $500",
-    amount: 500,
-  },
-  {
-    key: "site",
-    emoji: "\u{1F310}",
-    c: "#5B9BF9",
-    name: "The Site Build",
-    one: "A website that looks legit and turns visitors into customers.",
-    from: "From $500",
-    amount: 500,
-  },
-  {
-    key: "full",
-    emoji: "\u{1F680}",
-    c: "#5B8CFF",
-    name: "The Full Build",
-    one: "Brand, site and system, wired together.",
-    from: "From $1,500",
-    amount: 1500,
-  },
-  {
-    key: "storefront",
-    emoji: "\u{1F6D2}",
-    c: "#F0845F",
-    name: "The Storefront Build",
-    one: "An online store. Cart, checkout, money in your account.",
-    from: "From $2,500",
-    amount: 2500,
-  },
-  {
-    key: "engine",
-    emoji: "\u{2699}\u{FE0F}",
-    c: "#34D399",
-    name: "The Engine Build",
-    one: "Follow-ups, booking and invoicing that run themselves.",
-    from: "From $500",
-    amount: 500,
-  },
-  {
-    key: "small",
-    emoji: "\u{2702}\u{FE0F}",
-    c: "#FBBF24",
-    name: "A Small Job",
-    one: "A reel, a logo, a design, a page, a form, a fix. From $49.99.",
-    from: "From $49.99",
-  },
+  { key: "identity", icon: "palette", c: "#4C7BE8", name: "The Identity Build", one: "Your logo, colors and words. A brand people remember.", from: "From $500" },
+  { key: "site", icon: "compass", c: "#5B9BF9", name: "The Site Build", one: "A website that looks legit and turns visitors into customers.", from: "From $500" },
+  { key: "full", icon: "rocket", c: "#5B8CFF", name: "The Full Build", one: "Brand, site and system, wired together.", from: "From $1,500" },
+  { key: "storefront", icon: "box", c: "#F0845F", name: "The Storefront Build", one: "An online store. Cart, checkout, money in your account.", from: "From $2,500" },
+  { key: "engine", icon: "bolt", c: "#34D399", name: "The Engine Build", one: "Follow-ups, booking and invoicing that run themselves.", from: "From $500" },
+  { key: "small", icon: "scissors", c: "#FBBF24", name: "A Small Job", one: "A reel, a logo, a design, a page, a form, a fix.", from: "From $49.99" },
 ];
 
 const NOT_SURE = "Not sure yet";
+const NOT_SURE_BUILD: Build = {
+  key: "unsure",
+  icon: "chat",
+  c: "#93A2BC",
+  name: NOT_SURE,
+  one: "Tell us the idea and we will name the build for you.",
+  from: "Quote before you pay",
+};
 
-/** One input look, used by the page form and the contact card. */
-const field =
-  "w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent";
+type GroupKey = "brand" | "site" | "sell" | "system" | "video";
+type Pick = { label: string; small?: boolean };
 
-/* The opener question. It pops up before the form for anyone who arrives
-   cold, requires an answer, and uses it to pick the build. The visitor
-   lands on a ticket that is already half filled in, which is the close. */
-const OPENERS = [
+/** The five areas. Each pick is small (a quick job on its own) or not. */
+const GROUPS: { key: GroupKey; title: string; line: string; icon: string; c: string; picks: Pick[] }[] = [
   {
-    said: "People don\u2019t get what we do.",
-    build: "The Identity Build",
+    key: "brand",
+    title: "Brand and look",
+    line: "How people recognize you",
+    icon: "palette",
     c: "#4C7BE8",
-    line: "That is a brand problem, not a you problem. The Identity Build fixes the first impression once, and everything after it compounds.",
+    picks: [
+      { label: "Logo" },
+      { label: "Colors and fonts" },
+      { label: "Brand refresh" },
+      { label: "Social graphics", small: true },
+      { label: "Flyers and print", small: true },
+    ],
   },
   {
-    said: "Our website is embarrassing. Or missing.",
-    build: "The Site Build",
+    key: "site",
+    title: "Website",
+    line: "Where people decide",
+    icon: "compass",
     c: "#5B9BF9",
-    line: "People check the link before they trust you. The Site Build is one page that answers the question and asks for the next step.",
+    picks: [
+      { label: "New website" },
+      { label: "Redesign" },
+      { label: "Landing page", small: true },
+      { label: "Fix or speed up", small: true },
+      { label: "Show up on Google" },
+    ],
   },
   {
-    said: "People buy through our DMs.",
-    build: "The Storefront Build",
+    key: "sell",
+    title: "Selling online",
+    line: "Getting paid without the back and forth",
+    icon: "box",
     c: "#F0845F",
-    line: "You are the checkout, and that is the bottleneck. The Storefront Build gives your buyers cart, checkout and a receipt while you sleep.",
+    picks: [
+      { label: "Online store" },
+      { label: "Checkout and payments" },
+      { label: "Product drops" },
+      { label: "Move sales off DMs" },
+    ],
   },
   {
-    said: "I do everything by hand.",
-    build: "The Engine Build",
+    key: "system",
+    title: "Behind the scenes",
+    line: "What keeps running after launch",
+    icon: "bolt",
     c: "#34D399",
-    line: "The busywork is the growth cap. The Engine Build wires follow-ups, booking and invoicing to run on their own.",
+    picks: [
+      { label: "Booking" },
+      { label: "Follow-up emails" },
+      { label: "Invoicing" },
+      { label: "Email list" },
+      { label: "Forms that send", small: true },
+    ],
   },
   {
-    said: "I want the whole thing.",
-    build: "The Full Build",
-    c: "#5B8CFF",
-    line: "Brand, site and system in one pass, so it launches coherent instead of stitched together.",
-  },
-  {
-    said: "None of these. I just have an idea.",
-    build: NOT_SURE,
-    c: "#5B8CFF",
-    line: "Then you are the easy case. Describe the idea below and we will tell you which build it is and what it costs, before you pay anything.",
+    key: "video",
+    title: "Video and motion",
+    line: "Something people stop scrolling for",
+    icon: "clapper",
+    c: "#FBBF24",
+    picks: [
+      { label: "Promo reel", small: true },
+      { label: "Logo animation", small: true },
+      { label: "Ad for social", small: true },
+    ],
   },
 ];
+
+const TIMELINES = ["As soon as possible", "This month", "Next few months", "Just exploring"];
+const STARTS = ["Starting from scratch", "I have something, make it better"];
+
+/** Picks that a ?build= link starts with, so the preview is never empty. */
+const BUILD_STARTER: Record<string, string[]> = {
+  "The Identity Build": ["Logo", "Colors and fonts"],
+  "The Site Build": ["New website"],
+  "The Storefront Build": ["Online store"],
+  "The Engine Build": ["Booking", "Follow-up emails"],
+  "The Full Build": ["Logo", "New website", "Booking"],
+};
 
 /** Legacy pricing-page links: /intake?service=Starter|Growth|Scale|Not sure. */
 const legacyMap: Record<string, string> = {
@@ -133,154 +144,235 @@ const legacyMap: Record<string, string> = {
   "not sure": NOT_SURE,
 };
 
+const pickIndex = new Map<string, { group: GroupKey; small: boolean }>();
+GROUPS.forEach((g) => g.picks.forEach((p) => pickIndex.set(p.label, { group: g.key, small: !!p.small })));
+
+/** The whole recommendation, run on every click. Plain rules, no guessing. */
+function bestFit(picked: string[]): string {
+  if (picked.length === 0) return "";
+  const info = picked.map((p) => pickIndex.get(p)).filter(Boolean) as { group: GroupKey; small: boolean }[];
+  const groups = new Set(info.map((i) => i.group));
+  if (info.every((i) => i.small)) return "A Small Job";
+  if (groups.has("sell")) return "The Storefront Build";
+  const core = ["brand", "site", "system"].filter((g) => info.some((i) => i.group === g && !i.small));
+  if (core.length >= 2) return "The Full Build";
+  if (core[0] === "brand") return "The Identity Build";
+  if (core[0] === "site") return "The Site Build";
+  if (core[0] === "system") return "The Engine Build";
+  return "A Small Job";
+}
+
+const buildByName = (n: string) => builds.find((b) => b.name === n) ?? (n === NOT_SURE ? NOT_SURE_BUILD : undefined);
+
+const REMEMBER = "fz-intake-me";
+
+const field =
+  "w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule rounded-[11px] px-4 py-3 text-[15px] transition-colors focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent";
+
+/** Numbered step heading. */
+function Step({ n, title, hint }: { n: number; title: string; hint?: string }) {
+  return (
+    <div className="flex items-baseline gap-3 mb-4">
+      <span className="font-display text-sm text-accent-light tabular-nums">0{n}</span>
+      <h2 className="font-display text-xl text-ink tracking-tight">{title}</h2>
+      {hint && <span className="text-xs text-ink-mute ml-auto hidden sm:inline">{hint}</span>}
+    </div>
+  );
+}
+
+/** A choice that pops when it is on: tinted fill, colored edge, a check. */
+function Choice({
+  on,
+  c,
+  onClick,
+  children,
+  role = "checkbox",
+}: {
+  on: boolean;
+  c: string;
+  onClick: () => void;
+  children: React.ReactNode;
+  role?: "checkbox" | "radio";
+}) {
+  return (
+    <button
+      type="button"
+      role={role}
+      aria-checked={on}
+      onClick={onClick}
+      className={`fz-choice group inline-flex items-center gap-2 rounded-[11px] border px-3.5 py-2.5 text-sm transition-all duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-px active:scale-[0.97] ${
+        on ? "text-ink" : "text-ink-soft border-rule bg-paper-deep hover:border-ink-mute hover:text-ink"
+      }`}
+      style={
+        on
+          ? {
+              background: `${c}22`,
+              borderColor: c,
+              boxShadow: `0 0 0 1px ${c}, 0 10px 24px -14px ${c}`,
+            }
+          : undefined
+      }
+    >
+      <span
+        aria-hidden
+        className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-[5px] border transition-colors"
+        style={on ? { background: c, borderColor: c } : { borderColor: "#3A4A70" }}
+      >
+        {on && (
+          <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="#0C1424" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2.5 6.2l2.3 2.3 4.7-5" />
+          </svg>
+        )}
+      </span>
+      {children}
+    </button>
+  );
+}
+
 function IntakeForm() {
   const searchParams = useSearchParams();
   const rawBuild = (searchParams.get("build") || "").trim().toLowerCase();
   const rawService = (searchParams.get("service") || "").trim().toLowerCase();
+  const cameFromCart = searchParams.get("cart") === "1";
 
-  const fromBuild = builds.find(
-    (b) => b.key === rawBuild || b.name.toLowerCase() === rawBuild
-  )?.name;
+  const fromBuild = builds.find((b) => b.key === rawBuild || b.name.toLowerCase() === rawBuild)?.name;
   const fromLegacy = rawService
-    ? legacyMap[
-        Object.keys(legacyMap).find((k) => rawService.startsWith(k)) ?? ""
-      ]
+    ? legacyMap[Object.keys(legacyMap).find((k) => rawService.startsWith(k)) ?? ""]
     : undefined;
   const preselected = fromBuild ?? fromLegacy ?? "";
 
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    business: "",
-    service: preselected,
-    description: "",
-  });
+  const [picked, setPicked] = useState<string[]>(() => BUILD_STARTER[preselected] ?? []);
+  // A build the visitor chose by hand wins over the suggestion until they clear it.
+  const [manual, setManual] = useState<string>(preselected);
+  const [timeline, setTimeline] = useState("");
+  const [start, setStart] = useState("");
+  const [me, setMe] = useState({ name: "", email: "", business: "" });
+  const [notes, setNotes] = useState("");
+  const [remember, setRemember] = useState(true);
+  const [showAll, setShowAll] = useState(false);
+
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
-  // A 400 means the form is not filled in right, which is nothing like the
-  // send failing. Same red box for both used to tell somebody their details
-  // vanished when all they did was write four words in the description.
   const [fixable, setFixable] = useState(false);
-  // The opener pops up only for cold arrivals. A preselected build or a
-  // cart handoff already answered the question somewhere else.
-  const [asked, setAsked] = useState(
-    Boolean(preselected) || searchParams.get("cart") === "1"
-  );
-  const [opener, setOpener] = useState<(typeof OPENERS)[number] | null>(null);
-  // Picking a build opens the contact card right there, so the next thing on
-  // screen is four fields and the send button instead of a page to scroll.
-  const [sheet, setSheet] = useState(false);
   const [error, setError] = useState("");
   const loading = state === "sending";
 
-  const set = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
+  const suggested = useMemo(() => bestFit(picked), [picked]);
+  const service = manual || suggested;
+  const build = buildByName(service);
 
-  // Arriving from the cart: preselect A Small Job and write the items into
-  // the description, once, without clobbering anything the visitor typed.
-  const cameFromCart = searchParams.get("cart") === "1";
+  // Fill name, email and business from last time, if this browser has them.
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(REMEMBER) || "null");
+      if (saved && typeof saved === "object") {
+        setMe((m) => ({
+          name: m.name || String(saved.name || ""),
+          email: m.email || String(saved.email || ""),
+          business: m.business || String(saved.business || ""),
+        }));
+      }
+    } catch {
+      /* private mode or blocked storage, the form works without it */
+    }
+  }, []);
+
+  // Arriving from the cart: the cart items become the notes, once.
   useEffect(() => {
     if (!cameFromCart) return;
     const items = readCart();
     if (items.length === 0) return;
-    const lines = items
-      .map((i) => `- ${i.name} — ${i.from ? "from " : ""}${money(i.price)}`)
-      .join("\n");
+    const lines = items.map((i) => `- ${i.name}, ${i.from ? "from " : ""}${money(i.price)}`).join("\n");
     const approx = items.some((i) => i.from) ? "from " : "";
-    const summary = `From my cart:\n${lines}\nTotal: ${approx}${money(cartTotal(items))}`;
-    // If a build is in the cart, that build is the ticket. Small jobs alone
-    // land under A Small Job.
     const buildInCart = [...items]
       .sort((a, b) => b.price - a.price)
       .map((i) => builds.find((x) => x.key === i.id)?.name)
       .find(Boolean);
-    setForm((f) => ({
-      ...f,
-      service: f.service || buildInCart || "A Small Job",
-      description: f.description ? f.description : summary,
-    }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setManual((m) => m || buildInCart || "A Small Job");
+    setNotes((n) => n || `From my cart:\n${lines}\nTotal: ${approx}${money(cartTotal(items))}`);
   }, [cameFromCart]);
 
-  // Escape closes the contact card, and the page behind it does not scroll
-  // while it is open.
-  useEffect(() => {
-    if (!sheet) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setSheet(false);
-    };
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = prev;
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [sheet]);
+  const toggle = (label: string) =>
+    setPicked((p) => (p.includes(label) ? p.filter((x) => x !== label) : [...p, label]));
 
-  // The lead in their own mail app, ready to send. This is what saves the
-  // project when our email is down, so it carries every answer they typed.
+  const brief = useMemo(() => {
+    const out: string[] = [];
+    if (picked.length) out.push(`What I need: ${picked.join(", ")}`);
+    if (timeline) out.push(`Timeline: ${timeline}`);
+    if (start) out.push(`Starting point: ${start}`);
+    const top = out.join("\n");
+    return [top, notes.trim()].filter(Boolean).join("\n\n");
+  }, [picked, timeline, start, notes]);
+
   const fallbackMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(
-    `New project for FlowZone — ${form.service || "not sure yet"}`
+    `New project for FlowZone: ${service || "not sure yet"}`
   )}&body=${encodeURIComponent(
-    `Hi FlowZone,\n\nName: ${form.name}\nEmail: ${form.email}\nBusiness: ${form.business}\nBuild: ${
-      form.service
-    }\n\nWhat I want built:\n${form.description}\n\nThanks,\n${form.name}`
+    `Hi FlowZone,\n\nName: ${me.name}\nEmail: ${me.email}\nBusiness: ${me.business}\nBuild: ${service}\n\n${brief}\n\nThanks,\n${me.name}`
   )}`;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.service) {
+    if (!service) {
       setState("error");
-      setSheet(false);
       setFixable(true);
-      setError("Pick one of the four builds, or choose not sure yet.");
+      setError("Pick at least one thing up top, or choose not sure yet.");
+      document.getElementById("fz-step-1")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    if (brief.length < 10) {
+      setState("error");
+      setFixable(true);
+      setError("Tell us a little about the idea, even one sentence.");
       return;
     }
     setState("sending");
     setError("");
     try {
+      if (remember) localStorage.setItem(REMEMBER, JSON.stringify(me));
+      else localStorage.removeItem(REMEMBER);
+    } catch {
+      /* not important */
+    }
+    try {
       const res = await fetch("/api/intake", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...me, service, description: brief }),
       });
-      // The success screen only ever runs when the server says the details
-      // really landed. No body, no promise.
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data?.ok) {
-        // 400 is the form, anything else is us.
         setFixable(res.status === 400);
         throw new Error(data?.error || "Could not reach the studio.");
       }
       setState("done");
-      setSheet(false);
       if (cameFromCart) clearCart();
+      window.scrollTo({ top: 0 });
     } catch (err) {
       setState("error");
       setError(err instanceof Error ? err.message : "Could not reach the studio.");
     }
   };
 
-  const picked = builds.find((b) => b.name === form.service);
+  const first = me.name.trim().split(/\s+/)[0];
 
   if (state === "done") {
     return (
-      <div className="min-h-screen bg-paper-deep flex items-center justify-center px-6">
-        <div className="max-w-md w-full bg-paper rounded-xl border border-rule p-10 text-center">
-          <div className="flex justify-center mb-4">
-            <Icon name="sparkle" size={32} color="#5B8CFF" />
+      <div className="min-h-screen bg-paper-deep flex items-center justify-center px-6 py-24">
+        <div className="max-w-lg w-full panel rounded-[18px] p-10 text-center fz-settle">
+          <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full" style={{ background: "#5B8CFF22", boxShadow: "0 0 0 1px #5B8CFF" }}>
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#A8C4FF" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
           </div>
-          <h2 className="text-2xl font-display font-normal text-ink mb-3">Ticket received.</h2>
-          <p className="text-ink-mute mb-6 leading-relaxed">
-            We will message you about the details and payment.
+          <h1 className="font-display text-3xl text-ink tracking-tight mb-3">
+            Thank you{first ? `, ${first}` : ""}.
+          </h1>
+          <p className="text-ink-soft leading-relaxed mb-2">
+            We are really happy you reached out. Your ticket for {build && build.name !== NOT_SURE ? build.name : "your idea"} is in, and a person is reading it.
           </p>
           <p className="text-ink-mute leading-relaxed">
-            Thank you for believing in us and yourself.
+            Check your inbox for a note from Dennis. You will hear back with a plan, usually the same day.
           </p>
           <p className="text-xs text-ink-mute mt-8">
-            Need us sooner?{" "}
-            <a href={`mailto:${SITE.email}`} className="text-accent hover:underline">
-              {SITE.email}
-            </a>
+            Thought of something else? Write to{" "}
+            <a href={`mailto:${SITE.email}`} className="text-accent hover:underline">{SITE.email}</a>
           </p>
         </div>
       </div>
@@ -288,350 +380,288 @@ function IntakeForm() {
   }
 
   return (
-    <div className="min-h-screen bg-paper-deep py-20 px-6">
-      <div className="max-w-xl mx-auto">
-
-        {!asked && (
-          <div
-            className="fixed inset-0 z-50 bg-[#060B1F]/85 backdrop-blur-sm flex items-center justify-center px-6"
-            role="dialog"
-            aria-modal="true"
-            aria-label="One question before the ticket"
-          >
-            <div className="max-w-md w-full bg-paper rounded-xl border border-rule p-8">
-              <p className="text-accent font-semibold text-sm uppercase tracking-wider mb-2">
-                One question first
-              </p>
-              <h2 className="text-2xl font-display font-normal text-ink mb-2">
-                Which one have you said out loud?
-              </h2>
-              <p className="text-sm text-ink-mute leading-relaxed mb-5">
-                Pick the one that sounds like you. It picks the right build and
-                leaves you four answers from a price.
-              </p>
-              <div className="space-y-2">
-                {OPENERS.map((o) => (
-                  <button
-                    key={o.said}
-                    type="button"
-                    onClick={() => {
-                      setOpener(o);
-                      setAsked(true);
-                      set("service", o.build);
-                    }}
-                    className="w-full text-left rounded-lg border border-rule bg-paper-deep px-4 py-3 text-sm text-ink hover:border-ink-mute transition-colors"
-                  >
-                    &ldquo;{o.said}&rdquo;
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {sheet && (
-          <div
-            className="fixed inset-0 z-[70] bg-[#060B1F]/85 backdrop-blur-sm flex items-end sm:items-center justify-center sm:px-6 overflow-y-auto"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Your details"
-            onMouseDown={(e) => {
-              if (e.target === e.currentTarget) setSheet(false);
-            }}
-          >
-            <div className="w-full sm:max-w-md bg-paper rounded-t-2xl sm:rounded-xl border border-rule p-6 sm:p-8 my-0 sm:my-10">
-              {picked && (
-                <div className="flex items-start gap-3 mb-5">
-                  <span className="text-2xl leading-none">{picked.emoji}</span>
-                  <div className="min-w-0">
-                    <p className="text-xs text-ink-mute">You picked</p>
-                    <p className="text-base font-semibold text-ink">{picked.name}</p>
-                    <p className="text-xs mt-0.5 font-medium" style={{ color: picked.c }}>
-                      {picked.from}
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setSheet(false)}
-                    className="ml-auto text-xs text-ink-mute hover:text-ink transition-colors"
-                  >
-                    Change build
-                  </button>
-                </div>
-              )}
-
-              <p className="text-sm text-ink-soft leading-relaxed mb-5">
-                Four answers and you get a scope, a price and a date back, usually the same day.
-              </p>
-
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label htmlFor="fz-sheet-name" className="block text-sm font-semibold text-ink-soft mb-1.5">
-                    Full Name
-                  </label>
-                  <input
-                    id="fz-sheet-name"
-                    name="name"
-                    type="text"
-                    autoComplete="name"
-                    autoFocus
-                    required
-                    value={form.name}
-                    onChange={(e) => set("name", e.target.value)}
-                    className={field}
-                    placeholder="Jane Smith"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="fz-sheet-email" className="block text-sm font-semibold text-ink-soft mb-1.5">
-                    Email Address
-                  </label>
-                  <input
-                    id="fz-sheet-email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    inputMode="email"
-                    required
-                    value={form.email}
-                    onChange={(e) => set("email", e.target.value)}
-                    className={field}
-                    placeholder="jane@company.com"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="fz-sheet-business" className="block text-sm font-semibold text-ink-soft mb-1.5">
-                    Business Name{" "}
-                    <span className="font-normal text-ink-mute">or your own, if the brand is you</span>
-                  </label>
-                  <input
-                    id="fz-sheet-business"
-                    name="organization"
-                    type="text"
-                    autoComplete="organization"
-                    required
-                    value={form.business}
-                    onChange={(e) => set("business", e.target.value)}
-                    className={field}
-                    placeholder="Acme Co. or Jane Doe"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="fz-sheet-idea" className="block text-sm font-semibold text-ink-soft mb-1.5">
-                    Tell us about the idea
-                  </label>
-                  <textarea
-                    id="fz-sheet-idea"
-                    name="description"
-                    required
-                    minLength={10}
-                    rows={3}
-                    value={form.description}
-                    onChange={(e) => set("description", e.target.value)}
-                    className={`${field} resize-none`}
-                    placeholder="Describe what you want built and any tools you already use..."
-                  />
-                  <p className="text-xs text-ink-mute mt-1.5">One sentence is enough. A few words is not.</p>
-                </div>
-
-                <button type="submit" disabled={loading} className="btn-primary w-full !py-4 text-base disabled:opacity-50">
-                  {loading ? "Submitting..." : <>Submit Project <span className="arrow">&rarr;</span></>}
-                </button>
-
-                {state === "error" && (
-                  <p className="text-sm text-ink-soft leading-relaxed">
-                    {error} Everything you typed is still here.
-                  </p>
-                )}
-
-                <button
-                  type="button"
-                  onClick={() => setSheet(false)}
-                  className="w-full text-xs text-ink-mute hover:text-ink transition-colors"
-                >
-                  I want to see the other builds first
-                </button>
-              </form>
-            </div>
-          </div>
-        )}
-        <div className="text-center mb-10">
-          <p className="text-accent font-semibold text-sm uppercase tracking-wider mb-3">Get Started</p>
-          <h1 className="text-4xl font-display font-normal text-ink mb-3">Start Your Project</h1>
-          <p className="text-ink-mute">
-            Pick the build, tell us the idea. You get a scope, a price and a date back, usually the same day.
+    <div className="min-h-screen bg-paper-deep pt-28 pb-24 px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="max-w-2xl mb-10">
+          <p className="label mb-3">Start a ticket</p>
+          <h1 className="font-display text-4xl sm:text-5xl text-ink tracking-tight leading-[1.05] mb-4">
+            What are we building?
+          </h1>
+          <p className="text-ink-soft text-lg leading-relaxed">
+            Tap everything that fits. We match the build as you go, and you get a scope, a price and a date back, usually the same day.
           </p>
         </div>
 
-        {opener && (
-          <div className="bg-paper rounded-xl border border-rule p-5 mb-6">
-            <p className="text-xs text-ink-mute mb-1.5">
-              You said &ldquo;{opener.said}&rdquo;
-            </p>
-            <p className="text-sm text-ink-soft leading-relaxed">{opener.line}</p>
-            <p className="text-xs mt-2.5 font-medium" style={{ color: opener.c }}>
-              {opener.build === NOT_SURE
-                ? "We will name the build for you. Just describe the idea."
-                : `${opener.build} is already picked below. Four answers and you get a price.`}
-            </p>
-          </div>
-        )}
-
-                <form onSubmit={handleSubmit} className="bg-paper rounded-xl border border-rule p-8 space-y-5">
-          <div>
-            <label className="block text-sm font-semibold text-ink-soft mb-1.5">Which build is this for?</label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3" role="radiogroup" aria-label="Pick a build">
-              {builds.map((b) => {
-                const on = form.service === b.name;
-                return (
-                  <button
-                    key={b.key}
-                    type="button"
-                    role="radio"
-                    aria-checked={on}
-                    onClick={() => {
-                      set("service", b.name);
-                      setSheet(true);
-                    }}
-                    className={`text-left rounded-lg border px-4 py-3.5 transition-colors bg-paper-deep ${
-                      on ? "border-transparent" : "border-rule hover:border-ink-mute"
-                    }`}
-                    style={on ? { boxShadow: `inset 0 0 0 2px ${b.c}` } : undefined}
-                  >
-                    <span className="flex items-start gap-3">
-                      <span className="text-xl leading-none mt-0.5">{b.emoji}</span>
-                      <span>
-                        <span className="block text-sm font-semibold text-ink">{b.name}</span>
-                        <span className="block text-xs text-ink-mute mt-1 leading-relaxed">{b.one}</span>
-                        <span className="block text-xs mt-1.5 font-medium" style={{ color: b.c }}>
-                          {b.from}
+        <form id="fz-ticket" onSubmit={handleSubmit} className="grid lg:grid-cols-[minmax(0,1fr)_360px] gap-8 items-start">
+          <div className="space-y-6 min-w-0">
+            {/* 01 · Picks */}
+            <section id="fz-step-1" className="panel rounded-[18px] p-5 sm:p-7 scroll-mt-28">
+              <Step n={1} title="What do you need?" hint="Pick as many as you like" />
+              <div className="grid sm:grid-cols-2 gap-3">
+                {GROUPS.map((g) => {
+                  const count = g.picks.filter((p) => picked.includes(p.label)).length;
+                  return (
+                    <div
+                      key={g.key}
+                      className={`rounded-[14px] border p-4 transition-all duration-300 ${g.key === "video" ? "sm:col-span-2" : ""}`}
+                      style={
+                        count
+                          ? { borderColor: `${g.c}88`, background: `linear-gradient(180deg, ${g.c}14, transparent 70%)` }
+                          : { borderColor: "#26355A" }
+                      }
+                    >
+                      <div className="flex items-center gap-2.5 mb-3">
+                        <span className="flex h-8 w-8 items-center justify-center rounded-[9px]" style={{ background: `${g.c}22` }}>
+                          <Icon name={g.icon} size={17} color={g.c} />
                         </span>
-                      </span>
+                        <div className="min-w-0">
+                          <p className="text-sm font-semibold text-ink leading-tight">{g.title}</p>
+                          <p className="text-xs text-ink-mute leading-tight mt-0.5">{g.line}</p>
+                        </div>
+                        {count > 0 && (
+                          <span key={count} className="fz-settle ml-auto text-[11px] font-semibold tabular-nums rounded-[6px] px-1.5 py-0.5" style={{ background: g.c, color: "#0C1424" }}>
+                            {count}
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {g.picks.map((p) => (
+                          <Choice key={p.label} on={picked.includes(p.label)} c={g.c} onClick={() => toggle(p.label)}>
+                            {p.label}
+                          </Choice>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Best fit, live */}
+              <div className="mt-5 rounded-[14px] border border-rule bg-paper-deep p-4">
+                {build ? (
+                  <div key={build.name} className="fz-settle flex items-center gap-3">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[11px]" style={{ background: `${build.c}22`, boxShadow: `0 0 0 1px ${build.c}66` }}>
+                      <Icon name={build.icon} size={20} color={build.c} />
                     </span>
+                    <div className="min-w-0">
+                      <p className="text-[11px] uppercase tracking-[0.16em] text-ink-mute font-medium">
+                        {manual ? "You picked" : "Best fit"}
+                      </p>
+                      <p className="font-display text-lg text-ink leading-tight">{build.name}</p>
+                    </div>
+                    <p className="ml-auto text-sm font-semibold whitespace-nowrap" style={{ color: "#F0845F" }}>{build.from}</p>
+                  </div>
+                ) : (
+                  <p className="text-sm text-ink-mute">Tap a few things above and the right build shows up here.</p>
+                )}
+                <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
+                  <button type="button" onClick={() => setShowAll((s) => !s)} className="text-accent-light hover:text-ink transition-colors">
+                    {showAll ? "Hide the builds" : "Choose the build yourself"}
                   </button>
-                );
-              })}
-            </div>
-            <button
-              type="button"
-              onClick={() => set("service", NOT_SURE)}
-              className={`mt-3 text-xs transition-colors ${
-                form.service === NOT_SURE
-                  ? "text-ink underline underline-offset-4"
-                  : "text-ink-mute hover:text-ink"
-              }`}
-            >
-              Not sure which one? Pick this and just describe the idea. We will tell you which build it is.
-            </button>
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-ink-soft mb-1.5">Full Name</label>
-            <input
-              type="text"
-              id="fz-name"
-              name="name"
-              autoComplete="name"
-              required
-              value={form.name}
-              onChange={(e) => set("name", e.target.value)}
-              className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent"
-              placeholder="Jane Smith"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-ink-soft mb-1.5">Email Address</label>
-            <input
-              type="email"
-              id="fz-email"
-              name="email"
-              autoComplete="email"
-              inputMode="email"
-              required
-              value={form.email}
-              onChange={(e) => set("email", e.target.value)}
-              className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent"
-              placeholder="jane@company.com"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-ink-soft mb-1.5">
-              Business Name{" "}
-              <span className="font-normal text-ink-mute">or your own, if the brand is you</span>
-            </label>
-            <input
-              type="text"
-              id="fz-business"
-              name="organization"
-              autoComplete="organization"
-              required
-              value={form.business}
-              onChange={(e) => set("business", e.target.value)}
-              className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent"
-              placeholder="Acme Co. or Jane Doe"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-ink-soft mb-1.5">Tell us about the idea</label>
-            <textarea
-              id="fz-idea"
-              name="description"
-              required
-              minLength={10}
-              rows={4}
-              value={form.description}
-              onChange={(e) => set("description", e.target.value)}
-              className="w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent resize-none"
-              placeholder="Describe what you want built and any tools you already use..."
-            />
-            <p className="text-xs text-ink-mute mt-1.5">One sentence is enough. A few words is not.</p>
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="btn-primary w-full !py-4 text-base disabled:opacity-50"
-          >
-            {loading ? "Submitting..." : <>Submit Project <span className="arrow">→</span></>}
-          </button>
-
-          {state === "error" && fixable && (
-            <div className="surface border border-rule rounded-xl p-5">
-              <div className="flex items-center gap-2 mb-2">
-                <Icon name="chat" size={20} color="#5B8CFF" />
-                <p className="label">One more thing</p>
+                  {manual && suggested && manual !== suggested && (
+                    <button type="button" onClick={() => setManual("")} className="text-ink-mute hover:text-ink transition-colors">
+                      Use the suggestion ({suggested.replace(/^The /, "")})
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setManual(manual === NOT_SURE ? "" : NOT_SURE)}
+                    className={`transition-colors ${manual === NOT_SURE ? "text-ink underline underline-offset-4" : "text-ink-mute hover:text-ink"}`}
+                  >
+                    Not sure, just help me
+                  </button>
+                </div>
+                {showAll && (
+                  <div className="fz-settle mt-3 grid grid-cols-2 sm:grid-cols-3 gap-2" role="radiogroup" aria-label="Pick a build">
+                    {builds.map((b) => (
+                      <Choice key={b.key} role="radio" on={service === b.name} c={b.c} onClick={() => setManual(b.name)}>
+                        <span className="text-left leading-tight">
+                          <span className="block">{b.name.replace(/^The /, "")}</span>
+                          <span className="block text-[11px] text-ink-mute">{b.from}</span>
+                        </span>
+                      </Choice>
+                    ))}
+                  </div>
+                )}
               </div>
-              <p className="text-sm text-ink-soft leading-relaxed">{error}</p>
-              <p className="text-sm text-ink-mute leading-relaxed mt-2">
-                Everything you typed is still here. Fix that one and press submit again.
-              </p>
-            </div>
-          )}
+            </section>
 
-          {state === "error" && !fixable && (
-            <div className="surface border border-rule rounded-xl p-5">
-              <div className="flex items-center gap-2 mb-2">
-                <Icon name="chat" size={20} color="#5B8CFF" />
-                <p className="label">Let&apos;s get this to Denny</p>
+            {/* 02 · When and where from */}
+            <section className="panel rounded-[18px] p-5 sm:p-7">
+              <Step n={2} title="When and where from?" hint="Optional" />
+              <p className="text-xs text-ink-mute mb-2.5">When do you want it?</p>
+              <div className="flex flex-wrap gap-2 mb-5" role="radiogroup" aria-label="Timeline">
+                {TIMELINES.map((t) => (
+                  <Choice key={t} role="radio" on={timeline === t} c="#FBBF24" onClick={() => setTimeline(timeline === t ? "" : t)}>
+                    {t}
+                  </Choice>
+                ))}
               </div>
-              <p className="text-sm text-ink-mute leading-relaxed mb-4">
-                Everything you typed is still here. Press submit again, or open the email below. It
-                is already filled in with your answers and it goes straight to Denny.
-              </p>
-              <a href={fallbackMailto} className="btn-primary shine">
-                Email it to us <span className="arrow">→</span>
-              </a>
-              <p className="text-xs text-ink-mute mt-3">Or write to {SITE.email}</p>
+              <p className="text-xs text-ink-mute mb-2.5">Where are you starting?</p>
+              <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Starting point">
+                {STARTS.map((s) => (
+                  <Choice key={s} role="radio" on={start === s} c="#2DD4BF" onClick={() => setStart(start === s ? "" : s)}>
+                    {s}
+                  </Choice>
+                ))}
+              </div>
+            </section>
+
+            {/* 03 · You */}
+            <section className="panel rounded-[18px] p-5 sm:p-7">
+              <Step n={3} title="Who is this for?" />
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="fz-name" className="block text-sm text-ink-soft mb-1.5">Your name</label>
+                  <input id="fz-name" name="name" type="text" autoComplete="name" required value={me.name}
+                    onChange={(e) => setMe({ ...me, name: e.target.value })} className={field} placeholder="Jane Smith" />
+                </div>
+                <div>
+                  <label htmlFor="fz-email" className="block text-sm text-ink-soft mb-1.5">Email</label>
+                  <input id="fz-email" name="email" type="email" autoComplete="email" inputMode="email" required value={me.email}
+                    onChange={(e) => setMe({ ...me, email: e.target.value })} className={field} placeholder="jane@company.com" />
+                </div>
+                <div className="sm:col-span-2">
+                  <label htmlFor="fz-business" className="block text-sm text-ink-soft mb-1.5">
+                    Business name <span className="text-ink-mute">or your own, if the brand is you</span>
+                  </label>
+                  <input id="fz-business" name="organization" type="text" autoComplete="organization" required value={me.business}
+                    onChange={(e) => setMe({ ...me, business: e.target.value })} className={field} placeholder="Acme Co. or Jane Doe" />
+                </div>
+                <div className="sm:col-span-2">
+                  <label htmlFor="fz-idea" className="block text-sm text-ink-soft mb-1.5">
+                    Anything else? <span className="text-ink-mute">{picked.length ? "Optional" : "A sentence about the idea"}</span>
+                  </label>
+                  <textarea id="fz-idea" name="description" rows={3} value={notes}
+                    onChange={(e) => setNotes(e.target.value)} className={`${field} resize-none`}
+                    placeholder="Links, tools you already use, the thing you keep putting off..." />
+                </div>
+              </div>
+              <label className="mt-4 flex items-center gap-2 text-xs text-ink-mute cursor-pointer select-none">
+                <input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} className="accent-[#5B8CFF]" />
+                Remember my details on this device
+              </label>
+            </section>
+
+            {/* Send, for phones. Desktop sends from the ticket on the right. */}
+            <div className="lg:hidden space-y-4">
+              <TicketPreview build={build} picked={picked} timeline={timeline} start={start} me={me} />
+              <SendButton loading={loading} />
             </div>
-          )}
+
+            {state === "error" && (
+              <div className="panel rounded-[18px] p-5">
+                <div className="flex items-center gap-2 mb-2">
+                  <Icon name="chat" size={20} color="#5B8CFF" />
+                  <p className="label">{fixable ? "One more thing" : "Let’s get this to Denny"}</p>
+                </div>
+                <p className="text-sm text-ink-soft leading-relaxed">{error}</p>
+                <p className="text-sm text-ink-mute leading-relaxed mt-2">
+                  Everything you picked and typed is still here.
+                  {fixable ? " Fix that one and send again." : " Send again, or open the email below. It is already filled in and goes straight to Denny."}
+                </p>
+                {!fixable && (
+                  <a href={fallbackMailto} className="btn-primary shine mt-4 inline-flex">
+                    Email it to us <span className="arrow">&rarr;</span>
+                  </a>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* The ticket, filling itself in. */}
+          <aside className="hidden lg:block sticky top-28 space-y-4">
+            <TicketPreview build={build} picked={picked} timeline={timeline} start={start} me={me} />
+            <SendButton loading={loading} />
+            <p className="text-xs text-ink-mute text-center">Nothing is charged. You see the price first.</p>
+          </aside>
         </form>
       </div>
+    </div>
+  );
+}
+
+function SendButton({ loading }: { loading: boolean }) {
+  return (
+    <button type="submit" form="fz-ticket" disabled={loading} className="btn-primary w-full !py-4 text-base disabled:opacity-50">
+      {loading ? "Sending..." : <>Send my ticket <span className="arrow">&rarr;</span></>}
+    </button>
+  );
+}
+
+/** Live preview of the ticket that lands in the studio inbox. */
+function TicketPreview({
+  build,
+  picked,
+  timeline,
+  start,
+  me,
+}: {
+  build?: Build;
+  picked: string[];
+  timeline: string;
+  start: string;
+  me: { name: string; business: string };
+}) {
+  const c = build?.c ?? "#26355A";
+  return (
+    <div className="panel rounded-[18px] overflow-hidden">
+      <div className="h-1 transition-colors duration-500" style={{ background: c }} />
+      <div className="p-5">
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-[11px] uppercase tracking-[0.16em] text-ink-mute font-medium">Your ticket</p>
+          <span className="flex items-center gap-1" aria-hidden>
+            <span className="h-1.5 w-1.5 rounded-full bg-[#1E3A8A]" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#5B9BF9]" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#C6E4F8]" />
+          </span>
+        </div>
+
+        {build ? (
+          <div key={build.name} className="fz-settle flex items-center gap-3 mb-4">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px]" style={{ background: `${c}22` }}>
+              <Icon name={build.icon} size={19} color={c} />
+            </span>
+            <div className="min-w-0">
+              <p className="font-display text-lg text-ink leading-tight">{build.name}</p>
+              <p className="text-xs font-semibold" style={{ color: "#F0845F" }}>{build.from}</p>
+            </div>
+          </div>
+        ) : (
+          <p className="text-sm text-ink-mute mb-4">Your build shows up here.</p>
+        )}
+
+        <div className="flex flex-wrap gap-1.5 min-h-[28px]">
+          {picked.length ? (
+            picked.map((p) => {
+              const g = GROUPS.find((x) => x.key === pickIndex.get(p)?.group);
+              return (
+                <span key={p} className="fz-settle text-xs rounded-[7px] px-2 py-1 text-ink" style={{ background: `${g?.c ?? "#5B8CFF"}22` }}>
+                  {p}
+                </span>
+              );
+            })
+          ) : (
+            <span className="text-xs text-ink-mute">Nothing picked yet</span>
+          )}
+        </div>
+
+        <dl className="mt-4 space-y-2 text-sm border-t border-rule pt-4">
+          <Row k="When" v={timeline} />
+          <Row k="From" v={start ? start.replace("I have something, make it better", "Improving what exists") : ""} />
+          <Row k="Name" v={me.name} />
+          <Row k="Business" v={me.business} />
+        </dl>
+      </div>
+    </div>
+  );
+}
+
+function Row({ k, v }: { k: string; v: string }) {
+  return (
+    <div className="flex gap-3">
+      <dt className="w-20 shrink-0 text-ink-mute text-xs pt-0.5">{k}</dt>
+      <dd className={`min-w-0 truncate ${v ? "text-ink" : "text-ink-mute/60"}`}>{v || "Not yet"}</dd>
     </div>
   );
 }
