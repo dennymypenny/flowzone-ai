@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SITE } from "@/lib/site";
+import { studioEmail, receiptEmail, ticketId } from "@/lib/intakeEmails";
 
 /**
  * The intake form.
@@ -13,12 +14,6 @@ import { SITE } from "@/lib/site";
  * Same house rules as /api/contact: escape everything that lands in HTML,
  * guard the key, never hand an internal error back to the visitor.
  */
-
-const esc = (v: unknown) =>
-  String(v ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
 
 const FROM = process.env.RESEND_FROM || "FlowZone Intake <onboarding@resend.dev>";
 
@@ -73,20 +68,10 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const html = `
-    <div style="font-family:system-ui,sans-serif;max-width:640px">
-      <p style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5B8CFF;margin:0 0 6px">New intake</p>
-      <h2 style="margin:0 0 18px;font-size:24px;color:#0B1322">${esc(name)}</h2>
-      <table style="border-collapse:collapse;width:100%;font-size:14px">
-        <tr><td style="padding:8px 12px;background:#F4F6FA;font-weight:600;width:140px">Name</td><td style="padding:8px 12px;border-bottom:1px solid #E2E8F0">${esc(name)}</td></tr>
-        <tr><td style="padding:8px 12px;background:#F4F6FA;font-weight:600">Email</td><td style="padding:8px 12px;border-bottom:1px solid #E2E8F0">${esc(email)}</td></tr>
-        <tr><td style="padding:8px 12px;background:#F4F6FA;font-weight:600">Business</td><td style="padding:8px 12px;border-bottom:1px solid #E2E8F0">${esc(business)}</td></tr>
-        <tr><td style="padding:8px 12px;background:#F4F6FA;font-weight:600">Package</td><td style="padding:8px 12px;border-bottom:1px solid #E2E8F0">${esc(service)}</td></tr>
-      </table>
-      <pre style="white-space:pre-wrap;font-family:inherit;font-size:14px;line-height:1.6;color:#333;background:#F4F6FA;padding:20px;border-left:3px solid #5B8CFF;margin:20px 0">${esc(description)}</pre>
-      <p style="color:#888;font-size:12px">Reply straight to them at <a href="mailto:${esc(email)}">${esc(email)}</a></p>
-    </div>
-  `;
+  const ticket = { name, email, business, service, description };
+  const id = ticketId();
+  const studio = studioEmail(ticket, id);
+  const receipt = receiptEmail(ticket, id);
 
   try {
     // A hung upstream would leave somebody watching a spinner, so it gets a leash.
@@ -100,8 +85,8 @@ export async function POST(req: NextRequest) {
         from: FROM,
         to: SITE.leadInbox,
         reply_to: email,
-        subject: `New inquiry from ${name} — ${service}`,
-        html,
+        subject: studio.subject,
+        html: studio.html,
       }),
       signal: AbortSignal.timeout(10000),
     });
@@ -134,13 +119,8 @@ export async function POST(req: NextRequest) {
         from: FROM,
         to: email,
         reply_to: SITE.leadInbox,
-        subject: "We got your project details",
-        html: `<div style="font-family:system-ui,sans-serif;max-width:640px">
-          <h2 style="margin:0 0 12px;font-size:24px;color:#0B1322">Got it. A person is reading this.</h2>
-          <p style="color:#4A5568;line-height:1.6">You picked ${esc(service)}. You will hear back with scope, price and a date, usually the same day.</p>
-          <pre style="white-space:pre-wrap;font-family:inherit;font-size:14px;line-height:1.6;color:#333;background:#F4F6FA;padding:20px;border-left:3px solid #5B8CFF;margin:20px 0">${esc(description)}</pre>
-          <p style="color:#888;font-size:13px;margin-top:24px">FlowZone · flowzone.dev<br/>You imagine it. We get it moving.</p>
-        </div>`,
+        subject: receipt.subject,
+        html: receipt.html,
       }),
       signal: AbortSignal.timeout(10000),
     });
