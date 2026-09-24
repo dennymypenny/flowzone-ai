@@ -310,7 +310,8 @@ function IntakeForm() {
   const loading = state === "sending";
 
   const suggested = useMemo(() => bestFit(picked), [picked]);
-  const service = manual || suggested;
+  // "__none" = the visitor tapped the picked build again to clear it.
+  const service = manual === "__none" ? "" : manual || suggested;
   const build = buildByName(service);
 
   // Fill name, email and business from last time, if this browser has them.
@@ -481,7 +482,7 @@ function IntakeForm() {
             </section>
 
             <section>
-              <Label right={manual && suggested && manual !== suggested ? (
+              <Label right={manual && suggested && manual !== suggested && manual !== "__none" ? (
                 <button type="button" onClick={() => setManual("")} className="text-white underline underline-offset-4">
                   Use best fit
                 </button>
@@ -495,7 +496,7 @@ function IntakeForm() {
                     b={b}
                     on={service === b.name}
                     fit={!!suggested && suggested === b.name}
-                    onClick={() => setManual(service === b.name && manual ? "" : b.name)}
+                    onClick={() => setManual(service === b.name ? (manual && manual !== "__none" && suggested && suggested !== b.name ? "" : "__none") : b.name)}
                   />
                 ))}
               </div>

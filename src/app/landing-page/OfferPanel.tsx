@@ -9,7 +9,7 @@ import { money } from "@/lib/catalog";
  * white button that carries the pick into the ticket.
  */
 
-type Plan = "page" | "care";
+type Plan = "page" | "care" | "";
 
 const INCLUDED_PAGE = [
   "One page, designed and built by a person",
@@ -88,7 +88,7 @@ export default function OfferPanel({
                 type="button"
                 role="radio"
                 aria-checked={on}
-                onClick={() => setPlan(p.key)}
+                onClick={() => setPlan(on ? "" : p.key)}
                 className="fz-key w-full text-left flex items-center gap-4 rounded-[14px] px-4 py-4"
               >
                 <span

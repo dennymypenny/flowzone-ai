@@ -99,6 +99,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${figtree.variable} ${spaceGrotesk.variable}`}>
       <head>
+        {/* In-app browsers (X, Instagram, LinkedIn, Facebook, TikTok) hang a
+            close button over the top of the page, so only there does the
+            phone layout leave a clear band above the nav. Everywhere else
+            the nav sits at the top. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(/Instagram|FBAN|FBAV|LinkedInApp|Twitter|TwitterAndroid|musical_ly|BytedanceWebview|Snapchat/i.test(navigator.userAgent))document.documentElement.classList.add('inapp')}catch(e){}",
+          }}
+        />
         <StructuredData />
       </head>
       <body className="antialiased bg-paper text-ink">

@@ -834,13 +834,13 @@ button {
 .sitebar { top: 3px; }
 
 @media (max-width: 767px) {
-  body {
+  html.inapp body {
     padding-top: calc(52px + env(safe-area-inset-top, 0px));
   }
-  .topline {
+  html.inapp .topline {
     top: calc(52px + env(safe-area-inset-top, 0px));
   }
-  .sitebar {
+  html.inapp .sitebar {
     top: calc(55px + env(safe-area-inset-top, 0px));
   }
 }

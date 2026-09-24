@@ -175,7 +175,7 @@ export default function FreeSample() {
           ? await fetch("/api/sample", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(form),
+              body: JSON.stringify({ ...form, kind: form.kind || "other" }),
             })
           : await fetch("/api/subscribe", {
               method: "POST",
@@ -361,18 +361,16 @@ export default function FreeSample() {
                       <>
                         <div>
                           <p className="text-[13px] font-semibold text-ink-soft mb-2.5 pl-1">What should we make?</p>
-                          <div className="flex flex-wrap gap-2">
+                          <div className="flex flex-wrap gap-x-2 gap-y-3" role="radiogroup" aria-label="What should we make?">
                             {KINDS.map((k) => (
                               <button
                                 type="button"
                                 key={k.id}
-                                onClick={() => set("kind", k.id)}
-                                aria-pressed={form.kind === k.id}
-                                className={`px-4 py-2 rounded-full text-[13px] font-medium transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] active:scale-95 ${
-                                  form.kind === k.id
-                                    ? "bg-white text-[#0C1424] shadow-[0_8px_24px_-8px_rgba(168,196,255,0.8)] scale-[1.04]"
-                                    : "bg-white/[0.06] border border-white/[0.08] text-ink-soft hover:bg-white/[0.11] hover:text-ink"
-                                }`}
+                                role="radio"
+                                // Tap to pick, tap again to un-pick, same as every choice on the site.
+                                onClick={() => set("kind", form.kind === k.id ? "" : k.id)}
+                                aria-checked={form.kind === k.id}
+                                className="fz-key px-4 py-2 rounded-[11px] text-[13px] font-medium"
                               >
                                 {k.label}
                               </button>
@@ -444,7 +442,7 @@ export default function FreeSample() {
                       </p>
                     )}
 
-                    <button type="submit" disabled={busy} style={pill} className="btn-primary w-full justify-center !py-4 !text-[15px] !font-semibold disabled:opacity-70">
+                    <button type="submit" disabled={busy} className="fz-go w-full flex items-center justify-center rounded-[12px] py-4 text-[15px] font-semibold">
                       {busy ? "Sending..." : mode === "sample" ? "Get my free graphic" : "Join the list"}
                       {!busy && <span className="arrow ml-1">→</span>}
                     </button>
