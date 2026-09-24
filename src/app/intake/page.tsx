@@ -47,7 +47,7 @@ const NOT_SURE_BUILD: Build = {
   c: "#93A2BC",
   name: NOT_SURE,
   one: "Tell us the idea and we will name the build for you.",
-  from: "Quote before you pay",
+  from: "Free quote",
 };
 
 type GroupKey = "brand" | "site" | "sell" | "system" | "video";
@@ -166,21 +166,27 @@ const buildByName = (n: string) => builds.find((b) => b.name === n) ?? (n === NO
 
 const REMEMBER = "fz-intake-me";
 
-const field =
-  "w-full bg-paper-deep text-ink placeholder-ink-mute border border-rule rounded-[11px] px-4 py-3 text-[15px] transition-colors focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent";
+/* The look: a near-black panel, white for whatever is chosen, brand color only
+   as a signal (group icons, the fit badge, the top bar). High contrast so the
+   choice is the brightest thing on screen. */
+const INK_PANEL = "#07090F";
+const CARD = "#10141D";
+const EDGE = "rgba(255,255,255,0.09)";
 
-/** Numbered step heading. */
-function Step({ n, title, hint }: { n: number; title: string; hint?: string }) {
+const field =
+  "w-full bg-[#10141D] text-white placeholder-[#6B7890] border border-white/10 rounded-[11px] px-4 py-3 text-[15px] transition-colors focus:outline-none focus:border-white focus:ring-2 focus:ring-white/15";
+
+/** Small uppercase section label, like a receipt heading. */
+function Label({ children, right }: { children: React.ReactNode; right?: React.ReactNode }) {
   return (
-    <div className="flex items-baseline gap-3 mb-4">
-      <span className="font-display text-sm text-accent-light tabular-nums">0{n}</span>
-      <h2 className="font-display text-xl text-ink tracking-tight">{title}</h2>
-      {hint && <span className="text-xs text-ink-mute ml-auto hidden sm:inline">{hint}</span>}
+    <div className="flex items-baseline gap-3 mb-3">
+      <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#8190A8]">{children}</p>
+      {right && <span className="ml-auto text-[11px] text-[#6B7890]">{right}</span>}
     </div>
   );
 }
 
-/** A choice that pops when it is on: tinted fill, colored edge, a check. */
+/** A choice. Off: dark card. On: solid white with dark text and a colored check. */
 function Choice({
   on,
   c,
@@ -200,31 +206,77 @@ function Choice({
       role={role}
       aria-checked={on}
       onClick={onClick}
-      className={`fz-choice group inline-flex items-center gap-2 rounded-[11px] border px-3.5 py-2.5 text-sm transition-all duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-px active:scale-[0.97] ${
-        on ? "text-ink" : "text-ink-soft border-rule bg-paper-deep hover:border-ink-mute hover:text-ink"
-      }`}
-      style={
+      className={`inline-flex items-center gap-2 rounded-[11px] border px-3.5 py-2.5 text-sm transition-all duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-px active:scale-[0.97] ${
         on
-          ? {
-              background: `${c}22`,
-              borderColor: c,
-              boxShadow: `0 0 0 1px ${c}, 0 10px 24px -14px ${c}`,
-            }
-          : undefined
-      }
+          ? "bg-white text-[#0C1424] border-white font-medium shadow-[0_10px_28px_-14px_rgba(255,255,255,0.55)]"
+          : "bg-[#10141D] text-[#C9D2E3] border-white/10 hover:border-white/30 hover:text-white"
+      }`}
     >
       <span
         aria-hidden
-        className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-[5px] border transition-colors"
-        style={on ? { background: c, borderColor: c } : { borderColor: "#3A4A70" }}
+        className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-colors"
+        style={on ? { background: c, borderColor: c } : { borderColor: "rgba(255,255,255,0.25)" }}
       >
         {on && (
-          <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="#0C1424" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M2.5 6.2l2.3 2.3 4.7-5" />
           </svg>
         )}
       </span>
       {children}
+    </button>
+  );
+}
+
+/** One build as a plan row. Selected row goes white, like a picked plan. */
+function PlanRow({
+  b,
+  on,
+  fit,
+  onClick,
+}: {
+  b: Build;
+  on: boolean;
+  fit: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      role="radio"
+      aria-checked={on}
+      onClick={onClick}
+      className={`w-full text-left flex items-center gap-4 rounded-[14px] border px-4 py-3.5 transition-all duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.99] ${
+        on ? "bg-white border-white shadow-[0_14px_36px_-18px_rgba(255,255,255,0.6)]" : "bg-[#10141D] border-white/[0.07] hover:border-white/25"
+      }`}
+    >
+      <span
+        aria-hidden
+        className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors"
+        style={on ? { borderColor: "#0C1424" } : { borderColor: "rgba(255,255,255,0.18)", background: "#07090F" }}
+      >
+        {on && <span className="h-2.5 w-2.5 rounded-full bg-[#0C1424]" />}
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="flex items-center gap-2 flex-wrap">
+          <span className={`font-semibold text-[15px] ${on ? "text-[#0C1424]" : "text-white"}`}>{b.name.replace(/^The /, "")}</span>
+          {fit && (
+            <span
+              className="fz-settle text-[10px] font-semibold uppercase tracking-[0.08em] rounded-[6px] px-1.5 py-0.5"
+              style={on ? { background: "#0C1424", color: "#fff" } : { background: b.c, color: "#0C1424" }}
+            >
+              Best fit
+            </span>
+          )}
+        </span>
+        <span className={`block text-[13px] mt-0.5 sm:truncate leading-snug ${on ? "text-[#4A5873]" : "text-[#8190A8]"}`}>{b.one}</span>
+      </span>
+      <span className={`shrink-0 text-right font-semibold text-[15px] tabular-nums ${on ? "text-[#0C1424]" : "text-white"}`}>
+        {b.from.replace("From ", "")}
+        <span className={`block text-[10px] font-normal uppercase tracking-[0.1em] ${on ? "text-[#8190A8]" : "text-[#6B7890]"}`}>
+          {b.from.startsWith("From") ? "from" : ""}
+        </span>
+      </span>
     </button>
   );
 }
@@ -249,7 +301,6 @@ function IntakeForm() {
   const [me, setMe] = useState({ name: "", email: "", business: "" });
   const [notes, setNotes] = useState("");
   const [remember, setRemember] = useState(true);
-  const [showAll, setShowAll] = useState(false);
 
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [fixable, setFixable] = useState(false);
@@ -356,70 +407,60 @@ function IntakeForm() {
 
   if (state === "done") {
     return (
-      <div className="min-h-screen bg-paper-deep flex items-center justify-center px-6 py-24">
-        <div className="max-w-lg w-full panel rounded-[18px] p-10 text-center fz-settle">
-          <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full" style={{ background: "#5B8CFF22", boxShadow: "0 0 0 1px #5B8CFF" }}>
-            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#A8C4FF" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+      <div className="min-h-screen bg-paper-deep flex items-center justify-center px-4 py-28">
+        <div className="max-w-lg w-full rounded-[24px] border border-white/10 p-10 text-center fz-settle shadow-[0_40px_80px_-40px_rgba(0,0,0,0.8)]" style={{ background: INK_PANEL }}>
+          <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-white">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#0C1424" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
           </div>
-          <h1 className="font-display text-3xl text-ink tracking-tight mb-3">
-            Thank you{first ? `, ${first}` : ""}.
-          </h1>
-          <p className="text-ink-soft leading-relaxed mb-2">
+          <h1 className="font-display text-3xl text-white tracking-tight mb-3">Thank you{first ? `, ${first}` : ""}.</h1>
+          <p className="text-[#C9D2E3] leading-relaxed mb-2">
             We are really happy you reached out. Your ticket for {build && build.name !== NOT_SURE ? build.name : "your idea"} is in, and a person is reading it.
           </p>
-          <p className="text-ink-mute leading-relaxed">
-            Check your inbox for a note from Dennis. You will hear back with a plan, usually the same day.
-          </p>
-          <p className="text-xs text-ink-mute mt-8">
+          <p className="text-[#8190A8] leading-relaxed">Check your inbox for a note from Dennis. You will hear back with a plan, usually the same day.</p>
+          <p className="text-xs text-[#6B7890] mt-8">
             Thought of something else? Write to{" "}
-            <a href={`mailto:${SITE.email}`} className="text-accent hover:underline">{SITE.email}</a>
+            <a href={`mailto:${SITE.email}`} className="text-white underline underline-offset-4">{SITE.email}</a>
           </p>
         </div>
       </div>
     );
   }
 
+  const planList = [...builds, NOT_SURE_BUILD];
+
   return (
     <div className="min-h-screen bg-paper-deep pt-28 pb-24 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
-        <div className="max-w-2xl mb-10">
-          <p className="label mb-3">Start a ticket</p>
-          <h1 className="font-display text-4xl sm:text-5xl text-ink tracking-tight leading-[1.05] mb-4">
-            What are we building?
-          </h1>
-          <p className="text-ink-soft text-lg leading-relaxed">
-            Tap everything that fits. We match the build as you go, and you get a scope, a price and a date back, usually the same day.
-          </p>
-        </div>
+        <form
+          id="fz-ticket"
+          onSubmit={handleSubmit}
+          className="grid lg:grid-cols-[minmax(0,1fr)_400px] rounded-[24px] border border-white/10 overflow-clip shadow-[0_40px_90px_-40px_rgba(0,0,0,0.85)]"
+          style={{ background: INK_PANEL }}
+        >
+          {/* Left: the choices */}
+          <div className="min-w-0 p-5 sm:p-8 space-y-9">
+            <div>
+              <h1 className="font-display text-3xl sm:text-4xl text-white tracking-tight leading-[1.05]">Start a ticket</h1>
+              <p className="text-[#C9D2E3] mt-2 leading-relaxed max-w-md">
+                Tap what you need. We match the build as you go and you see the price before anything starts.
+              </p>
+            </div>
 
-        <form id="fz-ticket" onSubmit={handleSubmit} className="grid lg:grid-cols-[minmax(0,1fr)_360px] gap-8 items-start">
-          <div className="space-y-6 min-w-0">
-            {/* 01 · Picks */}
-            <section id="fz-step-1" className="panel rounded-[18px] p-5 sm:p-7 scroll-mt-28">
-              <Step n={1} title="What do you need?" hint="Pick as many as you like" />
-              <div className="grid sm:grid-cols-2 gap-3">
+            <section id="fz-step-1" className="scroll-mt-28">
+              <Label right="Pick as many as you like">01 · What do you need?</Label>
+              <div className="space-y-5">
                 {GROUPS.map((g) => {
                   const count = g.picks.filter((p) => picked.includes(p.label)).length;
                   return (
-                    <div
-                      key={g.key}
-                      className={`rounded-[14px] border p-4 transition-all duration-300 ${g.key === "video" ? "sm:col-span-2" : ""}`}
-                      style={
-                        count
-                          ? { borderColor: `${g.c}88`, background: `linear-gradient(180deg, ${g.c}14, transparent 70%)` }
-                          : { borderColor: "#26355A" }
-                      }
-                    >
-                      <div className="flex items-center gap-2.5 mb-3">
-                        <span className="flex h-8 w-8 items-center justify-center rounded-[9px]" style={{ background: `${g.c}22` }}>
-                          <Icon name={g.icon} size={17} color={g.c} />
+                    <div key={g.key}>
+                      <div className="flex items-center gap-2.5 mb-2.5">
+                        <span className="flex h-7 w-7 items-center justify-center rounded-[8px]" style={{ background: `${g.c}26` }}>
+                          <Icon name={g.icon} size={15} color={g.c} />
                         </span>
-                        <div className="min-w-0">
-                          <p className="text-sm font-semibold text-ink leading-tight">{g.title}</p>
-                          <p className="text-xs text-ink-mute leading-tight mt-0.5">{g.line}</p>
-                        </div>
+                        <p className="text-sm font-semibold text-white">{g.title}</p>
+                        <p className="text-xs text-[#6B7890] hidden sm:block">{g.line}</p>
                         {count > 0 && (
-                          <span key={count} className="fz-settle ml-auto text-[11px] font-semibold tabular-nums rounded-[6px] px-1.5 py-0.5" style={{ background: g.c, color: "#0C1424" }}>
+                          <span key={count} className="fz-settle ml-auto text-[11px] font-semibold tabular-nums rounded-[6px] px-1.5 py-0.5 bg-white text-[#0C1424]">
                             {count}
                           </span>
                         )}
@@ -435,69 +476,38 @@ function IntakeForm() {
                   );
                 })}
               </div>
+            </section>
 
-              {/* Best fit, live */}
-              <div className="mt-5 rounded-[14px] border border-rule bg-paper-deep p-4">
-                {build ? (
-                  <div key={build.name} className="fz-settle flex items-center gap-3">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[11px]" style={{ background: `${build.c}22`, boxShadow: `0 0 0 1px ${build.c}66` }}>
-                      <Icon name={build.icon} size={20} color={build.c} />
-                    </span>
-                    <div className="min-w-0">
-                      <p className="text-[11px] uppercase tracking-[0.16em] text-ink-mute font-medium">
-                        {manual ? "You picked" : "Best fit"}
-                      </p>
-                      <p className="font-display text-lg text-ink leading-tight">{build.name}</p>
-                    </div>
-                    <p className="ml-auto text-sm font-semibold whitespace-nowrap" style={{ color: "#F0845F" }}>{build.from}</p>
-                  </div>
-                ) : (
-                  <p className="text-sm text-ink-mute">Tap a few things above and the right build shows up here.</p>
-                )}
-                <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
-                  <button type="button" onClick={() => setShowAll((s) => !s)} className="text-accent-light hover:text-ink transition-colors">
-                    {showAll ? "Hide the builds" : "Choose the build yourself"}
-                  </button>
-                  {manual && suggested && manual !== suggested && (
-                    <button type="button" onClick={() => setManual("")} className="text-ink-mute hover:text-ink transition-colors">
-                      Use the suggestion ({suggested.replace(/^The /, "")})
-                    </button>
-                  )}
-                  <button
-                    type="button"
-                    onClick={() => setManual(manual === NOT_SURE ? "" : NOT_SURE)}
-                    className={`transition-colors ${manual === NOT_SURE ? "text-ink underline underline-offset-4" : "text-ink-mute hover:text-ink"}`}
-                  >
-                    Not sure, just help me
-                  </button>
-                </div>
-                {showAll && (
-                  <div className="fz-settle mt-3 grid grid-cols-2 sm:grid-cols-3 gap-2" role="radiogroup" aria-label="Pick a build">
-                    {builds.map((b) => (
-                      <Choice key={b.key} role="radio" on={service === b.name} c={b.c} onClick={() => setManual(b.name)}>
-                        <span className="text-left leading-tight">
-                          <span className="block">{b.name.replace(/^The /, "")}</span>
-                          <span className="block text-[11px] text-ink-mute">{b.from}</span>
-                        </span>
-                      </Choice>
-                    ))}
-                  </div>
-                )}
+            <section>
+              <Label right={manual && suggested && manual !== suggested ? (
+                <button type="button" onClick={() => setManual("")} className="text-white underline underline-offset-4">
+                  Use best fit
+                </button>
+              ) : "Matched as you tap"}>
+                02 · Your build
+              </Label>
+              <div className="space-y-2" role="radiogroup" aria-label="Pick a build">
+                {planList.map((b) => (
+                  <PlanRow
+                    key={b.key}
+                    b={b}
+                    on={service === b.name}
+                    fit={!!suggested && suggested === b.name}
+                    onClick={() => setManual(service === b.name && manual ? "" : b.name)}
+                  />
+                ))}
               </div>
             </section>
 
-            {/* 02 · When and where from */}
-            <section className="panel rounded-[18px] p-5 sm:p-7">
-              <Step n={2} title="When and where from?" hint="Optional" />
-              <p className="text-xs text-ink-mute mb-2.5">When do you want it?</p>
-              <div className="flex flex-wrap gap-2 mb-5" role="radiogroup" aria-label="Timeline">
+            <section>
+              <Label right="Optional">03 · When and where from?</Label>
+              <div className="flex flex-wrap gap-2 mb-3" role="radiogroup" aria-label="Timeline">
                 {TIMELINES.map((t) => (
                   <Choice key={t} role="radio" on={timeline === t} c="#FBBF24" onClick={() => setTimeline(timeline === t ? "" : t)}>
                     {t}
                   </Choice>
                 ))}
               </div>
-              <p className="text-xs text-ink-mute mb-2.5">Where are you starting?</p>
               <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Starting point">
                 {STARTS.map((s) => (
                   <Choice key={s} role="radio" on={start === s} c="#2DD4BF" onClick={() => setStart(start === s ? "" : s)}>
@@ -507,73 +517,52 @@ function IntakeForm() {
               </div>
             </section>
 
-            {/* 03 · You */}
-            <section className="panel rounded-[18px] p-5 sm:p-7">
-              <Step n={3} title="Who is this for?" />
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="fz-name" className="block text-sm text-ink-soft mb-1.5">Your name</label>
-                  <input id="fz-name" name="name" type="text" autoComplete="name" required value={me.name}
-                    onChange={(e) => setMe({ ...me, name: e.target.value })} className={field} placeholder="Jane Smith" />
-                </div>
-                <div>
-                  <label htmlFor="fz-email" className="block text-sm text-ink-soft mb-1.5">Email</label>
-                  <input id="fz-email" name="email" type="email" autoComplete="email" inputMode="email" required value={me.email}
-                    onChange={(e) => setMe({ ...me, email: e.target.value })} className={field} placeholder="jane@company.com" />
-                </div>
-                <div className="sm:col-span-2">
-                  <label htmlFor="fz-business" className="block text-sm text-ink-soft mb-1.5">
-                    Business name <span className="text-ink-mute">or your own, if the brand is you</span>
-                  </label>
-                  <input id="fz-business" name="organization" type="text" autoComplete="organization" required value={me.business}
-                    onChange={(e) => setMe({ ...me, business: e.target.value })} className={field} placeholder="Acme Co. or Jane Doe" />
-                </div>
-                <div className="sm:col-span-2">
-                  <label htmlFor="fz-idea" className="block text-sm text-ink-soft mb-1.5">
-                    Anything else? <span className="text-ink-mute">{picked.length ? "Optional" : "A sentence about the idea"}</span>
-                  </label>
-                  <textarea id="fz-idea" name="description" rows={3} value={notes}
-                    onChange={(e) => setNotes(e.target.value)} className={`${field} resize-none`}
-                    placeholder="Links, tools you already use, the thing you keep putting off..." />
-                </div>
+            <section>
+              <Label>04 · Who is this for?</Label>
+              <div className="grid sm:grid-cols-2 gap-3">
+                <input id="fz-name" name="name" type="text" autoComplete="name" required aria-label="Your name" value={me.name}
+                  onChange={(e) => setMe({ ...me, name: e.target.value })} className={field} placeholder="Your name" />
+                <input id="fz-email" name="email" type="email" autoComplete="email" inputMode="email" required aria-label="Email" value={me.email}
+                  onChange={(e) => setMe({ ...me, email: e.target.value })} className={field} placeholder="Email" />
+                <input id="fz-business" name="organization" type="text" autoComplete="organization" required aria-label="Business name" value={me.business}
+                  onChange={(e) => setMe({ ...me, business: e.target.value })} className={`${field} sm:col-span-2`} placeholder="Business name (or your name if the brand is you)" />
+                <textarea id="fz-idea" name="description" rows={3} aria-label="Anything else" value={notes}
+                  onChange={(e) => setNotes(e.target.value)} className={`${field} resize-none sm:col-span-2`}
+                  placeholder={picked.length ? "Anything else? Links, tools you use, the thing you keep putting off (optional)" : "A sentence about the idea"} />
               </div>
-              <label className="mt-4 flex items-center gap-2 text-xs text-ink-mute cursor-pointer select-none">
-                <input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} className="accent-[#5B8CFF]" />
+              <label className="mt-3 flex items-center gap-2 text-xs text-[#8190A8] cursor-pointer select-none">
+                <input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} className="accent-white" />
                 Remember my details on this device
               </label>
             </section>
 
-            {/* Send, for phones. Desktop sends from the ticket on the right. */}
-            <div className="lg:hidden space-y-4">
-              <TicketPreview build={build} picked={picked} timeline={timeline} start={start} me={me} />
-              <SendButton loading={loading} />
-            </div>
-
             {state === "error" && (
-              <div className="panel rounded-[18px] p-5">
-                <div className="flex items-center gap-2 mb-2">
-                  <Icon name="chat" size={20} color="#5B8CFF" />
-                  <p className="label">{fixable ? "One more thing" : "Let’s get this to Denny"}</p>
-                </div>
-                <p className="text-sm text-ink-soft leading-relaxed">{error}</p>
-                <p className="text-sm text-ink-mute leading-relaxed mt-2">
+              <div className="rounded-[14px] border border-white/10 p-5" style={{ background: CARD }}>
+                <p className="text-sm font-semibold text-white mb-1">{fixable ? "One more thing" : "Let’s get this to Denny"}</p>
+                <p className="text-sm text-[#C9D2E3] leading-relaxed">{error}</p>
+                <p className="text-sm text-[#8190A8] leading-relaxed mt-2">
                   Everything you picked and typed is still here.
                   {fixable ? " Fix that one and send again." : " Send again, or open the email below. It is already filled in and goes straight to Denny."}
                 </p>
                 {!fixable && (
-                  <a href={fallbackMailto} className="btn-primary shine mt-4 inline-flex">
-                    Email it to us <span className="arrow">&rarr;</span>
+                  <a href={fallbackMailto} className="mt-4 inline-flex rounded-[11px] bg-white text-[#0C1424] font-semibold px-5 py-3 text-sm">
+                    Email it to us &rarr;
                   </a>
                 )}
               </div>
             )}
+
+            {/* Phones: the ticket and the send button sit at the end. */}
+            <div className="lg:hidden border-t border-white/10 pt-6">
+              <TicketSide build={build} picked={picked} timeline={timeline} start={start} me={me} loading={loading} />
+            </div>
           </div>
 
-          {/* The ticket, filling itself in. */}
-          <aside className="hidden lg:block sticky top-28 space-y-4">
-            <TicketPreview build={build} picked={picked} timeline={timeline} start={start} me={me} />
-            <SendButton loading={loading} />
-            <p className="text-xs text-ink-mute text-center">Nothing is charged. You see the price first.</p>
+          {/* Right: the ticket, filling itself in */}
+          <aside className="hidden lg:block border-l border-white/10" style={{ background: "#0A0D14" }}>
+            <div className="sticky top-24 p-6">
+              <TicketSide build={build} picked={picked} timeline={timeline} start={start} me={me} loading={loading} />
+            </div>
           </aside>
         </form>
       </div>
@@ -581,77 +570,94 @@ function IntakeForm() {
   );
 }
 
-function SendButton({ loading }: { loading: boolean }) {
-  return (
-    <button type="submit" form="fz-ticket" disabled={loading} className="btn-primary w-full !py-4 text-base disabled:opacity-50">
-      {loading ? "Sending..." : <>Send my ticket <span className="arrow">&rarr;</span></>}
-    </button>
-  );
-}
-
-/** Live preview of the ticket that lands in the studio inbox. */
-function TicketPreview({
+/** The right-hand column: a banner, the live ticket, what happens next, the send button. */
+function TicketSide({
   build,
   picked,
   timeline,
   start,
   me,
+  loading,
 }: {
   build?: Build;
   picked: string[];
   timeline: string;
   start: string;
   me: { name: string; business: string };
+  loading: boolean;
 }) {
-  const c = build?.c ?? "#26355A";
+  const short = build ? (build.name === NOT_SURE ? "ticket" : build.name.replace(/^The /, "")) : "ticket";
   return (
-    <div className="panel rounded-[18px] overflow-hidden">
-      <div className="h-1 transition-colors duration-500" style={{ background: c }} />
-      <div className="p-5">
-        <div className="flex items-center justify-between mb-4">
-          <p className="text-[11px] uppercase tracking-[0.16em] text-ink-mute font-medium">Your ticket</p>
-          <span className="flex items-center gap-1" aria-hidden>
-            <span className="h-1.5 w-1.5 rounded-full bg-[#1E3A8A]" />
-            <span className="h-1.5 w-1.5 rounded-full bg-[#5B9BF9]" />
-            <span className="h-1.5 w-1.5 rounded-full bg-[#C6E4F8]" />
-          </span>
-        </div>
-
-        {build ? (
-          <div key={build.name} className="fz-settle flex items-center gap-3 mb-4">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px]" style={{ background: `${c}22` }}>
-              <Icon name={build.icon} size={19} color={c} />
-            </span>
-            <div className="min-w-0">
-              <p className="font-display text-lg text-ink leading-tight">{build.name}</p>
-              <p className="text-xs font-semibold" style={{ color: "#F0845F" }}>{build.from}</p>
+    <div className="space-y-4">
+      <div className="relative rounded-[16px] overflow-hidden border border-white/10">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/assets/intake-ocean.jpg" alt="" className="block w-full h-[120px] object-cover" />
+        <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-[#07090F] via-[#07090F]/70 to-transparent">
+          {build ? (
+            <div key={build.name} className="fz-settle">
+              <p className="font-display text-xl text-white leading-tight">{build.name}</p>
+              <p className="text-sm font-semibold" style={{ color: "#F0845F" }}>{build.from}</p>
             </div>
-          </div>
-        ) : (
-          <p className="text-sm text-ink-mute mb-4">Your build shows up here.</p>
-        )}
+          ) : (
+            <p className="font-display text-lg text-white/80">Your build shows up here</p>
+          )}
+        </div>
+      </div>
 
-        <div className="flex flex-wrap gap-1.5 min-h-[28px]">
+      <div className="rounded-[16px] border border-white/[0.07] p-4" style={{ background: CARD }}>
+        <Label>Your ticket</Label>
+        <div className="flex flex-wrap gap-1.5 mb-3 min-h-[26px]">
           {picked.length ? (
             picked.map((p) => {
               const g = GROUPS.find((x) => x.key === pickIndex.get(p)?.group);
               return (
-                <span key={p} className="fz-settle text-xs rounded-[7px] px-2 py-1 text-ink" style={{ background: `${g?.c ?? "#5B8CFF"}22` }}>
+                <span key={p} className="fz-settle inline-flex items-center gap-1.5 text-xs rounded-[7px] px-2 py-1 bg-white/[0.06] text-white">
+                  <span className="h-1.5 w-1.5 rounded-full" style={{ background: g?.c ?? "#5B8CFF" }} />
                   {p}
                 </span>
               );
             })
           ) : (
-            <span className="text-xs text-ink-mute">Nothing picked yet</span>
+            <span className="text-xs text-[#6B7890]">Nothing picked yet</span>
           )}
         </div>
-
-        <dl className="mt-4 space-y-2 text-sm border-t border-rule pt-4">
+        <dl className="space-y-1.5 text-sm">
           <Row k="When" v={timeline} />
           <Row k="From" v={start ? start.replace("I have something, make it better", "Improving what exists") : ""} />
           <Row k="Name" v={me.name} />
           <Row k="Business" v={me.business} />
         </dl>
+      </div>
+
+      <div className="rounded-[16px] border border-white/[0.07] p-4" style={{ background: CARD }}>
+        <Label>What happens next</Label>
+        <ul className="space-y-2.5 text-[15px] text-white">
+          {["A person reads every word", "You get scope, price and a date", "Usually the same day, no call needed"].map((t) => (
+            <li key={t} className="flex items-center gap-2.5">
+              <svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8.5l3 3 7-7" /></svg>
+              {t}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="pt-1">
+        <p className="flex items-center justify-center gap-2 text-sm text-[#8190A8] mb-3">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="8" cy="8" r="6.2" /><path d="M8 4.8V8l2.2 1.4" strokeLinecap="round" /></svg>
+          Reply <span className="font-medium" style={{ color: "#FBBF24" }}>usually the same day</span>
+        </p>
+        <button
+          type="submit"
+          form="fz-ticket"
+          disabled={loading}
+          className="w-full rounded-[12px] bg-white text-[#0C1424] font-semibold text-base py-4 transition-all duration-200 hover:bg-[#EAF0FF] hover:-translate-y-px active:scale-[0.99] disabled:opacity-60 shadow-[0_14px_40px_-18px_rgba(255,255,255,0.7)]"
+        >
+          {loading ? "Sending..." : <>Send my {short} ticket <span aria-hidden>&rarr;</span></>}
+        </button>
+        <p className="flex items-center justify-center gap-2 text-xs text-[#6B7890] mt-3">
+          <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5" /><path d="M5.5 7V5a2.5 2.5 0 015 0v2" /></svg>
+          No payment now · you see the price first
+        </p>
       </div>
     </div>
   );
@@ -660,8 +666,8 @@ function TicketPreview({
 function Row({ k, v }: { k: string; v: string }) {
   return (
     <div className="flex gap-3">
-      <dt className="w-20 shrink-0 text-ink-mute text-xs pt-0.5">{k}</dt>
-      <dd className={`min-w-0 truncate ${v ? "text-ink" : "text-ink-mute/60"}`}>{v || "Not yet"}</dd>
+      <dt className="w-20 shrink-0 text-[#6B7890] text-xs pt-0.5">{k}</dt>
+      <dd className={`min-w-0 truncate ${v ? "text-white" : "text-[#4A5670]"}`}>{v || "Not yet"}</dd>
     </div>
   );
 }
