@@ -231,11 +231,13 @@ function PlanRow({
   on,
   fit,
   onClick,
+  className = "",
 }: {
   b: Build;
   on: boolean;
   fit: boolean;
   onClick: () => void;
+  className?: string;
 }) {
   return (
     <button
@@ -243,7 +245,7 @@ function PlanRow({
       role="radio"
       aria-checked={on}
       onClick={onClick}
-      className="fz-key w-full text-left flex items-center gap-4 rounded-[14px] px-4 py-3.5"
+      className={`fz-key w-full text-left items-center gap-4 rounded-[14px] px-4 py-3.5 ${className || "flex"}`}
     >
       <span
         aria-hidden
@@ -303,6 +305,10 @@ function IntakeForm() {
   const [me, setMe] = useState({ name: "", email: "", business: "" });
   const [notes, setNotes] = useState("");
   const [remember, setRemember] = useState(true);
+  // Phone only: one area open at a time (tap again to close), and the build
+  // list folded to the picked build until they ask to see the rest.
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
+  const [allBuilds, setAllBuilds] = useState(false);
 
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [fixable, setFixable] = useState(false);
@@ -432,7 +438,7 @@ function IntakeForm() {
   const planList = [...builds, NOT_SURE_BUILD];
 
   return (
-    <div className="min-h-screen bg-paper-deep pt-28 pb-24 px-4 sm:px-6">
+    <div className="min-h-screen bg-paper-deep pt-24 sm:pt-28 pb-32 lg:pb-24 px-3 sm:px-6">
       <div className="max-w-6xl mx-auto">
         <form
           id="fz-ticket"
@@ -455,8 +461,13 @@ function IntakeForm() {
                 {GROUPS.map((g) => {
                   const count = g.picks.filter((p) => picked.includes(p.label)).length;
                   return (
-                    <div key={g.key}>
-                      <div className="flex items-center gap-2.5 mb-2.5">
+                    <div key={g.key} className="border-b border-white/[0.07] md:border-0 pb-3 md:pb-0">
+                      <button
+                        type="button"
+                        aria-expanded={openGroup === g.key}
+                        onClick={() => setOpenGroup(openGroup === g.key ? null : g.key)}
+                        className="w-full text-left flex items-center gap-2.5 py-1.5 md:py-0 mb-0 md:mb-2.5 md:pointer-events-none"
+                      >
                         <span className="flex h-7 w-7 items-center justify-center rounded-[8px]" style={{ background: `${g.c}26` }}>
                           <Icon name={g.icon} size={15} color={g.c} />
                         </span>
@@ -467,8 +478,12 @@ function IntakeForm() {
                             {count}
                           </span>
                         )}
-                      </div>
-                      <div className="flex flex-wrap gap-x-2.5 gap-y-3.5">
+                        <svg aria-hidden viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="#8190A8" strokeWidth="1.8" strokeLinecap="round"
+                          className={`md:hidden shrink-0 transition-transform duration-150 ${count > 0 ? "" : "ml-auto"} ${openGroup === g.key ? "rotate-180" : ""}`}>
+                          <path d="M4 6l4 4 4-4" />
+                        </svg>
+                      </button>
+                      <div className={`${openGroup === g.key ? "flex" : "hidden"} md:flex flex-wrap gap-x-2.5 gap-y-3.5 pt-3 md:pt-0`}>
                         {g.picks.map((p) => (
                           <Choice key={p.label} on={picked.includes(p.label)} c={g.c} onClick={() => toggle(p.label)}>
                             {p.label}
@@ -497,8 +512,15 @@ function IntakeForm() {
                     on={service === b.name}
                     fit={!!suggested && suggested === b.name}
                     onClick={() => setManual(service === b.name ? (manual && manual !== "__none" && suggested && suggested !== b.name ? "" : "__none") : b.name)}
+                    className={allBuilds || service === b.name ? "flex" : "hidden md:flex"}
                   />
                 ))}
+                {!service && !allBuilds && (
+                  <p className="md:hidden text-sm text-[#8190A8]">Tap what you need above and the right build shows up here.</p>
+                )}
+                <button type="button" onClick={() => setAllBuilds(!allBuilds)} className="md:hidden text-sm text-white underline underline-offset-4">
+                  {allBuilds ? "Show just mine" : `See all ${planList.length} builds`}
+                </button>
               </div>
             </section>
 
@@ -555,9 +577,20 @@ function IntakeForm() {
               </div>
             )}
 
-            {/* Phones: the ticket and the send button sit at the end. */}
-            <div className="lg:hidden border-t border-white/10 pt-6">
-              <TicketSide build={build} picked={picked} timeline={timeline} start={start} me={me} loading={loading} />
+            {/* Phones: no big preview card. A slim bar pinned to the bottom
+                carries the build, the price and the one send button. */}
+            <div className="lg:hidden fixed inset-x-0 bottom-0 z-[60] border-t border-white/10 px-4 pt-3 pb-[calc(12px+env(safe-area-inset-bottom,0px))]" style={{ background: "rgba(7,9,15,0.96)", backdropFilter: "blur(10px)" }}>
+              <div className="flex items-center gap-3">
+                <div className="min-w-0 flex-1">
+                  <p key={build?.name || "none"} className="fz-settle text-[13px] font-semibold text-white truncate">
+                    {build && build.name !== NOT_SURE ? build.name.replace(/^The /, "") : picked.length ? "We will pick the build" : "Nothing picked yet"}
+                  </p>
+                  <p className="text-[12px] text-[#F0845F] font-semibold">{build ? build.from : "Tap what you need"}</p>
+                </div>
+                <button type="submit" form="fz-ticket" disabled={loading} className="fz-go shrink-0 rounded-[12px] px-5 py-3 text-[15px] font-semibold">
+                  {loading ? "Sending..." : "Send ticket \u2192"}
+                </button>
+              </div>
             </div>
           </div>
 
