@@ -212,10 +212,10 @@ function Choice({
       <span
         aria-hidden
         className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-colors"
-        style={on ? { background: "#FFFFFF", borderColor: "#FFFFFF" } : { borderColor: "#A9B4C7", background: "#FFFFFF" }}
+        style={on ? { background: "#2B57C4", borderColor: "#2B57C4" } : { borderColor: "#7A879E", background: "transparent" }}
       >
         {on && (
-          <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="#0F6B4F" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+          <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="#FFFFFF" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
             <path d="M2.5 6.2l2.3 2.3 4.7-5" />
           </svg>
         )}
@@ -248,9 +248,9 @@ function PlanRow({
       <span
         aria-hidden
         className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors"
-        style={on ? { borderColor: "#04291B", background: "#FFFFFF" } : { borderColor: "#A9B4C7", background: "#FFFFFF" }}
+        style={on ? { borderColor: "#2B57C4", background: "#FFFFFF" } : { borderColor: "#7A879E", background: "transparent" }}
       >
-        {on && <span className="h-2.5 w-2.5 rounded-full bg-[#0F6B4F]" />}
+        {on && <span className="h-2.5 w-2.5 rounded-full bg-[#2B57C4]" />}
       </span>
       <span className="min-w-0 flex-1">
         <span className="flex items-center gap-2 flex-wrap">
@@ -258,17 +258,17 @@ function PlanRow({
           {fit && (
             <span
               className="fz-settle text-[10px] font-semibold uppercase tracking-[0.08em] rounded-[6px] px-1.5 py-0.5"
-              style={on ? { background: "#04291B", color: "#fff" } : { background: "#0C1424", color: "#fff" }}
+              style={on ? { background: "#2B57C4", color: "#fff" } : { background: "#FFFFFF", color: "#0C1424" }}
             >
               Best fit
             </span>
           )}
         </span>
-        <span className={`block text-[13px] mt-0.5 sm:truncate leading-snug ${on ? "text-[#0A4A33]" : "text-[#5B6880]"}`}>{b.one}</span>
+        <span className={`block text-[13px] mt-0.5 sm:truncate leading-snug ${on ? "text-[#4A5873]" : "text-[#9AA7BD]"}`}>{b.one}</span>
       </span>
       <span className="shrink-0 text-right font-semibold text-[15px] tabular-nums">
         {b.from.replace("From ", "")}
-        <span className={`block text-[10px] font-normal uppercase tracking-[0.1em] ${on ? "text-[#0A4A33]" : "text-[#7A879E]"}`}>
+        <span className={`block text-[10px] font-normal uppercase tracking-[0.1em] ${on ? "text-[#4A5873]" : "text-[#9AA7BD]"}`}>
           {b.from.startsWith("From") ? "from" : ""}
         </span>
       </span>
@@ -462,12 +462,12 @@ function IntakeForm() {
                         <p className="text-sm font-semibold text-white">{g.title}</p>
                         <p className="text-xs text-[#6B7890] hidden sm:block">{g.line}</p>
                         {count > 0 && (
-                          <span key={count} className="fz-settle ml-auto text-[11px] font-semibold tabular-nums rounded-[6px] px-1.5 py-0.5 bg-[#34D399] text-[#04291B]">
+                          <span key={count} className="fz-settle ml-auto text-[11px] font-semibold tabular-nums rounded-[6px] px-1.5 py-0.5 bg-white text-[#0C1424]">
                             {count}
                           </span>
                         )}
                       </div>
-                      <div className="flex flex-wrap gap-x-2 gap-y-3">
+                      <div className="flex flex-wrap gap-x-2.5 gap-y-3.5">
                         {g.picks.map((p) => (
                           <Choice key={p.label} on={picked.includes(p.label)} c={g.c} onClick={() => toggle(p.label)}>
                             {p.label}
@@ -488,7 +488,7 @@ function IntakeForm() {
               ) : "Matched as you tap"}>
                 02 · Your build
               </Label>
-              <div className="space-y-3" role="radiogroup" aria-label="Pick a build">
+              <div className="space-y-3.5" role="radiogroup" aria-label="Pick a build">
                 {planList.map((b) => (
                   <PlanRow
                     key={b.key}
@@ -503,14 +503,14 @@ function IntakeForm() {
 
             <section>
               <Label right="Optional">03 · When and where from?</Label>
-              <div className="flex flex-wrap gap-x-2 gap-y-3 mb-4" role="radiogroup" aria-label="Timeline">
+              <div className="flex flex-wrap gap-x-2.5 gap-y-3.5 mb-4" role="radiogroup" aria-label="Timeline">
                 {TIMELINES.map((t) => (
                   <Choice key={t} role="radio" on={timeline === t} c="#FBBF24" onClick={() => setTimeline(timeline === t ? "" : t)}>
                     {t}
                   </Choice>
                 ))}
               </div>
-              <div className="flex flex-wrap gap-x-2 gap-y-3" role="radiogroup" aria-label="Starting point">
+              <div className="flex flex-wrap gap-x-2.5 gap-y-3.5" role="radiogroup" aria-label="Starting point">
                 {STARTS.map((s) => (
                   <Choice key={s} role="radio" on={start === s} c="#2DD4BF" onClick={() => setStart(start === s ? "" : s)}>
                     {s}

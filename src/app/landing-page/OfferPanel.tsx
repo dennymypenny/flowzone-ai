@@ -79,7 +79,7 @@ export default function OfferPanel({
           Say what you do, show why you and point to one next step. Designed and built by a person, not a template.
         </p>
 
-        <div className="mt-8 space-y-3.5" role="radiogroup" aria-label="Pick a plan">
+        <div className="mt-8 space-y-4" role="radiogroup" aria-label="Pick a plan">
           {plans.map((p) => {
             const on = plan === p.key;
             return (
@@ -94,9 +94,9 @@ export default function OfferPanel({
                 <span
                   aria-hidden
                   className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2"
-                  style={on ? { borderColor: "#04291B", background: "#FFFFFF" } : { borderColor: "#A9B4C7", background: "#FFFFFF" }}
+                  style={on ? { borderColor: "#2B57C4", background: "#FFFFFF" } : { borderColor: "#7A879E", background: "transparent" }}
                 >
-                  {on && <span className="h-2.5 w-2.5 rounded-full bg-[#0F6B4F]" />}
+                  {on && <span className="h-2.5 w-2.5 rounded-full bg-[#2B57C4]" />}
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="flex items-center gap-2 flex-wrap">
@@ -104,17 +104,17 @@ export default function OfferPanel({
                     {p.badge && (
                       <span
                         className="text-[10px] font-semibold uppercase tracking-[0.08em] rounded-[6px] px-1.5 py-0.5"
-                        style={on ? { background: "#04291B", color: "#fff" } : { background: "#0C1424", color: "#fff" }}
+                        style={on ? { background: "#2B57C4", color: "#fff" } : { background: "#FFFFFF", color: "#0C1424" }}
                       >
                         {p.badge}
                       </span>
                     )}
                   </span>
-                  <span className={`block text-[13px] mt-0.5 ${on ? "text-[#0A4A33]" : "text-[#5B6880]"}`}>{p.sub}</span>
+                  <span className={`block text-[13px] mt-0.5 ${on ? "text-[#4A5873]" : "text-[#9AA7BD]"}`}>{p.sub}</span>
                 </span>
                 <span className="shrink-0 text-right">
                   <span className="block font-semibold text-[17px] tabular-nums">{p.price}</span>
-                  <span className={`block text-[11px] tabular-nums ${on ? "text-[#0A4A33]" : "text-[#5B6880]"}`}>
+                  <span className={`block text-[11px] tabular-nums ${on ? "text-[#4A5873]" : "text-[#9AA7BD]"}`}>
                     {p.was && <span className="line-through mr-1 opacity-70">{p.was}</span>}
                     {p.unit}
                   </span>
@@ -175,7 +175,7 @@ export default function OfferPanel({
 
         <div
           className="rounded-[16px] border p-5 transition-all duration-300"
-          style={plan === "care" ? { background: "#10141D", borderColor: "#34D39966" } : { background: "#10141D", borderColor: "rgba(255,255,255,0.07)", opacity: 0.55 }}
+          style={plan === "care" ? { background: "#10141D", borderColor: "#5B8CFF88" } : { background: "#10141D", borderColor: "rgba(255,255,255,0.07)", opacity: 0.55 }}
         >
           <div className="flex items-baseline gap-2 mb-3">
             <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#8190A8]">Website care</p>
@@ -186,7 +186,7 @@ export default function OfferPanel({
           </div>
           <ul className="space-y-2.5 text-[15px] text-white">
             {INCLUDED_CARE.map((t) => (
-              <li key={t} className="flex items-start gap-2.5"><span className="mt-1"><Check c="#34D399" /></span>{t}</li>
+              <li key={t} className="flex items-start gap-2.5"><span className="mt-1"><Check c="#A8C4FF" /></span>{t}</li>
             ))}
           </ul>
           {plan !== "care" && (
