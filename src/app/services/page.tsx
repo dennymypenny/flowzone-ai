@@ -483,7 +483,7 @@ export default function Services() {
             See what that looks like
           </Link>
           <div className="flex flex-wrap gap-x-6 gap-y-2 justify-center mt-12">
-            {Object.entries(LANDING_NAV).map(([slug, name]) => (
+            {Object.entries(LANDING_NAV).filter(([slug]) => slug !== "orange-county-brand-design").map(([slug, name]) => (
               <Link key={slug} href={`/${slug}`} className="text-sm underline underline-offset-4">
                 {name}
               </Link>
