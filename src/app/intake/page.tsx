@@ -3,6 +3,7 @@ import { useState, Suspense, useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { readCart, clearCart, cartTotal, money } from "@/app/components/cart";
 import { SITE } from "@/lib/site";
+import { BUILDS as PRICED_BUILDS, CARE, GRAPHICS, MOTION, PACKAGES, QUICK_JOBS } from "@/lib/catalog";
 import Icon from "@/components/Icon";
 
 /**
@@ -50,8 +51,12 @@ const NOT_SURE_BUILD: Build = {
   from: "Free quote",
 };
 
-type GroupKey = "brand" | "site" | "sell" | "system" | "video";
-type Pick = { label: string; small?: boolean };
+type GroupKey = "brand" | "site" | "sell" | "system" | "video" | "plans";
+/** `cents` is the flat price for a small pick on its own; `monthly` means it renews. */
+type Pick = { label: string; small?: boolean; cents?: number; monthly?: boolean };
+
+const G = GRAPHICS[0].price; // every simple graphic is one price
+const job = (id: string) => QUICK_JOBS.find((j) => j.id === id)!.price;
 
 /** The five areas. Each pick is small (a quick job on its own) or not. */
 const GROUPS: { key: GroupKey; title: string; line: string; icon: string; c: string; picks: Pick[] }[] = [
@@ -65,8 +70,8 @@ const GROUPS: { key: GroupKey; title: string; line: string; icon: string; c: str
       { label: "Logo" },
       { label: "Colors and fonts" },
       { label: "Brand refresh" },
-      { label: "Social graphics", small: true },
-      { label: "Flyers and print", small: true },
+      { label: "Social graphics", small: true, cents: G },
+      { label: "Flyers and print", small: true, cents: G },
     ],
   },
   {
@@ -76,11 +81,22 @@ const GROUPS: { key: GroupKey; title: string; line: string; icon: string; c: str
     icon: "clapper",
     c: "#FBBF24",
     picks: [
-      { label: "Ad for social", small: true },
-      { label: "Story ad", small: true },
-      { label: "Video ad", small: true },
-      { label: "Promo reel", small: true },
-      { label: "Logo animation", small: true },
+      { label: "Ad for social", small: true, cents: G },
+      { label: "Story ad", small: true, cents: G },
+      { label: "Video ad", small: true, cents: MOTION.videoAd },
+      { label: "Promo reel", small: true, cents: job("reel") },
+      { label: "Logo animation", small: true, cents: MOTION.logoAnimation },
+    ],
+  },
+  {
+    key: "plans",
+    title: "Packages and plans",
+    line: "A ready set of ads, or graphics every month",
+    icon: "gem",
+    c: "#2DD4BF",
+    picks: [
+      { label: `Ad package: ${PACKAGES.ads.what}`, small: true, cents: PACKAGES.ads.price },
+      { label: `Monthly graphics: ${PACKAGES.graphics.what}`, small: true, cents: PACKAGES.graphics.monthly, monthly: true },
     ],
   },
   {
@@ -92,10 +108,10 @@ const GROUPS: { key: GroupKey; title: string; line: string; icon: string; c: str
     picks: [
       { label: "New website" },
       { label: "Redesign" },
-      { label: "Landing page", small: true },
-      { label: "Fix or speed up", small: true },
+      { label: "Landing page", small: true, cents: job("page") },
+      { label: "Fix or speed up", small: true, cents: job("fix") },
       { label: "Show up on Google" },
-      { label: "Website care (monthly)", small: true },
+      { label: "Website care (monthly)", small: true, cents: CARE.monthly, monthly: true },
     ],
   },
   {
@@ -122,7 +138,7 @@ const GROUPS: { key: GroupKey; title: string; line: string; icon: string; c: str
       { label: "Follow-up emails" },
       { label: "Invoicing" },
       { label: "Email list" },
-      { label: "Forms that send", small: true },
+      { label: "Forms that send", small: true, cents: job("form") },
     ],
   },
 ];
@@ -149,6 +165,37 @@ const legacyMap: Record<string, string> = {
 
 const pickIndex = new Map<string, { group: GroupKey; small: boolean }>();
 GROUPS.forEach((g) => g.picks.forEach((p) => pickIndex.set(p.label, { group: g.key, small: !!p.small })));
+const pickByLabel = new Map<string, Pick>();
+GROUPS.forEach((g) => g.picks.forEach((p) => pickByLabel.set(p.label, p)));
+
+/**
+ * The running estimate. A big build counts once at its price, then every
+ * small pick adds its own flat price on top. Monthly picks add up separately.
+ * `from` is true when a build price is a starting point.
+ */
+type Estimate = { once: number; monthly: number; from: boolean; count: number };
+function estimate(picked: string[], build?: { name: string }): Estimate | null {
+  const base = build ? PRICED_BUILDS.find((b) => b.name === build.name) : undefined;
+  let once = base ? base.price : 0;
+  let monthly = 0;
+  let count = base ? 1 : 0;
+  for (const label of picked) {
+    const p = pickByLabel.get(label);
+    if (!p?.small || !p.cents) continue;
+    if (p.monthly) monthly += p.cents;
+    else once += p.cents;
+    count++;
+  }
+  if (!once && !monthly) return null;
+  return { once, monthly, from: !!base?.from, count };
+}
+
+const estimateText = (e: Estimate) => {
+  const parts: string[] = [];
+  if (e.once) parts.push(`${e.from ? "From " : ""}${money(e.once)}`);
+  if (e.monthly) parts.push(`${money(e.monthly)}/mo`);
+  return parts.join(" + ");
+};
 
 /** The whole recommendation, run on every click. Plain rules, no guessing. */
 function bestFit(picked: string[]): string {
@@ -321,6 +368,7 @@ function IntakeForm() {
   // "__none" = the visitor tapped the picked build again to clear it.
   const service = manual === "__none" ? "" : manual || suggested;
   const build = buildByName(service);
+  const est = useMemo(() => estimate(picked, build), [picked, build]);
 
   // Fill name, email and business from last time, if this browser has them.
   useEffect(() => {
@@ -361,9 +409,10 @@ function IntakeForm() {
     if (picked.length) out.push(`What I need: ${picked.join(", ")}`);
     if (timeline) out.push(`Timeline: ${timeline}`);
     if (start) out.push(`Starting point: ${start}`);
+    if (est) out.push(`Estimate on the page: ${estimateText(est)}`);
     const top = out.join("\n");
     return [top, notes.trim()].filter(Boolean).join("\n\n");
-  }, [picked, timeline, start, notes]);
+  }, [picked, timeline, start, notes, est]);
 
   const fallbackMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(
     `New project for FlowZone: ${service || "not sure yet"}`
@@ -587,7 +636,9 @@ function IntakeForm() {
                   <p key={build?.name || "none"} className="fz-settle text-[13px] font-semibold text-white truncate">
                     {build && build.name !== NOT_SURE ? build.name.replace(/^The /, "") : picked.length ? "We will pick the build" : "Nothing picked yet"}
                   </p>
-                  <p className="text-[12px] text-[#F0845F] font-semibold">{build ? build.from : "Tap what you need"}</p>
+                  <p key={est ? estimateText(est) : "x"} className="fz-settle text-[12px] text-[#F0845F] font-semibold">
+                    {est ? `${estimateText(est)}${est.count > 1 ? ` · ${est.count} items` : ""}` : build ? build.from : "Tap what you need"}
+                  </p>
                 </div>
                 <button type="submit" form="fz-ticket" disabled={loading} className="fz-go shrink-0 rounded-[12px] px-5 py-3 text-[15px] font-semibold">
                   {loading ? "Sending..." : "Send ticket \u2192"}
@@ -599,7 +650,7 @@ function IntakeForm() {
           {/* Right: the ticket, filling itself in */}
           <aside className="hidden lg:block border-l border-white/10" style={{ background: "#0A0D14" }}>
             <div className="sticky top-24 p-6">
-              <TicketSide build={build} picked={picked} timeline={timeline} start={start} me={me} loading={loading} />
+              <TicketSide est={est} build={build} picked={picked} timeline={timeline} start={start} me={me} loading={loading} />
             </div>
           </aside>
         </form>
@@ -610,6 +661,7 @@ function IntakeForm() {
 
 /** The right-hand column: a banner, the live ticket, what happens next, the send button. */
 function TicketSide({
+  est,
   build,
   picked,
   timeline,
@@ -617,6 +669,7 @@ function TicketSide({
   me,
   loading,
 }: {
+  est: Estimate | null;
   build?: Build;
   picked: string[];
   timeline: string;
@@ -635,7 +688,7 @@ function TicketSide({
           {build ? (
             <div key={build.name} className="fz-settle">
               <p className="font-display text-xl text-white leading-tight">{build.name}</p>
-              <p className="text-sm font-semibold" style={{ color: "#F0845F" }}>{build.from}</p>
+              <p className="text-sm font-semibold" style={{ color: "#F0845F" }}>{est ? estimateText(est) : build.from}</p>
             </div>
           ) : (
             <p className="font-display text-lg text-white/80">Your build shows up here</p>
@@ -661,6 +714,7 @@ function TicketSide({
           )}
         </div>
         <dl className="space-y-1.5 text-sm">
+          {est && est.count > 1 && <Row k="Estimate" v={`${estimateText(est)} for ${est.count} items`} />}
           <Row k="When" v={timeline} />
           <Row k="From" v={start ? start.replace("I have something, make it better", "Improving what exists") : ""} />
           <Row k="Name" v={me.name} />
@@ -671,7 +725,7 @@ function TicketSide({
       <div className="rounded-[16px] border border-white/[0.07] p-4" style={{ background: CARD }}>
         <Label>What happens next</Label>
         <ul className="space-y-2.5 text-[15px] text-white">
-          {["A person reads every word", "You get scope, price and a date", "Usually the same day, no call needed"].map((t) => (
+          {["We read every word", "You get scope, price and a date", "Usually the same day, no call needed"].map((t) => (
             <li key={t} className="flex items-center gap-2.5">
               <svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8.5l3 3 7-7" /></svg>
               {t}

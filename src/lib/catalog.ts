@@ -58,6 +58,18 @@ export const BUILDS: CartItem[] = [
 export const CATALOG: CartItem[] = [...SMALL_JOBS, ...BUILDS];
 
 /**
+ * Packages and the monthly plan. The ad package is one price for a ready set;
+ * the graphics plan renews every month and can stop anytime.
+ */
+export const PACKAGES = {
+  ads: { name: "Ad package", what: "3 ads and 1 video ad", price: 19900 },
+  graphics: { name: "Monthly graphics", what: "8 graphics a month", monthly: 29900 },
+} as const;
+
+/** Single-ticket prices for the motion jobs that are not in QUICK_JOBS. */
+export const MOTION = { videoAd: 7499, logoAnimation: 9999 } as const;
+
+/**
  * Website care, month to month and optional. Never required to buy anything
  * else, cancel anytime. Cheaper when it comes with the $99.99 landing page.
  */
