@@ -220,7 +220,7 @@ export default function Pulse() {
       data-pulse-ignore
       role="region"
       aria-label="Cookie notice"
-      className="fixed z-[45] left-3 right-3 bottom-3 md:left-auto md:right-6 md:bottom-6 md:w-[380px] rounded-[20px] border border-white/[0.1] bg-[#101A2E] shadow-[0_18px_50px_rgba(0,0,0,0.45)] p-5 text-ink"
+      className="fz-dock-lift fixed z-[45] left-3 right-3 bottom-3 md:left-auto md:right-6 md:bottom-6 md:w-[380px] rounded-[20px] border border-white/[0.1] bg-[#101A2E] shadow-[0_18px_50px_rgba(0,0,0,0.45)] p-5 text-ink"
     >
       <p className="text-[15px] font-semibold mb-1.5">One cookie, if that is okay</p>
       <p className="text-[14px] leading-relaxed text-ink-soft">

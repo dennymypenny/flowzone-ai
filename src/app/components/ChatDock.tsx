@@ -74,7 +74,7 @@ export default function ChatDock() {
         <button
           onClick={() => setOpen(true)}
           aria-label="Open Flowy, the FlowZone helper"
-          className="fixed z-40 md:hidden right-0 bottom-6 flex items-center gap-2"
+          className="fz-dock-lift fixed z-40 md:hidden right-0 bottom-6 flex items-center gap-2"
         >
           <span className="relative rounded-[14px] bg-white border border-[#D6DEEC] px-3 py-2 text-[13px] leading-none text-[#35425E] shadow-[0_18px_40px_-18px_rgba(11,19,34,0.55)]">
             Ask <span className="font-semibold text-[#2B57C4]">Flowy</span>

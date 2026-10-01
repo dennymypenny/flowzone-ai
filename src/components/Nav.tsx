@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Wordmark from "@/components/Wordmark";
 import CartWidget from "@/app/components/CartWidget";
@@ -16,9 +16,31 @@ const LINKS = [
 export default function Nav() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  // Phones: tuck the bar away on the way down, bring it back on the way up.
+  const [away, setAway] = useState(false);
+  useEffect(() => {
+    let last = window.scrollY;
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const d = y - last;
+        if (y < 80) setAway(false);
+        else if (d > 6) setAway(true);
+        else if (d < -6) setAway(false);
+        last = y;
+        ticking = false;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  useEffect(() => setAway(false), [pathname]);
 
   return (
-    <nav className="sitebar fixed w-full glassbar z-50">
+    <nav className={`sitebar fixed w-full glassbar z-50${away && !open ? " sitebar-away" : ""}`}>
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link href="/" aria-label="FlowZone, home">
           <Wordmark tone="dark" />

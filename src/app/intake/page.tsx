@@ -579,7 +579,7 @@ function IntakeForm() {
 
             {/* Phones: no big preview card. A slim bar pinned to the bottom
                 carries the build, the price and the one send button. */}
-            <div className="lg:hidden fixed inset-x-0 bottom-0 z-[60] border-t border-white/10 px-4 pt-3 pb-[calc(12px+env(safe-area-inset-bottom,0px))]" style={{ background: "rgba(7,9,15,0.96)", backdropFilter: "blur(10px)" }}>
+            <div className="fz-intake-dock lg:hidden fixed inset-x-0 bottom-0 z-[60] border-t border-white/10 px-4 pt-3 pb-[calc(12px+env(safe-area-inset-bottom,0px))]" style={{ background: "rgba(7,9,15,0.96)", backdropFilter: "blur(10px)" }}>
               <div className="flex items-center gap-3">
                 <div className="min-w-0 flex-1">
                   <p key={build?.name || "none"} className="fz-settle text-[13px] font-semibold text-white truncate">

@@ -1137,3 +1137,24 @@ html.fz-intro-out .fz-intro {
 .fzi-p .fzi-tag { font-size: 50px; line-height: 1.35; }
 .fzi-tag b { font-weight: 500; color: #F1F3F7; }
 .fzi-tag i { font-style: normal; font-weight: 500; color: #5B8CFF; }
+
+/* ------------------------------------------------------------------
+   Phones on /intake. The ticket page pins a send bar to the bottom, so
+   anything else that floats at the bottom (Flowy, the cookie note) rides
+   up above it instead of hiding behind it. Bottom only moves, nothing hides.
+   ------------------------------------------------------------------ */
+@media (max-width: 1023px) {
+  html:has(.fz-intake-dock) .fz-dock-lift {
+    bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+/* Phones: the nav slides up out of the way while you scroll down and comes
+   back the moment you scroll up. Transform only, it is never made invisible. */
+.sitebar { transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+@media (max-width: 767px) {
+  .sitebar.sitebar-away { transform: translateY(calc(-100% - 8px)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sitebar { transition: none; }
+}
