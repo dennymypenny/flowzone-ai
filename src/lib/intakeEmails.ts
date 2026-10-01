@@ -41,7 +41,7 @@ const BUILDS: Record<string, { c: string; tint: string; emoji: string; from: str
   "The Full Build": { c: "#2B57C4", tint: "#EDF2FD", emoji: "\u{1F680}", from: "From $1,500", one: "Brand, site and system, wired together." },
   "The Storefront Build": { c: "#B03A12", tint: "#FDF0EA", emoji: "\u{1F6D2}", from: "From $2,500", one: "Cart, checkout, money in your account." },
   "The Engine Build": { c: "#0F6B4F", tint: "#E8F7F1", emoji: "\u{2699}\u{FE0F}", from: "From $500", one: "Follow-ups, booking and invoicing, handled." },
-  "A Small Job": { c: "#8A5100", tint: "#FEF6E4", emoji: "\u{2702}\u{FE0F}", from: "From $49.99", one: "A reel, a logo, a page, a fix." },
+  "A Small Job": { c: "#8A5100", tint: "#FEF6E4", emoji: "\u{2702}\u{FE0F}", from: "From $49.99", one: "Ads, reels and graphics, plus quick fixes." },
 };
 const NOT_SURE = { c: "#1E3A8A", tint: "#EFF3F9", emoji: "\u{1F9ED}", from: "We will recommend one", one: "You bring the idea, we find the right build." };
 

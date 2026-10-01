@@ -37,7 +37,7 @@ const builds: Build[] = [
   { key: "full", icon: "rocket", c: "#5B8CFF", name: "The Full Build", one: "Brand, site and system, wired together.", from: "From $1,500" },
   { key: "storefront", icon: "box", c: "#F0845F", name: "The Storefront Build", one: "An online store. Cart, checkout, money in your account.", from: "From $2,500" },
   { key: "engine", icon: "bolt", c: "#34D399", name: "The Engine Build", one: "Follow-ups, booking and invoicing that run themselves.", from: "From $500" },
-  { key: "small", icon: "scissors", c: "#FBBF24", name: "A Small Job", one: "A reel, a logo, a design, a page, a form, a fix.", from: "From $49.99" },
+  { key: "small", icon: "scissors", c: "#FBBF24", name: "A Small Job", one: "Ads, reels and graphics. Or a page, a form, a fix.", from: "From $49.99" },
 ];
 
 const NOT_SURE = "Not sure yet";
@@ -67,6 +67,20 @@ const GROUPS: { key: GroupKey; title: string; line: string; icon: string; c: str
       { label: "Brand refresh" },
       { label: "Social graphics", small: true },
       { label: "Flyers and print", small: true },
+    ],
+  },
+  {
+    key: "video",
+    title: "Ads and video",
+    line: "Ads people stop scrolling for",
+    icon: "clapper",
+    c: "#FBBF24",
+    picks: [
+      { label: "Ad for social", small: true },
+      { label: "Story ad", small: true },
+      { label: "Video ad", small: true },
+      { label: "Promo reel", small: true },
+      { label: "Logo animation", small: true },
     ],
   },
   {
@@ -109,18 +123,6 @@ const GROUPS: { key: GroupKey; title: string; line: string; icon: string; c: str
       { label: "Invoicing" },
       { label: "Email list" },
       { label: "Forms that send", small: true },
-    ],
-  },
-  {
-    key: "video",
-    title: "Video and motion",
-    line: "Something people stop scrolling for",
-    icon: "clapper",
-    c: "#FBBF24",
-    picks: [
-      { label: "Promo reel", small: true },
-      { label: "Logo animation", small: true },
-      { label: "Ad for social", small: true },
     ],
   },
 ];
