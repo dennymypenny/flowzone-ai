@@ -344,7 +344,6 @@ export const LANDING_NAV: Record<string, string> = {
   "website-design": "Website design",
   "motion-graphics": "Motion graphics",
   "graphic-design": "Graphic design",
-  "orange-county-brand-design": "Orange County and LA",
   questions: "Questions",
 };
 
