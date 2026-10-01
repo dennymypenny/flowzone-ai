@@ -9,14 +9,14 @@ import LogoBand from "@/components/LogoBand";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Some of the work FlowZone has made. A storefront built end to end, a store redesign for AntibodY, a spec ad for Profound, a community site for a Miami Mahjong club, three reels cut for sound-off feeds, a brand animation, a product animation, a show title animation and brand graphics for clients.",
+    "Some of the work FlowZone has made. A storefront built end to end, a store redesign for AntibodY, a spec ad for Profound, a community site for a Miami Mahjong club, three reels cut for sound-off feeds, a product animation, a show title animation and brand graphics for clients.",
   alternates: { canonical: "/work" },
   // Set in full because metadata merging is shallow. A page that declares
   // openGraph replaces the layout block outright, so anything omitted is gone.
   openGraph: {
     title: "Work | FlowZone",
     description:
-      "Some of our work, and we are always looking for the next one. A storefront built end to end, a store redesign for AntibodY, a spec ad for Profound, a community site for a Miami Mahjong club, three reels cut for sound-off feeds, a brand animation, a product animation, a show title animation and brand graphics for clients.",
+      "Some of our work, and we are always looking for the next one. A storefront built end to end, a store redesign for AntibodY, a spec ad for Profound, a community site for a Miami Mahjong club, three reels cut for sound-off feeds, a product animation, a show title animation and brand graphics for clients.",
     url: `${SITE.url}/work`,
     siteName: "FlowZone",
     type: "website",
@@ -45,8 +45,8 @@ export default function Work() {
           </h1>
           <p className="lede max-w-reading mt-10">
             A storefront built end to end, a store redesign for AntibodY, a
-            spec ad for Profound, a community site for a Miami Mahjong club, three reels cut for sound-off feeds, a brand
-            animation, a product animation, a show title animation, brand
+            spec ad for Profound, a community site for a Miami Mahjong club, three reels cut for sound-off feeds, a
+            product animation, a show title animation, brand
             graphics for clients and three interface designs. Everything here was made by us, and nothing on this page
             is a concept dressed up as a client; the spec piece says it is one. If you have something you want
             built,{" "}
@@ -429,10 +429,8 @@ export default function Work() {
       </section>
 
       {/* ---------- 04 · Client site ----------
-          Mahj & Coffee, the second site on the page, next to CardsRG. Two
-          square videos side by side: a scroll-through of the site itself and
-          the welcome reel cut for the account, so the brand shows up in
-          motion twice rather than as stills. Client work: a real Miami
+          Mahj & Coffee, the second site on the page, next to CardsRG. One
+          scroll-through of the site itself (the welcome reel came off Sep 30). Client work: a real Miami
           community with a real account. Not hosted here, so no site link. */}
       <section id="mahj-and-coffee" data-flow className="scroll-mt-24 px-6 py-24 border-t border-rule">
         <div className="max-w-6xl mx-auto">
@@ -440,32 +438,26 @@ export default function Work() {
             <div className="md:col-span-6">
               <p className="label mb-4">04 · Client site</p>
               <h2 className="font-display text-5xl leading-none mb-4">
-                Two colours,
+                Two colors,
                 <br />
                 one very good table.
               </h2>
             </div>
             <p className="md:col-span-6 text-ink-soft leading-relaxed self-end max-w-reading">
               A community site has to feel like the room before you walk in.
-              The site and the welcome reel are built from the logo alone, its
-              red and its blush and nothing else, so everything the brand
-              posts looks like the same brand.
+              The site is built from the logo alone, its red and its blush
+              and nothing else, so everything the brand puts out looks like
+              the same brand.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+          <div className="max-w-2xl mx-auto">
             {[
               {
                 base: "mahj-coffee-site",
                 tag: "The site",
                 note: "One page, top to bottom.",
                 aria: "Scroll-through of the Mahj & Coffee website: the red wordmark on blush, Emily's welcome, ways to play, the Girl friend meet me for Mahj & Coffee band, the purist approach, the calendar, the Etsy practice sheet and the join list.",
-              },
-              {
-                base: "mahj-coffee-welcome",
-                tag: "The welcome reel",
-                note: "Cut for the Instagram grid.",
-                aria: "Mahj & Coffee welcome animation: the mahj and coffee wordmark, then a community for Mahjong lovers to Charleston into connection, tiles and coffee cups around a table, learn the game, find your people, why play behind a screen, real laughs, real macchiatos, real connection, bird bam, come for the tiles, leave with lifelong pungs of friendship, hashtag sip and play.",
               },
             ].map((v) => (
               <figure key={v.base} className="panel overflow-hidden flex flex-col">
@@ -497,25 +489,18 @@ export default function Work() {
               <p className="text-ink-soft font-light leading-relaxed max-w-reading">
                 Mahj &amp; Coffee teaches American Mahjong in Miami, beginner
                 lessons, guided play, game nights and coffee meetups, the
-                purist way. The site takes the two colours off the logo and
+                purist way. The site takes the two colors off the logo and
                 refuses a third. The founder&apos;s welcome is in her own
                 voice, the buttons carry a coffee cup, the girl with the mug
                 gets a whole band, and the practice sheet from the Etsy shop
                 gets its own room.
               </p>
-              <p className="text-ink-soft font-light leading-relaxed max-w-reading mt-4">
-                The reel introduces the same brand in twenty-seven seconds
-                with no photo library, drawn from the wordmark, the tiles, the
-                cups and the copy from the account&apos;s own bio. It reads
-                with the sound off and loops clean pinned to the top of the
-                profile.
-              </p>
               <div className="border-t border-rule mt-6 pt-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {[
-                  ["Pieces", "Site and reel"],
+                  ["Piece", "Community site"],
                   ["Palette", "Two, from the logo"],
                   ["Site", "Single HTML file"],
-                  ["Reel", "27s, 1:1, no audio"],
+                  ["City", "Miami"],
                 ].map(([k, v]) => (
                   <div key={k}>
                     <p className="label mb-1.5">{k}</p>

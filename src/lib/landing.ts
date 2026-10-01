@@ -277,7 +277,7 @@ export const LANDINGS: Landing[] = [
       },
       {
         q: "What kind of animation do you make?",
-        a: "Logo and brand animations, title sequences, product explainers, promo reels and ads. Examples are on the work page, including a Mahj & Coffee welcome animation, the Powered by People title animation, a SlipFolio product animation and a spec ad for Profound.",
+        a: "Logo and brand animations, title sequences, product explainers, promo reels and ads. Examples are on the work page, including the Powered by People title animation, a SlipFolio product animation and a spec ad for Profound.",
       },
       {
         q: "What formats will I get?",
