@@ -287,7 +287,8 @@ export default function Services() {
                   </span>
                 </div>
                 <h3 className="font-display text-3xl mb-2">{b.name}</h3>
-                <p className="text-sm mb-6" style={{ color: b.c }}>
+                {/* Two lines reserved on wide screens so every card's list starts on the same line. */}
+                <p className="text-sm leading-5 mb-6 md:min-h-[40px]" style={{ color: b.c }}>
                   {b.one}
                 </p>
 
@@ -332,7 +333,7 @@ export default function Services() {
                   </div>
                   <div className="col-span-2">
                     <p className="label mb-1.5">Right for you if</p>
-                    <p className="text-sm text-ink-soft font-light leading-relaxed">
+                    <p className="text-sm text-ink-soft font-light leading-relaxed md:min-h-[46px]">
                       {b.right}
                     </p>
                   </div>
