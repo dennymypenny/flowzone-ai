@@ -20,7 +20,7 @@ const FROM = process.env.RESEND_FROM || "FlowZone Intake <onboarding@resend.dev>
 // the studio copy is easy to spot in the inbox.
 const FROM_ADDR = (FROM.match(/<([^>]+)>/)?.[1] || FROM).trim();
 const FROM_STUDIO = `FlowZone Tickets <${FROM_ADDR}>`;
-const FROM_DENNIS = `Dennis at FlowZone <${FROM_ADDR}>`;
+const FROM_FLOWY = `Flowy from FlowZone <${FROM_ADDR}>`;
 
 // Caps so a paste bomb or a bot cannot turn one submission into a huge email.
 const LIMITS = {
@@ -121,7 +121,7 @@ export async function POST(req: NextRequest) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: FROM_DENNIS,
+        from: FROM_FLOWY,
         to: email,
         reply_to: SITE.leadInbox,
         subject: receipt.subject,
