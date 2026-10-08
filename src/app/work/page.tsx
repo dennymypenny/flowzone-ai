@@ -9,14 +9,14 @@ import LogoBand from "@/components/LogoBand";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Some of the work FlowZone has made. A storefront built end to end, a store redesign for AntibodY, a spec ad for Profound, a community site for a Miami Mahjong club, three reels cut for sound-off feeds, a product animation, a show title animation and brand graphics for clients.",
+    "Some of the work FlowZone has made. A storefront built end to end, a store redesign for AntibodY, a spec ad for Profound, a community site for a Miami Mahjong club, four reels cut for sound-off feeds, a product animation, a show title animation and brand graphics for clients.",
   alternates: { canonical: "/work" },
   // Set in full because metadata merging is shallow. A page that declares
   // openGraph replaces the layout block outright, so anything omitted is gone.
   openGraph: {
     title: "Work | FlowZone",
     description:
-      "Some of our work, and we are always looking for the next one. A storefront built end to end, a store redesign for AntibodY, a spec ad for Profound, a community site for a Miami Mahjong club, three reels cut for sound-off feeds, a product animation, a show title animation and brand graphics for clients.",
+      "Some of our work, and we are always looking for the next one. A storefront built end to end, a store redesign for AntibodY, a spec ad for Profound, a community site for a Miami Mahjong club, four reels cut for sound-off feeds, a product animation, a show title animation and brand graphics for clients.",
     url: `${SITE.url}/work`,
     siteName: "FlowZone",
     type: "website",
@@ -45,7 +45,7 @@ export default function Work() {
           </h1>
           <p className="lede max-w-reading mt-10">
             A storefront built end to end, a store redesign for AntibodY, a
-            spec ad for Profound, a community site for a Miami Mahjong club, three reels cut for sound-off feeds, a
+            spec ad for Profound, a community site for a Miami Mahjong club, four reels cut for sound-off feeds, a
             product animation, a show title animation, brand
             graphics for clients and three interface designs. Everything here was made by us, and nothing on this page
             is a concept dressed up as a client; the spec piece says it is one. If you have something you want
@@ -513,7 +513,7 @@ export default function Work() {
         </div>
       </section>
 
-      {/* Motion: three reels, on white. Two are client work and one is a
+      {/* Motion: four reels, on white. Three are client work and one is a
           studio sample, and each says which it is, because the rule on this
           page is that nothing pretends. Three across with the write-up under
           each, so a fourth drops in without a relayout. */}
@@ -535,7 +535,7 @@ export default function Work() {
             </div>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
                 name: "Shutters Depot",
@@ -566,6 +566,16 @@ export default function Work() {
                   "A sample cut in the studio for a South Florida property appointment service. The whole pitch in fourteen seconds: the problem, the coverage, the hours, the handle.",
                 link: null,
                 facts: [["Length", "14 seconds"], ["Made for", "Instagram and TikTok"]],
+              },
+              {
+                name: "RINGSHIFT",
+                kind: "Client work",
+                base: "ringshift-reel",
+                aria: "RINGSHIFT launch ad: can you last sixty seconds? Dodge the red, it gets faster. A one-tap ring game, tap, shift, survive, download now.",
+                blurb:
+                  "A launch ad for a one-tap mobile ring game coming to the App Store. Real gameplay under big captions that read in a glance: the challenge, the rule, the speed, then the download.",
+                link: null,
+                facts: [["Length", "17 seconds"], ["Made for", "App install ads"]],
               },
             ].map((r) => (
               <div key={r.base} className="flex flex-col">
@@ -668,7 +678,7 @@ export default function Work() {
       </section>
 
       {/* ---------- 07 · Title animation ----------
-          A twelve second show open, "powered by people", cut in the studio.
+          A fourteen second show open, "powered by people", cut in the studio.
           Landscape like SlipFolio, so it takes the full width. Studio sample,
           labelled that way: there is no client behind it and no link. */}
       <section data-flow className="band-light px-6 py-24">
@@ -677,7 +687,7 @@ export default function Work() {
             <div className="md:col-span-6">
               <p className="label mb-4">07 · Title animation</p>
               <h2 className="font-display text-5xl leading-none mb-4">
-                The first twelve seconds
+                The first few seconds
                 <br />
                 set the whole tone.
               </h2>
@@ -690,7 +700,7 @@ export default function Work() {
           </div>
 
           <div className="panel overflow-hidden">
-            <FastVideo className="w-full h-auto block" rate={1} preload="metadata" lazy controls poster={"/assets/powered-by-people-intro-poster.jpg"} ariaLabel={"Powered by People title animation: the words powered by people type in letter by letter over a glowing audio waveform on a deep blue background, then settle as a title card."} sources={[{ src: "/assets/powered-by-people-intro.mp4", type: "video/mp4" }, { src: "/assets/powered-by-people-intro.webm", type: "video/webm" }]} />
+            <FastVideo className="w-full h-auto block" rate={1} preload="metadata" lazy controls poster={"/assets/powered-by-people-intro-v2-poster.jpg"} ariaLabel={"Powered by People title animation: the words powered by people type in letter by letter over a glowing audio waveform on a deep blue background, then settle as a title card with the line: real conversations about how our business is powered by you."} sources={[{ src: "/assets/powered-by-people-intro-v2.mp4", type: "video/mp4" }, { src: "/assets/powered-by-people-intro-v2.webm", type: "video/webm" }]} />
           </div>
 
           <div className="grid md:grid-cols-12 gap-10 mt-8">
@@ -703,12 +713,13 @@ export default function Work() {
                 An intro built in the studio for a talk format about the people
                 behind the work. Sans for the power, italic serif for the
                 people, and a waveform that keeps moving so the card never sits
-                still. It drops in front of any episode, podcast or video,
-                without a recut.
+                still. Then the tagline types in under it, so viewers know what
+                the show is about before anyone speaks. It drops in front of
+                any episode, podcast or video, without a recut.
               </p>
               <div className="border-t border-rule mt-6 pt-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {[
-                  ["Length", "12 seconds"],
+                  ["Length", "14 seconds"],
                   ["Format", "16:9 landscape"],
                   ["Made for", "Podcast and video opens"],
                   ["Audio", "Add the theme"],
