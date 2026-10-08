@@ -9,14 +9,14 @@ import LogoBand from "@/components/LogoBand";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Some of the work FlowZone has made. A storefront built end to end, a store redesign for AntibodY, a spec ad for Profound, a community site for a Miami Mahjong club, four reels cut for sound-off feeds, a product animation, a show title animation and brand graphics for clients.",
+    "Some of the work FlowZone has made. A storefront built end to end, a store redesign for AntibodY, a spec ad for Profound, a community site for a Miami Mahjong club, four reels cut for sound-off feeds, a product animation, a show title animation and interface designs.",
   alternates: { canonical: "/work" },
   // Set in full because metadata merging is shallow. A page that declares
   // openGraph replaces the layout block outright, so anything omitted is gone.
   openGraph: {
     title: "Work | FlowZone",
     description:
-      "Some of our work, and we are always looking for the next one. A storefront built end to end, a store redesign for AntibodY, a spec ad for Profound, a community site for a Miami Mahjong club, four reels cut for sound-off feeds, a product animation, a show title animation and brand graphics for clients.",
+      "Some of our work, and we are always looking for the next one. A storefront built end to end, a store redesign for AntibodY, a spec ad for Profound, a community site for a Miami Mahjong club, four reels cut for sound-off feeds, a product animation, a show title animation and interface designs.",
     url: `${SITE.url}/work`,
     siteName: "FlowZone",
     type: "website",
@@ -46,8 +46,8 @@ export default function Work() {
           <p className="lede max-w-reading mt-10">
             A storefront built end to end, a store redesign for AntibodY, a
             spec ad for Profound, a community site for a Miami Mahjong club, four reels cut for sound-off feeds, a
-            product animation, a show title animation, brand
-            graphics for clients and three interface designs. Everything here was made by us, and nothing on this page
+            product animation, a show title animation and three interface
+            designs. Everything here was made by us, and nothing on this page
             is a concept dressed up as a client; the spec piece says it is one. If you have something you want
             built,{" "}
             <Link
@@ -872,75 +872,6 @@ export default function Work() {
                   ["Screens", "One, above the fold"],
                   ["Type", "Grotesk, two weights"],
                   ["Made for", "Product launch"],
-                ].map(([k, v]) => (
-                  <div key={k}>
-                    <p className="label mb-1.5">{k}</p>
-                    <p className="text-sm text-ink-soft">{v}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* NextPlayU is one banner, and that is the point: it sits here as the
-          proof behind the single-graphic offer. Landscape, so it gets the full
-          width like SlipFolio rather than a grid slot. */}
-      <section id="nextplayu" data-flow className="scroll-mt-24 px-6 py-24 border-t border-rule">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-12 gap-10 mb-10">
-            <div className="md:col-span-6">
-              <p className="label mb-4">09 · Brand graphics</p>
-              <h2 className="font-display text-5xl leading-none mb-4">
-                One graphic,
-                <br />
-                doing a whole introduction.
-              </h2>
-            </div>
-            <p className="md:col-span-6 text-ink-soft leading-relaxed self-end max-w-reading">
-              Sometimes the job is not a site or a reel. It is one banner that
-              has to carry the name, the mark, the promise and the address, and
-              look like a brand that has been around for years.
-            </p>
-          </div>
-
-          <div className="panel overflow-hidden">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/assets/npu-banner.png"
-              alt="NextPlayU banner: NPU monogram and wordmark over black and gold, with the line Your next play starts here. From college and pro sports to careers where high performers outperform. nextplayu.io"
-              className="w-full h-auto block"
-              loading="lazy"
-            />
-          </div>
-
-          <div className="grid md:grid-cols-12 gap-10 mt-8">
-            <div className="md:col-span-5">
-              <p className="label mb-3">Client work</p>
-              <h3 className="font-display text-3xl leading-none mb-2">NextPlayU</h3>
-              <a
-                href="https://nextplayu.io"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-accent hover:underline"
-              >
-                nextplayu.io ↗
-              </a>
-            </div>
-            <div className="md:col-span-7">
-              <p className="text-ink-soft font-light leading-relaxed max-w-reading">
-                NextPlayU helps college and pro athletes make the jump from
-                sports into careers. The banner leads with the monogram, holds
-                one line and one promise, and keeps the black and gold doing the
-                talking. Built as a single graphic, delivered ready to post.
-              </p>
-              <div className="border-t border-rule mt-6 pt-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
-                {[
-                  ["Piece", "Brand banner"],
-                  ["Format", "4:1 wide"],
-                  ["Made for", "Site and socials"],
-                  ["Turnaround", "Single graphic"],
                 ].map(([k, v]) => (
                   <div key={k}>
                     <p className="label mb-1.5">{k}</p>
