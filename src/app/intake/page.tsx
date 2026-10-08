@@ -360,6 +360,8 @@ function IntakeForm() {
   const [allBuilds, setAllBuilds] = useState(false);
 
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
+  // When the page opened. A person takes longer than three seconds to fill this in.
+  const [openedAt] = useState(() => Date.now());
   const [fixable, setFixable] = useState(false);
   const [error, setError] = useState("");
   const loading = state === "sending";
@@ -420,8 +422,10 @@ function IntakeForm() {
     `Hi FlowZone,\n\nName: ${me.name}\nEmail: ${me.email}\nBusiness: ${me.business}\nBuild: ${service}\n\n${brief}\n\nThanks,\n${me.name}`
   )}`;
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // Hidden bot trap. People never see it, form-filling bots fill it.
+    const trap = new FormData(e.currentTarget).get("website2");
     if (!service) {
       setState("error");
       setFixable(true);
@@ -447,7 +451,13 @@ function IntakeForm() {
       const res = await fetch("/api/intake", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...me, service, description: brief }),
+        body: JSON.stringify({
+          ...me,
+          service,
+          description: brief,
+          website2: typeof trap === "string" ? trap : "",
+          elapsedMs: Date.now() - openedAt,
+        }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data?.ok) {
@@ -595,6 +605,11 @@ function IntakeForm() {
 
             <section>
               <Label>04 · Who is this for?</Label>
+              {/* Bot trap: off screen, skipped by keyboard and screen readers. */}
+              <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", width: 1, height: 1, overflow: "hidden" }}>
+                <label htmlFor="fz-website2">Leave this empty</label>
+                <input id="fz-website2" name="website2" type="text" tabIndex={-1} autoComplete="off" defaultValue="" />
+              </div>
               <div className="grid sm:grid-cols-2 gap-3">
                 <input id="fz-name" name="name" type="text" autoComplete="name" required aria-label="Your name" value={me.name}
                   onChange={(e) => setMe({ ...me, name: e.target.value })} className={field} placeholder="Your name" />

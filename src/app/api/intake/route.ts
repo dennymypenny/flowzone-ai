@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SITE } from "@/lib/site";
 import { studioEmail, receiptEmail, ticketId } from "@/lib/intakeEmails";
+import { spamReason } from "@/lib/spam";
 
 /**
  * The intake form.
@@ -60,6 +61,14 @@ export async function POST(req: NextRequest) {
       { ok: false, error: "Tell us a little more about the idea, even one sentence." },
       { status: 400 }
     );
+  }
+
+  // Bots get the same success answer a person does, so they have nothing to
+  // tune against, but nothing is sent: no studio email, no receipt.
+  const spam = spamReason({ email, name, business, description, honeypot: raw.website2, elapsedMs: raw.elapsedMs });
+  if (spam) {
+    console.warn("[FlowZone Intake] bot dropped:", spam, "|", name, "|", email);
+    return NextResponse.json({ ok: true });
   }
 
   const key = process.env.RESEND_API_KEY;
