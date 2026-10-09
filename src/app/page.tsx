@@ -1050,10 +1050,10 @@ export default function Home() {
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { n: "89,212", k: "Views", c: "#2B57C4" },
-                { n: "28,027", k: "People reached", c: "#155E9C" },
-                { n: "4,743", k: "Interactions", c: "#3D6FE8" },
-                { n: "+998", k: "Net new followers", c: "#0F6B4F" },
+                { n: "407,555", k: "Views", c: "#2B57C4" },
+                { n: "103,707", k: "Viewers", c: "#155E9C" },
+                { n: "13,741", k: "Interactions", c: "#3D6FE8" },
+                { n: "+1,162", k: "Net new followers", c: "#0F6B4F" },
               ].map((m) => (
                 <div key={m.k}>
                   <p

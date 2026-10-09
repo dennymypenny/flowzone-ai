@@ -5,6 +5,7 @@ import { SITE } from "@/lib/site";
 import NodeWeb from "@/app/components/NodeWeb";
 import MessageUs, { TicketNote } from "@/components/MessageUs";
 import LogoBand from "@/components/LogoBand";
+import GrowthChart from "@/components/GrowthChart";
 
 export const metadata: Metadata = {
   title: "Work",
@@ -175,80 +176,29 @@ export default function Work() {
           <div className="border-t border-rule pt-10 mt-16">
             <div className="flex flex-wrap items-baseline justify-between gap-3 mb-8">
               <p className="label">What the brand did in 90 days</p>
-              <p className="label">Instagram · last 90 days</p>
+              <p className="label">Instagram Insights · Jul 10 to Oct 7</p>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
-              {[
-                { n: "205,569", k: "Views", c: "#A8C4FF" },
-                { n: "90,313", k: "People reached", c: "#5B8CFF" },
-                { n: "11,001", k: "Interactions", c: "#C6E4F8" },
-                { n: "+1,327", k: "Net new followers", c: "#34D399" },
-              ].map((m) => (
-                <div key={m.k}>
-                  <p
-                    className="font-display text-4xl md:text-5xl leading-none"
-                    style={{ color: m.c }}
-                  >
-                    {m.n}
-                  </p>
-                  <p className="label mt-2">{m.k}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="panel p-5 md:p-6">
-              <svg
-                viewBox="0 0 640 150"
-                className="w-full h-[130px] md:h-[170px] block"
-                preserveAspectRatio="none"
-                role="img"
-                aria-label="Daily views: quiet through June, building through July, a spike to eighteen thousand in mid August, then a spike to thirty-seven thousand in the week of September 9"
-              >
-                <defs>
-                  <linearGradient id="crgWorkLine" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#7E9FD8" />
-                    <stop offset="55%" stopColor="#C6E4F8" />
-                    <stop offset="100%" stopColor="#FFFFFF" />
-                  </linearGradient>
-                </defs>
-                <path
-                  d="M 0.0,144.9 L 7.2,143.7 L 14.4,145.2 L 21.6,144.8 L 28.8,144.3 L 36.0,145.5 L 43.1,145.4 L 50.3,143.9 L 57.5,144.5 L 64.7,145.4 L 71.9,144.8 L 79.1,144.4 L 86.3,145.4 L 93.5,143.7 L 100.7,144.5 L 107.9,145.1 L 115.1,145.5 L 122.2,145.4 L 129.4,144.7 L 136.6,144.7 L 143.8,143.1 L 151.0,141.7 L 158.2,142.9 L 165.4,139.3 L 172.6,140.3 L 179.8,143.1 L 187.0,139.1 L 194.2,142.6 L 201.3,141.9 L 208.5,138.6 L 215.7,138.7 L 222.9,139.0 L 230.1,143.1 L 237.3,139.1 L 244.5,139.0 L 251.7,140.5 L 258.9,143.2 L 266.1,141.9 L 273.3,143.2 L 280.4,139.2 L 287.6,142.6 L 294.8,141.3 L 302.0,140.3 L 309.2,142.5 L 316.4,139.3 L 323.6,142.7 L 330.8,139.1 L 338.0,141.2 L 345.2,132.1 L 352.4,138.1 L 359.6,139.3 L 366.7,131.7 L 373.9,131.9 L 381.1,137.9 L 388.3,135.0 L 395.5,123.6 L 402.7,77.3 L 409.9,123.6 L 417.1,139.4 L 424.3,132.3 L 431.5,139.9 L 438.7,132.0 L 445.8,140.0 L 453.0,137.7 L 460.2,133.1 L 467.4,132.5 L 474.6,134.2 L 481.8,136.0 L 489.0,133.6 L 496.2,131.7 L 503.4,133.8 L 510.6,135.2 L 517.8,136.2 L 524.9,137.0 L 532.1,138.1 L 539.3,137.1 L 546.5,139.6 L 553.7,131.8 L 560.9,136.2 L 568.1,132.6 L 575.3,133.1 L 582.5,135.5 L 589.7,133.8 L 596.9,112.0 L 604.0,4.0 L 611.2,96.6 L 618.4,115.8 L 625.6,119.7 L 632.8,125.5 L 640.0,133.2"
-                  fill="none"
-                  stroke="url(#crgWorkLine)"
-                  strokeWidth="3"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  vectorEffect="non-scaling-stroke"
-                />
-              </svg>
-              <div className="flex justify-between mt-3">
-                <span className="label">Jun 17</span>
-                <span className="label">Jul 31</span>
-                <span className="label">Sep 14</span>
+            <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+              <div className="lg:col-span-8">
+                <GrowthChart />
               </div>
-            </div>
 
-            <div className="grid sm:grid-cols-2 gap-5 mt-6">
-              {[
-                { k: "Reels", v: "139K", w: "93%", c: "#5B8CFF" },
-                { k: "Posts", v: "41K", w: "30%", c: "#A8C4FF" },
-              ].map((b) => (
-                <div key={b.k}>
-                  <div className="flex items-baseline justify-between mb-2">
-                    <p className="text-sm text-ink">{b.k}</p>
-                    <p className="text-sm" style={{ color: b.c }}>
-                      {b.v} views
-                    </p>
-                  </div>
-                  <div className="h-1.5 rounded-full bg-rule overflow-hidden">
-                    <span
-                      className="block h-full rounded-full"
-                      style={{ width: b.w, background: b.c }}
-                    />
-                  </div>
+              {/* The receipt itself. Numbers on a website are easy to type,
+                  so the real screenshot sits next to them, uncropped. */}
+              <figure className="lg:col-span-4 w-full max-w-[300px] mx-auto lg:max-w-none">
+                <div className="rounded-[28px] border border-white/15 bg-black p-2 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.9)]">
+                  <img
+                    src="/assets/crg-ig-insights-1008.jpg"
+                    alt="Screenshot of the CardsRG Instagram Insights overview for the last 90 days: 407,555 views, 1,162 net followers, 13,741 interactions, 103,707 viewers, with reels at 330K views, posts at 46K and stories at 31K"
+                    className="w-full h-auto block rounded-[22px]"
+                    loading="lazy"
+                  />
                 </div>
-              ))}
+                <figcaption className="label mt-3 text-center">
+                  The real screenshot, straight from Instagram
+                </figcaption>
+              </figure>
             </div>
 
             <p className="text-ink-soft font-light leading-relaxed mt-8 max-w-reading">
