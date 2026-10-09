@@ -3,9 +3,12 @@ import { useState, Suspense, useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { readCart, clearCart, cartTotal, money } from "@/app/components/cart";
 import { SITE } from "@/lib/site";
+import { PICK_TO_PAYABLE } from "@/lib/payables";
+import { PAY_ON } from "@/app/components/PayNow";
 import { BUILDS as PRICED_BUILDS, CARE, GRAPHICS, MOTION, PACKAGES, QUICK_JOBS } from "@/lib/catalog";
 import Icon from "@/components/Icon";
 import SendReel from "@/components/SendReel";
+import PayNowLater from "@/app/intake/PayAfterTicket";
 
 /**
  * The intake, rebuilt Sep 23 2026 as one screen with no popups.
@@ -420,7 +423,6 @@ function IntakeForm() {
 
   const brief = useMemo(() => {
     const out: string[] = [];
-    out.push(`Ticket: ${ticketNo}`);
     if (picked.length) out.push(`What I need: ${picked.join(", ")}`);
     if (timeline) out.push(`Timeline: ${timeline}`);
     if (start) out.push(`Starting point: ${start}`);
@@ -470,6 +472,7 @@ function IntakeForm() {
           ...me,
           service,
           description: brief,
+          ticket: ticketNo,
           website2: typeof trap === "string" ? trap : "",
           elapsedMs: Date.now() - openedAt,
         }),
@@ -492,6 +495,10 @@ function IntakeForm() {
 
   const first = me.name.trim().split(/\s+/)[0];
 
+  // A ticket of only fixed-price small jobs can be paid on the thank you.
+  const payIds = picked.map((p) => PICK_TO_PAYABLE[p]).filter(Boolean);
+  const smallOnly = PAY_ON && build?.name === "A Small Job" && picked.length > 0 && payIds.length === picked.length;
+
   const reelEl = reel ? (
     <SendReel settled={state !== "sending"} failed={state === "error"} onDone={() => setReel(false)} />
   ) : null;
@@ -507,6 +514,8 @@ function IntakeForm() {
         est={est}
         picked={picked}
         timeline={timeline}
+        payIds={smallOnly ? payIds : []}
+        email={me.email}
       />
       </>
     );
@@ -791,7 +800,11 @@ function ThankYou({
   est,
   picked,
   timeline,
+  payIds,
+  email,
 }: {
+  payIds: string[];
+  email: string;
   first?: string;
   ticketNo: string;
   build?: Build;
@@ -874,6 +887,10 @@ function ThankYou({
                 </li>
               ))}
             </ol>
+
+            {payIds.length > 0 && est && (
+              <PayNowLater ids={payIds} email={email} ticket={ticketNo} total={estimateText(est)} />
+            )}
 
             <div className="mt-7 flex flex-col sm:flex-row gap-3">
               <a href="/work" className="flex-1 text-center rounded-[12px] px-5 py-3.5 font-semibold text-white" style={{ background: "#0F6B4F" }}>

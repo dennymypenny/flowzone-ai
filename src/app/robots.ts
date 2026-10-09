@@ -31,12 +31,12 @@ export default function robots(): MetadataRoute.Robots {
         // /thank-you and /ai-news send noindex from their own metadata, so
         // they have to stay crawlable for that tag to be read.
         // What is left is what should never be fetched at all.
-        disallow: ["/admin", "/api/"],
+        disallow: ["/admin", "/api/", "/studio", "/paid"],
       },
       {
         userAgent: AI_BOTS,
         allow: "/",
-        disallow: ["/admin", "/api/"],
+        disallow: ["/admin", "/api/", "/studio", "/paid"],
       },
     ],
     sitemap: `${SITE.url}/sitemap.xml`,

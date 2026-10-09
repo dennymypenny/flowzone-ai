@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
+import { startCheckout, PAY_ON } from "@/app/components/PayNow";
+import { payable } from "@/lib/payables";
 import {
   readCart,
   removeFromCart,
@@ -28,6 +30,10 @@ export default function CartWidget() {
   }, []);
 
   const [mounted, setMounted] = useState(false);
+  const [paying, setPaying] = useState(false);
+  const [payErr, setPayErr] = useState("");
+  // Card checkout only when every item has a fixed price. A build is quoted first.
+  const canPay = PAY_ON && items.length > 0 && items.every((i) => !i.from && payable(i.id));
   useEffect(() => setMounted(true), []);
 
   if (items.length === 0 && !open) return null;
@@ -108,16 +114,39 @@ export default function CartWidget() {
                     {money(cartTotal(items))}
                   </p>
                 </div>
+                {canPay && (
+                  <>
+                    <button
+                      type="button"
+                      disabled={paying}
+                      onClick={async () => {
+                        setPaying(true);
+                        setPayErr("");
+                        const r = await startCheckout(items.map((i) => i.id)).catch(() => ({ ok: false as const, error: "Checkout did not open." }));
+                        if (!r.ok) {
+                          setPaying(false);
+                          setPayErr(r.error || "Checkout did not open. Send it as a ticket instead.");
+                        }
+                      }}
+                      className="w-full rounded-[12px] px-5 py-3.5 font-semibold text-white mb-3 disabled:opacity-70 disabled:cursor-wait"
+                      style={{ background: "#0F6B4F" }}
+                    >
+                      {paying ? "Opening checkout…" : `Pay ${money(cartTotal(items))} now`} <span aria-hidden>→</span>
+                    </button>
+                    {payErr && <p className="text-xs text-[#B03A12] mb-3">{payErr}</p>}
+                  </>
+                )}
                 <Link
                   href="/intake?cart=1"
-                  className="btn-primary w-full justify-center text-center"
+                  className={`${canPay ? "btn-ghost" : "btn-primary"} w-full justify-center text-center`}
                   onClick={() => setOpen(false)}
                 >
                   Send as a ticket <span className="arrow">→</span>
                 </Link>
                 <p className="text-xs text-ink-mute font-light leading-relaxed mt-4">
-                  No payment now. The ticket lands with a person, you get a reply
-                  and a start date, then you pay.
+                  {canPay
+                    ? "Pay by card through Stripe and send the details after, or send a ticket and pay once we reply."
+                    : "No payment now. The ticket lands with a person, you get a reply and a start date, then you pay."}
                 </p>
                 <button
                   type="button"

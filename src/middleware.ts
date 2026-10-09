@@ -44,6 +44,10 @@ const RULES: Array<[string, Rule]> = [
   ["/api/imageproxy", { limit: 300, windowMs: 10 * 60_000 }],
   // Visit counting. A busy reader fires a few events a page; a loop is not a reader.
   ["/api/track", { limit: 400, windowMs: 10 * 60_000 }],
+  // Opens a Stripe Checkout. A buyer clicks this a few times at most.
+  ["/api/checkout", { limit: 20, windowMs: 10 * 60_000 }],
+  // Denny's pay links. Also needs PAY_KEY, this just slows a key guesser.
+  ["/api/pay-link", { limit: 40, windowMs: 10 * 60_000 }],
   // Denny's dashboard pull. Also needs STATS_KEY.
   ["/api/stats", { limit: 30, windowMs: 10 * 60_000 }],
 ];

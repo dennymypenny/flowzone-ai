@@ -45,6 +45,9 @@ const SECURITY_HEADERS = [
 ];
 
 const nextConfig = {
+  // Pay now buttons only show once Stripe is connected (STRIPE_SECRET_KEY in
+  // Vercel, then a redeploy). Only this yes/no reaches the browser, never the key.
+  env: { NEXT_PUBLIC_PAY_ON: process.env.STRIPE_SECRET_KEY ? "1" : "" },
   // No reason to announce the framework in every response.
   poweredByHeader: false,
   async headers() {

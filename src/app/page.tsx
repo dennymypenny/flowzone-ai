@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Icon from "@/components/Icon";
 import AddToCart from "@/app/components/AddToCart";
+import PayNow from "@/app/components/PayNow";
 import type { Metadata } from "next";
 import MessageUs, { TicketNote } from "@/components/MessageUs";
 import LogoBand from "@/components/LogoBand";
@@ -1131,6 +1132,7 @@ export default function Home() {
                       {price}
                     </span>
                     <AddToCart id={id} showPrice={false} />
+                    <PayNow items={[id]} label="Pay" className="!px-3" />
                   </span>
                 ))}
               </div>

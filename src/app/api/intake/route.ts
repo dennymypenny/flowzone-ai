@@ -83,7 +83,9 @@ export async function POST(req: NextRequest) {
   }
 
   const ticket = { name, email, business, service, description };
-  const id = ticketId();
+  // The page shows the visitor a ticket number before this answers; use it so the emails match.
+  const given = String(raw.ticket ?? "");
+  const id = /^FZ-[A-Z0-9]{4,6}$/.test(given) ? given : ticketId();
   const studio = studioEmail(ticket, id);
   const receipt = receiptEmail(ticket, id);
 

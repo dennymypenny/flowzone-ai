@@ -5,6 +5,7 @@ import { LANDING_NAV } from "@/lib/landing";
 import NodeWeb from "@/app/components/NodeWeb";
 import { TicketNote } from "@/components/MessageUs";
 import AddToCart from "@/app/components/AddToCart";
+import PayNow from "@/app/components/PayNow";
 import { GRAPHICS, money } from "@/lib/catalog";
 import Icon from "@/components/Icon";
 
@@ -311,13 +312,16 @@ export default function Services() {
                           <span className="text-ink-soft">
                             {w} <span className="text-ink">{price}</span>
                           </span>
-                          <AddToCart id={id} showPrice={false} />
+                          <span className="flex items-center gap-2 shrink-0">
+                            <AddToCart id={id} showPrice={false} />
+                            <PayNow items={[id]} />
+                          </span>
                         </li>
                       ))}
                     </ul>
                     <p className="text-xs text-ink-mute font-light mt-4">
-                      Add to the cart, then send it all as one ticket from the
-                      cart in the corner.
+                      Add to the cart and send it all as one ticket, or pay
+                      right away where you see Pay now.
                     </p>
                   </div>
                 )}
@@ -410,6 +414,7 @@ export default function Services() {
                     {money(g.price)}
                   </span>
                   <AddToCart id={g.id} showPrice={false} />
+                  <PayNow items={[g.id]} />
                 </span>
               </div>
             ))}
