@@ -5,6 +5,7 @@ import { readCart, clearCart, cartTotal, money } from "@/app/components/cart";
 import { SITE } from "@/lib/site";
 import { BUILDS as PRICED_BUILDS, CARE, GRAPHICS, MOTION, PACKAGES, QUICK_JOBS } from "@/lib/catalog";
 import Icon from "@/components/Icon";
+import SendReel from "@/components/SendReel";
 
 /**
  * The intake, rebuilt Sep 23 2026 as one screen with no popups.
@@ -17,6 +18,11 @@ import Icon from "@/components/Icon";
  * The API still gets the same five fields. The picks, timeline and starting
  * point are written into `description` as a short brief, so the studio email
  * reads like a ticket and nobody has to type a paragraph.
+ *
+ * Oct 9 2026: the whole ticket fits one screen. On desktop the right column
+ * is pinned and sized to the window; on phones the bottom bar shows the picks
+ * and opens into the full ticket with the send button. Sending plays the
+ * homepage intro reel (SendReel) while the request is in flight.
  *
  * Name, email and business are remembered in this browser (try/catch, never
  * required) so a second ticket fills itself in. Legacy ?build= and ?service=
@@ -358,6 +364,10 @@ function IntakeForm() {
   // list folded to the picked build until they ask to see the rest.
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [allBuilds, setAllBuilds] = useState(false);
+  // Phone only: the bottom bar opened up into the full ticket.
+  const [review, setReview] = useState(false);
+  // The intro reel, mounted on send and removed once it has played out.
+  const [reel, setReel] = useState(false);
 
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
   // When the page opened. A person takes longer than three seconds to fill this in.
@@ -441,6 +451,8 @@ function IntakeForm() {
     }
     setState("sending");
     setError("");
+    setReview(false);
+    setReel(true);
     try {
       if (remember) localStorage.setItem(REMEMBER, JSON.stringify(me));
       else localStorage.removeItem(REMEMBER);
@@ -464,19 +476,27 @@ function IntakeForm() {
         setFixable(res.status === 400);
         throw new Error(data?.error || "Could not reach the studio.");
       }
+      // The thank you renders under the reel, which fades away to reveal it.
       setState("done");
       if (cameFromCart) clearCart();
       window.scrollTo({ top: 0 });
     } catch (err) {
       setState("error");
       setError(err instanceof Error ? err.message : "Could not reach the studio.");
+      setTimeout(() => document.getElementById("fz-send-error")?.scrollIntoView({ behavior: "smooth", block: "center" }), 500);
     }
   };
 
   const first = me.name.trim().split(/\s+/)[0];
 
+  const reelEl = reel ? (
+    <SendReel settled={state !== "sending"} failed={state === "error"} onDone={() => setReel(false)} />
+  ) : null;
+
   if (state === "done") {
     return (
+      <>
+      {reelEl}
       <div className="min-h-screen bg-paper-deep flex items-center justify-center px-4 py-28">
         <div className="max-w-lg w-full rounded-[24px] border border-white/10 p-10 text-center fz-settle shadow-[0_40px_80px_-40px_rgba(0,0,0,0.8)]" style={{ background: INK_PANEL }}>
           <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-white">
@@ -493,12 +513,15 @@ function IntakeForm() {
           </p>
         </div>
       </div>
+      </>
     );
   }
 
   const planList = [...builds, NOT_SURE_BUILD];
 
   return (
+    <>
+    {reelEl}
     <div className="min-h-screen bg-paper-deep pt-24 sm:pt-28 pb-32 lg:pb-24 px-3 sm:px-6">
       <div className="max-w-6xl mx-auto">
         <form
@@ -628,7 +651,7 @@ function IntakeForm() {
             </section>
 
             {state === "error" && (
-              <div className="rounded-[14px] border border-white/10 p-5" style={{ background: CARD }}>
+              <div id="fz-send-error" className="rounded-[14px] border border-white/10 p-5" style={{ background: CARD }}>
                 <p className="text-sm font-semibold text-white mb-1">{fixable ? "One more thing" : "Let’s get this to Denny"}</p>
                 <p className="text-sm text-[#C9D2E3] leading-relaxed">{error}</p>
                 <p className="text-sm text-[#8190A8] leading-relaxed mt-2">
@@ -645,16 +668,38 @@ function IntakeForm() {
 
             {/* Phones: no big preview card. A slim bar pinned to the bottom
                 carries the build, the price and the one send button. */}
-            <div className="fz-intake-dock lg:hidden fixed inset-x-0 bottom-0 z-[60] border-t border-white/10 px-4 pt-3 pb-[calc(12px+env(safe-area-inset-bottom,0px))]" style={{ background: "rgba(7,9,15,0.96)", backdropFilter: "blur(10px)" }}>
-              <div className="flex items-center gap-3">
-                <div className="min-w-0 flex-1">
-                  <p key={build?.name || "none"} className="fz-settle text-[13px] font-semibold text-white truncate">
-                    {build && build.name !== NOT_SURE ? build.name.replace(/^The /, "") : picked.length ? "We will pick the build" : "Nothing picked yet"}
-                  </p>
-                  <p key={est ? estimateText(est) : "x"} className="fz-settle text-[12px] text-[#F0845F] font-semibold">
-                    {est ? `${estimateText(est)}${est.count > 1 ? ` · ${est.count} items` : ""}` : build ? build.from : "Tap what you need"}
-                  </p>
+            <div className="fz-intake-dock lg:hidden fixed inset-x-0 bottom-0 z-[60] border-t border-white/10 px-4 pt-3 pb-[calc(12px+env(safe-area-inset-bottom,0px))]" style={{ background: "rgba(7,9,15,0.97)", backdropFilter: "blur(10px)" }}>
+              {review && (
+                <div id="fz-dock-ticket" className="fz-settle max-h-[calc(100dvh-170px)] overflow-y-auto overscroll-contain pb-3">
+                  <TicketCard est={est} build={build} picked={picked} timeline={timeline} start={start} me={me} withBuild />
                 </div>
+              )}
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setReview(!review)}
+                  aria-expanded={review}
+                  aria-controls="fz-dock-ticket"
+                  className="min-w-0 flex-1 text-left"
+                >
+                  <span className="flex items-center gap-1.5">
+                    <span key={build?.name || "none"} className="fz-settle text-[13px] font-semibold text-white truncate">
+                      {build && build.name !== NOT_SURE ? build.name.replace(/^The /, "") : picked.length ? "We will pick the build" : "Nothing picked yet"}
+                    </span>
+                    {picked.length > 0 && (
+                      <svg aria-hidden viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="#C9D2E3" strokeWidth="1.8" strokeLinecap="round"
+                        className={`shrink-0 transition-transform duration-150 ${review ? "" : "rotate-180"}`}>
+                        <path d="M4 6l4 4 4-4" />
+                      </svg>
+                    )}
+                  </span>
+                  <span key={est ? estimateText(est) : "x"} className="fz-settle block text-[12px] text-[#F0845F] font-semibold truncate">
+                    {est ? estimateText(est) : build ? build.from : "Tap what you need"}
+                    {picked.length > 0 && (
+                      <span className="text-[#C9D2E3] font-medium">{` · ${review ? "Hide ticket" : `See ticket (${picked.length})`}`}</span>
+                    )}
+                  </span>
+                </button>
                 <button type="submit" form="fz-ticket" disabled={loading} className="fz-go shrink-0 rounded-[12px] px-5 py-3 text-[15px] font-semibold">
                   {loading ? "Sending..." : "Send ticket \u2192"}
                 </button>
@@ -664,42 +709,90 @@ function IntakeForm() {
 
           {/* Right: the ticket, filling itself in */}
           <aside className="hidden lg:block border-l border-white/10" style={{ background: "#0A0D14" }}>
-            <div className="sticky top-24 p-6">
+            <div className="sticky top-24 max-h-[calc(100dvh-7rem)] overflow-y-auto overscroll-contain p-5">
               <TicketSide est={est} build={build} picked={picked} timeline={timeline} start={start} me={me} loading={loading} />
             </div>
           </aside>
         </form>
       </div>
     </div>
+    </>
   );
 }
 
-/** The right-hand column: a banner, the live ticket, what happens next, the send button. */
-function TicketSide({
-  est,
-  build,
-  picked,
-  timeline,
-  start,
-  me,
-  loading,
-}: {
+type TicketProps = {
   est: Estimate | null;
   build?: Build;
   picked: string[];
   timeline: string;
   start: string;
   me: { name: string; business: string };
-  loading: boolean;
-}) {
+};
+
+/**
+ * The ticket itself: every pick grouped under its area, the build and price,
+ * and the details. Shared by the desktop column and the phone bar so both
+ * show the same thing. Compact on purpose, so six or seven picks still fit
+ * one screen with the send button.
+ */
+function TicketCard({ est, build, picked, timeline, start, me, withBuild = false }: TicketProps & { withBuild?: boolean }) {
+  const grouped = GROUPS.map((g) => ({ g, items: g.picks.filter((p) => picked.includes(p.label)) })).filter((x) => x.items.length);
+  return (
+    <div className="rounded-[16px] border border-white/[0.07] p-4" style={{ background: CARD }}>
+      <Label right={picked.length ? `${picked.length} ${picked.length === 1 ? "item" : "items"}` : undefined}>Your ticket</Label>
+      {withBuild && (
+        <div className="flex items-baseline gap-3 mb-3 pb-3 border-b border-white/[0.07]">
+          <p className="font-display text-lg text-white leading-tight">{build ? build.name : "Your build shows up here"}</p>
+          {build && (
+            <p className="ml-auto shrink-0 text-sm font-semibold" style={{ color: "#F0845F" }}>{est ? estimateText(est) : build.from}</p>
+          )}
+        </div>
+      )}
+      {grouped.length ? (
+        <div className="space-y-2 mb-3">
+          {grouped.map(({ g, items }) => (
+            <div key={g.key} className="flex gap-2.5">
+              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-[6px]" style={{ background: `${g.c}26` }}>
+                <Icon name={g.icon} size={11} color={g.c} />
+              </span>
+              <div className="min-w-0 flex flex-wrap gap-1">
+                {items.map((p) => (
+                  <span key={p.label} className="fz-settle inline-flex items-center gap-1 text-xs rounded-[7px] px-2 py-0.5 bg-white/[0.06] text-white">
+                    {p.label}
+                    {p.small && p.cents ? (
+                      <span className="text-[#8190A8] tabular-nums">{money(p.cents)}{p.monthly ? "/mo" : ""}</span>
+                    ) : null}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-xs text-[#6B7890] mb-3">Nothing picked yet</p>
+      )}
+      <dl className="space-y-1 text-sm border-t border-white/[0.07] pt-3">
+        {est && <Row k="Estimate" v={estimateText(est)} />}
+        <Row k="When" v={timeline} />
+        <Row k="From" v={start ? start.replace("I have something, make it better", "Improving what exists") : ""} />
+        <Row k="Name" v={me.name} />
+        <Row k="Business" v={me.business} />
+      </dl>
+    </div>
+  );
+}
+
+/** The right-hand column: the build banner, the live ticket, the send button. */
+function TicketSide({ loading, ...t }: TicketProps & { loading: boolean }) {
+  const { build, est } = t;
   // "Send my Storefront Build ticket", or just "Send my ticket" with no build yet.
   const label = build && build.name !== NOT_SURE ? `Send my ${build.name.replace(/^The /, "")} ticket` : "Send my ticket";
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       <div className="relative rounded-[16px] overflow-hidden border border-white/10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/assets/intake-ocean.jpg" alt="" className="block w-full h-[120px] object-cover" />
-        <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-[#07090F] via-[#07090F]/70 to-transparent">
+        <img src="/assets/intake-ocean.jpg" alt="" className="block w-full h-[92px] object-cover" />
+        <div className="absolute inset-x-0 bottom-0 p-3.5 bg-gradient-to-t from-[#07090F] via-[#07090F]/70 to-transparent">
           {build ? (
             <div key={build.name} className="fz-settle">
               <p className="font-display text-xl text-white leading-tight">{build.name}</p>
@@ -711,49 +804,9 @@ function TicketSide({
         </div>
       </div>
 
-      <div className="rounded-[16px] border border-white/[0.07] p-4" style={{ background: CARD }}>
-        <Label>Your ticket</Label>
-        <div className="flex flex-wrap gap-1.5 mb-3 min-h-[26px]">
-          {picked.length ? (
-            picked.map((p) => {
-              const g = GROUPS.find((x) => x.key === pickIndex.get(p)?.group);
-              return (
-                <span key={p} className="fz-settle inline-flex items-center gap-1.5 text-xs rounded-[7px] px-2 py-1 bg-white/[0.06] text-white">
-                  <span className="h-1.5 w-1.5 rounded-full" style={{ background: g?.c ?? "#5B8CFF" }} />
-                  {p}
-                </span>
-              );
-            })
-          ) : (
-            <span className="text-xs text-[#6B7890]">Nothing picked yet</span>
-          )}
-        </div>
-        <dl className="space-y-1.5 text-sm">
-          {est && est.count > 1 && <Row k="Estimate" v={`${estimateText(est)} for ${est.count} items`} />}
-          <Row k="When" v={timeline} />
-          <Row k="From" v={start ? start.replace("I have something, make it better", "Improving what exists") : ""} />
-          <Row k="Name" v={me.name} />
-          <Row k="Business" v={me.business} />
-        </dl>
-      </div>
-
-      <div className="rounded-[16px] border border-white/[0.07] p-4" style={{ background: CARD }}>
-        <Label>What happens next</Label>
-        <ul className="space-y-2.5 text-[15px] text-white">
-          {["We read every word", "You get scope, price and a date", "Usually the same day, no call needed"].map((t) => (
-            <li key={t} className="flex items-center gap-2.5">
-              <svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8.5l3 3 7-7" /></svg>
-              {t}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <TicketCard {...t} />
 
       <div className="pt-1">
-        <p className="flex items-center justify-center gap-2 text-sm text-[#8190A8] mb-3">
-          <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="8" cy="8" r="6.2" /><path d="M8 4.8V8l2.2 1.4" strokeLinecap="round" /></svg>
-          Reply <span className="font-medium" style={{ color: "#FBBF24" }}>usually the same day</span>
-        </p>
         <button
           type="submit"
           form="fz-ticket"
@@ -762,9 +815,10 @@ function TicketSide({
         >
           {loading ? "Sending..." : <>{label} <span aria-hidden>&rarr;</span></>}
         </button>
-        <p className="flex items-center justify-center gap-2 text-xs text-[#6B7890] mt-3">
-          <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5" /><path d="M5.5 7V5a2.5 2.5 0 015 0v2" /></svg>
+        <p className="text-center text-xs text-[#8190A8] mt-3 leading-relaxed">
           No payment now · you see the price first
+          <br />
+          A person reads it and replies <span className="font-medium" style={{ color: "#FBBF24" }}>usually the same day</span>
         </p>
       </div>
     </div>

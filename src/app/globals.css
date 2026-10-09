@@ -1158,3 +1158,22 @@ html.fz-intro-out .fz-intro {
 @media (prefers-reduced-motion: reduce) {
   .sitebar { transition: none; }
 }
+
+/* The send reel on /intake (SendReel.tsx): the intro board replayed when a
+   ticket goes out. Mounted only after a click, so it can never cover the page
+   on load, and SendReel always removes it within 12s. */
+.fz-sendreel {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow: hidden;
+  background: #0C1424;
+  animation: fz-sendreel-in 0.22s ease both;
+}
+@keyframes fz-sendreel-in { from { opacity: 0; } to { opacity: 1; } }
+.fz-sendreel.fz-sendreel-out {
+  pointer-events: none;
+  animation: fz-sendreel-leave 0.45s cubic-bezier(0.33, 0, 0.2, 1) forwards;
+}
+@keyframes fz-sendreel-leave { from { opacity: 1; } to { opacity: 0; } }
+.fz-sendreel .fzi-stage { position: absolute; left: 50%; top: 50%; transform-origin: 50% 50%; }
