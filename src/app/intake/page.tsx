@@ -372,6 +372,8 @@ function IntakeForm() {
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
   // When the page opened. A person takes longer than three seconds to fill this in.
   const [openedAt] = useState(() => Date.now());
+  // A short ticket number people can quote back. It rides in the brief, so it is in the studio email too.
+  const [ticketNo] = useState(() => `FZ-${Math.floor(1000 + Math.random() * 9000)}`);
   const [fixable, setFixable] = useState(false);
   const [error, setError] = useState("");
   const loading = state === "sending";
@@ -418,13 +420,14 @@ function IntakeForm() {
 
   const brief = useMemo(() => {
     const out: string[] = [];
+    out.push(`Ticket: ${ticketNo}`);
     if (picked.length) out.push(`What I need: ${picked.join(", ")}`);
     if (timeline) out.push(`Timeline: ${timeline}`);
     if (start) out.push(`Starting point: ${start}`);
     if (est) out.push(`Estimate on the page: ${estimateText(est)}`);
     const top = out.join("\n");
     return [top, notes.trim()].filter(Boolean).join("\n\n");
-  }, [picked, timeline, start, notes, est]);
+  }, [picked, timeline, start, notes, est, ticketNo]);
 
   const fallbackMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(
     `New project for FlowZone: ${service || "not sure yet"}`
@@ -497,22 +500,14 @@ function IntakeForm() {
     return (
       <>
       {reelEl}
-      <div className="min-h-screen bg-paper-deep flex items-center justify-center px-4 py-28">
-        <div className="max-w-lg w-full rounded-[24px] border border-white/10 p-10 text-center fz-settle shadow-[0_40px_80px_-40px_rgba(0,0,0,0.8)]" style={{ background: INK_PANEL }}>
-          <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-white">
-            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#0C1424" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
-          </div>
-          <h1 className="font-display text-3xl text-white tracking-tight mb-3">Thank you{first ? `, ${first}` : ""}.</h1>
-          <p className="text-[#C9D2E3] leading-relaxed mb-2">
-            We are really happy you reached out. Your ticket for {build && build.name !== NOT_SURE ? build.name : "your idea"} is in, and a person is reading it.
-          </p>
-          <p className="text-[#8190A8] leading-relaxed">Check your inbox for a note from Dennis. You will hear back with a plan, usually the same day.</p>
-          <p className="text-xs text-[#6B7890] mt-8">
-            Thought of something else? Write to{" "}
-            <a href={`mailto:${SITE.email}`} className="text-white underline underline-offset-4">{SITE.email}</a>
-          </p>
-        </div>
-      </div>
+      <ThankYou
+        first={first}
+        ticketNo={ticketNo}
+        build={build && build.name !== NOT_SURE ? build : undefined}
+        est={est}
+        picked={picked}
+        timeline={timeline}
+      />
       </>
     );
   }
@@ -778,6 +773,123 @@ function TicketCard({ est, build, picked, timeline, start, me, withBuild = false
         <Row k="Name" v={me.name} />
         <Row k="Business" v={me.business} />
       </dl>
+    </div>
+  );
+}
+
+/**
+ * The thank you, Oct 9 2026. Denny: "that thank you black is not rewarding,
+ * make it like green and we are glad". A green page, a white receipt, a check
+ * that draws itself and a one-time burst of dots. Everything is visible with
+ * no animation at all: the motion lives in @keyframes only (see globals.css,
+ * .fz-ty-*), never in a resting opacity:0.
+ */
+function ThankYou({
+  first,
+  ticketNo,
+  build,
+  est,
+  picked,
+  timeline,
+}: {
+  first?: string;
+  ticketNo: string;
+  build?: Build;
+  est: Estimate | null;
+  picked: string[];
+  timeline: string;
+}) {
+  const steps = [
+    { t: "Ticket sent", d: "Just now", done: true },
+    { t: "Dennis reads it", d: "Usually today", done: false },
+    { t: "Your plan lands", d: "Scope, price and a date", done: false },
+  ];
+  return (
+    <div className="fz-ty-page min-h-screen px-4 pt-28 pb-20 flex items-start sm:items-center justify-center">
+      <div className="relative max-w-xl w-full">
+        <div className="fz-ty-card relative rounded-[24px] bg-white text-[#0C1424] overflow-hidden shadow-[0_40px_90px_-30px_rgba(6,60,40,0.55)]">
+          <div className="relative px-6 sm:px-10 pt-10 pb-8 text-center" style={{ background: "#ECFDF5" }}>
+            <div className="relative mx-auto mb-6 h-20 w-20">
+              <span aria-hidden className="fz-ty-burst">
+                {Array.from({ length: 12 }).map((_, i) => (
+                  <i key={i} style={{ ["--a" as string]: `${i * 30}deg`, ["--c" as string]: ["#10B981", "#2B57C4", "#34D399", "#5B9BF9", "#0F6B4F", "#C6E4F8"][i % 6] }} />
+                ))}
+              </span>
+              <span className="fz-ty-ring relative flex h-20 w-20 items-center justify-center rounded-full" style={{ background: "#10B981" }}>
+                <svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="#FFFFFF" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+                  <path className="fz-ty-check" d="M5 12.5l4.5 4.5L19 7.5" />
+                </svg>
+              </span>
+            </div>
+            <p className="text-[12px] font-semibold uppercase tracking-[0.16em] mb-3" style={{ color: "#0F6B4F" }}>
+              Ticket {ticketNo} is in
+            </p>
+            <h1 className="font-display text-[34px] sm:text-[42px] leading-[1.05] tracking-tight text-[#0C1424]">
+              We are so glad you are here{first ? `, ${first}` : ""}.
+            </h1>
+            <p className="mt-4 text-[17px] leading-relaxed text-[#334155] max-w-md mx-auto">
+              <span className="font-semibold text-[#0F6B4F]">Thanks for believing in yourself and in us.</span>{" "}
+              Your idea just got moving. Dennis is reading your ticket now and you will hear back soon.
+            </p>
+          </div>
+
+          <div aria-hidden className="relative h-0 border-t-2 border-dashed border-[#D1FAE5]">
+            <span className="absolute -left-3 -top-3 h-6 w-6 rounded-full fz-ty-notch" />
+            <span className="absolute -right-3 -top-3 h-6 w-6 rounded-full fz-ty-notch" />
+          </div>
+
+          <div className="px-6 sm:px-10 py-7">
+            <div className="flex items-baseline gap-3 mb-4">
+              <p className="font-display text-xl leading-tight">{build ? build.name : "Your idea"}</p>
+              {(est || build) && (
+                <p className="ml-auto shrink-0 font-semibold" style={{ color: "#B03A12" }}>{est ? estimateText(est) : build?.from}</p>
+              )}
+            </div>
+            {picked.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 mb-5">
+                {picked.map((p) => (
+                  <span key={p} className="inline-flex items-center gap-1.5 text-[13px] rounded-[8px] px-2.5 py-1 bg-[#F1F5F9] text-[#0C1424]">
+                    <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="#10B981" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 6.2l2.3 2.3 4.7-5" /></svg>
+                    {p}
+                  </span>
+                ))}
+              </div>
+            )}
+            {timeline && <p className="text-sm text-[#475569] mb-5">Timeline: <span className="text-[#0C1424] font-medium">{timeline}</span></p>}
+
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#64748B] mb-3">What happens next</p>
+            <ol className="grid grid-cols-3 gap-2">
+              {steps.map((st, i) => (
+                <li key={st.t} className="relative">
+                  <span
+                    className="flex h-7 w-7 items-center justify-center rounded-full text-[13px] font-semibold mb-2"
+                    style={st.done ? { background: "#10B981", color: "#fff" } : { background: "#F1F5F9", color: "#0F6B4F", boxShadow: "inset 0 0 0 1.5px #A7F3D0" }}
+                  >
+                    {st.done ? (
+                      <svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 6.2l2.3 2.3 4.7-5" /></svg>
+                    ) : i + 1}
+                  </span>
+                  <p className="text-[14px] font-semibold leading-tight">{st.t}</p>
+                  <p className="text-[12px] text-[#64748B] leading-snug mt-0.5">{st.d}</p>
+                </li>
+              ))}
+            </ol>
+
+            <div className="mt-7 flex flex-col sm:flex-row gap-3">
+              <a href="/work" className="flex-1 text-center rounded-[12px] px-5 py-3.5 font-semibold text-white" style={{ background: "#0F6B4F" }}>
+                See what we have built &rarr;
+              </a>
+              <a href="/" className="flex-1 text-center rounded-[12px] px-5 py-3.5 font-semibold text-[#0C1424] bg-[#F1F5F9]">
+                Back to home
+              </a>
+            </div>
+            <p className="text-xs text-[#64748B] mt-5 text-center">
+              Thought of something else? Write to{" "}
+              <a href={`mailto:${SITE.email}`} className="text-[#0F6B4F] font-medium underline underline-offset-4">{SITE.email}</a> and mention {ticketNo}.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

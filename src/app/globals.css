@@ -1177,3 +1177,32 @@ html.fz-intro-out .fz-intro {
 }
 @keyframes fz-sendreel-leave { from { opacity: 1; } to { opacity: 0; } }
 .fz-sendreel .fzi-stage { position: absolute; left: 50%; top: 50%; transform-origin: 50% 50%; }
+
+/* The /intake thank you (ThankYou in intake/page.tsx). A green page behind a
+   white receipt. Motion is keyframes only: with animation off every piece
+   sits in its finished, visible state. */
+.fz-ty-page {
+  background:
+    radial-gradient(60% 50% at 50% 30%, rgba(52, 211, 153, 0.35) 0%, rgba(16, 185, 129, 0) 70%),
+    linear-gradient(180deg, #064E3B 0%, #065F46 55%, #047857 100%);
+}
+.fz-ty-notch { background: #065F46; }
+.fz-ty-card { animation: fz-ty-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes fz-ty-rise { from { transform: translateY(28px) scale(0.97); } to { transform: none; } }
+.fz-ty-ring { animation: fz-ty-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both; }
+@keyframes fz-ty-pop { from { transform: scale(0.3); } to { transform: scale(1); } }
+.fz-ty-check { stroke-dasharray: 24; stroke-dashoffset: 0; animation: fz-ty-draw 0.45s ease-out 0.45s both; }
+@keyframes fz-ty-draw { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
+.fz-ty-burst { position: absolute; inset: 0; pointer-events: none; }
+.fz-ty-burst i {
+  position: absolute; left: 50%; top: 50%; width: 9px; height: 9px; margin: -4.5px;
+  border-radius: 999px; background: var(--c); opacity: 0;
+  animation: fz-ty-fly 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+}
+@keyframes fz-ty-fly {
+  0% { opacity: 1; transform: rotate(var(--a)) translateX(0) scale(1); }
+  100% { opacity: 0; transform: rotate(var(--a)) translateX(78px) scale(0.4); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fz-ty-card, .fz-ty-ring, .fz-ty-check, .fz-ty-burst i { animation: none; }
+}
