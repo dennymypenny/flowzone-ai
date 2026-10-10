@@ -18,6 +18,7 @@ export const PLANS: Plan[] = [
       "Two rounds of revisions, 60 days of support",
     ],
     href: "/intake?build=full",
+    buy: "/buy/build-full",
     cta: "Start the Full Build",
   },
   {
@@ -32,6 +33,7 @@ export const PLANS: Plan[] = [
       "30 days of support after launch",
     ],
     href: "/intake",
+    buy: "/buy#builds",
     cta: "Start one build",
   },
   {
@@ -47,6 +49,7 @@ export const PLANS: Plan[] = [
       "A flat number agreed before you pay",
     ],
     href: "/intake?build=storefront",
+    buy: "/buy/build-storefront",
     cta: "Get my flat quote",
   },
   {
@@ -62,6 +65,7 @@ export const PLANS: Plan[] = [
       `Website care, ${money(CARE.monthly)} a month, optional`,
     ],
     href: "/intake?build=small",
+    buy: "/buy#graphics",
     cta: "Start a small job",
   },
 ];

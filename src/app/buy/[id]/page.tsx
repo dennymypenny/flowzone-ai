@@ -15,7 +15,7 @@ export function generateStaticParams() {
   return SHOP.map((id) => ({ id }));
 }
 
-const C: Record<string, string> = { Graphics: "#2B57C4", Web: "#0F6B4F", Video: "#8A5100", Plans: "#0C6E80" };
+const C: Record<string, string> = { Builds: "#1E3A8A", Graphics: "#2B57C4", Web: "#0F6B4F", Video: "#8A5100", Plans: "#0C6E80" };
 
 function find(id: string) {
   const p = PAYABLES.find((x) => x.id === id);
@@ -48,7 +48,7 @@ export default function BuyPage({ params }: { params: { id: string } }) {
   const f = find(params.id);
   if (!f) notFound();
   const { p, d, name, price } = f;
-  const per = p.monthly ? "a month" : "flat";
+  const per = p.monthly ? "a month" : p.from ? "to start" : "flat";
   return (
     <div className="min-h-screen pt-24 sm:pt-28 pb-20 px-4" style={{ background: "#F4F1EA" }}>
       <div className="max-w-5xl mx-auto">

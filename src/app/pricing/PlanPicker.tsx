@@ -17,6 +17,8 @@ export type Plan = {
   one: string;
   includes: string[];
   href: string;
+  /** Where to pay by card right now, skipping the ticket. */
+  buy?: string;
   cta: string;
   badge?: string;
 };
@@ -132,7 +134,13 @@ export default function PlanPicker({ plans, start = "full" }: { plans: Plan[]; s
           <Link href={p ? p.href : "/intake"} className="fz-go block text-center w-full rounded-[12px] font-semibold text-base py-4">
             {p ? p.cta : "Start a ticket"} <span aria-hidden>&rarr;</span>
           </Link>
-          <p className="text-center text-xs text-[#6B7890] mt-3">No payment now · you see the price first · no retainer required</p>
+          {p?.buy ? (
+            <p className="text-center text-sm text-[#C9D2E3] mt-3">
+              Already sure? <Link href={p.buy} className="text-[#A8C4FF] font-semibold hover:underline">Pay by card and start today</Link>
+            </p>
+          ) : (
+            <p className="text-center text-xs text-[#6B7890] mt-3">No payment now · you see the price first · no retainer required</p>
+          )}
         </div>
       </div>
     </div>

@@ -7,9 +7,9 @@
  * server, so nobody can edit a price in devtools and pay $1.
  */
 
-import { SMALL_JOBS, MOTION, PACKAGES, CARE, money } from "@/lib/catalog";
+import { SMALL_JOBS, BUILDS, MOTION, PACKAGES, CARE, money } from "@/lib/catalog";
 
-export type Payable = { id: string; name: string; cents: number; monthly?: boolean };
+export type Payable = { id: string; name: string; cents: number; monthly?: boolean; from?: boolean };
 
 export const PAYABLES: Payable[] = [
   ...SMALL_JOBS.map((j) => ({ id: j.id, name: j.name, cents: j.price })),
@@ -19,6 +19,8 @@ export const PAYABLES: Payable[] = [
   { id: "adpack", name: `${PACKAGES.ads.name}: ${PACKAGES.ads.what}`, cents: PACKAGES.ads.price },
   { id: "graphicsplan", name: `${PACKAGES.graphics.name}: ${PACKAGES.graphics.what}`, cents: PACKAGES.graphics.monthly, monthly: true },
   { id: "care", name: `${CARE.name}, month to month`, cents: CARE.monthly, monthly: true },
+  // The builds, at their listed price. Oct 9 2026: every offer can be bought without a call.
+  ...BUILDS.map((b) => ({ id: `build-${b.id}`, name: b.name, cents: b.price, from: !!b.from })),
 ];
 
 export const payable = (id: string) => PAYABLES.find((p) => p.id === id);
@@ -48,7 +50,7 @@ export const payLabel = (p: Payable) => `${money(p.cents)}${p.monthly ? "/mo" : 
  * product description so checkout reads the same. No em dashes, no Oxford commas.
  */
 export type Detail = {
-  group: "Graphics" | "Web" | "Video" | "Plans";
+  group: "Builds" | "Graphics" | "Web" | "Video" | "Plans";
   blurb: string;
   includes: string[];
   time: string;
@@ -74,11 +76,17 @@ export const DETAILS: Record<string, Detail> = {
   logoanim: { group: "Video", blurb: "Your logo, brought to life for intros, reels and your site.", includes: ["3 to 5 second animation", "MP4 plus a transparent version", "Sized for social and video intros"], time: "3 to 5 days" },
   adpack: { group: "Plans", blurb: "A ready set of ads: three static ads and one video ad that match.", includes: ["Three static ads in one style", "One video ad", "Sized for the platforms you run ads on", "Two rounds of changes"], time: "5 to 7 days" },
   graphicsplan: { group: "Plans", blurb: "Eight fresh graphics every month, so your feed never goes quiet.", includes: ["8 graphics a month, posts, stories or flyers", "Planned with you at the start of each month", "Cancel anytime"], time: "Starts within 3 days" },
+  "build-identity": { group: "Builds", blurb: "Your brand, built: the look people recognize you by.", includes: ["Logo, colors and type, designed for you", "A short brand guide you can hand anyone", "A full round of revisions", "30 days of support after launch", "Pay the starting price now. If your scope needs more, we quote the difference before any extra work starts."], time: "1 to 2 weeks" },
+  "build-site": { group: "Builds", blurb: "Your website, designed and live on your domain.", includes: ["Custom designed site, never a template", "Copy written with you", "Fast on phones, forms wired in", "A full round of revisions, 30 days of support", "Pay the starting price now. If your scope needs more, we quote the difference before any extra work starts."], time: "2 to 3 weeks" },
+  "build-engine": { group: "Builds", blurb: "The system that keeps running after launch: payments, booking, email and follow up.", includes: ["One working system, set up end to end", "Connected to the tools you already use", "A full round of revisions, 30 days of support", "Pay the starting price now. If your scope needs more, we quote the difference before any extra work starts."], time: "1 to 2 weeks" },
+  "build-full": { group: "Builds", blurb: "Brand, site and system, wired together. One studio, one price.", includes: ["Identity, site and one working system", "Copy written for you, end to end", "Payments, forms and email wired in", "Two rounds of revisions, 60 days of support"], time: "3 to 5 weeks" },
+  "build-storefront": { group: "Builds", blurb: "A real shop, cart to checkout, on top of everything in The Full Build.", includes: ["Everything in The Full Build", "Full storefront with cart and checkout", "Your existing tools connected", "Pay the starting price now. If your scope needs more, we quote the difference before any extra work starts."], time: "4 to 6 weeks" },
   care: { group: "Plans", blurb: "Your website kept fast, safe and up to date, month to month.", includes: ["Updates and small edits each month", "Uptime and speed checks", "Fixes when something breaks", "Cancel anytime"], time: "Starts right away" },
 };
 
 /** The order the /buy list shows them in. "graphic" is a checkout alias, not a page. */
 export const SHOP: string[] = [
+  "build-full", "build-identity", "build-site", "build-engine", "build-storefront",
   "flyer", "socialpack", "adcreative", "logo", "channelart", "thumbnails", "onepager", "deck", "emailheader",
   "reel", "videoad", "logoanim",
   "page", "form", "fix",
@@ -105,4 +113,9 @@ export const SHOP_NAME: Record<string, string> = {
   adpack: "Ad package",
   graphicsplan: "Monthly graphics",
   care: "Website care",
+  "build-identity": "The Identity Build",
+  "build-site": "The Site Build",
+  "build-engine": "The Engine Build",
+  "build-full": "The Full Build",
+  "build-storefront": "The Storefront Build",
 };

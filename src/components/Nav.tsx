@@ -11,6 +11,7 @@ const LINKS = [
   { href: "/work", label: "Work" },
   { href: "/services", label: "What We Build" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/buy", label: "Shop" },
 ];
 
 export default function Nav() {

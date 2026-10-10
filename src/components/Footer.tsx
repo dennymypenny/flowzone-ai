@@ -35,6 +35,7 @@ export default function Footer() {
             <p className="label mb-5">Start</p>
             <ul className="space-y-3">
               <li><Link href="/pricing" className="text-sm text-ink-soft hover:text-ink transition-colors">Pricing</Link></li>
+              <li><Link href="/buy" className="text-sm text-ink-soft hover:text-ink transition-colors">Shop</Link></li>
               <li><Link href="/intake" className="text-sm text-ink-soft hover:text-ink transition-colors">Start a Ticket</Link></li>
               <li><Link href="/landing-page" className="text-sm text-ink-soft hover:text-ink transition-colors">Landing Page $99.99</Link></li>
             </ul>

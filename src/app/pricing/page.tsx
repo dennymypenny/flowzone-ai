@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { SITE } from "@/lib/site";
 import PlanPicker from "./PlanPicker";
@@ -35,6 +36,9 @@ export default function Pricing() {
           <h1 className="display text-4xl sm:text-6xl leading-[1.02]">Flat prices. Pick one.</h1>
           <p className="text-ink-soft mt-3 leading-relaxed">
             Paid once, agreed before we start. If a cheaper plan fits, we tell you.
+          </p>
+          <p className="text-ink-soft mt-3 leading-relaxed">
+            Know exactly what you need? <Link href="/buy" className="text-accent hover:underline">Shop the flat-price list</Link> and pay by card right now.
           </p>
         </div>
         <PlanPicker plans={PLANS} start="full" />
