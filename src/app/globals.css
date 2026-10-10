@@ -1206,3 +1206,42 @@ html.fz-intro-out .fz-intro {
 @media (prefers-reduced-motion: reduce) {
   .fz-ty-card, .fz-ty-ring, .fz-ty-check, .fz-ty-burst i { animation: none; }
 }
+
+/* Tilt3D: the ticket in your hand (Oct 9 2026). Transform only, the card is
+   always visible. The entrance uses fill-mode backwards so that once it ends
+   the pointer-driven transform takes over. */
+.fz-3d-stage { perspective: 1400px; }
+.fz-3d {
+  position: relative;
+  border-radius: 24px;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  will-change: transform;
+  box-shadow:
+    var(--sx, 0px) var(--sy, 30px) 60px -24px rgba(4, 40, 28, 0.55),
+    calc(var(--sx, 0px) * 2) calc(var(--sy, 30px) * 2) 120px -40px rgba(4, 40, 28, 0.45);
+  animation: fz-3d-in 1s cubic-bezier(0.2, 0.9, 0.25, 1.04) 0.1s backwards;
+}
+@keyframes fz-3d-in {
+  0% { transform: translateY(70px) rotateX(32deg) rotateY(-8deg) scale(0.92); }
+  70% { transform: translateY(-6px) rotateX(-4deg) rotateY(2deg) scale(1.01); }
+  100% { transform: rotateX(0deg) rotateY(0deg); }
+}
+.fz-3d .fz-ty-card { animation: none; }
+.fz-3d-sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at var(--gx, 50%) var(--gy, 30%), rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 42%),
+    linear-gradient(115deg, rgba(255, 255, 255, 0) 35%, rgba(190, 240, 220, 0.35) calc(var(--gx, 50%) - 5%), rgba(200, 220, 255, 0.3) var(--gx, 50%), rgba(255, 255, 255, 0) 70%);
+  mix-blend-mode: soft-light;
+  opacity: 0.35;
+  transition: opacity 0.5s ease;
+}
+.fz-3d-live .fz-3d-sheen { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .fz-3d { animation: none; transform: none; }
+  .fz-3d-sheen { display: none; }
+}

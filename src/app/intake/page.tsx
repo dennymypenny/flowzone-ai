@@ -8,6 +8,7 @@ import { PAY_ON } from "@/app/components/PayNow";
 import { BUILDS as PRICED_BUILDS, CARE, GRAPHICS, MOTION, PACKAGES, QUICK_JOBS } from "@/lib/catalog";
 import Icon from "@/components/Icon";
 import SendReel from "@/components/SendReel";
+import Tilt3D from "@/components/Tilt3D";
 import PayNowLater from "@/app/intake/PayAfterTicket";
 
 /**
@@ -819,8 +820,8 @@ function ThankYou({
   ];
   return (
     <div className="fz-ty-page min-h-screen px-4 pt-28 pb-20 flex items-start sm:items-center justify-center">
-      <div className="relative max-w-xl w-full">
-        <div className="fz-ty-card relative rounded-[24px] bg-white text-[#0C1424] overflow-hidden shadow-[0_40px_90px_-30px_rgba(6,60,40,0.55)]">
+      <Tilt3D className="relative max-w-xl w-full">
+        <div className="fz-ty-card relative rounded-[24px] bg-white text-[#0C1424] overflow-hidden">
           <div className="relative px-6 sm:px-10 pt-10 pb-8 text-center" style={{ background: "#ECFDF5" }}>
             <div className="relative mx-auto mb-6 h-20 w-20">
               <span aria-hidden className="fz-ty-burst">
@@ -906,7 +907,7 @@ function ThankYou({
             </p>
           </div>
         </div>
-      </div>
+      </Tilt3D>
     </div>
   );
 }
