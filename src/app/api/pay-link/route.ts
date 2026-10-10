@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
       after_completion: { type: "redirect", redirect: { url: `${siteOrigin(req.url)}/paid?session_id={CHECKOUT_SESSION_ID}` } },
       allow_promotion_codes: false,
       custom_text: {
-        submit: { message: `Thank you${client ? `, ${client}` : ""}. Once this goes through, Dennis gets started and you will hear from FlowZone the same day.`.slice(0, 1200) },
+        submit: { message: `Thank you${client ? `, ${client}` : ""}. Once this goes through, we get started and you will hear from us the same day.`.slice(0, 1200) },
       },
       metadata: meta,
       ...(monthly ? { subscription_data: { metadata: meta } } : { payment_intent_data: { metadata: meta }, invoice_creation: { enabled: true } }),

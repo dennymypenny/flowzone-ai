@@ -657,11 +657,11 @@ function IntakeForm() {
 
             {state === "error" && (
               <div id="fz-send-error" className="rounded-[14px] border border-white/10 p-5" style={{ background: CARD }}>
-                <p className="text-sm font-semibold text-white mb-1">{fixable ? "One more thing" : "Let’s get this to Denny"}</p>
+                <p className="text-sm font-semibold text-white mb-1">{fixable ? "One more thing" : "Let’s get this to us"}</p>
                 <p className="text-sm text-[#C9D2E3] leading-relaxed">{error}</p>
                 <p className="text-sm text-[#8190A8] leading-relaxed mt-2">
                   Everything you picked and typed is still here.
-                  {fixable ? " Fix that one and send again." : " Send again, or open the email below. It is already filled in and goes straight to Denny."}
+                  {fixable ? " Fix that one and send again." : " Send again, or open the email below. It is already filled in and comes straight to us."}
                 </p>
                 {!fixable && (
                   <a href={fallbackMailto} className="mt-4 inline-flex rounded-[11px] bg-white text-[#0C1424] font-semibold px-5 py-3 text-sm">
@@ -815,7 +815,7 @@ function ThankYou({
 }) {
   const steps = [
     { t: "Ticket sent", d: "Just now", done: true },
-    { t: "Dennis reads it", d: "Usually today", done: false },
+    { t: "We read it", d: "Usually today", done: false },
     { t: "Your plan lands", d: "Scope, price and a date", done: false },
   ];
   return (
@@ -843,7 +843,7 @@ function ThankYou({
             </h1>
             <p className="mt-4 text-[17px] leading-relaxed text-[#334155] max-w-md mx-auto">
               <span className="font-semibold text-[#0F6B4F]">Thanks for believing in yourself and in us.</span>{" "}
-              Your idea just got moving. Dennis is reading your ticket now and you will hear back soon.
+              Your idea just got moving. We are reading your ticket now and you will hear back soon.
             </p>
           </div>
 

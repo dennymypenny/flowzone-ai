@@ -100,7 +100,7 @@ function Paid() {
             <form onSubmit={sendBrief} className="space-y-3">
               <p className="font-display text-xl">One last thing: what should we make?</p>
               <p className="text-sm text-[#475569] leading-relaxed">
-                Tell us the words, links, colors or anything you have. Dennis starts as soon as this lands.
+                Tell us the words, links, colors or anything you have. We start as soon as this lands.
               </p>
               <div className="grid sm:grid-cols-2 gap-3">
                 <input required aria-label="Your name" placeholder="Your name" className={field} value={me.name} onChange={(e) => setMe({ ...me, name: e.target.value })} />
@@ -114,7 +114,7 @@ function Paid() {
                 </p>
               )}
               <button type="submit" disabled={sent === "sending"} className="w-full rounded-[12px] px-5 py-3.5 font-semibold text-white disabled:opacity-70" style={{ background: "#0F6B4F" }}>
-                {sent === "sending" ? "Sending…" : "Send it to Dennis →"}
+                {sent === "sending" ? "Sending…" : "Send it over →"}
               </button>
             </form>
           ) : (
@@ -123,7 +123,7 @@ function Paid() {
               <ol className="grid grid-cols-3 gap-2 mb-7">
                 {[
                   { t: "Paid", d: "Just now", done: true },
-                  { t: sent === "done" ? "Brief sent" : "Dennis starts", d: sent === "done" ? "Just now" : "Usually today", done: sent === "done" },
+                  { t: sent === "done" ? "Brief sent" : "We get started", d: sent === "done" ? "Just now" : "Usually today", done: sent === "done" },
                   { t: "First look", d: "In your inbox", done: false },
                 ].map((st, i) => (
                   <li key={st.t}>

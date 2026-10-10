@@ -13,7 +13,7 @@ export default function PayAfterTicket({ ids, email, ticket, total }: { ids: str
   return (
     <div className="mt-6 rounded-[16px] p-5 border" style={{ background: "#ECFDF5", borderColor: "#A7F3D0" }}>
       <p className="font-display text-lg leading-tight text-[#0C1424]">Want it started today?</p>
-      <p className="text-sm text-[#334155] mt-1 mb-4">Pay now by card and Dennis starts on it right away. Or wait for the reply, either way works.</p>
+      <p className="text-sm text-[#334155] mt-1 mb-4">Pay now by card and we start on it right away. Or wait for the reply, either way works.</p>
       <button
         type="button"
         disabled={busy}
