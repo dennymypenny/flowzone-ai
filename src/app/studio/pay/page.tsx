@@ -114,7 +114,8 @@ export default function StudioPay() {
     );
   }
 
-  const first = made?.client.trim().split(/\s+/)[0];
+  // Full client name: "Control Theory", not "Control". Most clients are businesses.
+  const first = made?.client.trim();
   const message = made
     ? `Hi${first ? ` ${first}` : ""}, here is your secure payment link for ${made.what} (${made.amount}${made.monthly ? " a month" : ""}): ${made.url}\n\nOnce it goes through we get started. Thank you for believing in yourself and in us!`
     : "";
