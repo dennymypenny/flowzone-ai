@@ -74,7 +74,8 @@ export async function POST(req: NextRequest) {
     const msg = e instanceof StripeError ? e.message : String(e);
     console.error("[FlowZone Checkout] Stripe refused:", msg, "|", ids.join(","));
     return NextResponse.json(
-      { ok: false, error: "Checkout did not open. Send it as a ticket and we will send a pay link.", fallback: "/intake?cart=1" },
+      // `reason` is Stripe's short error code (e.g. account_invalid), safe to show and handy to debug.
+      { ok: false, error: "Checkout did not open. Send it as a ticket and we will send a pay link.", fallback: "/intake?cart=1", reason: e instanceof StripeError ? e.code : "network" },
       { status: 502 }
     );
   }

@@ -34,7 +34,7 @@ export function formEncode(obj: Record<string, Val>, prefix = ""): string[] {
 }
 
 export class StripeError extends Error {
-  constructor(message: string, public status: number) {
+  constructor(message: string, public status: number, public code = "") {
     super(message);
   }
 }
@@ -60,8 +60,9 @@ export async function stripe<T = Record<string, unknown>>(
   });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) {
-    const msg = (data as { error?: { message?: string } })?.error?.message || `Stripe said ${res.status}`;
-    throw new StripeError(msg, res.status);
+    const err = (data as { error?: { message?: string; code?: string; type?: string } })?.error;
+    const msg = err?.message || `Stripe said ${res.status}`;
+    throw new StripeError(msg, res.status, err?.code || err?.type || String(res.status));
   }
   return data as T;
 }
