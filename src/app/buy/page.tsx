@@ -31,7 +31,7 @@ export default function BuyIndex() {
                     <div className="p-4">
                       <p className="font-semibold leading-tight">{SHOP_NAME[id]}</p>
                       <p className="text-sm text-[#64748B] mt-1">
-                        <s className="text-[#64748B] mr-1">{money(p.cents)}</s><span className="font-semibold text-[#B03A12]">{p.from ? "from " : ""}{money(payNowCents(p.cents))}{p.monthly ? "/mo" : ""}</span> · {DETAILS[id].time}
+                        {p.from ? "from " : ""}<s className="text-[#64748B] mr-1">{money(p.cents)}</s><span className="font-semibold text-[#B03A12]">{money(payNowCents(p.cents))}{p.monthly ? "/mo" : ""}</span>
                       </p>
                     </div>
                   </a>
