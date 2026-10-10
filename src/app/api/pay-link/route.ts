@@ -38,6 +38,9 @@ export async function POST(req: NextRequest) {
   const email = clean(b.email, 200);
   const ticket = clean(b.ticket, 20);
   const monthly = b.monthly === true;
+  // Which branded card the checkout shows: a build, or the general studio card.
+  const kind = ["site", "identity", "full", "storefront", "engine"].includes(String(b.kind)) ? String(b.kind) : "";
+  const image = `https://www.flowzone.dev/pay/${kind ? `build-${kind}` : "studio"}.jpg`;
   const cents = Math.round(Number(String(b.amount ?? "").replace(/[$,\s]/g, "")) * 100);
   if (!what) return NextResponse.json({ ok: false, error: "Say what it is for. The client sees it at checkout." }, { status: 400 });
   if (!Number.isFinite(cents) || cents < 100 || cents > 5_000_000) {
@@ -47,16 +50,26 @@ export async function POST(req: NextRequest) {
   const name = client ? `${what} for ${client}` : what;
   const meta = { client, what, amount: String(cents), monthly: monthly ? "1" : "", email, ticket, source: "studio" };
   try {
+    // A real product, so checkout shows the FlowZone card and a description.
+    const product = await stripe<{ id: string }>("POST", "products", {
+      name: name.slice(0, 250),
+      description: `${what}${client ? ` for ${client}` : ""}, designed and built by FlowZone Studio.${ticket ? ` Ticket ${ticket}.` : ""}`.slice(0, 500),
+      images: [image],
+      metadata: { source: "studio", client, ticket },
+    });
     const price = await stripe<{ id: string }>("POST", "prices", {
       currency: "usd",
       unit_amount: cents,
-      product_data: { name: `FlowZone: ${name}`.slice(0, 250) },
+      product: product.id,
       ...(monthly ? { recurring: { interval: "month" } } : {}),
     });
     const base = {
       line_items: [{ price: price.id, quantity: 1 }],
       after_completion: { type: "redirect", redirect: { url: `${siteOrigin(req.url)}/paid?session_id={CHECKOUT_SESSION_ID}` } },
       allow_promotion_codes: false,
+      custom_text: {
+        submit: { message: `Thank you${client ? `, ${client}` : ""}. Once this goes through, Dennis gets started and you will hear from FlowZone the same day.`.slice(0, 1200) },
+      },
       metadata: meta,
       ...(monthly ? { subscription_data: { metadata: meta } } : { payment_intent_data: { metadata: meta }, invoice_creation: { enabled: true } }),
     };

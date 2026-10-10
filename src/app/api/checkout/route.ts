@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe, stripeReady, siteOrigin, StripeError } from "@/lib/stripe";
-import { payable } from "@/lib/payables";
+import { payable, DETAILS, SHOP } from "@/lib/payables";
 
 /**
  * Card checkout for the fixed-price items. Oct 9 2026.
@@ -45,7 +45,11 @@ export async function POST(req: NextRequest) {
       price_data: {
         currency: "usd",
         unit_amount: p.cents,
-        product_data: { name: p.name },
+        product_data: {
+          name: p.name,
+          ...(DETAILS[id] ? { description: DETAILS[id].blurb } : {}),
+          images: [`https://www.flowzone.dev/pay/${SHOP.includes(id) ? id : "flyer"}.jpg`],
+        },
         ...(p.monthly ? { recurring: { interval: "month" } } : {}),
       },
     };
