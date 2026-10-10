@@ -321,7 +321,7 @@ export default function Services() {
                     </ul>
                     <p className="text-xs text-ink-mute font-light mt-4">
                       Add to the cart and send it all as one ticket, or pay
-                      right away where you see Pay now.
+                      right away where you see Pay now and take 10% off.
                     </p>
                   </div>
                 )}

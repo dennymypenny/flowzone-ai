@@ -25,6 +25,18 @@ export const PAYABLES: Payable[] = [
 
 export const payable = (id: string) => PAYABLES.find((p) => p.id === id);
 
+/** A cart id ("full", "flyer") to the id checkout charges ("build-full", "flyer"). */
+export const cartPayId = (id: string) => (payable(id) ? id : payable(`build-${id}`) ? `build-${id}` : "");
+
+/**
+ * Pay by card now, get 10% off. Oct 9 2026. A real discount: the listed price is
+ * what a quoted ticket or a studio pay link charges. Always rounds in the buyer's
+ * favor, so it is never less than 10%: $49.99 -> $44.99, $1,500 -> $1,350.
+ */
+export const PAY_NOW_OFF = 10;
+export const payNowCents = (cents: number) =>
+  cents % 100 === 99 ? Math.floor(((cents + 1) * (100 - PAY_NOW_OFF)) / 100) - 1 : Math.floor((cents * (100 - PAY_NOW_OFF)) / 10000) * 100;
+
 /** /intake pick labels that can be paid for on the spot, mapped to an id above. */
 export const PICK_TO_PAYABLE: Record<string, string> = {
   "Social graphics": "socialpack",

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PAYABLES, DETAILS, SHOP, SHOP_NAME } from "@/lib/payables";
+import { PAYABLES, DETAILS, SHOP, SHOP_NAME, payNowCents, PAY_NOW_OFF } from "@/lib/payables";
 import { money } from "@/lib/catalog";
 
 /** flowzone.dev/buy: every fixed-price service, each linking to its own page. */
@@ -17,6 +17,7 @@ export default function BuyIndex() {
       <div className="max-w-6xl mx-auto">
         <h1 className="font-display text-4xl sm:text-5xl text-[#141821] tracking-tight">Flat price, start today</h1>
         <p className="text-[#3D3A33] mt-3 max-w-xl leading-relaxed">Pick a service, pay by card and send the details. A person starts on it, usually the same day.</p>
+        <p className="mt-3 inline-block text-sm font-semibold text-white px-3 py-1.5" style={{ background: "#0F6B4F" }}>{PAY_NOW_OFF}% off everything when you pay by card here</p>
         {GROUPS.map((g) => (
           <section key={g} id={g.toLowerCase()} className="mt-12 scroll-mt-24">
             <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#6B6558] mb-4 border-b border-[#141821] pb-2">{g}</p>
@@ -30,7 +31,7 @@ export default function BuyIndex() {
                     <div className="p-4">
                       <p className="font-semibold leading-tight">{SHOP_NAME[id]}</p>
                       <p className="text-sm text-[#64748B] mt-1">
-                        <span className="font-semibold text-[#B03A12]">{p.from ? "from " : ""}{money(p.cents)}{p.monthly ? "/mo" : ""}</span> · {DETAILS[id].time}
+                        <s className="text-[#64748B] mr-1">{money(p.cents)}</s><span className="font-semibold text-[#B03A12]">{p.from ? "from " : ""}{money(payNowCents(p.cents))}{p.monthly ? "/mo" : ""}</span> · {DETAILS[id].time}
                       </p>
                     </div>
                   </a>

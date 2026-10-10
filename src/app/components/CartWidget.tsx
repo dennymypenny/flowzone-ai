@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { startCheckout, PAY_ON } from "@/app/components/PayNow";
-import { payable } from "@/lib/payables";
+import { cartPayId, payNowCents, PAY_NOW_OFF } from "@/lib/payables";
 import {
   readCart,
   removeFromCart,
@@ -33,7 +33,8 @@ export default function CartWidget() {
   const [paying, setPaying] = useState(false);
   const [payErr, setPayErr] = useState("");
   // Card checkout only when every item has a fixed price. A build is quoted first.
-  const canPay = PAY_ON && items.length > 0 && items.every((i) => !i.from && payable(i.id));
+  const canPay = PAY_ON && items.length > 0 && items.every((i) => cartPayId(i.id));
+  const nowTotal = items.reduce((t, i) => t + payNowCents(i.price), 0);
   useEffect(() => setMounted(true), []);
 
   if (items.length === 0 && !open) return null;
@@ -115,6 +116,15 @@ export default function CartWidget() {
                   </p>
                 </div>
                 {canPay && (
+                  <div className="flex items-baseline justify-between -mt-4 mb-6">
+                    <p className="text-sm font-semibold text-[#34D399]">Pay by card now, {PAY_NOW_OFF}% off</p>
+                    <p className="font-display text-2xl text-[#34D399]">
+                      <s className="text-base text-ink-mute mr-2">{money(cartTotal(items))}</s>
+                      {money(nowTotal)}
+                    </p>
+                  </div>
+                )}
+                {canPay && (
                   <>
                     <button
                       type="button"
@@ -122,16 +132,21 @@ export default function CartWidget() {
                       onClick={async () => {
                         setPaying(true);
                         setPayErr("");
-                        const r = await startCheckout(items.map((i) => i.id)).catch(() => ({ ok: false as const, error: "Checkout did not open." }));
+                        const r = await startCheckout(items.map((i) => cartPayId(i.id))).catch(() => ({ ok: false as const, error: "Checkout did not open." }));
                         if (!r.ok) {
                           setPaying(false);
                           setPayErr(r.error || "Checkout did not open. Send it as a ticket instead.");
                         }
                       }}
-                      className="w-full rounded-[12px] px-5 py-3.5 font-semibold text-white mb-3 disabled:opacity-70 disabled:cursor-wait"
-                      style={{ background: "#0F6B4F" }}
+                      className="paybtn w-full rounded-[12px] px-5 py-3.5 font-semibold mb-3 flex items-center justify-center gap-2.5 disabled:opacity-70 disabled:cursor-wait"
                     >
-                      {paying ? "Opening checkout…" : `Pay ${money(cartTotal(items))} now`} <span aria-hidden>→</span>
+                      {paying ? "Opening checkout…" : (
+                        <>
+                          <span className="paybtn-tag">Save {PAY_NOW_OFF}%</span>
+                          <span>{`Pay ${money(nowTotal)} now`}</span>
+                          <span aria-hidden className="paybtn-arrow">→</span>
+                        </>
+                      )}
                     </button>
                     {payErr && <p className="text-xs text-[#B03A12] mb-3">{payErr}</p>}
                   </>

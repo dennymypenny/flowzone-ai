@@ -57,11 +57,14 @@ export default function PayNow({
           window.location.href = r.fallback || "/intake?cart=1";
         }
       }}
-      className={`inline-flex items-center gap-1.5 text-sm font-semibold rounded-full px-3.5 py-1 transition-colors disabled:opacity-70 disabled:cursor-wait ${
-        dark ? "bg-white text-[#0C1424] hover:bg-[#E2E8F0]" : "bg-[#0F6B4F] text-white hover:bg-[#0B5A42]"
-      } ${className}`}
+      className={`paybtn inline-flex items-center gap-1.5 text-sm font-semibold rounded-[11px] px-3.5 py-1.5 disabled:opacity-70 disabled:cursor-wait ${className}`}
     >
-      {busy ? "Opening…" : label}
+      {busy ? "Opening…" : (
+        <>
+          {label}
+          <span aria-hidden className="paybtn-arrow">&rarr;</span>
+        </>
+      )}
     </button>
   );
 }

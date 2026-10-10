@@ -1245,3 +1245,56 @@ html.fz-intro-out .fz-intro {
   .fz-3d { animation: none; transform: none; }
   .fz-3d-sheen { display: none; }
 }
+
+/* Pay buttons, Oct 9 2026: the one place money changes hands, so it should catch the eye.
+   Emerald gradient, a soft glow, a sheen that sweeps across every few seconds and an
+   arrow that leans forward. The sheen is a decorative layer; the label never hides. */
+.paybtn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  color: #fff;
+  background: linear-gradient(180deg, #14916B 0%, #0F6B4F 100%);
+  border: 1px solid rgba(52, 211, 153, 0.55);
+  box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.15), 0 14px 32px -12px rgba(16, 185, 129, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1), filter 0.35s;
+}
+.paybtn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.38) 48%, transparent 66%);
+  transform: translateX(-120%);
+  animation: pay-sheen 3.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  pointer-events: none;
+}
+.paybtn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.35), 0 20px 40px -12px rgba(16, 185, 129, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+.paybtn .paybtn-arrow { display: inline-block; transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+.paybtn:hover .paybtn-arrow { transform: translateX(4px); }
+.paybtn .paybtn-tag {
+  display: inline-block;
+  font-size: 0.7em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #0C1424;
+  background: #A7F3D0;
+  border-radius: 6px;
+  padding: 0.2em 0.5em;
+  vertical-align: middle;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+@keyframes pay-sheen {
+  0%, 55% { transform: translateX(-120%); }
+  85%, 100% { transform: translateX(120%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .paybtn::after { animation: none; }
+  .paybtn, .paybtn .paybtn-arrow { transition: none; }
+}

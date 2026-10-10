@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe, stripeReady, siteOrigin, StripeError } from "@/lib/stripe";
+import { payNowCents, PAY_NOW_OFF } from "@/lib/payables";
 import { payable, DETAILS, SHOP } from "@/lib/payables";
 
 /**
@@ -44,10 +45,10 @@ export async function POST(req: NextRequest) {
       quantity: qty,
       price_data: {
         currency: "usd",
-        unit_amount: p.cents,
+        unit_amount: payNowCents(p.cents),
         product_data: {
           name: p.name,
-          ...(DETAILS[id] ? { description: DETAILS[id].blurb } : {}),
+          description: `${DETAILS[id] ? DETAILS[id].blurb + " " : ""}${PAY_NOW_OFF}% off for paying by card.`,
           images: [`https://www.flowzone.dev/pay/${SHOP.includes(id) ? id : "flyer"}.jpg`],
         },
         ...(p.monthly ? { recurring: { interval: "month" } } : {}),

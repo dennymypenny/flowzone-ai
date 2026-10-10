@@ -27,10 +27,15 @@ export default function BuyButton({ id, label }: { id: string; label: string }) 
             setErr("Checkout did not open. Try again, or start a ticket and we will send a pay link.");
           }
         }}
-        className="w-full rounded-[14px] px-6 py-4 text-lg font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-wait"
-        style={{ background: "#0F6B4F", boxShadow: "0 18px 36px -16px rgba(15,107,79,0.75)" }}
+        className="paybtn w-full rounded-[14px] px-6 py-4 text-lg font-semibold flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-wait"
       >
-        {busy ? "Opening secure checkout…" : label} {!busy && <span aria-hidden>&rarr;</span>}
+        {busy ? "Opening secure checkout…" : (
+          <>
+            <span className="paybtn-tag">Save 10%</span>
+            <span>{label}</span>
+            <span aria-hidden className="paybtn-arrow">&rarr;</span>
+          </>
+        )}
       </button>
       {err && <p className="text-sm text-[#B03A12] mt-2">{err}</p>}
     </>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { PAYABLES, DETAILS, SHOP, SHOP_NAME } from "@/lib/payables";
+import { PAYABLES, DETAILS, SHOP, SHOP_NAME, payNowCents, PAY_NOW_OFF } from "@/lib/payables";
 import { money } from "@/lib/catalog";
 import BuyButton from "../BuyButton";
 
@@ -21,7 +21,7 @@ function find(id: string) {
   const p = PAYABLES.find((x) => x.id === id);
   const d = DETAILS[id];
   if (!p || !d || !SHOP.includes(id)) return null;
-  return { p, d, name: SHOP_NAME[id], price: money(p.cents) };
+  return { p, d, name: SHOP_NAME[id], price: money(p.cents), now: money(payNowCents(p.cents)) };
 }
 
 export function generateMetadata({ params }: { params: { id: string } }): Metadata {
@@ -47,7 +47,7 @@ export function generateMetadata({ params }: { params: { id: string } }): Metada
 export default function BuyPage({ params }: { params: { id: string } }) {
   const f = find(params.id);
   if (!f) notFound();
-  const { p, d, name, price } = f;
+  const { p, d, name, price, now } = f;
   const per = p.monthly ? "a month" : p.from ? "to start" : "flat";
   return (
     <div className="min-h-screen pt-24 sm:pt-28 pb-20 px-4" style={{ background: "#F4F1EA" }}>
@@ -64,9 +64,11 @@ export default function BuyPage({ params }: { params: { id: string } }) {
             <p className="mt-3 text-[17px] leading-relaxed text-[#334155]">{d.blurb}</p>
 
             <div className="mt-6 flex items-baseline gap-2">
-              <span className="font-display text-[44px] leading-none tracking-tight" style={{ color: "#B03A12" }}>{price}</span>
+              <span className="font-display text-[44px] leading-none tracking-tight" style={{ color: "#B03A12" }}>{now}</span>
+              <s className="text-[22px] text-[#64748B] decoration-[#64748B]">{price}</s>
               <span className="text-[#64748B]">{per}</span>
             </div>
+            <p className="mt-2 text-sm font-semibold" style={{ color: "#0F6B4F" }}>{PAY_NOW_OFF}% off when you pay by card now</p>
 
             <p className="mt-7 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#64748B] mb-3">What you get</p>
             <ul className="space-y-2.5">
@@ -83,7 +85,7 @@ export default function BuyPage({ params }: { params: { id: string } }) {
             </ul>
 
             <div className="mt-auto pt-8">
-              <BuyButton id={params.id} label={`Pay ${price}${p.monthly ? "/mo" : ""} and get started`} />
+              <BuyButton id={params.id} label={`Pay ${now}${p.monthly ? "/mo" : ""} and get started`} />
               <p className="flex items-center justify-center gap-2 text-xs text-[#64748B] mt-3">
                 <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5" /><path d="M5.5 7V5a2.5 2.5 0 015 0v2" /></svg>
                 Secure checkout by Stripe. You send the details right after paying.
